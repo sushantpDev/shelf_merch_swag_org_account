@@ -79,27 +79,18 @@ function CatalogArrow() {
 export function Catalog() {
   return (
     <section className="section catalog-section" id="catalog">
-      <div className="split-heading">
-        <div>
-          <span className="kicker">SOMETHING FOR EVERYONE</span>
-          <h2>
-            One catalog.
-            <br />
-            <em>Every occasion.</em>
-          </h2>
-        </div>
-        <div>
-          <p className="desktop-only">
-            From apparel to tech accessories, explore what you can put your logo on.
-          </p>
-          <Link to="/app/catalog" className="text-link">
-            <span className="desktop-only">View full catalog</span>
-            <span className="mobile-only">See all</span>
-            <span>
-              <ArrowIcon />
-            </span>
-          </Link>
-        </div>
+      <div className="section-heading centered catalog-heading">
+        <span className="kicker">SOMETHING FOR EVERYONE</span>
+        <h2>
+          One catalog <em>for every occasion</em>
+        </h2>
+        <Link to="/app/catalog" className="text-link catalog-link">
+          <span className="catalog-link-label desktop-only">View full catalog</span>
+          <span className="catalog-link-label mobile-only">See all</span>
+          <span className="catalog-link-icon">
+            <ArrowIcon />
+          </span>
+        </Link>
       </div>
       <div className="catalog-grid">
         {CATALOG_ITEMS.map((item) => (
@@ -133,7 +124,7 @@ export function Catalog() {
               </svg>
             </div>
             <h3>{item.title}</h3>
-            <span className="round-arrow">{item.image ? <CatalogArrow /> : "↗"}</span>
+            <span className="round-arrow">{item.image ? <CatalogArrow /> : "→"}</span>
           </Link>
         ))}
       </div>

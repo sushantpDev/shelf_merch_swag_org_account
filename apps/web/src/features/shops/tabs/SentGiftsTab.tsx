@@ -112,14 +112,14 @@ function statusPill(campaign: UiCampaign) {
 }
 
 function pointsPerRecipient(campaign: UiCampaign, shop: UiShop) {
-  if ((campaign.creditsPerRecipient ?? 0) <= 0) return "—";
+  if ((campaign.creditsPerRecipient ?? 0) <= 0) return "N/A";
   return formatPointsQuantity(campaign.creditsPerRecipient * POINTS_PER_RUPEE, shop.currencyMode);
 }
 
 function formatCampaignDate(createdAt?: string) {
-  if (!createdAt) return "—";
+  if (!createdAt) return "N/A";
   const date = new Date(createdAt);
-  if (Number.isNaN(date.getTime())) return "—";
+  if (Number.isNaN(date.getTime())) return "N/A";
   return date.toLocaleDateString("en-IN");
 }
 
@@ -140,7 +140,7 @@ function campaignSubtext(campaign: UiCampaign, shop: UiShop) {
 
 function recipientAmount(creditAmount: number | undefined, shop: UiShop) {
   const amount = creditAmount ?? 0;
-  if (amount <= 0) return "—";
+  if (amount <= 0) return "N/A";
   return formatUnitsFromInr(amount, shop.currencyMode);
 }
 
@@ -159,7 +159,7 @@ function recipientStatusLabel(status?: string) {
     case "expired":
       return "Expired";
     default:
-      return status || "—";
+      return status || "N/A";
   }
 }
 
@@ -220,8 +220,8 @@ function CampaignRecipientsPanel({
           <tbody>
             {recipients.map((r: CampaignRecipientRow) => (
               <tr key={String(r._id ?? r.email)}>
-                <td style={{ fontWeight: 500 }}>{r.name || "—"}</td>
-                <td className="muted">{r.email || "—"}</td>
+                <td style={{ fontWeight: 500 }}>{r.name || "N/A"}</td>
+                <td className="muted">{r.email || "N/A"}</td>
                 <td className="num">{recipientAmount(r.creditAmount, shop)}</td>
                 <td className="muted" style={{ fontSize: 13 }}>
                   {recipientStatusLabel(r.redemptionStatus)}
@@ -361,7 +361,7 @@ export function SentGiftsTab({
                       <div className="data-list-secondary">{campaignSubtext(campaign, shop)}</div>
                     </td>
                     <td className="data-list-cell">
-                      <div className="data-list-primary">{campaign.senderName || "—"}</div>
+                      <div className="data-list-primary">{campaign.senderName || "N/A"}</div>
                     </td>
                     <td className="num data-list-cell">
                       <div className="data-list-primary">{pointsPerRecipient(campaign, shop)}</div>

@@ -46,6 +46,8 @@ RUN addgroup -S app && adduser -S app -G app
 COPY --from=deps /app/node_modules ./node_modules
 COPY package.json package-lock.json ./
 COPY apps/api ./apps/api
+# SEO route catalog is read from source at request time (not bundled into the SPA).
+COPY apps/web/src/seo ./apps/web/src/seo
 # SPA assets — Express serves these when NODE_ENV=production (see apps/api/src/app.js).
 COPY --from=build-web /app/apps/web/dist ./apps/web/dist
 # Email preset banners are read from disk at send time (not via the SPA dist).

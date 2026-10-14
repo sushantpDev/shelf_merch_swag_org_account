@@ -121,7 +121,7 @@ export function formatRecipientLoc(parts: {
   const loc = [parts.city, parts.state, parts.country === "IN" ? "IN" : parts.country]
     .filter(Boolean)
     .join(", ");
-  return loc || "—";
+  return loc || "N/A";
 }
 
 export function hasCompleteRecipientAddress(contact: Pick<UiContact, "address" | "city" | "state" | "pincode">): boolean {
@@ -358,7 +358,7 @@ export function contactForManualEmail(
     name: normalized.split("@")[0] || normalized,
     role: "Member",
     address: "",
-    loc: "—",
+    loc: "N/A",
     phone: "",
     department: "",
     employeeCode: "",

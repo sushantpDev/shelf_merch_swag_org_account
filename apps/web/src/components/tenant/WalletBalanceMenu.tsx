@@ -2,6 +2,7 @@ import { useEffect, useState, type MouseEvent } from "react";
 import { Link, useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
 import type { UiWallet } from "@/services/mappers";
+import { tenantPath } from "@/lib/workspaceSlug";
 import walletIconImg from "../../../assets/wallet-icon.svg";
 
 function TopbarChevron({ open }: { open: boolean }) {
@@ -59,7 +60,7 @@ export function WalletBalanceMenu({
 
   function openBudget() {
     close();
-    void navigate("/app/wallets");
+    void navigate(tenantPath("/wallets"));
   }
 
   function openTopup(e: MouseEvent) {
@@ -67,7 +68,7 @@ export function WalletBalanceMenu({
     e.stopPropagation();
     close();
     const walletId = primaryWallet?.id;
-    void navigate(walletId ? `/app/wallets?wallet=${encodeURIComponent(walletId)}&addFunds=1` : "/app/wallets");
+    void navigate(walletId ? `${tenantPath("/wallets")}?wallet=${encodeURIComponent(walletId)}&addFunds=1` : tenantPath("/wallets"));
   }
 
   return (
@@ -106,7 +107,7 @@ export function WalletBalanceMenu({
                   </p>
                   {budgetTitle === "Organization budget" ? (
                     <Button size="sm" asChild onClick={close}>
-                      <Link to="/app/wallets" state={{ startCreateWallet: true }}>
+                      <Link to={tenantPath("/wallets")} state={{ startCreateWallet: true }}>
                         Setup budget
                       </Link>
                     </Button>
@@ -129,7 +130,7 @@ export function WalletBalanceMenu({
               )}
             </div>
             <div className="wallet-menu-foot">
-              <Link to="/app/wallets" className="wallet-menu-create" onClick={close}>
+              <Link to={tenantPath("/wallets")} className="wallet-menu-create" onClick={close}>
                 {hasBudget ? "View budget dashboard" : budgetTitle === "Organization budget" ? "Setup budget" : "View budget"}
               </Link>
             </div>

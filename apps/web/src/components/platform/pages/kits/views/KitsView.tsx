@@ -79,7 +79,7 @@ export function KitsView({
                 const variants = Array.isArray(r.variantImages) ? r.variantImages.length : 0;
                 return (
                   <span className="muted" style={{ fontSize: 12 }}>
-                    {hero ? "Hero" : "—"}
+                    {hero ? "Hero" : "N/A"}
                     {gallery ? ` · ${gallery} gallery` : ""}
                     {items ? ` · ${items} product${items === 1 ? "" : "s"}` : ""}
                     {variants ? ` · ${variants} variant${variants === 1 ? "" : "s"}` : ""}

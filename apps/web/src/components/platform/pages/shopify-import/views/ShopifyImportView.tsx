@@ -45,7 +45,7 @@ export function ShopifyImportView({
             disabled={busy}
           />
           <p className="muted" style={{ fontSize: 12, marginTop: 6 }}>
-            Must be the Admin host, like <code>your-store.myshopify.com</code> — not a custom storefront domain.
+            Must be the Admin host, like <code>your-store.myshopify.com</code>, not a custom storefront domain.
           </p>
         </div>
         <div className="field">
@@ -64,7 +64,7 @@ export function ShopifyImportView({
             Used once for this import and never stored.{" "}
             {kits
               ? "Only kit bundles are imported, as curated active kits."
-              : "Only active Shopify products are pulled, and they land as drafts — HSN is copied from Shopify inventory items when set; still set cost and GST before publishing."}
+              : "Only active Shopify products are pulled, and they land as drafts. HSN is copied from Shopify inventory items when set; still set cost and GST before publishing."}
           </p>
         </div>
         <button type="button" className="btn btn-brand" disabled={busy || !domain || !token} onClick={onRun}>
@@ -129,7 +129,7 @@ export function ShopifyImportView({
 
           {kits && summary.kits && summary.kits.imported + summary.kits.updated > 0 && (
             <p className="muted" style={{ fontSize: 12.5, marginBottom: 12 }}>
-              Bundles were imported as <b>curated, ready-to-use kits</b> — no component products to add.
+              Bundles were imported as <b>curated, ready-to-use kits</b>. No component products to add.
             </p>
           )}
 

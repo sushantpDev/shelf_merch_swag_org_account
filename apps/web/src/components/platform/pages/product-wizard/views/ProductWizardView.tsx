@@ -281,7 +281,7 @@ export function ProductWizardView({
                     return (
                       <tr key={v._id || v.sku} style={enabled ? undefined : { opacity: 0.55 }}>
                         <td>{v.sku}</td>
-                        <td>{v.size || "—"}</td>
+                        <td>{v.size || "N/A"}</td>
                         <td>
                           <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
                             {!isPlaceholderColorHex(hex) && (
@@ -296,7 +296,7 @@ export function ProductWizardView({
                                 }}
                               />
                             )}
-                            {v.color || "—"}
+                            {v.color || "N/A"}
                           </span>
                         </td>
                         <td>{v.stock ?? 0}</td>
@@ -577,7 +577,7 @@ export function ProductWizardView({
             <h3 style={{ marginBottom: 12 }}>Design placeholders</h3>
             <p className="muted" style={{ fontSize: 13, marginBottom: 12 }}>
               Place design areas on any uploaded mask (front, back, left, or right). Switch the mockup
-              image to edit each view — areas are saved with the selected mask. Front falls back to
+              image to edit each view. Areas are saved with the selected mask. Front falls back to
               the selected Shopify image when no mask was uploaded.
             </p>
             {!printAreaImages.length && (

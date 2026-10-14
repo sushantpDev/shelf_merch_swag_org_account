@@ -301,10 +301,10 @@ export default function KitAcceptPortal({
         <p className="muted" style={{ marginBottom: 20, maxWidth: 560 }}>
           {welcome ||
             (isCuratedAccept
-              ? `Hi ${recipientName} — confirm your shipping address${
+              ? `Hi ${recipientName}, confirm your shipping address${
                   kitData.requiresKitVariant ? ", choose a kit variant," : ""
                 } to accept your gift kit.`
-              : `Hi ${recipientName} — confirm your kit items${kitData.items.some((i) => i.requiresSize) ? ", choose sizes where needed" : ""}, then enter your shipping address to accept.`)}
+              : `Hi ${recipientName}, confirm your kit items${kitData.items.some((i) => i.requiresSize) ? ", choose sizes where needed" : ""}, then enter your shipping address to accept.`)}
         </p>
 
         {kitArt && (

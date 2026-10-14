@@ -44,9 +44,9 @@ function statusClass(status: IntegrationsVm["zoho"]["status"]) {
 }
 
 function formatDate(value: string | null | undefined) {
-  if (!value) return "—";
+  if (!value) return "N/A";
   const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return "—";
+  if (Number.isNaN(d.getTime())) return "N/A";
   return d.toLocaleDateString(undefined, {
     year: "numeric",
     month: "short",
@@ -98,7 +98,7 @@ export function ZohoPeopleCard({ zoho }: ZohoCardProps) {
             <dd>
               {zoho.integration.zohoOrganizationName ||
                 zoho.integration.zohoOrganizationId ||
-                "—"}
+                "N/A"}
             </dd>
           </div>
           <div>

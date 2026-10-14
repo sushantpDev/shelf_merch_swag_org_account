@@ -23,7 +23,7 @@ const columns: {
         to={`/platform/orders/${String(r._id)}`}
         style={{ color: "var(--brand)", fontWeight: 600, textDecoration: "none" }}
       >
-        {String(r.orderNumber ?? "—")}
+        {String(r.orderNumber ?? "N/A")}
       </Link>
     ),
   },

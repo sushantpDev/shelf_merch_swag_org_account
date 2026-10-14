@@ -197,7 +197,7 @@ export function KitWizardView({
                   checked={!!rules.fixedComposition}
                   onChange={(e) => onSetRule("fixedComposition", e.target.checked)}
                 />
-                Fixed composition — tenants must use this kit as-is
+                Fixed composition. Tenants must use this kit as-is
               </label>
               <label className="row" style={{ gap: 9, alignItems: "center", marginBottom: 10, fontSize: 13.5 }}>
                 <input
@@ -205,7 +205,7 @@ export function KitWizardView({
                   checked={!!rules.customizationAllowed}
                   onChange={(e) => onSetRule("customizationAllowed", e.target.checked)}
                 />
-                Customization allowed — tenants may add their logo/branding
+                Customization allowed. Tenants may add their logo/branding
               </label>
               <label
                 className="row"
@@ -224,7 +224,7 @@ export function KitWizardView({
                 <span style={{ flex: 1, lineHeight: 1.4 }}>
                   <span style={{ fontWeight: 600, display: "block" }}>Require logo</span>
                   <span className="muted" style={{ fontSize: 12 }}>
-                    On — tenants must upload a logo. Off — hide the logo step (for kits that do not need one).
+                    On: tenants must upload a logo. Off: hide the logo step (for kits that do not need one).
                   </span>
                 </span>
                 <input
@@ -273,7 +273,7 @@ export function KitWizardView({
             <h3 style={{ marginBottom: 12 }}>Curated bundle</h3>
             <div className="banner info" style={{ marginBottom: 14 }}>
               This kit was imported from {kit?.source?.provider === "shopify" ? "Shopify" : "an external source"}{" "}
-              as a complete, pre-set bundle. Its contents are fixed — there are no individual products or variants to
+              as a complete, pre-set bundle. Its contents are fixed. There are no individual products or variants to
               add here.
             </div>
             <p className="muted" style={{ marginBottom: 14 }}>
@@ -307,7 +307,7 @@ export function KitWizardView({
                   {kit.items.map((it) => (
                     <tr key={it._id}>
                       <td>{productName(it.catalogProductId)}</td>
-                      <td className="muted">{it.variantSku || "—"}</td>
+                      <td className="muted">{it.variantSku || "N/A"}</td>
                       <td>{it.qty ?? 1}</td>
                       <td style={{ textAlign: "right" }}>
                         <button type="button" className="btn btn-ghost btn-sm" onClick={() => onDropItem(it._id)}>
@@ -343,7 +343,7 @@ export function KitWizardView({
                   onChange={(e) => onPickVariantSku(e.target.value)}
                   disabled={!pickVariants.length}
                 >
-                  <option value="">{pickVariants.length ? "Any" : "—"}</option>
+                  <option value="">{pickVariants.length ? "Any" : "N/A"}</option>
                   {pickVariants.map((v) => (
                     <option key={v.sku} value={v.sku}>
                       {[v.size, v.color].filter(Boolean).join(" / ") || v.sku}

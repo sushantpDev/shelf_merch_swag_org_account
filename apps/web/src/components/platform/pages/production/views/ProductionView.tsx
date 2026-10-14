@@ -28,9 +28,9 @@ export function ProductionView({
   }[] = [
     { key: "_id", label: "Task", render: (r) => String(r._id).slice(-6) },
     { key: "orderId", label: "Order", render: (r) => String(r.orderId ?? "").slice(-6) },
-    { key: "assignedTo", label: "Assignee", render: (r) => String(r.assignedTo || "—") },
+    { key: "assignedTo", label: "Assignee", render: (r) => String(r.assignedTo || "N/A") },
     { key: "status", label: "Status", render: (r) => <StatusTag status={String(r.status)} /> },
-    { key: "qcResult", label: "QC", render: (r) => String(r.qcResult || "—") },
+    { key: "qcResult", label: "QC", render: (r) => String(r.qcResult || "N/A") },
   ];
 
   if (canWrite) {

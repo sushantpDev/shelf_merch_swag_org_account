@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import type { UiShop } from "@/services/mappers";
 import {
+  fileTypeFromName,
+  setDefaultArtwork,
+} from "@/features/swag/wizard/artworkHistory";
+import {
   bannerConfigFromSource,
   bannerImageUrlKey,
   bannerPresetKey,
@@ -48,7 +52,17 @@ export function useShopLookEditor(shop: UiShop) {
       return;
     }
     const reader = new FileReader();
-    reader.onload = () => setState((s) => ({ ...s, logoUrl: String(reader.result) }));
+    reader.onload = () => {
+      const dataUrl = String(reader.result);
+      setState((s) => ({ ...s, logoUrl: dataUrl }));
+      setDefaultArtwork({
+        id: `shop-${shop.id}`,
+        name: file.name || `${shop.name} Logo`,
+        preview: dataUrl,
+        fileType: fileTypeFromName(file.name),
+        source: "shop-logo",
+      });
+    };
     reader.readAsDataURL(file);
   }
 

@@ -4,9 +4,7 @@ export function Flexibility() {
       <div className="section-heading centered">
         <span className="kicker">TOTAL FLEXIBILITY</span>
         <h2>
-          You decide how
-          <br />
-          <em>the gifting works.</em>
+          You decide how <em>the gifting works.</em>
         </h2>
         <p>Choosing the exact item doesn&apos;t have to be on you, unless you want it to be.</p>
       </div>

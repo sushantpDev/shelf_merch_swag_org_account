@@ -20,7 +20,7 @@ function ChipSet({ id }: { id: string }) {
     <div className="chip-set">
       {CHIPS.map((chip, index) => (
         <span key={`${id}-${chip.label}-${index}`} className={chip.className}>
-          {chip.label} <b>↗</b>
+          {chip.label} <b>→</b>
         </span>
       ))}
     </div>
@@ -41,7 +41,7 @@ function MobileExploreChips() {
             to={item.to}
             className={`chip chip-${index % 5}`}
           >
-            {item.shortTitle} <b>↗</b>
+            {item.shortTitle} <b>→</b>
           </Link>
         ))}
         {!showMore && items.length > EXPLORE_PRIMARY ? (
@@ -94,58 +94,30 @@ export function Offerings() {
       <MobileExploreChips />
       <div className="platform-bento">
         <article className="bento-shop">
+          <span className="mini-label">COMPANY SHOP</span>
           <div className="bento-copy">
-            <span className="mini-label">COMPANY SHOP</span>
             <h3>
               Your brand.
               <br />
               Its own storefront.
             </h3>
-            <p className="desktop-only">
-              Launch a branded shop for employees, new hires, distributors or partners, without
-              touching code.
-            </p>
-            <p className="mobile-only">
-              Create a branded store with your logo, colors and domain.
-            </p>
-            <a href="#contact" className="text-link">
-              <span className="desktop-only">Explore shops</span>
-              <span className="mobile-only">Launch your store</span>
-              <span>
-                <ArrowIcon />
-              </span>
-            </a>
           </div>
-          <div className="shop-ui">
-            <div className="shop-top">
-              <div className="mini-logo">A</div>
-              <span>acme goods</span>
-              <b>•••</b>
-            </div>
-            <div className="shop-banner">
-              <small>TEAM ESSENTIALS</small>
-              <strong>
-                Built for
-                <br />
-                the everyday.
-              </strong>
-              <button type="button">Shop collection</button>
-            </div>
-            <div className="product-row">
-              <div>
-                <span className="mini-product shirt-product">T</span>
-                <small>Core Tee</small>
-              </div>
-              <div>
-                <span className="mini-product mug-product">⌁</span>
-                <small>Travel Mug</small>
-              </div>
-              <div>
-                <span className="mini-product cap-product">⌒</span>
-                <small>Team Cap</small>
-              </div>
-            </div>
+          <div className="shop-visual">
+            <img
+              src="/images/company-shop-storefront.png"
+              alt="Company shop storefront with branded hoodie, tote, and mug"
+            />
           </div>
+          <p>
+            Launch a branded shop for employees, new hires, distributors or partners, without
+            touching code.
+          </p>
+          <a href="#contact" className="text-link">
+            Explore shops
+            <span>
+              <ArrowIcon />
+            </span>
+          </a>
         </article>
         <article className="bento-mini bento-kit">
           <span className="icon-tile">

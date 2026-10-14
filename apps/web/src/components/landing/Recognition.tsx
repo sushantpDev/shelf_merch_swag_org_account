@@ -3,17 +3,15 @@ import { ArrowIcon } from "./icons";
 export function Recognition() {
   return (
     <section className="recognition-section">
-      <div className="recognition-copy">
+      <div className="recognition-heading">
         <span className="kicker">RECOGNITION, BUILT IN</span>
         <h2>
           Celebrate the moments
           <br />
           <em>that move teams.</em>
         </h2>
-        <p className="desktop-only">
-          Recognize a moment once or set up a program that runs itself. Shelf Merch connects
-          appreciation to rewards people genuinely want.
-        </p>
+      </div>
+      <div className="recognition-copy">
         <ul>
           <li>
             <span>

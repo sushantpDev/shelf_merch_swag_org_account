@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { tenantPath } from "@/lib/workspaceSlug";
 
 const STEPS: {
   title: string;
@@ -41,7 +42,7 @@ export function NewUserWelcomeDialog({
 
   function startWalletSetup() {
     onClose();
-    navigate("/app/wallets", { state: { startCreateWallet: true } });
+    navigate(tenantPath("/wallets"), { state: { startCreateWallet: true } });
   }
 
   return (

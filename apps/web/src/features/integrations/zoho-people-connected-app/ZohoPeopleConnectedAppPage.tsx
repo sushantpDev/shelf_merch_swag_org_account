@@ -23,9 +23,9 @@ import {
 } from "./zoho-people-status";
 
 function formatDate(value: string | null | undefined) {
-  if (!value) return "—";
+  if (!value) return "N/A";
   const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return "—";
+  if (Number.isNaN(d.getTime())) return "N/A";
   return d.toLocaleDateString(undefined, {
     year: "numeric",
     month: "short",
@@ -109,7 +109,7 @@ function ZohoPeopleConnectedAppView({ vm }: { vm: ZohoPeopleConnectedAppVm }) {
                 <dd>
                   {vm.integration.zohoOrganizationName ||
                     vm.integration.zohoOrganizationId ||
-                    "—"}
+                    "N/A"}
                 </dd>
               </div>
               <div>

@@ -47,7 +47,7 @@ export function useAcceptInviteController(searchToken: string): AcceptInviteVm {
     setError("");
     setErrorCode("");
     if (!token) {
-      setError("Invalid invitation link — ask your admin to resend the invite.");
+      setError("Invalid invitation link. Ask your admin to resend the invite.");
       return;
     }
     if (!invitePasswordValid(password, confirm)) {

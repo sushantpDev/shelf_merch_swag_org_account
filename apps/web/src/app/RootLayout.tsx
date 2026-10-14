@@ -6,6 +6,7 @@ import { ShelfMerchLogo } from "@/components/brand/ShelfMerchLogo";
 import { ShopSubdomainGate } from "./ShopSubdomainGate";
 import errorPageArt from "@/assets/error-page-signpost.png";
 import { queryClient } from "@/services/queryClient";
+import { usePublicSeo } from "@/seo/usePublicSeo";
 
 function ErrorStatusPage({
   title,
@@ -47,6 +48,7 @@ function ErrorStatusPage({
 
 /** App shell: provides react-query + renders the matched route tree. */
 export function RootLayout() {
+  usePublicSeo();
   return (
     <QueryClientProvider client={queryClient}>
       <ShopSubdomainGate />

@@ -287,7 +287,7 @@ export function DataTable({
             <tr key={String(row._id ?? row.id ?? row.productId ?? i)}>
               {columns.map((c) => (
                 <td key={c.key} style={{ textAlign: c.align ?? "left", verticalAlign: "middle" }}>
-                  {c.render ? c.render(row) : String(row[c.key] ?? "—")}
+                  {c.render ? c.render(row) : String(row[c.key] ?? "N/A")}
                 </td>
               ))}
             </tr>

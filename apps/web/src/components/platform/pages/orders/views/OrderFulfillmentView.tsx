@@ -245,7 +245,7 @@ export function OrderFulfillmentView({
                       <div style={{ fontWeight: 700, fontSize: 15, marginRight: 4 }}>
                         {item.name ?? product?.name ?? "Product"}
                       </div>
-                      <Chip mono>{item.sku || "—"}</Chip>
+                      <Chip mono>{item.sku || "N/A"}</Chip>
                       {variant?.size ? <Chip>Size {variant.size}</Chip> : null}
                       {variant?.color ? (
                         <Chip>
@@ -311,7 +311,7 @@ export function OrderFulfillmentView({
                             <StatusTag status={h.status} />
                             {" · "}
                             {new Date(h.at).toLocaleString("en-IN")}
-                            {h.note ? ` — ${h.note}` : ""}
+                            {h.note ? `: ${h.note}` : ""}
                           </li>
                         ))}
                       </ul>

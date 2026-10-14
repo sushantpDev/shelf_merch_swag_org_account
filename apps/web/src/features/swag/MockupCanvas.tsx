@@ -650,7 +650,7 @@ export function MockupCanvas({
             }
       }
     >
-      {/* Logical 800×600 stage — same padded mockup frame as Edit Catalog. */}
+      {/* Logical 800×600 stage. Same padded mockup frame as Edit Catalog. */}
       <div
         ref={stageBoxRef}
         style={{
@@ -711,7 +711,7 @@ export function MockupCanvas({
             pointerEvents: "none",
           }}
         >
-          Active area ~{dpiWarn} DPI — aim for {MIN_EFFECTIVE_DPI}+
+          Active area ~{dpiWarn} DPI. Aim for {MIN_EFFECTIVE_DPI}+
         </div>
       )}
     </div>

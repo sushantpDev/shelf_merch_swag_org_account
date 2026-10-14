@@ -4,6 +4,8 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "node:path";
 import { createReadStream, existsSync, statSync } from "node:fs";
 import { loadEnv, type Plugin } from "vite";
+import catalog from "./src/seo/publicPages.json";
+import { applySpaSeo, resolveSpaSeo } from "../api/src/modules/seo/resolvePublicSeo.js";
 
 const REPO_ROOT = path.resolve(__dirname, "../..");
 const API_UPLOADS_DIR = path.resolve(__dirname, "../api/uploads");
@@ -64,6 +66,20 @@ function conditionalGtmPlugin(envDir: string): Plugin {
   };
 }
 
+/** Per-request head tags in dev. Production Express rewrites the same shell per path. */
+function spaSeoPlugin(): Plugin {
+  return {
+    name: "spa-seo",
+    transformIndexHtml: {
+      order: "pre",
+      handler(html, ctx) {
+        const requestPath = ctx.originalUrl || ctx.path || "/";
+        return applySpaSeo(html, resolveSpaSeo(catalog, requestPath));
+      },
+    },
+  };
+}
+
 /** Allow long-running proxied API calls (Shopify import) without idle socket cuts. */
 function longRunningProxyPlugin(): Plugin {
   return {
@@ -89,6 +105,7 @@ export default defineConfig({
     tailwindcss(),
     devUploadsPlugin(),
     conditionalGtmPlugin(REPO_ROOT),
+    spaSeoPlugin(),
     longRunningProxyPlugin(),
   ],
   resolve: {
@@ -122,6 +139,10 @@ export default defineConfig({
           });
         },
       },
+      "/compare": { target: "http://127.0.0.1:3001", changeOrigin: true },
+      "/solutions": { target: "http://127.0.0.1:3001", changeOrigin: true },
+      "/sitemap-compare.xml": { target: "http://127.0.0.1:3001", changeOrigin: true },
+      "/sitemap-solutions.xml": { target: "http://127.0.0.1:3001", changeOrigin: true },
     },
   },
   test: {

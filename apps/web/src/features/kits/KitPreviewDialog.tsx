@@ -562,15 +562,13 @@ export function KitPreviewDialog({
   return (
     <Dialog open={open && data !== null} onOpenChange={onOpenChange}>
       <DialogContent
-        className="sm-modal"
+        className={wide ? "sm-modal kit-preview-dialog kit-preview-dialog--wide" : "sm-modal kit-preview-dialog"}
         style={{
-          maxWidth: wide ? 850 : 640,
           maxHeight: "90vh",
-          overflowY: "auto",
         }}
       >
         {data && (
-          <div className="modal-pad" style={{ padding: "24px 32px" }}>
+          <div className="modal-pad kit-preview-dialog__body">
             {data.coverImage && (
               <div
                 style={{

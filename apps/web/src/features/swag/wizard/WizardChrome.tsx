@@ -55,7 +55,7 @@ export function WizardChrome({
       </div>
       <div className="main scroll" style={{ flex: 1 }}>
         <div
-          style={{ maxWidth: 1280, margin: "0 auto", padding: "28px 34px 40px", width: "100%" }}
+          style={{ maxWidth: 1280, margin: "0 auto", padding: "18px 34px 40px", width: "100%" }}
           className="fade-in"
         >
           {children}

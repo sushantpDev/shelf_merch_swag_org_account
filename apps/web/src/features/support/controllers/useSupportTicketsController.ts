@@ -26,7 +26,7 @@ const ATTACHMENT_EXT_RE = /\.(png|jpe?g|webp|gif|pdf)$/i;
 function attachmentProblem(file: File): string | null {
   const typeOk = ATTACHMENT_MIMES.has(file.type.toLowerCase()) || ATTACHMENT_EXT_RE.test(file.name);
   if (!typeOk) return "Only images (PNG, JPG, WEBP, GIF) or PDF files are allowed";
-  if (file.size > ATTACHMENT_MAX_BYTES) return "File is too large — 10 MB max";
+  if (file.size > ATTACHMENT_MAX_BYTES) return "File is too large. 10 MB max";
   return null;
 }
 

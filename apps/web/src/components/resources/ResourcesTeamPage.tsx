@@ -175,7 +175,7 @@ export function ResourcesTeamPage() {
                 <b>{item.name}</b>
                 <em>{item.proof.replace("✓ ", "")}</em>
               </span>
-              <strong>↗</strong>
+              <strong>→</strong>
             </Link>
           ))}
         </div>

@@ -77,53 +77,12 @@ export function Solutions() {
           </a>
         </div>
         <div className="solution-visual">
-          <div className="solution-window">
-            <div className="window-bar">
-              <span />
-              <span />
-              <span />
-            </div>
-            <div className="window-body">
-              <div className="window-nav">
-                <b>S</b>
-                <i />
-                <i />
-                <i />
-                <i />
-              </div>
-              <div className="window-content">
-                <div className="window-heading">
-                  <small>TEAM OVERVIEW</small>
-                  <strong>{item.label}</strong>
-                </div>
-                <div className="stat-row">
-                  <span>
-                    <b>₹4.8L</b>
-                    <small>Allocated</small>
-                  </span>
-                  <span>
-                    <b>384</b>
-                    <small>Recipients</small>
-                  </span>
-                  <span>
-                    <b>92%</b>
-                    <small>Delivered</small>
-                  </span>
-                </div>
-                <div className="activity-list">
-                  <span>
-                    <i /> New hire kit <b>Today</b>
-                  </span>
-                  <span>
-                    <i /> Milestone reward <b>Tomorrow</b>
-                  </span>
-                  <span>
-                    <i /> Client gift <b>Friday</b>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <img 
+            src={item.image} 
+            alt={item.title} 
+            className="solution-image" 
+            style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain' }}
+          />
         </div>
       </div>
     </section>

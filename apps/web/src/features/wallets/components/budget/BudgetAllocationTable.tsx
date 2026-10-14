@@ -109,7 +109,7 @@ export function BudgetAllocationTable({
                               ) : null}
                             </div>
                           ) : (
-                            <span className="text-muted-foreground">—</span>
+                            <span className="text-muted-foreground">N/A</span>
                           )}
                         </TableCell>
                         <TableCell className="text-right tabular-nums">{inr(d.allocated)}</TableCell>

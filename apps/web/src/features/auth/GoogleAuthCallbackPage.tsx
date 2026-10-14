@@ -34,7 +34,7 @@ export function GoogleAuthCallbackPage() {
 
     const session = parseHashSession(window.location.hash);
     if (!session) {
-      const text = "Invalid Google sign-in response — try again";
+      const text = "Invalid Google sign-in response. Try again";
       setMessage(text);
       toast.error(text);
       const timer = window.setTimeout(() => navigate("/login", { replace: true }), 2400);
@@ -44,7 +44,7 @@ export function GoogleAuthCallbackPage() {
     setSession(session);
     window.history.replaceState(null, "", window.location.pathname);
     toast.success(`Welcome, ${session.user.name.split(" ")[0]} 👋`);
-    const destination = isPlatformUser(session.user) ? "/platform/dashboard" : "/app";
+    const destination = isPlatformUser(session.user) ? "/platform/dashboard" : "/dashboard";
     navigate(destination, { replace: true });
   }, [navigate, searchParams]);
 

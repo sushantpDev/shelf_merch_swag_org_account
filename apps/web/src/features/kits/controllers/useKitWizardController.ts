@@ -1,4 +1,4 @@
-import { useMemo, useReducer, useState, type Dispatch } from "react";
+import { useEffect, useMemo, useReducer, useState, type Dispatch } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import { toast } from "sonner";
 import { useWorkspace } from "@/hooks/useWorkspace";
@@ -12,6 +12,8 @@ import {
   primaryAreaKey,
   type MockupUploadItem,
 } from "@/features/swag/mockup-bake";
+import { resolveDefaultArtwork } from "@/features/swag/wizard/artworkHistory";
+import { kitDefaultSeedKeysForProducts } from "../kitPrintArea";
 import { usePlatformKits, useCreateKit } from "../model";
 import type { UiProduct } from "../model";
 import { kitReducer, type KitAction, type KitDraft } from "../wizard/kitDraft";
@@ -93,6 +95,34 @@ export function useKitWizardController(): KitWizardVm {
   const [draft, dispatch] = useReducer(kitReducer, seeded);
 
   const pickedProducts = draft.picked.map((i) => catalog[i]).filter(Boolean) as UiProduct[];
+  const defaultArt = useMemo(
+    () => resolveDefaultArtwork({ workspace }),
+    [workspace],
+  );
+
+  useEffect(() => {
+    if (!draft.art && defaultArt) {
+      dispatch({
+        type: "setArt",
+        art: { name: defaultArt.name, preview: defaultArt.preview },
+      });
+    }
+  }, [defaultArt, draft.art]);
+
+  useEffect(() => {
+    const effectiveArt =
+      draft.art || (defaultArt ? { name: defaultArt.name, preview: defaultArt.preview } : null);
+    if (
+      effectiveArt &&
+      pickedProducts.length > 0 &&
+      Object.keys(draft.areaArts || {}).length === 0
+    ) {
+      const keys = kitDefaultSeedKeysForProducts(pickedProducts);
+      if (keys.length) {
+        dispatch({ type: "setAreaArts", keys, art: effectiveArt });
+      }
+    }
+  }, [pickedProducts, draft.art, draft.areaArts, defaultArt]);
 
   function onNext() {
     if (step === 0) {
@@ -194,7 +224,7 @@ export function useKitWizardController(): KitWizardVm {
           return n + (listPrintAreas(catalog[i]).length > 0 ? 1 : 0);
         }, 0);
         if (brandableCount > 0 && mockups.length < brandableCount) {
-          throw new Error("Failed to generate mockups for all kit products — try again");
+          throw new Error("Failed to generate mockups for all kit products. Try again");
         }
       }
 

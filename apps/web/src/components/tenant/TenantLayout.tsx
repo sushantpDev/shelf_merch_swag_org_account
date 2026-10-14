@@ -10,6 +10,7 @@ import { getStoredUser, isAuthenticated } from "@/services/api-bridge";
 import { useWorkspace } from "@/hooks/useWorkspace";
 import { useTenantAccess } from "@/hooks/useTenantAccess";
 import { formatWalletAmount, formatWalletsTotal } from "@/lib/walletFormat";
+import { tenantPath } from "@/lib/workspaceSlug";
 import {
   entityManagerBudgetRemaining,
   entityManagerDepartments,
@@ -52,7 +53,9 @@ export default function TenantLayout() {
   const navigation = useNavigation();
   const [searchParams] = useSearchParams();
   const walletParam =
-    location.pathname === "/app/wallets" ? (searchParams.get("wallet") ?? undefined) : undefined;
+    location.pathname.endsWith("/wallets")
+      ? (searchParams.get("wallet") ?? undefined)
+      : undefined;
   const _currentWalletId = walletParam || workspace?.primaryWalletId;
 
   useEffect(() => {
@@ -93,7 +96,7 @@ export default function TenantLayout() {
     <div className="tenant-shell tenant-shell--page-scroll">
       <header className="topbar">
         <div className="brandmark">
-          <ShelfMerchLogo href="/app" height={32} />
+          <ShelfMerchLogo href={tenantPath()} height={32} />
         </div>
         <div className="spacer" />
         <div className="topbar-right">

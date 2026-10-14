@@ -30,9 +30,9 @@ export function ShipmentsView({
     label: string;
     render?: (row: Record<string, unknown>) => ReactNode;
   }[] = [
-    { key: "awb", label: "AWB", render: (r) => String(r.awb ?? r.trackingNumber ?? "—") },
+    { key: "awb", label: "AWB", render: (r) => String(r.awb ?? r.trackingNumber ?? "N/A") },
     { key: "courier", label: "Courier" },
-    { key: "orderNumber", label: "Order", render: (r) => String(r.orderNumber ?? "—") },
+    { key: "orderNumber", label: "Order", render: (r) => String(r.orderNumber ?? "N/A") },
     { key: "status", label: "Status", render: (r) => <StatusTag status={String(r.status)} /> },
     {
       key: "createdAt",

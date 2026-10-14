@@ -45,13 +45,13 @@ const ART_B: ArtFile = { name: "b.png", preview: "data:b" };
 const ART_C: ArtFile = { name: "c.png", preview: "data:c" };
 
 describe("preferredDefaultAreaKey", () => {
-  it("prefers Front Right when multiple front placeholders exist", () => {
+  it("prefers Front Left when multiple chest placeholders exist", () => {
     const p = product({
       id: "polo",
       nm: "Polo",
       printAreas: [area("left", "Left"), area("right", "Right"), area("back", "Back")],
     });
-    expect(preferredDefaultAreaKey(p)).toBe("right");
+    expect(preferredDefaultAreaKey(p)).toBe("left");
   });
 
   it("falls back to the first front area when Right is missing", () => {
@@ -246,7 +246,29 @@ describe("edge cases", () => {
     expect(frontAreaKeysForProduct(bag)).toEqual(["front"]);
   });
 
-  it("defaultSeedKeysForProducts seeds one Right/front key per product", () => {
+  it("keeps plain left/right chest placeholders on the front view", () => {
+    const polo = product({
+      id: "polo",
+      nm: "Polo",
+      printAreas: [area("left", "Left"), area("right", "Right")],
+    });
+    expect(frontAreaKeysForProduct(polo)).toEqual(["left", "right"]);
+    expect(areasForMockupView(polo, "right")).toEqual([]);
+  });
+
+  it("excludes dedicated side placeholders from the front product card", () => {
+    const side = { ...area("right", "Right sleeve"), mockupImageUrl: "/right-mask.png" };
+    const polo = product({
+      id: "polo",
+      nm: "Polo",
+      maskRightImageUrl: "/right-mask.png",
+      printAreas: [area("front", "Front chest"), side],
+    });
+    expect(frontAreaKeysForProduct(polo)).toEqual(["front"]);
+    expect(areasForMockupView(polo, "right")).toEqual([side]);
+  });
+
+  it("defaultSeedKeysForProducts seeds one Left/front key per product", () => {
     const polo = product({
       id: "polo",
       nm: "Polo",
@@ -257,6 +279,6 @@ describe("edge cases", () => {
       nm: "Tee",
       printAreas: [area("chest", "Chest")],
     });
-    expect(defaultSeedKeysForProducts([polo, tee])).toEqual(["polo::right", "tee::chest"]);
+    expect(defaultSeedKeysForProducts([polo, tee])).toEqual(["polo::left", "tee::chest"]);
   });
 });

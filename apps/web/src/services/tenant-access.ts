@@ -1,5 +1,7 @@
 /** Client mirror of apps/api/src/middleware/tenantAccess.middleware.js */
 
+import { tenantPath } from "@/lib/workspaceSlug";
+
 const SUPER = "platform_super_admin";
 const COMPANY_ADMIN = "company_admin";
 const ENTITY_MANAGER = "entity_manager";
@@ -69,23 +71,62 @@ export const TENANT_NAV: TenantNavItem[] = [
   {
     area: "home",
     key: "home",
-    label: "Home",
-    href: "/app",
-    match: (pathname) => pathname === "/app" || pathname === "/app/",
+    label: "Dashboard",
+    href: "/dashboard",
+    match: (pathname) =>
+      pathname === "/dashboard" ||
+      pathname === "/dashboard/" ||
+      pathname === "/app" ||
+      pathname === "/app/",
   },
-  { area: "orders", key: "orders", label: "Orders", href: "/app/orders" },
-  { area: "wallets", key: "wallets", label: "Budget", href: "/app/wallets" },
-  { area: "shops", key: "shops", label: "Shops", href: "/app/shops" },
-  { area: "swag", key: "swag", label: "Swag", href: "/app/swag" },
-  { area: "kits", key: "kits", label: "Kits", href: "/app/kits" },
-  { area: "campaigns", key: "campaigns", label: "Campaigns", href: "/app/campaigns" },
-  { area: "contacts", key: "contacts", label: "Contacts", href: "/app/contacts" },
-  { area: "support", key: "support", label: "Support", href: "/app/support" },
-  { area: "integrations", key: "integrations", label: "Integrations", href: "/app/integrations" },
-  { area: "settings", key: "settings", label: "Settings", href: "/app/settings" },
-  { area: "catalog", key: "catalog", label: "Catalog", href: "/app/catalog" },
+  { area: "orders", key: "orders", label: "Orders", href: "/dashboard/orders" },
+  { area: "wallets", key: "wallets", label: "Budget", href: "/dashboard/wallets" },
+  { area: "shops", key: "shops", label: "Shops", href: "/dashboard/shops" },
+  { area: "swag", key: "swag", label: "Swag", href: "/dashboard/swag" },
+  { area: "kits", key: "kits", label: "Kits", href: "/dashboard/kits" },
+  { area: "campaigns", key: "campaigns", label: "Campaigns", href: "/dashboard/campaigns" },
+  { area: "contacts", key: "contacts", label: "Contacts", href: "/dashboard/contacts" },
+  { area: "support", key: "support", label: "Support", href: "/dashboard/support" },
+  { area: "integrations", key: "integrations", label: "Integrations", href: "/dashboard/integrations" },
+  { area: "settings", key: "settings", label: "Settings", href: "/dashboard/settings" },
+  { area: "catalog", key: "catalog", label: "Catalog", href: "/dashboard/catalog" },
 ];
 
+/** Build nav items with dynamic slug-based paths (e.g. /shelfmerch/shops). */
+function buildTenantNav(): TenantNavItem[] {
+  const base = tenantPath();
+  return [
+    {
+      area: "home",
+      key: "home",
+      label: "Dashboard",
+      href: base,
+      match: (pathname) => {
+        const slug = base;
+        return (
+          pathname === slug ||
+          pathname === `${slug}/` ||
+          pathname === "/dashboard" ||
+          pathname === "/dashboard/" ||
+          pathname === "/app" ||
+          pathname === "/app/"
+        );
+      },
+    },
+    { area: "orders", key: "orders", label: "Orders", href: tenantPath("/orders") },
+    { area: "wallets", key: "wallets", label: "Budget", href: tenantPath("/wallets") },
+    { area: "shops", key: "shops", label: "Shops", href: tenantPath("/shops") },
+    { area: "swag", key: "swag", label: "Swag", href: tenantPath("/swag") },
+    { area: "kits", key: "kits", label: "Kits", href: tenantPath("/kits") },
+    { area: "campaigns", key: "campaigns", label: "Campaigns", href: tenantPath("/campaigns") },
+    { area: "contacts", key: "contacts", label: "Contacts", href: tenantPath("/contacts") },
+    { area: "support", key: "support", label: "Support", href: tenantPath("/support") },
+    { area: "integrations", key: "integrations", label: "Integrations", href: tenantPath("/integrations") },
+    { area: "settings", key: "settings", label: "Settings", href: tenantPath("/settings") },
+    { area: "catalog", key: "catalog", label: "Catalog", href: tenantPath("/catalog") },
+  ];
+}
+
 export function navItemsForTenantRole(role: string | undefined): TenantNavItem[] {
-  return TENANT_NAV.filter((item) => canAccessTenantArea(role, item.area, "read"));
+  return buildTenantNav().filter((item) => canAccessTenantArea(role, item.area, "read"));
 }

@@ -63,7 +63,7 @@ export function FilePrintingGuidelines() {
             "Preferred formats: PNG, AI, PDF, DST (if available)",
             "Minimum text height: 0.25 inches",
             "Minimum line thickness: 0.05 inches",
-            "Avoid gradients - embroidery works best with solid colours.",
+            "Avoid gradients. Embroidery works best with solid colours.",
             "Do not use photographs. Clean vector graphics give the best results.",
             "Use simple, legible fonts and avoid overly intricate letterforms.",
             "Limit colour changes for cleaner stitching and better finish.",

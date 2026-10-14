@@ -48,7 +48,7 @@ export function CreditNoteModalView({
           className="inp"
           value={reason}
           onChange={(e) => onReason(e.target.value)}
-          placeholder="e.g. partial return — damaged goods"
+          placeholder="e.g. partial return, damaged goods"
         />
       </div>
       <button

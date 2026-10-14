@@ -144,7 +144,7 @@ export const parseAmt = (s: string | number): number =>
 
 /** Format an ISO date ("2026-04-01") into "01 Apr 2026". */
 export const fmtDate = (iso: string): string => {
-  if (!iso) return "—";
+  if (!iso) return "N/A";
   return new Date(`${iso}T00:00`).toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "short",

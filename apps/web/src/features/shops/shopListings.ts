@@ -55,7 +55,7 @@ export function activeListingKeysForShop(shop: UiShop, listingKeys: Set<string>)
   const fromListings = (shop.activeListingKeys || []).filter((k) => listingKeys.has(k));
   if (fromListings.length) return fromListings;
 
-  // Legacy fallback: bootstrap from selectedCatalogProductIds × published collections
+  // Legacy fallback: bootstrap from selectedCatalogProductIds to published collections
   const legacy = new Set((shop.selectedCatalogProductIds || []).map(String));
   return [...listingKeys].filter((k) => {
     const parsed = parseListingKey(k);

@@ -78,7 +78,7 @@ export function errorFromResponse(status: number, body: unknown): ApiError {
   if ((status === 502 || status === 503 || status === 504) && !apiError?.message) {
     return new ApiError(
       status,
-      "Server temporarily unavailable - wait a moment and try again",
+      "Server temporarily unavailable. Please wait a moment and try again",
       "GATEWAY_ERROR",
       body,
     );

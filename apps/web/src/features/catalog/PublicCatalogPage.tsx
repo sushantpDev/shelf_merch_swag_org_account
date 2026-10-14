@@ -8,12 +8,18 @@ function isCatalogIndexPath(pathname: string) {
   return /^\/(?:apps|app)\/catalog\/?$/.test(pathname);
 }
 
+function isCatalogProductPath(pathname: string) {
+  return /^\/(?:apps|app)\/catalog\/(?!category(?:\/|$))[^/]+/.test(pathname);
+}
+
 export function PublicCatalogLayout() {
   const location = useLocation();
   const isCatalogIndex = isCatalogIndexPath(location.pathname);
 
   useEffect(() => {
-    document.title = "Catalog Shelf Merch";
+    if (!isCatalogProductPath(location.pathname)) {
+      document.title = "Catalog Shelf Merch";
+    }
     window.scrollTo(0, 0);
   }, [location.pathname, location.search]);
 

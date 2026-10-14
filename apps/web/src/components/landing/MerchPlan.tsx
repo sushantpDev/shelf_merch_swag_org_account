@@ -1,70 +1,63 @@
-import { CheckCircle2, Mail, MapPin, MessageCircle, PackageCheck } from "lucide-react";
-import { RequestDemoForm } from "@/features/request-demo/RequestDemoForm";
+import { ArrowUpRight, CheckCircle2, PackageCheck, Truck } from "lucide-react";
 
 const highlights = [
-  { label: "No payment or commitment", icon: CheckCircle2 },
-  { label: "One team from design to delivery", icon: PackageCheck },
-  { label: "Pan-India support", icon: MapPin },
+  {
+    title: "No payment or commitment",
+    description: "Share your requirement first. We shape the plan before anything is locked.",
+    icon: CheckCircle2,
+  },
+  {
+    title: "One team from design to delivery",
+    description: "Products, packaging, budgets and fulfilment stay in one clear workflow.",
+    icon: PackageCheck,
+  },
+  {
+    title: "Pan-India delivery support",
+    description: "Ship employee kits, event merch and partner gifts across locations with ease.",
+    icon: Truck,
+  },
 ];
 
 export function MerchPlan() {
   return (
     <section className="landing-plan" id="contact" aria-labelledby="landing-plan-title">
-      <div className="landing-plan__image" aria-hidden="true">
-        <img src="/images/landing/hero.png" alt="" />
+      <div className="landing-plan__heading">
+        <span className="landing-plan__eyebrow">MERCH PLANNING</span>
+        <h2 id="landing-plan-title">
+          Tell us what you need.
+          <em>We&apos;ll build the merch plan.</em>
+        </h2>
       </div>
 
       <div className="landing-plan__copy">
-        <h2 id="landing-plan-title">
-          Tell us what
-          <br />
-          you need.
-          <em>
-            We&apos;ll build the
-            <br />
-            merch plan.
-          </em>
-        </h2>
-
         <ul className="landing-plan__highlights">
-          {highlights.map(({ label, icon: Icon }) => (
-            <li key={label}>
+          {highlights.map(({ title, description, icon: Icon }) => (
+            <li key={title}>
               <span aria-hidden="true">
                 <Icon size={19} strokeWidth={2.4} />
               </span>
-              {label}
+              <div>
+                <b>{title}</b>
+                <small>{description}</small>
+              </div>
             </li>
           ))}
         </ul>
 
-        <a className="landing-plan__email" href="mailto:supported@shelfmerch.com">
-          <Mail size={20} aria-hidden="true" />
-          supported@shelfmerch.com
+        <a className="landing-plan__cta" href="/request-demo">
+          Book a Demo
+          <span aria-hidden="true">
+            <ArrowUpRight size={23} strokeWidth={2.2} />
+          </span>
         </a>
       </div>
 
-      <div className="landing-plan__form-card" aria-labelledby="landing-plan-form-title">
-        <RequestDemoForm
-          titleId="landing-plan-form-title"
-          idPrefix="landing-plan"
-          variant="landing"
-          showHeading={false}
-          submitLabel="Send my requirement"
-          consentText="Your details open as a prefilled WhatsApp message. Nothing is shared until you tap Send."
-          whatsAppLabel="Prefer WhatsApp? Chat now"
-          commitmentText="No payment or commitment"
+      <figure className="landing-plan__image-card" aria-label="Branded merchandise kit preview">
+        <img
+          src="/images/landing/merch-plan/merch-flatlay-transparent.png"
+          alt="Blue and pink branded merchandise flat lay with tote bag, cap, notebook, mug and pen"
         />
-      </div>
-
-      {/* <a
-        className="landing-plan__floating-whatsapp"
-        href="https://wa.me/917801087402"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <MessageCircle size={25} aria-hidden="true" />
-        WhatsApp
-      </a> */}
+      </figure>
     </section>
   );
 }

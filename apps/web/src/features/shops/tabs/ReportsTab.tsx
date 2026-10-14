@@ -200,7 +200,7 @@ export function ReportsTab({ shop }: { shop: UiShop }) {
         <div className="card" style={{ padding: 22 }}>
           <h3 style={{ fontSize: 16, marginBottom: 2 }}>Orders per week</h3>
           <p className="muted" style={{ fontSize: 12.5, marginBottom: 14 }}>
-            Redemption orders placed in this shop — last 12 weeks
+            Redemption orders placed in this shop for the last 12 weeks
           </p>
           {weeklyHasOrders ? (
             <div style={{ height: 220 }}>

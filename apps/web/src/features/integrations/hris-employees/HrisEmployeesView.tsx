@@ -16,7 +16,7 @@ const COUNTRY_ALIASES: Record<string, string> = {
 
 function emptyCell(value?: string | null) {
   const v = (value ?? "").trim();
-  return v ? v : "—";
+  return v ? v : "N/A";
 }
 
 function titleCaseWords(value: string) {

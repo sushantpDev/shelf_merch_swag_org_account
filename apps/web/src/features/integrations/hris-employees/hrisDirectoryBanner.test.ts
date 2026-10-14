@@ -26,15 +26,15 @@ describe("hris directory banner", () => {
   it("shows syncing with the previous successful time", () => {
     expect(
       hrisDirectoryBannerText(status({ state: "syncing", lastSuccessfulSyncAt: TODAY })),
-    ).toBe(`Syncing — last successful sync ${formatDirectorySyncAt(TODAY)}`);
+    ).toBe(`Syncing. Last successful sync ${formatDirectorySyncAt(TODAY)}`);
   });
 
   it("shows initial sync copy when no successful sync exists", () => {
     expect(hrisDirectoryBannerText(status({ state: "connected" }))).toBe(
-      "Connected — initial sync pending",
+      "Connected. Initial sync pending",
     );
     expect(hrisDirectoryBannerText(status({ state: "syncing" }))).toBe(
-      "Syncing — initial sync in progress",
+      "Syncing. Initial sync in progress",
     );
   });
 
@@ -44,7 +44,7 @@ describe("hris directory banner", () => {
         status({ state: "disconnected", lastSuccessfulSyncAt: STALE, retainSnapshot: true }),
       ),
     ).toBe(
-      `Disconnected — last synced ${formatDirectorySyncAt(STALE)}. People from the last snapshot are still listed.`,
+      `Disconnected. Last synced ${formatDirectorySyncAt(STALE)}. People from the last snapshot are still listed.`,
     );
   });
 
@@ -69,7 +69,7 @@ describe("hris directory banner", () => {
     ]);
     expect(directory.state).toBe("syncing");
     expect(hrisDirectoryBannerText(directory)).toBe(
-      `Syncing — last successful sync ${formatDirectorySyncAt(TODAY)}`,
+      `Syncing. Last successful sync ${formatDirectorySyncAt(TODAY)}`,
     );
   });
 

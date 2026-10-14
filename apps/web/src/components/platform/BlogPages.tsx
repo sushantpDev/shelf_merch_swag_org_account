@@ -146,7 +146,7 @@ export function BlogEditorPage() {
       {canWrite && <><button type="button" className="btn btn-ghost btn-sm" disabled={busy || uploading} onClick={() => void save()}>{busy ? "Saving…" : post?.status === "published" ? "Save changes" : "Save draft"}</button>
         <button type="button" className="btn btn-brand btn-sm" disabled={busy || uploading} onClick={() => void save(true)}>{post?.status === "published" ? "Save and publish" : "Publish"}</button>
         {post?.status === "published" && <button type="button" className="btn btn-ghost btn-sm" disabled={busy} onClick={() => void unpublish()}>Unpublish</button>}</>}
-      {post?.status === "published" && <a className="btn btn-ghost btn-sm" href={`/blog/${post.slug}`} target="_blank" rel="noreferrer">View live article ↗</a>}
+      {post?.status === "published" && <a className="btn btn-ghost btn-sm" href={`/blog/${post.slug}`} target="_blank" rel="noreferrer">View live article →</a>}
     </div><div className={`blog-admin-layout${preview ? " blog-admin-layout-preview" : ""}`}>
       <section className="blog-admin-main">
         {preview ? <><span className="blog-admin-eyebrow">ShelfMerch Blog</span><h1>{fields.title || "Untitled article"}</h1><p className="blog-admin-lede">{fields.excerpt}</p>

@@ -236,7 +236,7 @@ export function AddFundsDialog({ open, onOpenChange, walletId, walletName }: Pro
                 <div className="add-funds-brand-card">
                   <p className="add-funds-brand-card-title">Reference note</p>
                   <div className="add-funds-field add-funds-field--tight">
-                    <p className="add-funds-field-hint">Optional — shown on your funding request</p>
+                    <p className="add-funds-field-hint">Optional. Shown on your funding request</p>
                     <input
                       id="add-funds-note"
                       className="add-funds-inp"
@@ -275,7 +275,7 @@ export function AddFundsDialog({ open, onOpenChange, walletId, walletName }: Pro
                       <div>
                         <div className="add-funds-method-title">Pay online (Razorpay)</div>
                         <div className="add-funds-method-sub">
-                          UPI, cards, or net banking — credited after finance approval.
+                          UPI, cards, or net banking. Credited after finance approval.
                         </div>
                       </div>
                     </button>
@@ -296,7 +296,7 @@ export function AddFundsDialog({ open, onOpenChange, walletId, walletName }: Pro
                       <div>
                         <div className="add-funds-method-title">Upload Purchase Order</div>
                         <div className="add-funds-method-sub">
-                          Submit a signed PO for finance approval — credited once approved.
+                          Submit a signed PO for finance approval. Credited once approved.
                         </div>
                       </div>
                     </button>
@@ -460,7 +460,7 @@ export function AddFundsDialog({ open, onOpenChange, walletId, walletName }: Pro
                         </div>
                         <div className="add-funds-detail-row">
                           <span>File</span>
-                          <b>{uploadFile?.name ?? "—"}</b>
+                          <b>{uploadFile?.name ?? "N/A"}</b>
                         </div>
                       </>
                     )}

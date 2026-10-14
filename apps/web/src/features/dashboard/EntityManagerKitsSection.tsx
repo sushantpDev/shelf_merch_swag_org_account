@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
+import { tenantPath } from "@/lib/workspaceSlug";
 import { useTenantAccess } from "@/hooks/useTenantAccess";
 import { useWorkspace } from "@/hooks/useWorkspace";
 import {
@@ -46,7 +47,7 @@ function findWorkspaceClone(kits: UiKit[], platformKitId: string) {
 
 /**
  * Entity Manager home widgets: Customised Kits empty/list + always-on Curated Kits.
- * Preview/Send reuse the same curated flow as /app/kits — no permission changes.
+ * Preview/Send reuse the same curated flow as /dashboard/kits — no permission changes.
  */
 export function EntityManagerKitsSection() {
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ export function EntityManagerKitsSection() {
 
     const existing = findWorkspaceClone(workspaceKits, kit._id);
     if (existing?.id) {
-      navigate(`/app/kits/${existing.id}/send`);
+      navigate(`${tenantPath("/kits")}/${existing.id}/send`);
       return;
     }
 
@@ -116,7 +117,7 @@ export function EntityManagerKitsSection() {
         platformKitId: kit._id,
         productRefs: productRefs.length ? productRefs : undefined,
       });
-      navigate(`/app/kits/${ensured.id}/send`);
+      navigate(`${tenantPath("/kits")}/${ensured.id}/send`);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not prepare kit");
     }
@@ -127,7 +128,7 @@ export function EntityManagerKitsSection() {
       <div className="dash-em-kits__custom card dash-card">
         <div className="dash-section-head">
           <h2>Customised Kits</h2>
-          <Link to="/app/kits?tab=customized" className="dash-inline-action">
+          <Link to={`${tenantPath("/kits")}?tab=customized`} className="dash-inline-action">
             View all
           </Link>
         </div>
@@ -136,7 +137,7 @@ export function EntityManagerKitsSection() {
           <ul className="dash-em-kits__list">
             {customKits.slice(0, 3).map((kit) => (
               <li key={kit.id}>
-                <Link to={`/app/kits/${kit.id}`} className="dash-em-kits__row">
+                <Link to={`${tenantPath("/kits")}/${kit.id}`} className="dash-em-kits__row">
                   <img
                     src={kit.artworkUrl ? resolveMediaUrl(kit.artworkUrl) : kitPreviewImg}
                     alt=""
@@ -156,7 +157,7 @@ export function EntityManagerKitsSection() {
               No kits have been created by your Company Admin yet.
             </p>
             <p className="dash-empty-note">You can still browse and send Curated Kits.</p>
-            <Link to="/app/kits?tab=curated" className="btn btn-ghost btn-sm">
+            <Link to={`${tenantPath("/kits")}?tab=curated`} className="btn btn-ghost btn-sm">
               Browse Curated Kits
             </Link>
           </div>
@@ -166,7 +167,7 @@ export function EntityManagerKitsSection() {
       <div className="dash-em-kits__curated card dash-card">
         <div className="dash-section-head">
           <h2>Curated Kits</h2>
-          <Link to="/app/kits?tab=curated" className="dash-inline-action">
+          <Link to={`${tenantPath("/kits")}?tab=curated`} className="dash-inline-action">
             View all
           </Link>
         </div>

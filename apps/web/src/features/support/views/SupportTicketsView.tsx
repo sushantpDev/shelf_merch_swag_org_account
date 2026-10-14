@@ -326,7 +326,7 @@ export function SupportTicketsView(vm: SupportTicketsVm) {
             <DialogHeader>
               <DialogTitle style={{ fontSize: 18 }}>Raise a support ticket</DialogTitle>
               <DialogDescription>
-                Tell us what went wrong — the team replies right here.
+                Tell us what went wrong. The team replies right here.
               </DialogDescription>
             </DialogHeader>
             <div style={{ marginTop: 14 }}>
@@ -370,7 +370,7 @@ export function SupportTicketsView(vm: SupportTicketsVm) {
               </div>
               <div className="field">
                 <label className="lbl" htmlFor="support-attachment">
-                  Attachment <span className="muted">(optional — image or PDF, 10 MB max)</span>
+                  Attachment <span className="muted">(optional: image or PDF, 10 MB max)</span>
                 </label>
                 <input
                   ref={fileInputRef}
@@ -478,7 +478,7 @@ export function SupportTicketsView(vm: SupportTicketsVm) {
                 <div className="support-ticket-thread-scroll">
                   {(vm.selected.messages ?? []).length === 0 ? (
                     <p className="support-ticket-thread-empty">
-                      No replies yet — the team has been notified.
+                      No replies yet. The team has been notified.
                     </p>
                   ) : (
                     vm.selected.messages.map((m, i) => (

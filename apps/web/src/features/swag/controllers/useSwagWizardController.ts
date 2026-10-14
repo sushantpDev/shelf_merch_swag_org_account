@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState, type Dispatch } from "react";
+import { useEffect, useMemo, useReducer, useRef, useState, type Dispatch } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router";
 import { toast } from "sonner";
@@ -14,7 +14,12 @@ import {
   primaryAreaKey,
   type MockupUploadItem,
 } from "../mockup-bake";
-import { buildPreviousUploads, type PreviousArtwork } from "../wizard/artworkHistory";
+import {
+  buildPreviousUploads,
+  resolveDefaultArtwork,
+  type PreviousArtwork,
+} from "../wizard/artworkHistory";
+import { defaultSeedKeysForProducts } from "../wizard/artworkStepModel";
 import { useCreateCollection, useSyncCollectionPublish, useUpdateCollection } from "../model";
 import type { UiProduct, UiShop } from "../model";
 import {
@@ -104,9 +109,42 @@ export function useSwagWizardController(): SwagWizardVm {
 
   const pickedProducts = draft.picked.map((i) => catalog[i]).filter(Boolean) as UiProduct[];
   const shopName = shopId ? workspace?.shops.find((s) => s.id === shopId)?.name : undefined;
+  const currentShop = shopId ? shops.find((s) => s.id === shopId) : (shops[0] ?? null);
+  const defaultArt = useMemo(
+    () => resolveDefaultArtwork({ shop: currentShop, workspace }),
+    [currentShop, workspace],
+  );
+
+  useEffect(() => {
+    if (!editCollectionId && !draft.art && defaultArt) {
+      dispatch({
+        type: "setArt",
+        art: { name: defaultArt.name, preview: defaultArt.preview },
+      });
+    }
+  }, [editCollectionId, defaultArt, draft.art]);
+
+  useEffect(() => {
+    if (editCollectionId) return;
+    const effectiveArt =
+      draft.art || (defaultArt ? { name: defaultArt.name, preview: defaultArt.preview } : null);
+    if (
+      effectiveArt &&
+      pickedProducts.length > 0 &&
+      Object.keys(draft.areaArts || {}).length === 0
+    ) {
+      const keys = defaultSeedKeysForProducts(pickedProducts);
+      if (keys.length) {
+        dispatch({ type: "setAreaArts", keys, art: effectiveArt });
+      }
+    }
+  }, [editCollectionId, pickedProducts, draft.art, draft.areaArts, defaultArt]);
+
   const previousUploads = buildPreviousUploads(
     workspace?.collections ?? [],
     workspace?.kits ?? [],
+    workspace?.shops ?? [],
+    workspace?.logoUrl,
   );
 
   function onExit() {
@@ -207,8 +245,8 @@ export function useSwagWizardController(): SwagWizardVm {
       if (brandableCount > 0 && mockups.length < brandableCount) {
         throw new Error(
           mockups.length
-            ? "Failed to generate designs for all products — try again"
-            : "Failed to generate designs — try again",
+            ? "Failed to generate designs for all products. Try again"
+            : "Failed to generate designs. Try again",
         );
       }
 

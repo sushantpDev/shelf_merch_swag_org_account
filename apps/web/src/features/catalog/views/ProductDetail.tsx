@@ -263,7 +263,7 @@ export function ProductDetail({ product }: { product: UiProduct; index: number }
           />
 
           {/* <p className="catalog-pdp-print-note">
-            <span aria-hidden="true">▣</span> One print location and basic decoration included. Learn more ↗
+            <span aria-hidden="true">▣</span> One print location and basic decoration included. Learn more →
           </p> */}
         </div>
       </div>

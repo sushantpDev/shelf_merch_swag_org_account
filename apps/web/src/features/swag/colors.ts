@@ -20,11 +20,11 @@ const SWAG_COLOR_HEX: Record<string, string> = Object.fromEntries(SWAG_COLORS);
 
 const PRODUCT_DESCRIPTIONS: Record<string, string> = {
   hoodie:
-    "A comfortable fleece hoodie built for everyday wear. Features a soft interior, adjustable drawstring hood, and kangaroo pocket. Durable construction holds up wash after wash — ideal for corporate gifting, team swag, and employee recognition.",
+    "A comfortable fleece hoodie built for everyday wear. Features a soft interior, adjustable drawstring hood, and kangaroo pocket. Durable construction holds up wash after wash, ideal for corporate gifting, team swag, and employee recognition.",
   tee: "A premium cotton tee with a relaxed fit and smooth hand-feel. Reinforced shoulders and tear-away label make it perfect for branded decoration and bulk gifting programs.",
   bottle:
     "Insulated stainless steel bottle keeps drinks cold for 24 hours or hot for 12. Leak-proof lid and powder-coated finish stand up to daily use.",
-  mug: "Glossy ceramic mug with a comfortable C-handle. Microwave and dishwasher safe — a classic choice for desk-side branding.",
+  mug: "Glossy ceramic mug with a comfortable C-handle. Microwave and dishwasher safe, a classic choice for desk-side branding.",
   pack: "Structured backpack with padded straps and multiple compartments. Built for commuters and everyday carry with room for a laptop.",
   cap: "Structured twill cap with adjustable closure. Pre-curved visor and breathable panels for all-day comfort.",
   note: "Hard-cover notebook with rounded corners and elastic closure. Acid-free pages ready for notes, sketches, or meeting prep.",

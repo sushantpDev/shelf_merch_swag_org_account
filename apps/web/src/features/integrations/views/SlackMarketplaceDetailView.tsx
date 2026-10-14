@@ -44,14 +44,14 @@ type TabId = "overview" | "configure" | "appinfo";
 const HIGHLIGHTS = [
   "Receive alerts for gift sends, kit assignments, and recognition moments in Slack.",
   "Automate essential updates for wallet funding, budgets, points, and shipping.",
-  "Choose which Shelf Merch events post to your default channel — and change them anytime.",
+  "Choose which Shelf Merch events post to your default channel and change them anytime.",
 ];
 
 const OVERVIEW_BULLETS = [
   "Post gifting and recognition updates to channels your team already uses.",
   "Get notified on wallet funding, budget changes, kits, and order shipping.",
   "Send a test message after connecting to confirm channel delivery.",
-  "Disconnect anytime — other Shelf Merch integrations stay intact.",
+  "Disconnect anytime. Other Shelf Merch integrations stay intact.",
 ];
 
 const RELATED = [

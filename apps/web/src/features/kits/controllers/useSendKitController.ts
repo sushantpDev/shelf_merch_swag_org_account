@@ -1,5 +1,5 @@
 import { useMemo, useReducer, useState, useEffect, useRef, type Dispatch } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 import { useWorkspace, useInvalidateWorkspace } from "@/hooks/useWorkspace";
@@ -21,6 +21,8 @@ import {
   type KitSendTotals,
 } from "@/features/send/money";
 import { toSchedulePayload } from "@/features/send/types";
+import { CONTACTS_QUERY_KEY } from "@/features/contacts/model";
+import { persistNewRecipientContacts } from "@/features/send/persistNewRecipientContacts";
 import { validateSingleLocation } from "@/features/send/singleLocationValidation";
 import {
   addRecipientRowsUpToLimit,
@@ -358,6 +360,7 @@ async function upsertRecipientContact(
 /** Controller for the send-kit wizard: recipient/experience/checkout state, pay flow. */
 export function useSendKitController(): SendKitVm {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { id } = useParams() as { id: string };
   const { data: workspace, isLoading } = useWorkspace();
   const refreshWorkspace = useInvalidateWorkspace();
@@ -371,6 +374,7 @@ export function useSendKitController(): SendKitVm {
   const [selectedWalletId, setSelectedWalletId] = useState("");
   const [curatedLogoPreview, setCuratedLogoPreview] = useState("");
   const logoObjectUrlRef = useRef<string | null>(null);
+  const pendingEmailContacts = useRef<Promise<void>>(Promise.resolve());
 
   const catalog: UiProduct[] = useMemo(() => workspace?.catalogProducts ?? [], [workspace]);
   const contacts: UiContact[] = useMemo(() => workspace?.contacts ?? [], [workspace]);
@@ -419,6 +423,15 @@ export function useSendKitController(): SendKitVm {
     () => mergePickerContacts(contacts, draft.selRecips, recipientOverlays),
     [contacts, draft.selRecips, recipientOverlays],
   );
+
+  useEffect(() => {
+    for (const id of draft.selRecips) {
+      if (!isManualRecipientId(id)) continue;
+      const email = id.slice("email:".length);
+      const contact = contacts.find((row) => normalizeRecipientEmail(row.email) === email);
+      if (contact) dispatch({ type: "remapRecipId", fromId: id, toId: contact.id });
+    }
+  }, [contacts, draft.selRecips]);
 
   const pricedItems = useMemo(() => {
     if (!kit) return [];
@@ -563,6 +576,29 @@ export function useSendKitController(): SendKitVm {
     setRecipientOverlays((prev) => ({ ...prev, ...next }));
   }
 
+  function saveAddedEmails(emails: string[]) {
+    if (!emails.length) return;
+    pendingEmailContacts.current = pendingEmailContacts.current.then(async () => {
+      const { saved, failed } = await persistNewRecipientContacts(emails.map((email) => ({ email })), contacts);
+      if (saved.length) {
+        await queryClient.invalidateQueries({ queryKey: CONTACTS_QUERY_KEY });
+        try {
+          await refreshWorkspace();
+        } catch {
+          // The saved contacts will appear on the next workspace read.
+        }
+        for (const { fromId, contact } of saved) {
+          dispatch({ type: "remapRecipId", fromId, toId: contact.id });
+        }
+      }
+      if (failed.length) {
+        toast.error(`Could not save ${failed.length === 1 ? "1 contact" : `${failed.length} contacts`} to Contacts`);
+      }
+    }).catch(() => {
+      toast.error("Could not refresh Contacts");
+    });
+  }
+
   function onAddRecipientEmails(raw: string, profile?: RecipientProfileInput) {
     const hasProfile = profileHasDetails(profile);
     const { ids, result, overlays } = addRecipientsUpToLimit(
@@ -575,6 +611,7 @@ export function useSendKitController(): SendKitVm {
     dispatch({ type: "setSelRecips", selRecips: ids });
     mergeOverlays(overlays);
     reportRecipientAddResult(result);
+    saveAddedEmails(result.added.filter((email) => !overlays[normalizeRecipientEmail(email)]));
 
     if (hasProfile && result.added.length) {
       void persistRecipientOverlays(overlays, ids).catch((err) => {
@@ -597,6 +634,7 @@ export function useSendKitController(): SendKitVm {
       dispatch({ type: "setSelRecips", selRecips: ids });
       mergeOverlays(overlays);
       reportRecipientAddResult(result);
+      saveAddedEmails(result.added.filter((email) => !overlays[normalizeRecipientEmail(email)]));
 
       if (Object.keys(overlays).length) {
         void persistRecipientOverlays(overlays, ids).catch((err) => {
@@ -624,6 +662,7 @@ export function useSendKitController(): SendKitVm {
           dispatch({ type: "remapRecipId", fromId: contactId, toId: saved.id });
         }
         void refreshWorkspace().catch(() => undefined);
+        void queryClient.invalidateQueries({ queryKey: CONTACTS_QUERY_KEY });
       })
       .catch((err) => {
         toast.error(err instanceof Error ? err.message : "Could not save contact details");
@@ -651,6 +690,7 @@ export function useSendKitController(): SendKitVm {
       }));
     }
     void refreshWorkspace().catch(() => undefined);
+    void queryClient.invalidateQueries({ queryKey: CONTACTS_QUERY_KEY });
   }
 
   async function syncSelectedRecipientContacts() {
@@ -696,6 +736,7 @@ export function useSendKitController(): SendKitVm {
       return;
     }
     if (step === 1) {
+      await pendingEmailContacts.current;
       if (!draft.selRecips.length) {
         toast.error("Select at least one recipient");
         return;

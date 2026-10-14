@@ -50,7 +50,7 @@ function FooterNavLink({ item }: { item: FooterLink }) {
   const mark = item.external ? <ArrowUpRight aria-hidden="true" /> : null;
   if (!item.to && !item.href) {
     return (
-      <button type="button" onClick={() => toast.message("Cookie preferences — coming soon")}>
+      <button type="button" onClick={() => toast.message("Cookie preferences coming soon")}>
         {item.label}
         {mark}
       </button>
@@ -211,7 +211,7 @@ export function CatalogMarketingFooter({ onViewCatalog }: { onViewCatalog?: () =
               </SocialIcon>
             </a>
           </div>
-          <p className="sm-cat-copy">Shelf Merch — All rights reserved © 2026</p>
+          <p className="sm-cat-copy">Shelf Merch. All rights reserved © 2026</p>
           <nav className="sm-cat-legal" aria-label="Legal">
             <Link to="/request-demo">Accessibility Support</Link>
             <Link to="/terms">Terms</Link>

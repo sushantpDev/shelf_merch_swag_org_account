@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Recipients Table Preview</title>
+    <style>
+      :root {
+        --brand: #3d5fd9;
+        --brand-d: #2143c5;
+        --brand-50: #edf2ff;
+        --ink: #111827;
+        --ink-2: #334155;
+        --ink-3: #6b7280;
+        --line: #e5e7eb;
+        --line-2: #eef0f3;
+        --surface: #f5f7fb;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      .page {
+        max-width: 1180px;
+        margin: 48px auto;
+        padding: 0 24px;
+      }
+      h1 {
+        margin: 0 0 6px;
+        font-size: 30px;
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+      .lead {
+        margin: 0 0 22px;
+        color: var(--ink-3);
+        font-size: 16px;
+      }
+      .panel {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+        overflow: hidden;
+      }
+      .toolbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--line-2);
+        flex-wrap: wrap;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        height: 34px;
+        padding: 0 14px;
+        border-radius: 999px;
+        background: var(--brand-50);
+        color: var(--brand-d);
+        font-size: 13px;
+        font-weight: 800;
+      }
+      .btn {
+        height: 34px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--ink);
+        padding: 0 14px;
+        font-weight: 700;
+        font-size: 13px;
+      }
+      .btn:disabled {
+        color: #9ca3af;
+        background: #fafafa;
+      }
+      .search {
+        margin-left: auto;
+        min-width: 280px;
+        flex: 1;
+        max-width: 520px;
+        height: 36px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 13px;
+        color: var(--ink-3);
+      }
+      .search span { font-size: 15px; }
+      .search input {
+        width: 100%;
+        border: 0;
+        outline: 0;
+        font: inherit;
+      }
+      .limit {
+        margin: 0;
+        padding: 0 18px 14px;
+        font-size: 13px;
+        color: var(--ink-3);
+      }
+      .table-wrap {
+        overflow: auto;
+      }
+      table {
+        width: 100%;
+        min-width: 920px;
+        border-collapse: collapse;
+      }
+      th {
+        padding: 12px 16px;
+        text-align: left;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: .09em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        border-top: 1px solid var(--line-2);
+        border-bottom: 1px solid var(--line);
+        white-space: nowrap;
+      }
+      th:first-child,
+      td:first-child {
+        width: 54px;
+        padding-left: 22px;
+        padding-right: 8px;
+      }
+      td {
+        padding: 13px 16px;
+        border-bottom: 1px solid var(--line-2);
+        vertical-align: middle;
+        font-size: 14px;
+      }
+      tbody tr:hover td { background: #ecf0fc; }
+      tbody tr.selected td { background: color-mix(in srgb, var(--brand) 5%, #fff); }
+      tbody tr.selected:hover td { background: color-mix(in srgb, var(--brand) 8%, #fff); }
+      .check {
+        width: 18px;
+        height: 18px;
+        border-radius: 5px;
+        border: 2px solid #d1d5db;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 900;
+      }
+      .selected .check {
+        background: var(--brand);
+        border-color: var(--brand);
+      }
+      .person {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        min-width: 0;
+      }
+      .avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        background: #dbeafe;
+        color: #1d4ed8;
+        font-size: 11px;
+        font-weight: 800;
+        flex: 0 0 auto;
+      }
+      .avatar.orange {
+        background: #ffedd5;
+        color: #c2410c;
+      }
+      .avatar.green {
+        background: #d1fae5;
+        color: #047857;
+      }
+      .copy {
+        min-width: 0;
+      }
+      .name {
+        display: block;
+        font-weight: 700;
+        color: #2143c5;
+        line-height: 1.25;
+      }
+      .email {
+        display: block;
+        color: var(--ink-3);
+        font-size: 12.5px;
+        line-height: 1.35;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 340px;
+      }
+      .muted {
+        color: var(--ink-3);
+        font-weight: 500;
+      }
+      .country {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--ink-2);
+        font-weight: 500;
+      }
+      .flag {
+        width: 18px;
+        height: 18px;
+        border-radius: 999px;
+      }
+      @media (max-width: 720px) {
+        .page {
+          margin: 28px auto;
+          padding: 0 16px;
+        }
+        h1 { font-size: 26px; }
+        .toolbar {
+          align-items: stretch;
+        }
+        .search {
+          min-width: 100%;
+          max-width: none;
+          margin-left: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <h1>Add recipients</h1>
+      <p class="lead">Don't have all emails? You can add recipients later from the shop dashboard.</p>
+
+      <section class="panel">
+        <div class="toolbar">
+          <span class="pill">1 / 10 selected</span>
+          <button class="btn" disabled>Select all</button>
+          <button class="btn">Deselect all</button>
+          <button class="btn">Input emails</button>
+          <button class="btn">Add by CSV</button>
+          <label class="search">
+            <span>⌕</span>
+            <input placeholder="Search by name or email" />
+          </label>
+        </div>
+        <p class="limit">Recipient limit reached (10). Deselect someone to add more.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Person</th>
+                <th>Group</th>
+                <th>Country</th>
+                <th>Home address</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="selected">
+                <td><span class="check">✓</span></td>
+                <td>
+                  <div class="person">
+                    <span class="avatar">AW</span>
+                    <span class="copy">
+                      <span class="name">Aaron Whitfield</span>
+                      <span class="email">awhitfield77563417419376387757727726369180@initech.biz</span>
+                    </span>
+                  </div>
+                </td>
+                <td class="muted">Engineering</td>
+                <td><span class="country"><img class="flag" src="https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/us.svg" alt="" />United States</span></td>
+                <td class="muted">San Jose, CA, US</td>
+              </tr>
+              <tr>
+                <td><span class="check"></span></td>
+                <td>
+                  <div class="person">
+                    <span class="avatar orange">AH</span>
+                    <span class="copy">
+                      <span class="name">Adrian Holloway</span>
+                      <span class="email">aholloway77563417419376387757727726369180@initech.biz</span>
+                    </span>
+                  </div>
+                </td>
+                <td class="muted">Marketing</td>
+                <td><span class="country"><img class="flag" src="https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/us.svg" alt="" />United States</span></td>
+                <td class="muted">San Jose, CA, US</td>
+              </tr>
+              <tr>
+                <td><span class="check"></span></td>
+                <td>
+                  <div class="person">
+                    <span class="avatar green">AI</span>
+                    <span class="copy">
+                      <span class="name">Ananya Iyer</span>
+                      <span class="email">ananya.iyer@company.com</span>
+                    </span>
+                  </div>
+                </td>
+                <td class="muted">Operations</td>
+                <td><span class="country"><img class="flag" src="https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/in.svg" alt="" />India</span></td>
+                <td class="muted">Hyderabad, Telangana, IN</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

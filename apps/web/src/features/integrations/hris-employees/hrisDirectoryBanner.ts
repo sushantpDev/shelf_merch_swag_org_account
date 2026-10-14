@@ -116,17 +116,17 @@ export function hrisDirectoryBannerText(directory: HrisDirectoryStatus): string 
   const syncedAt = formatDirectorySyncAt(directory.lastSuccessfulSyncAt);
   if (directory.state === "syncing") {
     return syncedAt
-      ? `Syncing — last successful sync ${syncedAt}`
-      : "Syncing — initial sync in progress";
+      ? `Syncing. Last successful sync ${syncedAt}`
+      : "Syncing. Initial sync in progress";
   }
   if (directory.state === "connected") {
-    return syncedAt ? `Connected last synced ${syncedAt}` : "Connected — initial sync pending";
+    return syncedAt ? `Connected last synced ${syncedAt}` : "Connected. Initial sync pending";
   }
   if (directory.state === "error") {
-    return syncedAt ? `Error — last synced ${syncedAt}` : "Error";
+    return syncedAt ? `Error. Last synced ${syncedAt}` : "Error";
   }
   if (directory.state === "disconnected") {
-    const when = syncedAt ? ` — last synced ${syncedAt}` : "";
+    const when = syncedAt ? `. Last synced ${syncedAt}` : "";
     return `Disconnected${when}. People from the last snapshot are still listed.`;
   }
   return null;

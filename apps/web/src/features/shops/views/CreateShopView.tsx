@@ -215,7 +215,7 @@ export function CreateShopView(vm: CreateShopVm) {
                       type="button"
                       className="xbtn"
                       aria-label="Remove logo"
-                      onClick={() => dispatch({ type: "set", patch: { logoUrl: "" } })}
+                      onClick={() => vm.onRemoveLogo()}
                     >
                       ✕
                     </button>

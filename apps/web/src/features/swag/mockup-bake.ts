@@ -85,7 +85,7 @@ export function resolvePrintAreaStage(
   areaKey?: string | null,
 ) {
   const area = pickPrintArea(p, areaKey);
-  const phys = physicalFrameForView(productPhysical(p), area?.key);
+  const phys = physicalFrameForView(productPhysical(p), printAreaGeometryViewKey(p, area));
   const raw = area
     ? (area as unknown as Record<string, unknown>)
     : { box: DEFAULT_BOX, widthIn: 0, heightIn: 0 };
@@ -216,6 +216,33 @@ export function printAreaViewKey(
   return "front";
 }
 
+/** True only when a print area is explicitly tied to a dedicated side mockup asset. */
+export function printAreaUsesDedicatedSideView(
+  p: UiProduct | undefined,
+  area: { key?: string; label?: string; mockupImageUrl?: string } | null | undefined,
+): boolean {
+  const mockup = resolveMediaUrl(area?.mockupImageUrl);
+  if (!mockup) return false;
+  const sideUrls = [
+    resolveMediaUrl(p?.maskLeftImageUrl),
+    resolveMediaUrl(p?.baseLeftImageUrl),
+    resolveMediaUrl(p?.maskRightImageUrl),
+    resolveMediaUrl(p?.baseRightImageUrl),
+  ].filter(Boolean) as string[];
+  return sideUrls.some((url) => sameMediaPath(mockup, url));
+}
+
+function printAreaGeometryViewKey(
+  p: UiProduct | undefined,
+  area: { key?: string; label?: string; mockupImageUrl?: string } | null | undefined,
+): ProductViewKey {
+  const view = printAreaViewKey(p, area);
+  if ((view === "left" || view === "right") && !printAreaUsesDedicatedSideView(p, area)) {
+    return "front";
+  }
+  return view;
+}
+
 /** Views available for a product (always front; others when mask/stage/areas exist). */
 export function listProductViews(p: UiProduct | undefined): ProductViewKey[] {
   const views: ProductViewKey[] = ["front"];
@@ -240,7 +267,9 @@ export function listProductViews(p: UiProduct | undefined): ProductViewKey[] {
     },
   ];
   for (const extra of extras) {
-    const hasArea = listPrintAreas(p).some((a) => printAreaViewKey(p, a) === extra.key);
+    const hasArea = listPrintAreas(p).some(
+      (a) => printAreaViewKey(p, a) === extra.key && printAreaUsesDedicatedSideView(p, a),
+    );
     if (extra.hasAssets || hasArea) views.push(extra.key);
   }
   return views;

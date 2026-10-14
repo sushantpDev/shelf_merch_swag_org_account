@@ -21,7 +21,7 @@ const contacts: UiContact[] = [
     name: "Alice",
     role: "",
     address: "",
-    loc: "—",
+    loc: "N/A",
   },
   {
     id: "c2",
@@ -29,7 +29,7 @@ const contacts: UiContact[] = [
     name: "Bob",
     role: "",
     address: "",
-    loc: "—",
+    loc: "N/A",
   },
 ];
 

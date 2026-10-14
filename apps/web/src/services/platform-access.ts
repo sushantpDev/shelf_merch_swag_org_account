@@ -1,4 +1,4 @@
-/** Client mirror of apps/api platformAccess.middleware.js role × area matrix. */
+/** Client mirror of apps/api platformAccess.middleware.js role to area matrix. */
 
 const SUPER = "platform_super_admin";
 const OPS = "platform_ops_admin";

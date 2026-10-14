@@ -29,7 +29,7 @@ export default function ResourcesHub() {
           </div>
           <div className="stack-card sales">
             <span>02</span>
-            <i>◎</i>
+            <i>✦</i>
             <b>
               Sales &<br />
               Marketing
@@ -38,7 +38,7 @@ export default function ResourcesHub() {
           </div>
           <div className="stack-card events">
             <span>03</span>
-            <i>◫</i>
+            <i>✦</i>
             <b>Events</b>
             <small>SWAG BARS · KITS · FULFILLMENT</small>
           </div>
@@ -80,7 +80,7 @@ export default function ResourcesHub() {
           <Link className="team-card sales" to="/resources/sales">
             <div className="team-card-top">
               <span>02</span>
-              <i className="round-icon">◎</i>
+              <i className="round-icon">✦</i>
             </div>
             <h3>
               Sales &<br />
@@ -97,7 +97,7 @@ export default function ResourcesHub() {
           <Link className="team-card events" to="/resources/events">
             <div className="team-card-top">
               <span>03</span>
-              <i className="round-icon">◫</i>
+              <i className="round-icon">✦</i>
             </div>
             <h3>Events</h3>
             <p>Conference swag, bulk kits and merch bars.</p>

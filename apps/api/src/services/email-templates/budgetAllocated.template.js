@@ -29,9 +29,10 @@ export function buildBudgetAllocatedEmail({
   link = '',
 } = {}) {
   const amountLabel = formatInr(amount);
+  const organizationLabel = String(organizationName || '').trim() || 'your organization';
   const balanceLabel =
     newBalance == null || !Number.isFinite(Number(newBalance)) ? null : formatInr(newBalance);
-  const subject = `Additional budget allocated — ${amountLabel}`;
+  const subject = `Additional budget allocated ${amountLabel}`;
   const walletLink = link || appUrl('/login');
 
   const text = [
@@ -65,7 +66,7 @@ export function buildBudgetAllocatedEmail({
     ${detailRows([
       { label: 'Amount added', value: amountLabel },
       { label: 'Department', value: departmentName },
-      { label: 'Organization', value: organizationName },
+      { label: 'Organization', value: organizationLabel },
       ...(balanceLabel ? [{ label: 'Updated balance', value: balanceLabel }] : []),
     ])}
     ${callout(
@@ -76,7 +77,7 @@ export function buildBudgetAllocatedEmail({
 
   const html = emailShell({
     title: subject,
-    heroEyebrow: 'ShelfMerch Budget',
+    heroEyebrow: `${organizationLabel} Budget`,
     heroTitle: 'Budget added to your wallet',
     preheader: `${amountLabel} has been allocated to your account. Log in to view your updated balance.`,
     footerNote: 'You are receiving this because budget was allocated to your department.',

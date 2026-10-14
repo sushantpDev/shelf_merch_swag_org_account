@@ -459,7 +459,7 @@ export function useRequestSampleController(): RequestSampleVm {
       const launched = await launch.mutateAsync({
         entityId: String(entityId),
         kitId: String(kit!.id),
-        name: `Sample — ${kit!.name}`,
+        name: `Sample: ${kit!.name}`,
         totalBudget: paymentTotal,
         packaging,
         fulfillmentMode: "single",

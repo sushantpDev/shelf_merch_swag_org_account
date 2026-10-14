@@ -38,7 +38,7 @@ export function DashboardView({ data, error, loading }: DashboardVm) {
                   <li key={a.kind} style={{ marginBottom: 6 }}>
                     {a.kind.replace(/_/g, " ")}
                     {a.count != null ? ` (${a.count})` : ""}
-                    {a.amountInr != null ? ` — ${inr(a.amountInr)}` : ""}
+                    {a.amountInr != null ? `: ${inr(a.amountInr)}` : ""}
                   </li>
                 ))}
               </ul>

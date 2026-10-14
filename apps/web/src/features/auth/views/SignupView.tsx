@@ -14,7 +14,7 @@ export function SignupView(vm: SignupVm) {
     >
       {vm.accountExists ? (
         <div className="auth-exists-panel" role="alert">
-          <p className="auth-exists-copy">Account already exists — sign in</p>
+          <p className="auth-exists-copy">Account already exists. Sign in</p>
           <button type="button" className="auth-simple-submit" onClick={vm.onSignIn}>
             Sign In
           </button>

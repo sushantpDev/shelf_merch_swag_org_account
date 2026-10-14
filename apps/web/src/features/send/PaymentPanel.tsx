@@ -164,7 +164,7 @@ export function PaymentPanel({
       )}
 
       {option("upi", "UPI / Netbanking", "Pay instantly via any UPI app or bank")}
-      {option("card", "Debit / credit card", "Pay securely via Razorpay — Visa, Mastercard, RuPay, Amex")}
+      {option("card", "Debit / credit card", "Pay securely via Razorpay. Visa, Mastercard, RuPay, Amex")}
 
       <div className="field" style={{ marginTop: 14 }}>
         <label className="lbl">Billing</label>
@@ -172,7 +172,7 @@ export function PaymentPanel({
           className="card"
           style={{ padding: "11px 13px", fontSize: 12.5, color: "var(--ink-2)" }}
         >
-          Hyderabad, Telangana, IN - GSTIN 36AAAAA0000A1Z5{" "}
+          Hyderabad, Telangana, IN GSTIN 36AAAAA0000A1Z5{" "}
           <button
             type="button"
             className="lnk"

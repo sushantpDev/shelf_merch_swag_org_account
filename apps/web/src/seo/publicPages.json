@@ -1,0 +1,175 @@
+{
+  "origin": "https://shelfmerch.io",
+  "defaultImage": "https://shelfmerch.io/images/logo/shelfmerch-wordmark.png",
+  "noindex": [
+    "/app",
+    "/platform/",
+    "/login",
+    "/signup",
+    "/forgot-password",
+    "/reset-password",
+    "/accept-invite",
+    "/redeem",
+    "/zoho",
+    "/auth",
+    "/dashboard"
+  ],
+  "pages": [
+    {
+      "path": "/",
+      "title": "shelfmerch: Recognition & Swag Platform",
+      "description": "Celebrate milestones, appreciate efforts, and build a culture of recognition with premium swag, gifts, and experiences—delivered globally."
+    },
+    {
+      "path": "/about",
+      "title": "About Shelf Merch - Built to Make Brand Moments Real",
+      "description": "Shelf Merch designs, prints, and delivers branded merchandise, gifts, and recognition programs for companies across India."
+    },
+    {
+      "path": "/careers",
+      "title": "Careers at Shelf Merch - Current Openings",
+      "description": "Open roles at Shelf Merch in Hyderabad. Join the team that designs, produces, and delivers branded merchandise and recognition programs."
+    },
+    {
+      "path": "/platform",
+      "title": "Shelf Merch Platform - Every Branded Moment",
+      "description": "The Shelf Merch platform for company stores, onboarding kits, employee gifting, and branded merchandise programs."
+    },
+    {
+      "path": "/resources",
+      "title": "Resources by Team — Shelf Merch",
+      "description": "How HR, sales, and events teams use Shelf Merch for onboarding, client gifting, and event merchandise."
+    },
+    {
+      "path": "/resources/hr",
+      "title": "Shelf Merch for Human Resources",
+      "description": "Bring onboarding, milestones, recognition and employee gifting into one HR-friendly platform—without adding another operational burden."
+    },
+    {
+      "path": "/resources/sales",
+      "title": "Shelf Merch for Sales & Marketing",
+      "description": "Run prospect gifting, client appreciation and branded campaigns at the speed of your pipeline—with every item on-brand and every rupee visible."
+    },
+    {
+      "path": "/resources/events",
+      "title": "Shelf Merch for Events",
+      "description": "Plan, produce and distribute event swag from one partner—from pre-event kits and conference merch bars to post-event lead gifting."
+    },
+    {
+      "path": "/request-demo",
+      "title": "Request a demo | ShelfMerch",
+      "description": "Tell us about your company and schedule a personalised ShelfMerch platform demo for swag, kits, and employee gifting."
+    },
+    {
+      "path": "/contact-us",
+      "title": "Contact Shelf Merch",
+      "description": "Design, print, pack and deliver premium company merch anywhere in India, with one team handling everything."
+    },
+    {
+      "path": "/apps/catalog",
+      "title": "Catalog Shelf Merch",
+      "description": "Browse the Shelf Merch catalog of apparel, accessories, bags, drinkware, technology, office supplies, and kits."
+    },
+    {
+      "path": "/apps/catalog/category/apparel",
+      "title": "Apparel catalog | ShelfMerch",
+      "description": "Branded apparel in the Shelf Merch catalog, ready for company stores, kits, and recognition programs."
+    },
+    {
+      "path": "/apps/catalog/category/accessories",
+      "title": "Accessories catalog | ShelfMerch",
+      "description": "Branded accessories in the Shelf Merch catalog for employee gifts, events, and company stores."
+    },
+    {
+      "path": "/apps/catalog/category/bags",
+      "title": "Bags catalog | ShelfMerch",
+      "description": "Branded bags in the Shelf Merch catalog for onboarding kits, events, and everyday company gifting."
+    },
+    {
+      "path": "/apps/catalog/category/drinkware",
+      "title": "Drinkware catalog | ShelfMerch",
+      "description": "Branded drinkware in the Shelf Merch catalog for offices, events, and recognition gifts."
+    },
+    {
+      "path": "/apps/catalog/category/technology",
+      "title": "Technology catalog | ShelfMerch",
+      "description": "Branded technology products in the Shelf Merch catalog for employee gifts and company stores."
+    },
+    {
+      "path": "/apps/catalog/category/office-supplies",
+      "title": "Office supplies catalog | ShelfMerch",
+      "description": "Branded office supplies in the Shelf Merch catalog for desks, kits, and workplace programs."
+    },
+    {
+      "path": "/apps/catalog/category/kits",
+      "title": "Kits catalog | ShelfMerch",
+      "description": "Ready-to-send kits in the Shelf Merch catalog for onboarding, milestones, and events."
+    },
+    {
+      "path": "/integrations/slack",
+      "title": "Connect ShelfMerch with Slack | ShelfMerch",
+      "description": "Send ShelfMerch kit, order, delivery, and budget updates into Slack without reading private conversations."
+    },
+    {
+      "path": "/support",
+      "title": "ShelfMerch Support | Help Center",
+      "description": "Get support for ShelfMerch integrations, Slack connection, account setup, and platform assistance."
+    },
+    {
+      "path": "/privacy",
+      "title": "Privacy Policy | Shelf Merch",
+      "description": "Privacy Policy for Shelf Merch websites, company stores, employee wallets, recognition programmes and merchandise fulfilment services.",
+      "robots": "noindex, follow",
+      "canonicalPath": "/legal/privacy-policy"
+    },
+    {
+      "path": "/terms",
+      "title": "Terms & Conditions | Shelf Merch",
+      "description": "Terms and conditions for Shelf Merch websites, company stores, and merchandise fulfilment services.",
+      "robots": "noindex, follow",
+      "canonicalPath": "/legal/terms-of-service"
+    },
+    {
+      "path": "/docs/zoho-people",
+      "title": "ShelfMerch for Zoho People · Documentation",
+      "description": "Sync employees from Zoho People into ShelfMerch for onboarding kits, rewards, and corporate gifting."
+    },
+    {
+      "path": "/docs/zoho-people/user-guide",
+      "title": "ShelfMerch for Zoho People — User Guide",
+      "description": "User guide for connecting Zoho People to ShelfMerch, syncing employees, and troubleshooting."
+    },
+    {
+      "path": "/docs/zoho-people/admin-guide",
+      "title": "ShelfMerch for Zoho People — Administrator Guide",
+      "description": "Administrator guide for ShelfMerch for Zoho People: OAuth scopes, security, field mapping, and troubleshooting."
+    },
+    {
+      "path": "/case-studies/zoho-people",
+      "title": "Example Employee Onboarding Workflow · ShelfMerch for Zoho People",
+      "description": "Example workflow showing how Zoho People and ShelfMerch can support employee onboarding kits and gifts. Not a customer case study."
+    }
+  ],
+  "patterns": [
+    {
+      "match": "^/apps/catalog/[^/]+$",
+      "title": "Catalog product | ShelfMerch",
+      "description": "A product in the Shelf Merch catalog for branded merchandise, kits, and company stores.",
+      "canonical": "self"
+    },
+    {
+      "match": "^/apps/catalog/category/[^/]+$",
+      "title": "Catalog | ShelfMerch",
+      "description": "A category in the Shelf Merch catalog.",
+      "robots": "noindex, follow",
+      "canonical": "self"
+    },
+    {
+      "match": "^/resources/[^/]+$",
+      "title": "Resources | ShelfMerch",
+      "description": "Shelf Merch resources by team.",
+      "robots": "noindex, follow",
+      "canonicalPath": "/resources"
+    }
+  ]
+}

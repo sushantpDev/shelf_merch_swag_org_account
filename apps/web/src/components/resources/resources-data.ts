@@ -9,13 +9,13 @@ export const RESOURCE_NAV = [
     slug: "sales" as const,
     label: "Sales & Marketing",
     blurb: "Prospects, clients & campaigns",
-    icon: "◎",
+    icon: "✦",
   },
   {
     slug: "events" as const,
     label: "Events",
     blurb: "Conference swag, kits & merch bars",
-    icon: "◫",
+    icon: "✦",
   },
 ];
 
@@ -79,7 +79,7 @@ export const TEAMS: Record<TeamSlug, TeamContent> = {
         ],
       ],
       [
-        "◫",
+        "✦",
         "Milestones that never slip",
         "Automate the dates that matter, with the right reward for every moment and tenure.",
         [
@@ -123,14 +123,14 @@ export const TEAMS: Record<TeamSlug, TeamContent> = {
       "+250",
     ],
     floats: [
-      ["◫", "18 milestones", "Ready this month"],
+      ["✦", "18 milestones", "Ready this month"],
       ["⇢", "Welcome kit delivered", "Bengaluru · just now"],
     ],
   },
   sales: {
     slug: "sales",
     name: "Sales & Marketing",
-    icon: "◎",
+    icon: "✦",
     tone: "coral",
     eyebrow: "SHELF MERCH FOR SALES & MARKETING",
     titleBefore: "Turn every gift",
@@ -148,7 +148,7 @@ export const TEAMS: Record<TeamSlug, TeamContent> = {
     body: "Give revenue teams a fast, repeatable way to create branded moments before, during and after the deal.",
     moments: [
       [
-        "◎",
+        "✦",
         "Prospect gifting that opens doors",
         "Send a relevant gift before a meeting, after a demo or inside an account-based campaign.",
         [
@@ -158,7 +158,7 @@ export const TEAMS: Record<TeamSlug, TeamContent> = {
         ],
       ],
       [
-        "◇",
+        "✦",
         "Client appreciation that lands",
         "Mark renewals, project wins and key relationships with premium, on-brand gifting.",
         ["Collections by client tier", "Premium packaging and notes", "One-off or recurring programs"],
@@ -173,9 +173,9 @@ export const TEAMS: Record<TeamSlug, TeamContent> = {
     workflowBefore: "A campaign in motion,",
     workflowEm: "not in a spreadsheet.",
     steps: [
-      ["◎", "Choose the audience", "Upload accounts, contacts or recipients."],
+      ["✦", "Choose the audience", "Upload accounts, contacts or recipients."],
       ["▦", "Build the collection", "Curate approved gifts or merchandise."],
-      ["◇", "Send your way", "Gift link, direct send or branded store."],
+      ["✦", "Send your way", "Gift link, direct send or branded store."],
       ["▥", "Measure the moment", "See claims, delivery and spend together."],
     ],
     control: "Speed for teams. Guardrails for brands.",
@@ -198,14 +198,14 @@ export const TEAMS: Record<TeamSlug, TeamContent> = {
       "Ready to ship",
     ],
     floats: [
-      ["◇", "Gift claimed", "After today's demo"],
+      ["✦", "Gift claimed", "After today's demo"],
       ["▥", "14 opportunities", "Influenced this month"],
     ],
   },
   events: {
     slug: "events",
     name: "Events",
-    icon: "◫",
+    icon: "✦",
     tone: "mint",
     eyebrow: "SHELF MERCH FOR EVENTS",
     titleBefore: "Make every event",
@@ -235,7 +235,7 @@ export const TEAMS: Record<TeamSlug, TeamContent> = {
         ["On-site size and style choice", "Scan-for-swag lead capture", "Staffed or self-serve formats"],
       ],
       [
-        "◇",
+        "✦",
         "Follow-up gifting that converts",
         "Turn booth scans and attendee lists into timely, trackable post-event campaigns.",
         ["Personalized recipient links", "Branded thank-you notes", "Redemption and delivery reporting"],
@@ -245,7 +245,7 @@ export const TEAMS: Record<TeamSlug, TeamContent> = {
     workflowEm: "One calm workflow.",
     steps: [
       ["✦", "Share the brief", "Audience, format, dates and budget."],
-      ["◇", "Curate & approve", "Products, samples, artwork and packaging."],
+      ["✦", "Curate & approve", "Products, samples, artwork and packaging."],
       ["▣", "Produce & kit", "In-house print, embroidery and packing."],
       ["⇢", "Deliver everywhere", "Venue, hotel, office or attendee doorstep."],
     ],
@@ -269,7 +269,7 @@ export const TEAMS: Record<TeamSlug, TeamContent> = {
       "On track",
     ],
     floats: [
-      ["⌗", "Scan for swag", "Lead capture ready"],
+      ["✦", "Scan for swag", "Lead capture ready"],
       ["▣", "600 VIP kits", "Labels verified"],
     ],
   },

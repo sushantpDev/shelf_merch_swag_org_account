@@ -139,7 +139,7 @@ export function AddToShopStep({
           <div className="sw-publish-kicker">Review &amp; publish</div>
           <h1 className="sw-publish-title">{collectionName}</h1>
           <p className="sw-publish-lead">
-            Choose which shops should receive this collection. Artwork is optional — undrafted
+            Choose which shops should receive this collection. Artwork is optional. Undrafted
             products still publish.
           </p>
         </div>
@@ -362,7 +362,7 @@ export function AddToShopStep({
               <div>
                 <h2 className="sw-publish-panel-title">Product preview</h2>
                 <p className="sw-publish-panel-hint mut3">
-                  Review only — editing happens in Artwork
+                  Review only. Editing happens in Artwork
                 </p>
               </div>
             </div>
@@ -432,7 +432,7 @@ export function AddToShopStep({
                             <span className="sw-publish-area-dot" aria-hidden="true" />
                           )}
                           <span>
-                            {designed ? `${label} · ${view}` : `Not designed – ${label} · ${view}`}
+                            {designed ? `${label} · ${view}` : `Not designed: ${label} · ${view}`}
                           </span>
                         </li>
                       );

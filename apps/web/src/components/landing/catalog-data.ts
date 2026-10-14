@@ -14,7 +14,7 @@ export const CATALOG_ITEMS: CatalogItem[] = [
   {
     count: "01",
     className: "catalog-card catalog-blue",
-    image: "/images/landing/catalog/apparel.png",
+    image: "/images/landing/catalog/apparel.png?v=2",
     imageAlt: "Customizable white polo shirt",
     title: "Apparel",
     shortTitle: "Apparel",
@@ -25,7 +25,7 @@ export const CATALOG_ITEMS: CatalogItem[] = [
   {
     count: "02",
     className: "catalog-card catalog-coral",
-    image: "/images/landing/catalog/drinkware.png",
+    image: "/images/landing/catalog/drinkware.png?v=2",
     imageAlt: "Insulated water bottle",
     title: "Drinkware",
     shortTitle: "Drinkware",
@@ -36,7 +36,7 @@ export const CATALOG_ITEMS: CatalogItem[] = [
   {
     count: "03",
     className: "catalog-card catalog-mint",
-    image: "/images/landing/catalog/tech.png",
+    image: "/images/landing/catalog/tech.png?v=2",
     imageAlt: "Wireless charging station",
     title: "Tech Accessories",
     shortTitle: "Gadgets",
@@ -47,7 +47,7 @@ export const CATALOG_ITEMS: CatalogItem[] = [
   {
     count: "04",
     className: "catalog-card catalog-lilac",
-    image: "/images/landing/catalog/bags-travel.png",
+    image: "/images/landing/catalog/bags-travel.png?v=3",
     imageAlt: "Laptop bag for travel",
     title: "Bags & Travel",
     shortTitle: "Bags",
@@ -58,7 +58,7 @@ export const CATALOG_ITEMS: CatalogItem[] = [
   {
     count: "05",
     className: "catalog-card catalog-black",
-    image: "/images/landing/catalog/accessories.png",
+    image: "/images/landing/catalog/accessories.png?v=4",
     imageAlt: "Personalized metal keychain",
     title: "Accessories",
     shortTitle: "Accessories",
@@ -80,7 +80,7 @@ export const CATALOG_ITEMS: CatalogItem[] = [
   {
     count: "07",
     className: "catalog-card catalog-festive",
-    image: "/images/landing/catalog/festival-hampers.png",
+    image: "/images/landing/catalog/festival-hampers.png?v=4",
     imageAlt: "Festival puja hamper gift set",
     title: "Festival Hampers",
     shortTitle: "Kits",
@@ -91,7 +91,7 @@ export const CATALOG_ITEMS: CatalogItem[] = [
   {
     count: "08",
     className: "catalog-card catalog-outline",
-    image: "/images/landing/catalog/ready-to-order.png",
+    image: "/images/landing/catalog/ready-to-order.png?v=3",
     imageAlt: "Ready-to-order notebook and pen gift set",
     title: "Made-to-Order",
     shortTitle: "Lifestyle",
@@ -114,7 +114,7 @@ export const MOBILE_CATEGORY_ORDER = [
 ] as const;
 
 export function getOrderedCatalogItems() {
-  return MOBILE_CATEGORY_ORDER.map(
-    (title) => CATALOG_ITEMS.find((item) => item.title === title)!,
+  return MOBILE_CATEGORY_ORDER.map((title) =>
+    CATALOG_ITEMS.find((item) => item.title === title)!,
   ).filter(Boolean);
 }

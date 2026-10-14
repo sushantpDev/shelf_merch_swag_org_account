@@ -126,7 +126,7 @@ export function sendKitReducer(state: SendKitDraft, action: SendKitAction): Send
       const { [action.fromId]: fromVariants, ...restVariants } = state.recipVariants;
       return {
         ...state,
-        selRecips: state.selRecips.map((id) => (id === action.fromId ? action.toId : id)),
+        selRecips: [...new Set(state.selRecips.map((id) => (id === action.fromId ? action.toId : id)))],
         recipVariants: fromVariants
           ? {
               ...restVariants,
@@ -152,9 +152,9 @@ export function initialSendKitDraft(
     mode: "redeem",
     selRecips: firstRecips,
     singleLocation: { ...EMPTY_SINGLE_LOCATION },
-    note: "Welcome to the team — we are thrilled to have you!",
+    note: "Welcome to the team. We are thrilled to have you!",
     from: `People Team, ${account}`,
-    msg: "Your welcome kit is on its way! A little something from all of us — we're so glad you're here.",
+    msg: "Your welcome kit is on its way! A little something from all of us. We're so glad you're here.",
     when: "now",
     schedule: { date: tomorrow, time: "10:00", tz: "Asia/Kolkata (IST)" },
     preview: "landing",

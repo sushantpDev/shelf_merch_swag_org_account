@@ -238,7 +238,7 @@ function SsoSettingsView(vm: SettingsVm) {
           </li>
           <li className="settings-sso__step">
             Leave everything else to us. After we receive the details, we&apos;ll configure SSO in
-            our backend — typically <b>4–6 business days</b>. Once enabled for your email domain,
+            our backend, typically <b>4 to 6 business days</b>. Once enabled for your email domain,
             users on that domain are redirected to your IdP immediately.
           </li>
         </ol>

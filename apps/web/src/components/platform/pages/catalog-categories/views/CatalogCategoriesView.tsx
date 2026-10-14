@@ -171,7 +171,7 @@ export function CatalogCategoriesView({
               value={parentId}
               onChange={(e) => onParentId(e.target.value)}
             >
-              <option value="">None — top-level parent category</option>
+              <option value="">None, top-level parent category</option>
               {parentOptions.map(({ category, depth }) => (
                 <option key={category._id} value={category._id}>
                   {`${"\u00A0".repeat(depth * 2)}${depth ? "↳ " : ""}${category.name}`}

@@ -27,7 +27,7 @@ const CATEGORY_COPY: Record<string, string> = {
   Apparel:
     "Custom branded apparel built for teams at scale. From everyday essentials to premium statement pieces, our apparel collection helps you turn clothing into culture.",
   Accessories:
-    "Smart branded add-ons — including key chains — that are easy to gift, carry, and use across every audience.",
+    "Smart branded add-ons, including key chains, that are easy to gift, carry, and use across every audience.",
   Bags:
     "Branded bags designed for impact and logistics simplicity. From trade show totes to executive backpacks, every carry is built for real-world use.",
   Drinkware:

@@ -5,6 +5,7 @@ import {
   listPrintAreasForView,
   primaryAreaKey,
   printAreaKey,
+  printAreaUsesDedicatedSideView,
   printAreaViewKey,
   type Placement,
   type ProductViewKey,
@@ -28,17 +29,18 @@ export function areaKeysForProduct(product: UiProduct, idx: number): string[] {
 }
 
 /**
- * Default seed placeholder: area labeled/keyed "Right" when present (typically
- * right chest on front), otherwise the first front print area, otherwise primary.
+ * Default seed placeholder: area labeled/keyed "Left" when present. On apparel
+ * mockups this is the wearer's left chest, which appears on the visible right
+ * side of the product card. Otherwise use the first front print area.
  */
 export function preferredDefaultAreaKey(product: UiProduct): string {
   const all = listPrintAreas(product);
-  const right = all.find((a) => {
+  const left = all.find((a) => {
     const token = `${a?.key || ""} ${a?.label || ""}`.toLowerCase();
-    return /\bright\b/.test(token);
+    return /\bleft\b/.test(token);
   });
-  if (right) {
-    return printAreaKey(product, right, Math.max(0, all.indexOf(right)));
+  if (left) {
+    return printAreaKey(product, left, Math.max(0, all.indexOf(left)));
   }
   const frontAreas = listPrintAreasForView(product, "front");
   if (frontAreas.length) {
@@ -68,10 +70,19 @@ export function areasForMockupView(product: UiProduct, view: ProductViewKey) {
     return all.filter((a) => printAreaViewKey(product, a) === "back");
   }
   if (view === "left" || view === "right") {
-    return listPrintAreasForView(product, view);
+    return listPrintAreasForView(product, view).filter((a) =>
+      printAreaUsesDedicatedSideView(product, a),
+    );
   }
   // Front: everything that is not explicitly a back-only area.
-  return all.filter((a) => printAreaViewKey(product, a) !== "back");
+  return all.filter((a) => {
+    const areaView = printAreaViewKey(product, a);
+    if (areaView === "back") return false;
+    if ((areaView === "left" || areaView === "right") && printAreaUsesDedicatedSideView(product, a)) {
+      return false;
+    }
+    return true;
+  });
 }
 
 /** Area keys visible on the front product-card mockup (excludes back-only areas). */

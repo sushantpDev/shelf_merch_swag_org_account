@@ -12,8 +12,8 @@ export function InsufficientFundsDraftBanner({
 }) {
   const label =
     reason === "pending_approval"
-      ? "Wallet under review — save as draft and continue later"
-      : "Insufficient funds — save as draft and continue later";
+      ? "Wallet under review. Save as draft and continue later"
+      : "Insufficient funds. Save as draft and continue later";
 
   return (
     <div className="banner" style={{ marginBottom: 16, alignItems: "center", flexWrap: "wrap" }}>

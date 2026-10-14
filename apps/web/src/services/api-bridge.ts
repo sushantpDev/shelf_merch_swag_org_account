@@ -359,8 +359,8 @@ async function persistShopImageUrl(
   if (!file) {
     throw new Error(
       kind === "logo"
-        ? "Could not prepare logo for upload — try re-uploading your logo"
-        : "Could not prepare banner for upload — try re-uploading your banner",
+        ? "Could not prepare logo for upload. Try re-uploading your logo"
+        : "Could not prepare banner for upload. Try re-uploading your banner",
     );
   }
   return uploadShopAssetApi(file, kind);
@@ -538,14 +538,14 @@ export async function createKitFlow(payload: {
   if (payload.artwork) {
     const file = await prepareArtworkUploadFile(payload.artwork);
     if (!file) {
-      throw new Error("Could not prepare artwork for upload — try re-uploading your logo");
+      throw new Error("Could not prepare artwork for upload. Try re-uploading your logo");
     }
     kit = await uploadKitArtworkApi(kit.id, file);
   }
   if (payload.mockups?.length) {
     const withMockups = await uploadKitMockupsApi(kit.id, payload.mockups);
     if (!withMockups) {
-      throw new Error("Failed to save product mockups — try publishing again");
+      throw new Error("Failed to save product mockups. Try publishing again");
     }
     kit = withMockups;
   }
@@ -582,7 +582,7 @@ export async function updateKitFlow(payload: {
   if (payload.artwork) {
     const file = await prepareArtworkUploadFile(payload.artwork);
     if (!file) {
-      throw new Error("Could not prepare artwork for upload — try re-uploading your logo");
+      throw new Error("Could not prepare artwork for upload. Try re-uploading your logo");
     }
     kit = await uploadKitArtworkApi(kit.id, file);
   }

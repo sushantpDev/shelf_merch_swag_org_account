@@ -28,7 +28,7 @@ export function EmailAllowlistCard({
 
       {emails.length === 0 ? (
         <p className="muted" style={{ fontSize: 13, marginBottom: canWrite ? 12 : 0 }}>
-          No emails allowlisted — nobody can sign in until you add addresses.
+          No emails allowlisted. Nobody can sign in until you add addresses.
         </p>
       ) : (
         <ul style={{ listStyle: "none", padding: 0, margin: "0 0 12px", display: "grid", gap: 8 }}>

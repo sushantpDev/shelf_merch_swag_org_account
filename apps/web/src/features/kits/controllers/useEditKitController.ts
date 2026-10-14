@@ -6,6 +6,7 @@ import { useWorkspace } from "@/hooks/useWorkspace";
 import { useUpdateKit } from "../model";
 import type { UiKit, UiProduct } from "../model";
 import { areaPlacementKey } from "@/features/swag/mockup-bake";
+import { resolveDefaultArtwork } from "@/features/swag/wizard/artworkHistory";
 import { kitPreferredPrintAreaKey } from "../kitPrintArea";
 import { kitReducer, kitPickedIndices, type KitAction, type KitDraft } from "../wizard/kitDraft";
 
@@ -56,8 +57,14 @@ export function useEditKitController(): EditKitVm {
     const artPreview = kit.artworkUrl
       ? resolveMediaUrl(kit.artworkUrl) || kit.artworkUrl
       : "";
-    const art = artPreview
-      ? { name: "Kit artwork", preview: artPreview, existing: true as const }
+    const defaultArt = resolveDefaultArtwork({ workspace });
+    const effectivePreview = artPreview || defaultArt?.preview || "";
+    const art = effectivePreview
+      ? {
+          name: artPreview ? "Kit artwork" : (defaultArt?.name || "Shop Logo"),
+          preview: effectivePreview,
+          existing: Boolean(artPreview),
+        }
       : null;
     const areaArts: KitDraft["areaArts"] = {};
     if (art) {

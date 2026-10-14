@@ -122,9 +122,9 @@ function HrisLogoCard({
         requiresSetup
           ? `${tile.name}, requires setup`
           : needsAttention
-            ? `${tile.name}, needs attention — manage`
+            ? `${tile.name}, needs attention. Manage`
             : connected
-              ? `${tile.name}, connected — manage`
+              ? `${tile.name}, connected. Manage`
               : `Connect ${tile.name}`
       }
     >

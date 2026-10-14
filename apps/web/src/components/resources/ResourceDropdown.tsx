@@ -47,11 +47,11 @@ export function ResourceDropdown({ onNavigate }: ResourceDropdownProps) {
               <b>{item.label}</b>
               <em>{item.blurb}</em>
             </span>
-            <strong>↗</strong>
+            <strong>→</strong>
           </Link>
         ))}
         <a href="/blog" onClick={onNavigate}>
-          <i>✎</i><span><b>Blog</b><em>Ideas, guides and stories</em></span><strong>↗</strong>
+          <i>✎</i><span><b>Blog</b><em>Ideas, guides and stories</em></span><strong>→</strong>
         </a>
       </div>
     </div>

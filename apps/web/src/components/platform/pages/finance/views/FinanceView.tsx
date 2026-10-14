@@ -13,9 +13,9 @@ import { CreditNoteModal } from "./CreditNoteModal";
 import { FundingActionModal } from "./FundingActionModal";
 
 function formatDate(value: unknown) {
-  if (!value) return "—";
+  if (!value) return "N/A";
   const d = new Date(String(value));
-  return Number.isNaN(d.getTime()) ? "—" : d.toLocaleDateString("en-IN");
+  return Number.isNaN(d.getTime()) ? "N/A" : d.toLocaleDateString("en-IN");
 }
 
 /** Outstanding balances, funding approvals, tax invoices, and credit notes. */
@@ -47,7 +47,7 @@ export function FinanceView({
       label: "Document",
       render: (r) => {
         const doc = r.fundingDocument as FundingRow["fundingDocument"];
-        const label = [doc?.docType, doc?.docNumber].filter(Boolean).join(" · ") || "—";
+        const label = [doc?.docType, doc?.docNumber].filter(Boolean).join(" · ") || "N/A";
         return doc?.fileUrl ? (
           <a className="lnk" href={String(doc.fileUrl)} target="_blank" rel="noreferrer">
             {label}

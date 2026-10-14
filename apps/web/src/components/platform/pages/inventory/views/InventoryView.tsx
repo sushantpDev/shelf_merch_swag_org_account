@@ -25,12 +25,12 @@ export function InventoryView({
     {
       key: "available",
       label: "Available",
-      render: (r) => (r.mode === "made_to_order" ? "—" : String(r.available)),
+      render: (r) => (r.mode === "made_to_order" ? "N/A" : String(r.available)),
     },
     {
       key: "reserved",
       label: "Reserved",
-      render: (r) => (r.mode === "made_to_order" ? "—" : String(r.reserved)),
+      render: (r) => (r.mode === "made_to_order" ? "N/A" : String(r.reserved)),
     },
     { key: "lowStockThreshold", label: "Threshold" },
     {

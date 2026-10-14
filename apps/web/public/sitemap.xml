@@ -9,4 +9,10 @@
   <sitemap>
     <loc>https://shelfmerch.io/sitemap-blog.xml</loc>
   </sitemap>
+  <sitemap>
+    <loc>https://shelfmerch.io/sitemap-compare.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://shelfmerch.io/sitemap-solutions.xml</loc>
+  </sitemap>
 </sitemapindex>

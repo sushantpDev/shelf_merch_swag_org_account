@@ -284,7 +284,7 @@ function formatInr(n: number): string {
 }
 
 function formatDate(d: string | Date | undefined): string {
-  if (!d) return "—";
+  if (!d) return "N/A";
   return new Date(d).toLocaleDateString("en-IN", {
     day: "2-digit",
     month: "short",
@@ -805,7 +805,7 @@ export function mapWallet(w: ApiProduct, owner?: ApiUser): UiWallet {
     balance,
     unalloc: Math.max(0, balance - alloc),
     alloc,
-    owner: owner?.name || "—",
+    owner: owner?.name || "N/A",
     email: owner?.email || "",
     activity: [],
   };

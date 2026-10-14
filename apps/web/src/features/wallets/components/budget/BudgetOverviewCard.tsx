@@ -143,7 +143,7 @@ export function BudgetOverviewCard({
               Budget details
             </p>
             <MetaRow icon={Landmark} label="Funding source" value={fundingSource} />
-            <MetaRow icon={Receipt} label="Purchase order" value={docNumber || "—"} />
+            <MetaRow icon={Receipt} label="Purchase order" value={docNumber || "N/A"} />
             <MetaRow icon={FileText} label="Funding method" value={fundingLabel} />
             <MetaRow
               icon={Calendar}

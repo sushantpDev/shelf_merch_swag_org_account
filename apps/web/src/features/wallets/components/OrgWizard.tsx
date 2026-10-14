@@ -19,6 +19,7 @@ import {
   allocationFromPool,
   departmentsToSync,
   isAllocateEditFlow,
+  selectedDepartments,
   wizardCommittedAllocations,
   type WizardState,
 } from "../types";
@@ -35,6 +36,21 @@ import { Step2Departments } from "./steps/Step2Departments";
 import { Step3Allocate } from "./steps/Step3Allocate";
 import { Step4Managers } from "./steps/Step4Managers";
 import { Step5Review } from "./steps/Step5Review";
+
+type AllocationSuccessManager = {
+  name: string;
+  email: string;
+  department: string;
+};
+
+function managerInitials(name: string, email: string): string {
+  const source = name.trim() || email.trim();
+  const parts = source
+    .replace(/@.*/, "")
+    .split(/[\s._-]+/)
+    .filter(Boolean);
+  return (parts.length > 1 ? `${parts[0][0]}${parts[1][0]}` : source.slice(0, 2)).toUpperCase();
+}
 
 export function OrgWizard({
   account,
@@ -54,6 +70,7 @@ export function OrgWizard({
   const submitInFlight = useRef(false);
   const [submitting, setSubmitting] = useState(false);
   const [paying, setPaying] = useState(false);
+  const [allocationSuccessManagers, setAllocationSuccessManagers] = useState<AllocationSuccessManager[] | null>(null);
   const createWallet = useCreateWallet();
   const rzpOrder = useCreateRazorpayOrder();
   const verifyPayment = useVerifyRazorpayPayment();
@@ -220,18 +237,32 @@ export function OrgWizard({
 
       const result = await sync.mutateAsync(state);
       dispatch({ type: "finished", walletId: result.walletId, invites: result.invites });
+      setSubmitting(false);
+      setAllocationSuccessManagers(
+        selectedDepartments(state.departments)
+          .filter((d) => d.mgr.email.trim())
+          .map((d) => ({
+            name: d.mgr.name.trim() || d.mgr.email.trim(),
+            email: d.mgr.email.trim(),
+            department: d.name,
+          })),
+      );
       const inviteCount = result.invites.length;
       toast.success(
         inviteCount > 0
           ? inviteCount === 1 ? "1 invitation sent" : `${inviteCount} invitations sent`
           : "Managers notified",
       );
-      onExit();
     } catch (err) {
       submitInFlight.current = false;
       setSubmitting(false);
       toast.error(err instanceof Error ? err.message : "Failed to save");
     }
+  }
+
+  function closeAllocationSuccess() {
+    setAllocationSuccessManagers(null);
+    onExit();
   }
 
   if (busy) {
@@ -398,6 +429,54 @@ export function OrgWizard({
                 {isWalletFlow ? "Submit" : "Finish"}
               </button>
             </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={allocationSuccessManagers !== null}
+        onOpenChange={(open) => {
+          if (!open) closeAllocationSuccess();
+        }}
+      >
+        <DialogContent className="sm-modal allocation-success-modal">
+          <div className="allocation-success-modal__body">
+            <div className="allocation-success-modal__plane" aria-hidden="true">
+              <Send size={78} strokeWidth={1.2} />
+            </div>
+            <DialogHeader className="allocation-success-modal__header">
+              <DialogTitle className="allocation-success-modal__title">
+                Invitations sent!
+              </DialogTitle>
+              <DialogDescription className="allocation-success-modal__copy">
+                Managers have been invited and their budgets are ready.
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="allocation-success-modal__list">
+              {(allocationSuccessManagers ?? []).map((manager) => (
+                <div key={`${manager.email}-${manager.department}`} className="allocation-success-modal__row">
+                  <div className="allocation-success-modal__avatar">
+                    {managerInitials(manager.name, manager.email)}
+                  </div>
+                  <div className="allocation-success-modal__person">
+                    <strong>{manager.name}</strong>
+                    <span>
+                      {manager.email} · {manager.department}
+                    </span>
+                  </div>
+                  <span className="allocation-success-modal__sent">✓ Sent</span>
+                </div>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="allocation-success-modal__done"
+              onClick={closeAllocationSuccess}
+            >
+              Done
+            </button>
           </div>
         </DialogContent>
       </Dialog>

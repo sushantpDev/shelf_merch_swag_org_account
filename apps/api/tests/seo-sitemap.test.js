@@ -67,23 +67,17 @@ beforeEach(async () => {
 });
 
 describe('SEO robots.txt', () => {
-  it('returns crawler rules and sitemap declaration', async () => {
+  it('allows crawling so noindex can be read, and publishes the sitemap', async () => {
     const res = await request(app).get('/robots.txt');
     expect(res.status).toBe(200);
     expect(String(res.headers['content-type'] || '')).toMatch(/text\/plain/i);
     const body = String(res.text || '');
     expect(body).toContain('Sitemap: https://shelfmerch.io/sitemap.xml');
-    expect(body).toContain('Disallow: /app/');
-    expect(body).toContain('Disallow: /platform/');
-    expect(body).toContain('Disallow: /login');
-    expect(body).toContain('Disallow: /signup');
-    expect(body).toContain('Disallow: /forgot-password');
-    expect(body).toContain('Disallow: /reset-password');
-    expect(body).toContain('Disallow: /accept-invite');
-    expect(body).toContain('Disallow: /redeem/');
-    expect(body).toContain('Disallow: /zoho/');
-    // Exact /platform marketing page must remain crawlable (prefix is /platform/).
-    expect(body).not.toMatch(/^Disallow:\s*\/platform\s*$/m);
+    expect(body).toContain('Allow: /');
+    expect(body).toContain('Disallow: /api/');
+    expect(body).toContain('Disallow: /uploads/');
+    expect(body).toContain('Disallow: /email-assets/');
+    expect(body).not.toMatch(/^Disallow: \/(app|login|platform|shop)/m);
   });
 });
 
@@ -97,6 +91,8 @@ describe('SEO sitemap index + static', () => {
     expect(body).toContain('https://shelfmerch.io/sitemap-static.xml');
     expect(body).toContain('https://shelfmerch.io/sitemap-catalog.xml');
     expect(body).toContain('https://shelfmerch.io/sitemap-blog.xml');
+    expect(body).toContain('https://shelfmerch.io/sitemap-compare.xml');
+    expect(body).toContain('https://shelfmerch.io/sitemap-solutions.xml');
     expect(body).not.toContain('<html');
   });
 

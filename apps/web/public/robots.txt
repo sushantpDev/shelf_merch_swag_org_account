@@ -1,18 +1,14 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /uploads/
+Disallow: /email-assets/
 
-# Private / authenticated app surfaces
-Disallow: /app/
-# Trailing slash keeps the public marketing page /platform crawlable
-Disallow: /platform/
-
-# Auth and account flows
-Disallow: /login
-Disallow: /signup
-Disallow: /forgot-password
-Disallow: /reset-password
-Disallow: /accept-invite
-Disallow: /redeem/
-Disallow: /zoho/
+# HTML pages stay crawlable so Google can read noindex on /app, /login,
+# /platform/*, and other private shells. Disallow does not hide a URL from
+# search if it was already indexed, and it blocks noindex from being seen.
+# /api, /uploads, and /email-assets are not those HTML shells.
+# Tenant data is protected by authentication, not by robots.txt.
+# /platform stays indexable. Shop URLs stay crawlable.
 
 Sitemap: https://shelfmerch.io/sitemap.xml

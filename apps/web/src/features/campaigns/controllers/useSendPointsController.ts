@@ -60,6 +60,7 @@ export type SendPointsVm = {
   draft: SendPointsDraft;
   dispatch: (action: SendPointsAction) => void;
   totals: PointsSendTotals;
+  billableRecipientCount: number;
   contacts: UiContact[];
   pickerContacts: UiContact[];
   shop: UiShop | undefined;
@@ -199,7 +200,8 @@ export function useSendPointsController(): SendPointsVm {
     };
   }, [campaignParam, shopId, initial, workspace]);
 
-  const totals = pointsSendTotals(draft.ppr, draft.recips);
+  const billableRecipientCount = draft.selRecips.length || recipientLimit;
+  const totals = pointsSendTotals(draft.ppr, billableRecipientCount);
   const checkoutWallets = useMemo(
     () => (workspace ? walletsForCheckout(workspace) : []),
     [workspace],
@@ -413,12 +415,12 @@ export function useSendPointsController(): SendPointsVm {
       autoSelectRecipients();
     }
     if (step === 1) {
-      if (!draft.selRecips.length) {
-        toast.error("Select at least one recipient");
+      if (recipientLimit && draft.selRecips.length !== recipientLimit) {
+        toast.error(`Select exactly ${recipientLimit} recipients`);
         return;
       }
-      if (recipientLimit && draft.selRecips.length > recipientLimit) {
-        toast.error(`Maximum ${recipientLimit} recipients`);
+      if (!recipientLimit && !draft.selRecips.length) {
+        toast.error("Select at least one recipient");
         return;
       }
     }
@@ -442,12 +444,12 @@ export function useSendPointsController(): SendPointsVm {
       toast.error("Select a shop for this campaign");
       return;
     }
-    if (!draft.selRecips.length) {
-      toast.error("Select at least one recipient");
+    if (recipientLimit && draft.selRecips.length !== recipientLimit) {
+      toast.error(`Select exactly ${recipientLimit} recipients`);
       return;
     }
-    if (recipientLimit && draft.selRecips.length > recipientLimit) {
-      toast.error(`Maximum ${recipientLimit} recipients`);
+    if (!recipientLimit && !draft.selRecips.length) {
+      toast.error("Select at least one recipient");
       return;
     }
     if (!isValidBudgetPerRecipient(String(draft.ppr || ""))) {
@@ -592,6 +594,7 @@ export function useSendPointsController(): SendPointsVm {
     draft,
     dispatch,
     totals,
+    billableRecipientCount,
     contacts,
     pickerContacts,
     shop,

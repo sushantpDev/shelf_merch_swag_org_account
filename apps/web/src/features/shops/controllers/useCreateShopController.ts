@@ -2,6 +2,12 @@ import { useReducer, type Dispatch } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { useInvalidateWorkspace } from "@/hooks/useWorkspace";
+import {
+  clearDefaultArtwork,
+  fileTypeFromName,
+  setDefaultArtwork,
+} from "@/features/swag/wizard/artworkHistory";
+import { resolveMediaUrl } from "@/lib/mediaUrl";
 import { bannerConfigFromSource } from "../banner";
 import { useCreateShop } from "../model";
 import { markShopCelebration } from "../shopCelebration";
@@ -22,6 +28,7 @@ export type CreateShopVm = {
   onExit: () => void;
   onNext: () => void;
   onPickLogo: (file: File) => void;
+  onRemoveLogo: () => void;
   onPublish: () => void;
 };
 
@@ -50,8 +57,23 @@ export function useCreateShopController(): CreateShopVm {
       return;
     }
     const reader = new FileReader();
-    reader.onload = () => dispatch({ type: "set", patch: { logoUrl: String(reader.result) } });
+    reader.onload = () => {
+      const preview = String(reader.result);
+      dispatch({ type: "set", patch: { logoUrl: preview } });
+      setDefaultArtwork({
+        id: `shop-logo-${Date.now()}`,
+        name: file.name || "Shop Logo",
+        preview,
+        fileType: fileTypeFromName(file.name),
+        source: "shop-logo",
+      });
+    };
     reader.readAsDataURL(file);
+  }
+
+  function onRemoveLogo() {
+    dispatch({ type: "set", patch: { logoUrl: "" } });
+    clearDefaultArtwork();
   }
 
   async function onPublish() {
@@ -78,6 +100,18 @@ export function useCreateShopController(): CreateShopVm {
       markShopCelebration({ shopId: shop.id, shopName: shop.name });
       toast.success(`"${shop.name}" is live! 🎉`);
 
+      if (shop.logoUrl || draft.logoUrl) {
+        const logoPreview =
+          resolveMediaUrl(shop.logoUrl || draft.logoUrl) || shop.logoUrl || draft.logoUrl;
+        setDefaultArtwork({
+          id: `shop-${shop.id}`,
+          name: `${shop.name} Logo`,
+          preview: logoPreview,
+          fileType: fileTypeFromName(draft.logoUrl || "logo.png"),
+          source: "shop-logo",
+        });
+      }
+
       // Ensure the new shop is in the workspace cache before opening detail.
       await invalidateWorkspace();
       navigate(`/app/shops/${shop.id}?welcome=1`, { replace: true });
@@ -93,6 +127,7 @@ export function useCreateShopController(): CreateShopVm {
     onExit: () => navigate("/app/shops"),
     onNext,
     onPickLogo,
+    onRemoveLogo,
     onPublish,
   };
 }

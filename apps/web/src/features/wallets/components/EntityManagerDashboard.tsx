@@ -43,8 +43,8 @@ export function EntityManagerDashboard({
   );
   const subtitle =
     departments.length === 1
-      ? `${account} - ${dept.name}`
-      : `${account} - ${departments.length} assigned budgets`;
+      ? `${account}: ${dept.name}`
+      : `${account}: ${departments.length} assigned budgets`;
 
   return (
     <>

@@ -618,10 +618,10 @@ export function FulfillmentAssetStrip({
         {artworkTiles.map((entry) => (
           <FulfillmentTile
             key={entry.key}
-            label={areaArtwork.length > 1 ? `Logo / artwork - ${entry.label}` : "Logo / artwork - to print"}
+            label={areaArtwork.length > 1 ? `Logo / artwork: ${entry.label}` : "Logo / artwork to print"}
             onOpen={() =>
               setPreview({
-                title: areaArtwork.length > 1 ? `Logo / artwork - ${entry.label}` : "Logo / artwork - to print",
+                title: areaArtwork.length > 1 ? `Logo / artwork: ${entry.label}` : "Logo / artwork to print",
                 downloadUrl: entry.artworkUrl,
                 downloadName: `${fileBase}-${entry.key}-logo`,
                 body: (
@@ -651,10 +651,10 @@ export function FulfillmentAssetStrip({
         ))}
         {mockup && printAreas.length === 0 && (
           <FulfillmentTile
-            label={variantColor ? `Variant — ${variantColor}` : "Variant image"}
+            label={variantColor ? `Variant: ${variantColor}` : "Variant image"}
             onOpen={() =>
               setPreview({
-                title: variantColor ? `Variant — ${variantColor}` : "Variant image",
+                title: variantColor ? `Variant: ${variantColor}` : "Variant image",
                 downloadUrl: mockup,
                 downloadName: `${fileBase}-variant`,
                 body: (
@@ -683,12 +683,12 @@ export function FulfillmentAssetStrip({
           </FulfillmentTile>
         )}
         <FulfillmentTile
-          label="Base — production"
+          label="Base production"
           onOpen={
             baseImg
               ? () =>
                   setPreview({
-                    title: "Base — production",
+                    title: "Base production",
                     downloadUrl: baseImg,
                     downloadName: `${fileBase}-base`,
                     body: (
@@ -715,12 +715,12 @@ export function FulfillmentAssetStrip({
           )}
         </FulfillmentTile>
         <FulfillmentTile
-          label="Mask — tinted"
+          label="Mask tinted"
           onOpen={
             resolvedMask
               ? () =>
                   setPreview({
-                    title: "Mask — tinted",
+                    title: "Mask tinted",
                     downloadUrl: resolvedMask,
                     downloadName: `${fileBase}-mask`,
                     body: (
@@ -819,20 +819,20 @@ export function PrintSpecTable({ areas }: { areas: PrintArea[] }) {
               <tr key={a.key ?? i}>
                 <td style={{ fontWeight: 600 }}>{a.label}</td>
                 <td style={{ textTransform: "uppercase", letterSpacing: ".03em" }}>
-                  {a.methods?.length ? a.methods.join(", ") : "—"}
+                  {a.methods?.length ? a.methods.join(", ") : "N/A"}
                 </td>
                 <td style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>
                   {hasIn
                     ? `${wIn}×${hIn} in`
                     : a.maxWidthCm || a.maxHeightCm
-                      ? `${a.maxWidthCm ?? "—"}×${a.maxHeightCm ?? "—"} cm`
-                      : "—"}
+                      ? `${a.maxWidthCm ?? "N/A"}×${a.maxHeightCm ?? "N/A"} cm`
+                      : "N/A"}
                 </td>
                 <td style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>
-                  {hasIn ? `${Math.round(wIn * dpi)}×${Math.round(hIn * dpi)}` : "—"}
+                  {hasIn ? `${Math.round(wIn * dpi)}×${Math.round(hIn * dpi)}` : "N/A"}
                 </td>
                 <td style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>
-                  {a.dpi ?? "—"}
+                  {a.dpi ?? "N/A"}
                 </td>
               </tr>
             );

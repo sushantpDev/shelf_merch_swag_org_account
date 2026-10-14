@@ -3,6 +3,7 @@ import { createBrowserRouter, redirect, type RouteObject } from "react-router";
 import { NotFound, RootLayout, RouteError } from "./RootLayout";
 import { getStoredUser, isAuthenticated, isPlatformUser } from "@/services/api-bridge";
 import { requireTenantArea } from "@/services/tenant-route-guards";
+import { getWorkspaceSlug, setWorkspaceSlug } from "@/lib/workspaceSlug";
 
 /** Lazy route: resolves a named (default) export to react-router's `{ Component }`. */
 function page(loader: () => Promise<Record<string, unknown>>, name = "default") {
@@ -13,7 +14,8 @@ function page(loader: () => Promise<Record<string, unknown>>, name = "default") 
 function redirectIfAuthed() {
   if (!isAuthenticated()) return null;
   if (isPlatformUser(getStoredUser())) return redirect("/platform/dashboard");
-  return redirect("/app");
+  const slug = getWorkspaceSlug();
+  return redirect(slug ? `/${slug}` : "/dashboard");
 }
 
 const tenantChildren: RouteObject[] = [
@@ -23,7 +25,7 @@ const tenantChildren: RouteObject[] = [
   {
     path: "wallets/:walletId",
     loader: ({ params }) =>
-      redirect(`/app/wallets?wallet=${encodeURIComponent(params.walletId || "")}`),
+      redirect(`/dashboard/wallets?wallet=${encodeURIComponent(params.walletId || "")}`),
   },
   {
     path: "shops",
@@ -376,16 +378,55 @@ export const appRouter = createBrowserRouter([
       { path: "redeem/:token", lazy: page(() => import("./publicRoutes"), "RedeemRoute") },
       {
         path: "app",
+        loader: ({ request }) => {
+          const url = new URL(request.url);
+          const slug = getWorkspaceSlug();
+          const base = slug ? `/${slug}` : "/dashboard";
+          return redirect(`${base}${url.pathname.slice("/app".length)}${url.search}`);
+        },
         lazy: page(() => import("@/components/tenant/TenantLayout")),
         children: tenantChildren,
       },
       {
-        // Spec alias — OAuth success lands on /dashboard/integrations?zoho=…
-        path: "dashboard/integrations",
+        // Legacy /dashboard route — redirect to /:slug if slug is known
+        path: "dashboard",
         loader: ({ request }) => {
-          const url = new URL(request.url);
-          return redirect(`/app/integrations${url.search}`);
+          const slug = getWorkspaceSlug();
+          if (slug) {
+            const url = new URL(request.url);
+            const sub = url.pathname.slice("/dashboard".length);
+            return redirect(`/${slug}${sub}${url.search}`);
+          }
+          return null;
         },
+        lazy: page(() => import("@/components/tenant/TenantLayout")),
+        children: tenantChildren,
+      },
+      {
+        // Dynamic workspace slug route: /:slug, /:slug/shops, etc.
+        path: ":slug",
+        loader: ({ params }) => {
+          // Don't match known public/static top-level routes
+          const reserved = [
+            "login", "signup", "forgot-password", "reset-password",
+            "about", "careers", "privacy", "terms", "resources",
+            "request-demo", "contact-us", "contact", "contacts",
+            "catalog", "apps", "shop", "redeem", "accept-invite",
+            "platform", "app", "dashboard", "support", "legal",
+            "docs", "case-studies", "auth", "integrations", "zoho", "s",
+          ];
+          if (reserved.includes(params.slug || "")) {
+            // Let it fall through to the wildcard 404
+            throw new Response("Not Found", { status: 404 });
+          }
+          // Cache this slug so other parts of the app can resolve paths
+          if (params.slug) {
+            setWorkspaceSlug(params.slug);
+          }
+          return null;
+        },
+        lazy: page(() => import("@/components/tenant/TenantLayout")),
+        children: tenantChildren,
       },
       {
         path: "zoho/people",

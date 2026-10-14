@@ -39,6 +39,7 @@ export function SendPointsView({
   draft,
   dispatch,
   totals,
+  billableRecipientCount,
   shop,
   shopCurrencyLabel,
   currencyMode,
@@ -72,6 +73,7 @@ export function SendPointsView({
 
   const pprError = budgetPerRecipientError(pprRaw);
   const budgetStepValid = Boolean(draft.recips) && isValidBudgetPerRecipient(pprRaw);
+  const recipientsStepValid = Boolean(draft.recips) && draft.selRecips.length === draft.recips;
 
   const sendTotalUnits = usesCredits
     ? Math.round(totals.sub)
@@ -123,7 +125,7 @@ export function SendPointsView({
         <button
           type="button"
           className="btn btn-brand"
-          disabled={step === 0 && !budgetStepValid}
+          disabled={(step === 0 && !budgetStepValid) || (step === 1 && !recipientsStepValid)}
           onClick={onNext}
         >
           Next
@@ -177,7 +179,7 @@ export function SendPointsView({
           <div className="divider" />
           <div className="row" style={{ gap: 20 }}>
             <div className="field" style={{ flex: 1 }}>
-              <label className="lbl">Name your order (internal)</label>
+              <label className="lbl">Campaign name</label>
               <input
                 className="inp"
                 value={draft.orderName}
@@ -359,7 +361,7 @@ export function SendPointsView({
               </div>
               <SumRow
                 k="No. of recipients"
-                v={draft.recips ? String(draft.recips) : SEND_POINTS_PLACEHOLDERS.recips}
+                v={billableRecipientCount ? String(billableRecipientCount) : SEND_POINTS_PLACEHOLDERS.recips}
               />
               <SumRow
                 k={`${draft.pointsScope === "stadium" ? "Shelf Merch" : "Shop"} ${unitLower} per recipient`}

@@ -203,15 +203,15 @@ function OverviewTab({ overview, tenant }: { overview: OverviewData; tenant: Ten
     },
     {
       label: "Created",
-      value: tenant.createdAt ? new Date(tenant.createdAt).toLocaleString() : "—",
+      value: tenant.createdAt ? new Date(tenant.createdAt).toLocaleString() : "N/A",
     },
     {
       label: "Updated",
-      value: tenant.updatedAt ? new Date(tenant.updatedAt).toLocaleString() : "—",
+      value: tenant.updatedAt ? new Date(tenant.updatedAt).toLocaleString() : "N/A",
     },
     { label: "Last activity", value: formatRelativeTime(overview.lastActiveAt) },
     { label: "Currency", value: tenant.currency || "INR" },
-    { label: "GSTIN", value: tenant.gstin || "—" },
+    { label: "GSTIN", value: tenant.gstin || "N/A" },
   ];
 
   return (
@@ -296,7 +296,7 @@ function UsersTab({
         columns={[
           { key: "name", label: "Name" },
           { key: "email", label: "Email" },
-          { key: "role", label: "Role", render: (r) => String(r.role ?? "—") },
+          { key: "role", label: "Role", render: (r) => String(r.role ?? "N/A") },
           { key: "status", label: "Status", render: (r) => <StatusTag status={String(r.status)} /> },
           {
             key: "lastLoginAt",
@@ -465,7 +465,7 @@ function WalletTab({ overview }: { overview: OverviewData }) {
             key: "status",
             label: "Status",
             align: "center",
-            render: (r) => (r.status ? <StatusTag status={String(r.status)} /> : "—"),
+            render: (r) => (r.status ? <StatusTag status={String(r.status)} /> : "N/A"),
           },
         ]}
       />
@@ -632,7 +632,7 @@ function AuditTab({ tenantId }: { tenantId: string }) {
         {
           key: "createdAt",
           label: "When",
-          render: (r) => (r.createdAt ? new Date(String(r.createdAt)).toLocaleString() : "—"),
+          render: (r) => (r.createdAt ? new Date(String(r.createdAt)).toLocaleString() : "N/A"),
         },
         { key: "action", label: "Action" },
         { key: "actorRole", label: "Actor role" },
@@ -643,9 +643,9 @@ function AuditTab({ tenantId }: { tenantId: string }) {
             const before = r.before as { status?: string } | null;
             const after = r.after as { status?: string; reason?: string } | null;
             if (before?.status || after?.status) {
-              return `${formatTenantStatus(String(before?.status ?? "—"))} → ${formatTenantStatus(String(after?.status ?? "—"))}${after?.reason ? ` (${after.reason})` : ""}`;
+              return `${formatTenantStatus(String(before?.status ?? "N/A"))} → ${formatTenantStatus(String(after?.status ?? "N/A"))}${after?.reason ? ` (${after.reason})` : ""}`;
             }
-            return "—";
+            return "N/A";
           },
         },
       ]}

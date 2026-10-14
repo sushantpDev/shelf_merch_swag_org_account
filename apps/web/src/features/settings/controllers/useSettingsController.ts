@@ -5,6 +5,11 @@ import { useInvalidateWorkspace, useWorkspace } from "@/hooks/useWorkspace";
 import { useTenantAccess } from "@/hooks/useTenantAccess";
 import { ApiError } from "@/services/api";
 import {
+  fileTypeFromName,
+  getDefaultArtwork,
+  setDefaultArtwork,
+} from "@/features/swag/wizard/artworkHistory";
+import {
   getStoredUser,
   updateWorkspaceSettingsApi,
   uploadWorkspaceLogoApi,
@@ -102,6 +107,16 @@ export function useSettingsController(): SettingsVm {
       const uploadedLogoUrl = await withGatewayRetry(() => uploadWorkspaceLogoApi(file));
       await withGatewayRetry(() => updateWorkspaceSettingsApi({ logoUrl: uploadedLogoUrl }));
       setLogoUrl(uploadedLogoUrl);
+      const currentDefault = getDefaultArtwork();
+      if (!currentDefault || currentDefault.source === "workspace-logo") {
+        setDefaultArtwork({
+          id: "workspace-logo",
+          name: file.name || "Workspace Logo",
+          preview: uploadedLogoUrl,
+          fileType: fileTypeFromName(file.name),
+          source: "workspace-logo",
+        });
+      }
       await invalidateWorkspace();
       toast.success("Workspace icon updated");
     } catch (err) {

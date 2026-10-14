@@ -70,7 +70,7 @@ export function VerifyEmailPage() {
       const user = await verifySignupOtp(pendingId, otp);
       clearSignupDraft();
       toast.success(`Welcome to Shelf Merch, ${user.name.split(" ")[0]} 👋`);
-      const destination = isPlatformUser(user) ? "/platform/dashboard" : "/app";
+      const destination = isPlatformUser(user) ? "/platform/dashboard" : "/dashboard";
       window.location.assign(destination);
     } catch (err) {
       submitInFlight.current = false;
@@ -82,7 +82,7 @@ export function VerifyEmailPage() {
           setError("Incorrect verification code. Please try again.");
           setOtp("");
         } else if (err.code === "EMAIL_EXISTS") {
-          setError("Account already exists — sign in");
+          setError("Account already exists. Sign in");
         } else if (err.code === "SIGNUP_SESSION_EXPIRED") {
           setError("Signup session expired. Please sign up again.");
         } else {

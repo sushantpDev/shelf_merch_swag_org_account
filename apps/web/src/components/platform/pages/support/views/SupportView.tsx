@@ -45,7 +45,7 @@ export function SupportView({
     render?: (row: Record<string, unknown>) => ReactNode;
   }[] = [
     { key: "subject", label: "Subject" },
-    { key: "tenantName", label: "Tenant", render: (r) => String(r.tenantName ?? "") || "—" },
+    { key: "tenantName", label: "Tenant", render: (r) => String(r.tenantName ?? "") || "N/A" },
     { key: "type", label: "Type" },
     { key: "status", label: "Status", render: (r) => <StatusTag status={String(r.status)} /> },
   ];
@@ -54,7 +54,7 @@ export function SupportView({
     columns.push({
       key: "assigneeName",
       label: "Assignee",
-      render: (r) => String(r.assigneeName ?? "") || "—",
+      render: (r) => String(r.assigneeName ?? "") || "N/A",
     });
   }
 

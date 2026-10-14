@@ -218,7 +218,7 @@ export function StoreAuthPanel({
     setBusy(true);
     try {
       const res = await resetShopPassword(resetToken, password);
-      toast.success("Password updated — sign in");
+      toast.success("Password updated. Sign in");
       navigate(`${shopStorefrontPath(res.shopId)}?auth=signin`, { replace: true });
       setMode("signin");
     } catch (err) {
@@ -244,7 +244,7 @@ export function StoreAuthPanel({
     try {
       const res = await claimRedeemShopAccount(redeemToken, password);
       if (res.needsPassword) {
-        setError("Could not create account — try again");
+        setError("Could not create account. Try again");
         return;
       }
       onAuthenticated(persistSession(shop.id, res));

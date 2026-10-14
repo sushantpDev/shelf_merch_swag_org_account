@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { ResourceDropdown } from "../resources/ResourceDropdown";
+import "../landing-mobile.css";
 import "../resources/resource-nav.css";
 
 function AuthLinks({ className, onNavigate }: { className?: string; onNavigate?: () => void }) {
@@ -66,16 +67,16 @@ export function Header() {
         aria-label="Main navigation"
       >
         <div className="nav-links__sheet">
-          <a href="/platform" onClick={closeMenu}>
+          <Link to="/platform" onClick={closeMenu}>
             Platform
-          </a>
+          </Link>
           <ResourceDropdown onNavigate={closeMenu} />
           <Link to="/app/catalog" onClick={closeMenu}>
             Catalog
           </Link>
-          <a href="/about" onClick={closeMenu}>
+          <Link to="/about" onClick={closeMenu}>
             About
-          </a>
+          </Link>
           <AuthLinks className="mobile-only" onNavigate={closeMenu} />
           <Link className="header-cta nav-drawer-cta mobile-only" to="/request-demo" onClick={closeMenu}>
             Book a demo

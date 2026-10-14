@@ -589,7 +589,7 @@ export function PrintAreaEditor({
           <div className="field" style={{ marginTop: 8 }}>
             <label className="lbl">Preview colour</label>
             <p className="muted" style={{ fontSize: 11, margin: "0 0 6px" }}>
-              Recolours the garment only — background stays transparent.
+              Recolours the garment only. Background stays transparent.
             </p>
             <div className="row" style={{ gap: 6, flexWrap: "wrap" }}>
               <button
@@ -943,7 +943,7 @@ export function PrintAreaEditor({
                 {areaIn.scale && Math.abs(areaIn.scale - 1) > 0.02
                   ? ` (now ×${areaIn.scale.toFixed(2)})`
                   : ""}
-                — production file size does not grow.
+                Production file size does not grow.
               </p>
             )}
             <div className="row" style={{ gap: 10 }}>

@@ -13,9 +13,6 @@ export function Features() {
             <em>Your gifting should too.</em>
           </h2>
         </div>
-        <p className="desktop-only">
-          One place for thoughtful one-offs, repeatable programs and every celebration in between.
-        </p>
         <Link to="/platform" className="text-link operations-see-all mobile-only">
           See all
           <span>

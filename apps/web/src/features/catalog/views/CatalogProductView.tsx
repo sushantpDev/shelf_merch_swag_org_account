@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
+import { useCatalogProductHead } from "@/seo/useCatalogProductHead";
 import { LoadingState } from "@/components/LoadingState";
 import type { CatalogProductVm } from "../controllers/useCatalogProductController";
 import { ProductDetail } from "./ProductDetail";
@@ -11,6 +12,25 @@ export function CatalogProductView(vm: CatalogProductVm) {
   const location = useLocation();
   const { pathname } = location;
   const catalogHome = pathname.startsWith("/apps/catalog") ? "/apps/catalog" : "/app/catalog";
+  const catalogProduct = /^\/(?:apps|app)\/catalog\/(?!category(?:\/|$))[^/]+/.test(pathname);
+  const headMode = pathname.startsWith("/apps/catalog/") && catalogProduct
+    ? "public"
+    : catalogProduct
+      ? "title"
+      : "off";
+  useCatalogProductHead(
+    vm.product?.id && vm.product.nm
+      ? {
+          id: vm.product.id,
+          name: vm.product.nm,
+          description: vm.product.description,
+          brand: vm.product.brand,
+          category: vm.product.category,
+          image: vm.product.photoUrl || vm.product.imageUrls?.[0] || "",
+        }
+      : null,
+    headMode,
+  );
   const backTarget =
     typeof location.state === "object" &&
     location.state &&

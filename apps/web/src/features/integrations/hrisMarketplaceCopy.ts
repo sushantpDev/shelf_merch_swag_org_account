@@ -33,7 +33,7 @@ function profile(input: ProfileInput): HrisMarketplaceProfile {
       `Import people from ${name} so Shelf Merch knows who to gift.`,
       "Automatic sync keeps names, emails, and employment changes up to date.",
       "Open the employee directory and use synced people as Workspace Contacts.",
-      "Disconnect anytime — other Shelf Merch integrations stay intact.",
+      "Disconnect anytime. Other Shelf Merch integrations stay intact.",
     ],
     setup: `Click Connect and authorize ShelfMerch with ${name}. Syncing starts automatically. Sync now is optional.`,
     highlights: [

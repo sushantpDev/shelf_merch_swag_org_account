@@ -34,7 +34,7 @@ export function Production() {
         <h2 className="desktop-only">
           From design file
           <br />
-          to doorstep —
+          to doorstep
           <br />
           <em>we make it ourselves.</em>
         </h2>

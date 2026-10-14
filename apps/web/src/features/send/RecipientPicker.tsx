@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Search } from "lucide-react";
 import { toast } from "sonner";
+import { COUNTRY_OPTIONS } from "@/data/countries";
 import type { UiContact } from "@/services/mappers";
 import type { SendMode, SingleLocation } from "./types";
 import {
@@ -24,6 +25,57 @@ const MODE_CARDS: Array<[SendMode, string, string]> = [
   ],
   ["single", "Single location", "Ship all units to one office, event venue or address."],
 ];
+
+const COUNTRY_ALIASES: Record<string, string> = {
+  IND: "IN",
+  USA: "US",
+  UK: "GB",
+  UAE: "AE",
+};
+
+function recipientInitials(contact: UiContact) {
+  const name = (contact.name || "").trim();
+  if (name) {
+    const parts = name.split(/\s+/).filter(Boolean);
+    return parts.slice(0, 2).map((part) => part[0]?.toUpperCase() ?? "").join("") || "?";
+  }
+  return (contact.email[0] ?? "?").toUpperCase();
+}
+
+function recipientAvatarTone(seed: string) {
+  const tones = [
+    { bg: "#ede9fe", fg: "#5b21b6" },
+    { bg: "#dbeafe", fg: "#1d4ed8" },
+    { bg: "#fce7f3", fg: "#9d174d" },
+    { bg: "#d1fae5", fg: "#047857" },
+    { bg: "#ffedd5", fg: "#c2410c" },
+    { bg: "#e0f2fe", fg: "#0369a1" },
+  ];
+  let hash = 0;
+  for (let i = 0; i < seed.length; i += 1) hash = (hash + seed.charCodeAt(i) * 17) % tones.length;
+  return tones[hash];
+}
+
+function countryDisplay(code?: string) {
+  const raw = (code || "").trim();
+  if (!raw) return null;
+  const upper = COUNTRY_ALIASES[raw.toUpperCase()] || raw.toUpperCase();
+  const byCode = COUNTRY_OPTIONS.find((country) => country.value === upper);
+  const byLabel = COUNTRY_OPTIONS.find((country) => country.label.toLowerCase() === raw.toLowerCase());
+  const match = byCode || byLabel;
+  if (match) return { iso: match.value.toLowerCase(), label: match.label };
+  if (/^[A-Z]{2}$/.test(upper)) return { iso: upper.toLowerCase(), label: raw };
+  return { iso: "", label: raw };
+}
+
+function countryFlagSrc(iso: string) {
+  return `https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/${iso}.svg`;
+}
+
+function emptyCell(value?: string) {
+  const v = (value ?? "").trim();
+  return v ? v : "N/A";
+}
 
 /** Shared recipient picker (Send Items + Send Points). */
 export function RecipientPicker({
@@ -70,6 +122,7 @@ export function RecipientPicker({
     ? contacts.filter((c) => c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q))
     : contacts;
   const atLimit = Boolean(maxRecipients && selected.length >= maxRecipients);
+  const remainingRequired = maxRecipients ? Math.max(0, maxRecipients - selected.length) : 0;
 
   const loc = singleLocation;
 
@@ -177,31 +230,28 @@ export function RecipientPicker({
         </div>
       )}
 
-      <div className="card" style={{ padding: 16 }}>
-        <div className="row" style={{ gap: 8, marginBottom: 12, alignItems: "center" }}>
-          <span
-            className="tag tag-soft"
-            style={{ background: "var(--brand-50)", color: "var(--brand-d)" }}
-          >
+      <div className="recipient-table-card">
+        <div className="recipient-table-toolbar">
+          <span className="recipient-table-count">
             {selected.length}
             {maxRecipients ? ` / ${maxRecipients}` : ""} selected
           </span>
           {onSelectAll ? (
             <button
               type="button"
-              className="btn btn-ghost btn-sm"
+              className="recipient-table-action"
               disabled={atLimit}
               onClick={onSelectAll}
             >
               Select all
             </button>
           ) : null}
-          <button type="button" className="btn btn-ghost btn-sm" onClick={onDeselectAll}>
+          <button type="button" className="recipient-table-action" onClick={onDeselectAll}>
             Deselect all
           </button>
           <button
             type="button"
-            className="btn btn-ghost btn-sm"
+            className="recipient-table-action"
             disabled={atLimit || !onAddEmails}
             onClick={() => setShowEmailInput((open) => !open)}
           >
@@ -209,7 +259,7 @@ export function RecipientPicker({
           </button>
           <button
             type="button"
-            className="btn btn-ghost btn-sm"
+            className="recipient-table-action"
             disabled={atLimit || !onCsvImport}
             onClick={() => csvInputRef.current?.click()}
           >
@@ -222,20 +272,19 @@ export function RecipientPicker({
             style={{ display: "none" }}
             onChange={(e) => handleCsvChange(e.target.files?.[0])}
           />
-          <div className="search" style={{ flex: 1 }}>
+          <label className="recipient-table-search">
             <Search size={16} aria-hidden="true" />
             <input
-              style={{ height: 36 }}
               placeholder="Search by name or email"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               aria-label="Search recipients"
             />
-          </div>
+          </label>
         </div>
 
         {showEmailInput && onAddEmails ? (
-          <div className="card" style={{ padding: 14, marginBottom: 12, background: "#fff" }}>
+          <div className="recipient-table-email-panel">
             <label className="lbl">Paste email addresses</label>
             <textarea
               className="inp"
@@ -262,18 +311,29 @@ export function RecipientPicker({
           </div>
         ) : null}
 
-        {atLimit && maxRecipients ? (
-          <p className="mut3" style={{ fontSize: 12, marginBottom: 10 }}>
+        {maxRecipients && remainingRequired > 0 ? (
+          <p className="recipient-table-limit">
+            Select {remainingRequired} more {remainingRequired === 1 ? "recipient" : "recipients"} to continue.
+          </p>
+        ) : atLimit && maxRecipients ? (
+          <p className="recipient-table-limit">
             Recipient limit reached ({maxRecipients}). Deselect someone to add more.
           </p>
         ) : null}
 
-        <table className="tbl">
+        {rows.length === 0 ? (
+          <div className="recipient-table-empty">
+            {contacts.length ? "No recipients match your search." : "No recipients yet."}
+          </div>
+        ) : (
+          <div className="recipient-table-wrap">
+            <table className="recipient-table">
           <thead>
             <tr>
-              <th />
-              <th>Email</th>
-              <th>Name</th>
+              <th className="recipient-table-th-check" />
+              <th>Person</th>
+              <th>Group</th>
+              <th>Country</th>
               <th>Home address</th>
             </tr>
           </thead>
@@ -281,39 +341,67 @@ export function RecipientPicker({
             {rows.map((c) => {
               const on = selected.includes(c.id);
               const disabled = atLimit && !on;
+              const tone = recipientAvatarTone(c.id || c.email || c.name);
+              const country = countryDisplay(c.country);
               return (
-                <tr key={c.id}>
-                  <td>
+                <tr key={c.id} className={on ? "is-selected" : undefined}>
+                  <td className="recipient-table-td-check">
                     <button
                       type="button"
+                      className="recipient-table-check"
                       aria-pressed={on}
-                      aria-label={`${on ? "Deselect" : "Select"} ${c.name}`}
+                      aria-label={`${on ? "Deselect" : "Select"} ${c.name || c.email}`}
                       disabled={disabled}
                       onClick={() => onToggle(c.id)}
-                      style={{
-                        width: 18,
-                        height: 18,
-                        border: `2px solid ${on ? "var(--brand)" : "var(--line-strong)"}`,
-                        borderRadius: 4,
-                        display: "grid",
-                        placeItems: "center",
-                        background: on ? "var(--brand)" : "#fff",
-                        cursor: disabled ? "not-allowed" : "pointer",
-                        opacity: disabled ? 0.45 : 1,
-                        padding: 0,
-                      }}
                     >
                       {on && <span style={{ color: "#fff", fontSize: 11 }}>✓</span>}
                     </button>
                   </td>
-                  <td className="muted">{c.email}</td>
-                  <td style={{ fontWeight: 600 }}>{c.name}</td>
-                  <td className="muted">{c.loc || "—"}</td>
+                  <td>
+                    <div className="recipient-table-person">
+                      <span
+                        className="recipient-table-avatar"
+                        style={{ backgroundColor: tone.bg, color: tone.fg }}
+                        aria-hidden="true"
+                      >
+                        {recipientInitials(c)}
+                      </span>
+                      <span className="recipient-table-copy">
+                        <span className="recipient-table-name">{emptyCell(c.name)}</span>
+                        <span className="recipient-table-email">{c.email}</span>
+                      </span>
+                    </div>
+                  </td>
+                  <td className="recipient-table-muted">{emptyCell(c.department)}</td>
+                  <td>
+                    {country ? (
+                      <span className="recipient-table-country">
+                        {country.iso ? (
+                          <img
+                            className="recipient-table-flag"
+                            src={countryFlagSrc(country.iso)}
+                            alt=""
+                            width={18}
+                            height={18}
+                            onError={(e) => {
+                              e.currentTarget.style.display = "none";
+                            }}
+                          />
+                        ) : null}
+                        {country.label}
+                      </span>
+                    ) : (
+                      <span className="recipient-table-muted">N/A</span>
+                    )}
+                  </td>
+                  <td className="recipient-table-muted">{emptyCell(c.loc)}</td>
                 </tr>
               );
             })}
-          </tbody>
-        </table>
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </>
   );

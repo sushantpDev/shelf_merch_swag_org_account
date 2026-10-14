@@ -1116,9 +1116,9 @@ const MARKETING_PAGE_NORMALIZE_CSS = `
   }
 `;
 const PAGE_TITLE: Record<MarketingPageKey, string> = {
-  about: "About Shelf Merch - Built to Make Brand Moments Real",
-  careers: "Careers at Shelf Merch - Current Openings",
-  platform: "Shelf Merch Platform - Every Branded Moment",
+  about: "About Shelf Merch | Built to Make Brand Moments Real",
+  careers: "Careers at Shelf Merch | Current Openings",
+  platform: "Shelf Merch Platform | Every Branded Moment",
   privacy: "Privacy Policy | Shelf Merch",
   terms: "Terms & Conditions | Shelf Merch",
 };

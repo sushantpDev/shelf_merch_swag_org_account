@@ -5,20 +5,22 @@ export type SolutionItem = {
   points: string[];
   color: "blue" | "coral" | "mint" | "yellow" | "lilac";
   label: string;
+  image: string;
 };
 
 export const SOLUTIONS: SolutionItem[] = [
   {
-    tab: "Human Resources",
-    title: "Empower every stage of the employee journey",
-    body: "Streamline onboarding, recognition, and milestone gifting, all from one HR-friendly dashboard.",
+    tab: "Team Leads",
+    title: "Build a team culture people want to stay for",
+    body: "Make everyday recognition simple, visible and genuinely rewarding.",
     points: [
-      "Welcome kits or a dedicated onboarding shop",
-      "Automated anniversary, birthday and milestone gifts",
-      "Company-wide kudos that strengthens culture",
+      "Allocate and track team budgets",
+      "Reward great work with merch, kits or points",
+      "Build morale with lightweight peer recognition",
     ],
-    color: "blue",
-    label: "87% redeemed this month",
+    color: "lilac",
+    label: "126 kudos this week",
+    image: "/images/landing/solutions/team_leads.png",
   },
   {
     tab: "Marketing",
@@ -31,9 +33,10 @@ export const SOLUTIONS: SolutionItem[] = [
     ],
     color: "coral",
     label: "42 approved SKUs",
+    image: "/images/landing/solutions/marketing.png",
   },
   {
-    tab: "Administration",
+    tab: "Admin",
     title: "Simplify procurement, budgets and approvals",
     body: "Give admin teams one source of truth for every branded item leaving the building.",
     points: [
@@ -43,6 +46,7 @@ export const SOLUTIONS: SolutionItem[] = [
     ],
     color: "mint",
     label: "6 teams on budget",
+    image: "/images/landing/solutions/admin.png",
   },
   {
     tab: "Sales",
@@ -55,18 +59,20 @@ export const SOLUTIONS: SolutionItem[] = [
     ],
     color: "yellow",
     label: "18 gifts sent today",
+    image: "/images/landing/solutions/sales.png",
   },
   {
-    tab: "Team Leads",
-    title: "Build a team culture people want to stay for",
-    body: "Make everyday recognition simple, visible and genuinely rewarding.",
+    tab: "Human Resources",
+    title: "Empower every stage of the employee journey",
+    body: "Streamline onboarding, recognition, and milestone gifting, all from one HR-friendly dashboard.",
     points: [
-      "Allocate and track team budgets",
-      "Reward great work with merch, kits or points",
-      "Build morale with lightweight peer recognition",
+      "Welcome kits or a dedicated onboarding shop",
+      "Automated anniversary, birthday and milestone gifts",
+      "Company-wide kudos that strengthens culture",
     ],
-    color: "lilac",
-    label: "126 kudos this week",
+    color: "blue",
+    label: "87% redeemed this month",
+    image: "/images/landing/solutions/hr.png",
   },
   {
     tab: "Events",
@@ -79,5 +85,6 @@ export const SOLUTIONS: SolutionItem[] = [
     ],
     color: "blue",
     label: "5 cities, one order",
+    image: "/images/landing/solutions/marketing.png",
   },
 ];

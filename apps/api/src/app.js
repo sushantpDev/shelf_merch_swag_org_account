@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import mongoose from 'mongoose';
 import { pinoHttp } from 'pino-http';
 import { createPinoHttpOptions } from './config/logger.js';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { env, corsOrigins } from './config/env.js';
 import { ensureRedisReady } from './config/redis.js';
 import { LOCAL_UPLOAD_DIR } from './services/storage.service.js';
@@ -81,6 +81,9 @@ import {
   sendCatalogSitemap,
   sendSeoPublicFile,
 } from './modules/seo/sitemap.controller.js';
+import { renderSpaDocument, spaDocumentHeaders, documentKind, publicRedirectTarget, seoNotFoundHtml } from './modules/seo/spaDocument.js';
+import { sendContentArticle, sendContentIndex, sendContentSitemap } from './modules/seo/contentPublic.controller.js';
+import { sendCatalogProductSeo } from './modules/seo/catalogProductSeo.controller.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const WEB_DIST = path.resolve(__dirname, '../../web/dist');
@@ -347,20 +350,23 @@ export function createApp() {
    * Always registered so embed headers are applied and routes return 200 even
    * before/without a full SPA build (tests). Production prefers web/dist/index.html.
    */
+  const sendSpaIndex = (req, res) => {
+    const indexPath = path.join(WEB_DIST, 'index.html');
+    const headers = spaDocumentHeaders(req.path);
+    res.set(headers);
+    if (!existsSync(indexPath)) return false;
+    const html = renderSpaDocument(readFileSync(indexPath, 'utf8'), req.path);
+    res.status(200).type('html').send(html);
+    return true;
+  };
   const sendZohoConnectedAppPage = (req, res) => {
     applyZohoPeopleEmbedHeaders(res);
-    const indexHtml = path.join(WEB_DIST, 'index.html');
-    if (existsSync(indexHtml)) {
-      return res.sendFile('index.html', { root: WEB_DIST });
-    }
+    if (sendSpaIndex(req, res)) return;
     return res.status(200).type('html').send(ZOHO_CONNECTED_APP_HTML_FALLBACK);
   };
   const sendZohoEmbedPopupPage = (req, res) => {
     applyZohoPeopleCoopHeaders(res);
-    const indexHtml = path.join(WEB_DIST, 'index.html');
-    if (existsSync(indexHtml)) {
-      return res.sendFile('index.html', { root: WEB_DIST });
-    }
+    if (sendSpaIndex(req, res)) return;
     return res.status(200).type('html').send(ZOHO_CONNECTED_APP_HTML_FALLBACK);
   };
   app.get('/zoho/people', sendZohoConnectedAppPage);
@@ -382,6 +388,21 @@ export function createApp() {
   app.get('/blog/media/:id', asyncHandler(sendBlogMedia));
   app.get('/blog/:slug', asyncHandler(sendBlogArticle));
 
+  app.use((req, res, next) => {
+    if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+    if (req.path.length > 1 && req.path.endsWith('/') && /^\/(compare|solutions)(\/|$)/.test(req.path)) {
+      const query = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+      return res.redirect(301, `${req.path.slice(0, -1)}${query}`);
+    }
+    return next();
+  });
+
+  /** Published compare/solution pages only. Empty hubs stay noindex until a page is published. */
+  app.get('/compare', asyncHandler(sendContentIndex('compare')));
+  app.get('/compare/:slug', asyncHandler(sendContentArticle('compare')));
+  app.get('/solutions', asyncHandler(sendContentIndex('solution')));
+  app.get('/solutions/:slug', asyncHandler(sendContentArticle('solution')));
+
   /**
    * SEO: robots + sitemap index/static from apps/web/public (also copied into
    * web/dist by Vite). Catalog child sitemap is runtime from Mongo.
@@ -393,28 +414,60 @@ export function createApp() {
   app.get('/sitemap-static.xml', sendSeoPublicFile('sitemap-static.xml'));
   app.get('/sitemap-catalog.xml', asyncHandler(sendCatalogSitemap));
   app.get('/sitemap-blog.xml', asyncHandler(sendBlogSitemap));
+  app.get('/sitemap-compare.xml', asyncHandler(sendContentSitemap('compare')));
+  app.get('/sitemap-solutions.xml', asyncHandler(sendContentSitemap('solution')));
 
-  // Production: serve the Vite SPA from the same origin as the API.
+  app.use((req, res, next) => {
+    if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+    if (req.path.startsWith('/api/') || req.path.startsWith('/uploads/')) return next();
+    const target = publicRedirectTarget(req.path);
+    if (!target || target === req.path) return next();
+    const query = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+    return res.redirect(301, `${target}${query}`);
+  });
+
+  app.get('/apps/catalog/:id', asyncHandler(sendCatalogProductSeo(WEB_DIST)));
+
+  const sendDocument = (req, res, next) => {
+    if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+    if (req.path.startsWith('/api/') || req.path.startsWith('/uploads/') || req.path.startsWith('/email-assets/')) return next();
+    if (
+      req.path === '/robots.txt' ||
+      req.path === '/sitemap.xml' ||
+      req.path === '/sitemap-static.xml' ||
+      req.path === '/sitemap-catalog.xml' ||
+      req.path === '/sitemap-blog.xml' ||
+      req.path === '/sitemap-compare.xml' ||
+      req.path === '/sitemap-solutions.xml'
+    ) {
+      return next();
+    }
+    if (documentKind(req.path) === 'not-found') {
+      return res
+        .status(404)
+        .type('html')
+        .set('Cache-Control', 'private, no-store')
+        .set('X-Robots-Tag', 'noindex, follow')
+        .send(seoNotFoundHtml());
+    }
+    if (env.NODE_ENV === 'production' && existsSync(WEB_DIST)) {
+      if (sendSpaIndex(req, res)) return;
+    }
+    return next();
+  };
+
   if (env.NODE_ENV === 'production' && existsSync(WEB_DIST)) {
-    app.use(express.static(WEB_DIST, { index: false, maxAge: '1d' }));
-    app.get('/{*path}', (req, res, next) => {
-      if (req.method !== 'GET' && req.method !== 'HEAD') return next();
-      if (req.path.startsWith('/api/') || req.path.startsWith('/uploads/') || req.path.startsWith('/email-assets/')) return next();
-      // Explicit SEO / legal / docs / zoho routes are registered above; never
-      // fall through to the SPA shell for sitemap/robots if static misses.
-      if (
-        req.path === '/robots.txt' ||
-        req.path === '/sitemap.xml' ||
-        req.path === '/sitemap-static.xml' ||
-        req.path === '/sitemap-catalog.xml' ||
-        req.path === '/sitemap-blog.xml'
-      ) {
-        return next();
-      }
-      // /zoho/people(*), /legal/*, /docs/*, and /case-studies/* are registered above.
-      res.sendFile('index.html', { root: WEB_DIST });
-    });
+    app.use(express.static(WEB_DIST, {
+      index: false,
+      maxAge: '1d',
+      setHeaders(res, filePath) {
+        if (filePath.endsWith(`${path.sep}index.html`)) {
+          res.setHeader('Cache-Control', 'private, no-store');
+        }
+      },
+    }));
   }
+  app.get('/{*path}', sendDocument);
 
   app.use(notFoundHandler);
   app.use(errorHandler);

@@ -7,10 +7,10 @@ export function Quote() {
         days, and finally have one number to show finance.
       </blockquote>
       <div className="quote-author">
-        <span>NM</span>
+        <span>AS</span>
         <p>
-          <b>Customer name</b>
-          <small>Title · Company</small>
+          <b>Ananya Sharma</b>
+          <small>People Ops Lead · NovaTech</small>
         </p>
       </div>
     </section>

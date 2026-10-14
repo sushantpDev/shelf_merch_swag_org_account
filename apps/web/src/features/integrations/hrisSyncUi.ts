@@ -338,7 +338,7 @@ function historyRow(run: MergeSyncRunPublic, now: Date): HrisSyncHistoryRow {
   const hideZero = active && records === 0;
   return {
     id: run.id,
-    when: whenIso ? historyWhen(whenIso, now) : "—",
+    when: whenIso ? historyWhen(whenIso, now) : "N/A",
     reasonLabel: syncReasonListLabel(run.reason),
     statusLabel: historyStatus(run.status),
     recordsLabel: hideZero ? "" : records > 0 || run.status === "success" ? `${records.toLocaleString("en-US")} records` : "",
@@ -361,7 +361,7 @@ function historyStatus(status: string): string {
 
 function historyWhen(iso: string, now: Date): string {
   const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return "—";
+  if (Number.isNaN(d.getTime())) return "N/A";
   const start = new Date(now);
   start.setHours(0, 0, 0, 0);
   const day = new Date(d);

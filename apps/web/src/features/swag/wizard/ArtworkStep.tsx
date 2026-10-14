@@ -31,7 +31,12 @@ import {
 } from "../colors";
 import { DesignedProductThumb } from "../DesignedProductThumb";
 import type { ArtFile } from "../swagDraft";
-import { rememberArtwork, type PreviousArtwork } from "./artworkHistory";
+import {
+  getDefaultArtwork,
+  rememberArtwork,
+  resolveDefaultArtwork,
+  type PreviousArtwork,
+} from "./artworkHistory";
 import {
   areaKeysForProduct,
   areaLabelForKey,
@@ -90,14 +95,36 @@ export function ArtworkStep({
   const fileRef = useRef<HTMLInputElement>(null);
   const [tab, setTab] = useState<ArtTab>("upload");
   const [dragging, setDragging] = useState(false);
-  const [staging, setStaging] = useState<ArtFile | null>(art);
+  const defaultArt = useMemo(() => resolveDefaultArtwork(), []);
+  const initialStaging =
+    art || (defaultArt ? { name: defaultArt.name, preview: defaultArt.preview } : null);
+  const [staging, setStaging] = useState<ArtFile | null>(initialStaging);
   const [bannerDismissed, setBannerDismissed] = useState(false);
   const [previousUploads, setPreviousUploads] = useState<PreviousArtwork[]>(previousUploadsProp);
   const [editIdx, setEditIdx] = useState<number | null>(null);
 
   useEffect(() => {
-    if (art) setStaging(art);
+    if (art) {
+      setStaging(art);
+    } else {
+      const def = getDefaultArtwork();
+      if (def) {
+        setStaging({ name: def.name, preview: def.preview });
+      }
+    }
   }, [art]);
+
+  useEffect(() => {
+    const effective =
+      staging || (defaultArt ? { name: defaultArt.name, preview: defaultArt.preview } : null);
+    if (!art && effective && products.length > 0 && Object.keys(areaArts).length === 0) {
+      onSetArt(effective);
+      const keys = defaultSeedKeysForProducts(products);
+      if (keys.length) {
+        onSetAreaArts(keys, effective);
+      }
+    }
+  }, [art, staging, products, areaArts, onSetArt, onSetAreaArts, defaultArt]);
 
   useEffect(() => {
     setPreviousUploads(previousUploadsProp);
