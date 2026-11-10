@@ -11,14 +11,16 @@ export function Hero() {
           <span /> Merch. Gifting. Recognition.
         </div>
         <h1>
-          Every gift,
+          The AI-powered
           <br />
-          <em>one shelf.</em>
+          platform
+          <br />
+          <em>for corporate swag</em>
         </h1>
         <p className="hero-lead">
-          <span className="hero-lead__line">Run your company&apos;s swag, onboarding kits and</span>{' '}
-          <span className="hero-lead__line">employee gifting from a single platform, designed,</span>{' '}
-          <span className="hero-lead__line">printed and delivered anywhere in India.</span>
+          <span className="hero-lead__line">Curate branded merchandise with AI, launch your company</span>{' '}
+          <span className="hero-lead__line">swag store, and manage onboarding kits and employee gifts</span>{' '}
+          <span className="hero-lead__line">in one place. We handle fulfilment worldwide.</span>
         </p>
         <div className="hero-actions">
           <a className="button button-dark" href="/request-demo">
