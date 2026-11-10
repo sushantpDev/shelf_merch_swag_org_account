@@ -8,10 +8,11 @@ import "./resources.css";
 type ResourcesShellProps = {
   title: string;
   tone?: "blue" | "coral" | "mint";
+  variant?: "hub" | "hr" | "sales" | "events" | "case-study" | "about" | "platform";
   children: ReactNode;
 };
 
-export function ResourcesShell({ title, tone, children }: ResourcesShellProps) {
+export function ResourcesShell({ title, tone, variant, children }: ResourcesShellProps) {
   const location = useLocation();
 
   useEffect(() => {
@@ -20,7 +21,9 @@ export function ResourcesShell({ title, tone, children }: ResourcesShellProps) {
   }, [title, location.pathname]);
 
   return (
-    <div className={`shelf-resources${tone ? ` tone-${tone}` : ""}`}>
+    <div
+      className={`shelf-resources${tone ? ` tone-${tone}` : ""}${variant ? ` resources-${variant}` : ""}`}
+    >
       <div className="shelf-landing resources-site-header">
         <Header />
       </div>

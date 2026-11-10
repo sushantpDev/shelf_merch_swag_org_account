@@ -1,0 +1,197 @@
+﻿.resources-hr .hb-benefits {
+  padding-top: 64px;
+  scroll-margin-top: 70px;
+}
+.resources-hr .hb-heading {
+  max-width: 850px;
+  text-align: center;
+  margin-inline: auto;
+  margin-bottom: 32px;
+}
+.resources-hr .hb-heading > p:last-child {
+  color: var(--hr-body-color);
+  font-size: var(--hr-body-size);
+  line-height: var(--hr-body-leading);
+  max-width: 590px;
+  margin: 20px auto 0;
+}
+.resources-hr .hb-benefit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 70px;
+  padding-block: 54px;
+  border-bottom: 1px solid #e5e7ed;
+  scroll-margin-top: 85px;
+}
+.resources-hr .hb-benefit:last-child {
+  border: 0;
+}
+.resources-hr .hb-benefit--reverse .hb-benefit__copy {
+  order: 2;
+}
+.resources-hr .hb-benefit h3,
+.resources-hr .hb-tool-panel h3 {
+  font-size: clamp(28px, 2.65vw, 38px);
+  line-height: 1.16;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  margin: 0 0 22px;
+  max-width: 480px;
+}
+.resources-hr .hb-benefit__copy > p,
+.resources-hr .hb-tool-panel > div > p {
+  color: var(--hr-body-color);
+  font-size: var(--hr-body-size);
+  line-height: var(--hr-body-leading);
+  margin-bottom: 24px;
+  max-width: 490px;
+}
+.resources-hr .hb-benefit ul,
+.resources-hr .hb-tool-panel ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.resources-hr .hb-benefit li,
+.resources-hr .hb-tool-panel li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: var(--hr-body-size);
+  line-height: var(--hr-body-leading);
+  margin-top: 12px;
+}
+.resources-hr .hb-benefit li svg,
+.resources-hr .hb-tool-panel li svg {
+  flex-shrink: 0;
+  color: #3155b4;
+  margin-top: 4px;
+}
+.resources-hr .hb-benefit__art {
+  min-width: 0;
+  padding: 12px 0;
+}
+.resources-hr .hb-benefit__art > img {
+  width: 100%;
+  height: auto;
+  max-height: 370px;
+  object-fit: contain;
+  display: block;
+}
+.resources-hr .hb-tools {
+  width: min(1120px, 90%);
+  padding-block: 54px 64px;
+}
+.resources-hr .hb-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid #d9dce3;
+  margin-block: 36px 0;
+}
+.resources-hr .hb-tabs button {
+  border: 0;
+  background: transparent;
+  position: relative;
+  padding: 24px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #454b54;
+  cursor: pointer;
+}
+.resources-hr .hb-tabs button[aria-selected="true"] {
+  color: #161c2a;
+}
+.resources-hr .hb-tabs button[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -1px;
+  height: 2px;
+  background: #161c2a;
+}
+.resources-hr .hb-tool-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 60px;
+  min-height: 420px;
+  padding: 42px 24px 0;
+}
+.resources-hr .hb-tool-panel .hr-inline-link {
+  margin-top: 26px;
+}
+.resources-hr .hb-tool-visual {
+  min-width: 0;
+}
+.resources-hr .hb-connections-illustration,
+.resources-hr .hb-company-store-illustration,
+.resources-hr .hb-team-programs-illustration {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 390px;
+  object-fit: contain;
+}
+.resources-hr .hb-tabs button:focus-visible {
+  outline: 3px solid #171b25;
+  outline-offset: 2px;
+}
+.resources-hr .hb-tool-panel:focus-visible {
+  outline: 2px solid #3155b4;
+  outline-offset: 6px;
+}
+@media (max-width: 1100px) {
+  .resources-hr .hb-benefit,
+  .resources-hr .hb-tool-panel {
+    gap: 36px;
+  }
+}
+@media (max-width: 760px) {
+  .resources-hr .hb-benefits {
+    padding-top: 44px;
+  }
+  .resources-hr .hb-heading {
+    margin-bottom: 12px;
+  }
+  .resources-hr .hb-heading > p:last-child {
+    font-size: var(--hr-body-size);
+  }
+  .resources-hr .hb-benefit,
+  .resources-hr .hb-tool-panel {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-block: 34px;
+  }
+  .resources-hr .hb-benefit--reverse .hb-benefit__copy {
+    order: 0;
+  }
+  .resources-hr .hb-benefit h3,
+  .resources-hr .hb-tool-panel h3 {
+    font-size: 28px;
+  }
+  .resources-hr .hb-benefit__copy > p,
+  .resources-hr .hb-tool-panel > div > p {
+    font-size: var(--hr-body-size);
+  }
+  .resources-hr .hb-benefit__art {
+    padding: 0;
+  }
+  .resources-hr .hb-tools {
+    padding-block: 40px;
+  }
+  .resources-hr .hb-tabs {
+    margin-block: 26px 0;
+  }
+  .resources-hr .hb-tabs button {
+    font-size: 12px;
+    padding: 18px 6px;
+  }
+  .resources-hr .hb-tool-panel {
+    min-height: 0;
+    padding: 28px 0 0;
+  }
+}

@@ -15,6 +15,7 @@ import {
   getContactOrThrow,
   listContactsForUser,
   prepareContactPayloadForUser,
+  updateContact,
 } from './contacts.service.js';
 import { ImportJob } from '../imports/importJob.model.js';
 import { enqueueCsvImport } from '../../jobs/queues.js';
@@ -82,22 +83,12 @@ router.patch(
   canWrite,
   validate({ params: z.object({ id: objectId }), body: createSchema.partial() }),
   asyncHandler(async (req, res) => {
-    const contact = await getContactOrThrow({ tenantId: req.tenantId, contactId: req.params.id });
-    await assertContactAccess({ tenantId: req.tenantId, user: req.user, contact });
-
-    const payload = await prepareContactPayloadForUser({
+    const { contact, before } = await updateContact({
       tenantId: req.tenantId,
       user: req.user,
-      body: {
-        department: contact.department,
-        ...req.body,
-      },
-      existingContact: contact,
+      contactId: req.params.id,
+      body: req.body,
     });
-
-    const before = contact.toObject();
-    Object.assign(contact, payload);
-    await contact.save();
     writeAudit({ req, action: 'contact.update', entityType: 'Contact', entityId: contact._id, before, after: contact.toObject() });
     res.json(contactToPublicJSON(contact));
   }),

@@ -118,7 +118,7 @@ export function DesignCard({
             />
           ))}
           {more > 0 && (
-            <span className="mut3" style={{ fontSize: 10, alignSelf: "center" }}>
+            <span className="mut3" style={{ fontSize: "var(--workspace-font-caption, 10px)", alignSelf: "center" }}>
               +{more}
             </span>
           )}

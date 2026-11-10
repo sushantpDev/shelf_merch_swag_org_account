@@ -85,7 +85,9 @@ export function resolvePrintAreaStage(
   areaKey?: string | null,
 ) {
   const area = pickPrintArea(p, areaKey);
-  const phys = physicalFrameForView(productPhysical(p), printAreaGeometryViewKey(p, area));
+  // Catalog editing stores inches against the area's key, even when a Left/Right
+  // chest area is displayed on the front mockup. Keep that same physical frame.
+  const phys = physicalFrameForView(productPhysical(p), area?.key);
   const raw = area
     ? (area as unknown as Record<string, unknown>)
     : { box: DEFAULT_BOX, widthIn: 0, heightIn: 0 };
@@ -230,17 +232,6 @@ export function printAreaUsesDedicatedSideView(
     resolveMediaUrl(p?.baseRightImageUrl),
   ].filter(Boolean) as string[];
   return sideUrls.some((url) => sameMediaPath(mockup, url));
-}
-
-function printAreaGeometryViewKey(
-  p: UiProduct | undefined,
-  area: { key?: string; label?: string; mockupImageUrl?: string } | null | undefined,
-): ProductViewKey {
-  const view = printAreaViewKey(p, area);
-  if ((view === "left" || view === "right") && !printAreaUsesDedicatedSideView(p, area)) {
-    return "front";
-  }
-  return view;
 }
 
 /** Views available for a product (always front; others when mask/stage/areas exist). */
@@ -626,30 +617,31 @@ export function collectAreaPlacements(
 
 /**
  * Layers for live colour-tint / storefront composite from saved product refs.
- * Prefers per-area `artworkUrl` on areaPlacements; falls back to collection art
- * on the primary area only.
+ * Per-area `artworkUrl` is the source of truth (the placeholder chosen in the
+ * artwork step). Collection art is a single-area fallback only when nothing
+ * was assigned — it must not also land on the primary placeholder.
  */
 export function resolveProductArtworkLayers(
   product: UiProduct,
   fallbackArtworkUrl?: string | null,
 ): Array<{ artUrl: string; placement: Placement; areaKey: string }> {
+  if (!listPrintAreas(product).length) return [];
   const primary = primaryAreaKey(product);
   const fallback = fallbackArtworkUrl ? resolveMediaUrl(fallbackArtworkUrl) || fallbackArtworkUrl : "";
   const map = product.areaPlacements;
   const out: Array<{ artUrl: string; placement: Placement; areaKey: string }> = [];
+  const entries = map ? Object.entries(map) : [];
+  const hasOwnArt = entries.some(([, pl]) => Boolean(pl?.artworkUrl));
 
-  if (map && Object.keys(map).length) {
-    for (const [areaKey, pl] of Object.entries(map)) {
-      const artUrl =
-        (pl.artworkUrl ? resolveMediaUrl(pl.artworkUrl) || pl.artworkUrl : "") ||
-        (areaKey === primary ? fallback : "");
-      if (!artUrl) continue;
-      const { artworkUrl: _a, ...placement } = pl;
-      out.push({ areaKey, artUrl, placement });
-    }
+  for (const [areaKey, pl] of entries) {
+    const own = pl.artworkUrl ? resolveMediaUrl(pl.artworkUrl) || pl.artworkUrl : "";
+    const artUrl = own || (!hasOwnArt && areaKey === primary ? fallback : "");
+    if (!artUrl) continue;
+    const { artworkUrl: _a, ...placement } = pl;
+    out.push({ areaKey, artUrl, placement });
   }
 
-  if (!out.length && fallback) {
+  if (!out.length && fallback && !hasOwnArt) {
     out.push({
       areaKey: primary,
       artUrl: fallback,
@@ -657,6 +649,29 @@ export function resolveProductArtworkLayers(
     });
   }
   return out;
+}
+
+/**
+ * Collection-card / design preview props.
+ * When the artwork step saved art on specific placeholders, preview only those.
+ * A shared collection image must not be replayed from a bake that stamped it
+ * onto every print area.
+ */
+export function savedDesignPreview(
+  product: UiProduct,
+  collectionArtworkUrl?: string | null,
+): { artworkUrl?: string; preferBakedMockup: boolean } {
+  const areaCount = listPrintAreas(product).length;
+  const hasAreaArtwork = Object.values(product.areaPlacements || {}).some((pl) =>
+    Boolean(pl?.artworkUrl),
+  );
+  if (!areaCount) return { artworkUrl: undefined, preferBakedMockup: true };
+  if (hasAreaArtwork) return { artworkUrl: undefined, preferBakedMockup: false };
+  const shared = collectionArtworkUrl?.trim() ? collectionArtworkUrl : undefined;
+  // Multi-area products: composite the shared logo onto the primary area only.
+  // The baked PNG may already have it on every placeholder.
+  if (areaCount > 1) return { artworkUrl: shared, preferBakedMockup: false };
+  return { artworkUrl: shared, preferBakedMockup: true };
 }
 
 /** Bake white default mockups for a picked product list (wizard generate flow). */
@@ -795,7 +810,9 @@ export async function bakeMockupLayers(
 }
 
 /**
- * Build bake layers for every print area that has artwork (area-specific or fallback).
+ * Build bake layers for print areas that actually have artwork.
+ * The library image is used only when this product has no per-area assignment,
+ * and then only on the primary placeholder — same rule as the artwork step.
  */
 export function collectBakeLayers(
   product: UiProduct,
@@ -808,12 +825,21 @@ export function collectBakeLayers(
   // No catalog placeholder → never invent one or apply logo.
   if (!areas.length) return [];
   const primary = primaryAreaKey(product);
+  const assigned = new Set<string>();
+  areas.forEach((area, i) => {
+    if (!area) return;
+    const areaKey = printAreaStableKey(area, i, areas);
+    const draftKey = areaPlacementKey(product, idx, areaKey);
+    if (areaArts[draftKey]?.preview) assigned.add(areaKey);
+  });
   const out: Array<{ artUrl: string; placement: Placement; areaKey: string }> = [];
   areas.forEach((area, i) => {
     if (!area) return;
     const areaKey = printAreaStableKey(area, i, areas);
     const draftKey = areaPlacementKey(product, idx, areaKey);
-    const artUrl = areaArts[draftKey]?.preview || (areaKey === primary ? fallbackArtUrl : null) || "";
+    const specific = areaArts[draftKey]?.preview || "";
+    const artUrl =
+      specific || (!assigned.size && areaKey === primary ? fallbackArtUrl || "" : "");
     if (!artUrl) return;
     out.push({
       areaKey,

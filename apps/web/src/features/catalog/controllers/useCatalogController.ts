@@ -7,6 +7,7 @@ import {
   FALLBACK_CATALOG_NODES,
   catalogCategorySlug,
   resolveCatalogBrowseTarget,
+  productMatchesCollection,
   type CatalogCategoryChild,
   type CatalogCategoryNode,
 } from "../types";
@@ -42,6 +43,8 @@ export type CatalogVm = {
   items: UiProduct[];
   /** Product pool for style-carousel tile photos (landing only). */
   stylePreviewProducts: UiProduct[];
+  stylePreviewLoading?: boolean;
+  stylePreviewError?: string | null;
   count: number;
   isSkeleton: boolean;
   errorMessage: string | null;
@@ -61,6 +64,7 @@ export function useCatalogController(): CatalogVm {
       return remote.map((node) => ({
         name: node.name,
         slug: node.slug,
+        productScope: node.productScope,
         children: mapPublicChildren(node.children),
       }));
     }
@@ -93,7 +97,10 @@ export function useCatalogController(): CatalogVm {
   );
   /** Landing carousel: load products so tiles can show Category / Sub-Category photos. */
   const stylePreview = useCatalog(ALL_PRODUCTS, workspaceCatalog, !isCategorySelected);
-  const items = data?.items ?? [];
+  const productScope = categoryNodes.find((node) => node.name === parent)?.productScope;
+  const items = useMemo(() => productScope
+    ? (data?.items ?? []).filter((product) => productMatchesCollection(product, productScope))
+    : data?.items ?? [], [data?.items, productScope]);
   const stylePreviewProducts = !isCategorySelected
     ? (stylePreview.data?.items ?? workspaceCatalog?.items ?? [])
     : [];
@@ -124,7 +131,9 @@ export function useCatalogController(): CatalogVm {
     categoriesByParent,
     items,
     stylePreviewProducts,
-    count: data?.total ?? items.length,
+    stylePreviewLoading: stylePreview.isLoading && stylePreviewProducts.length === 0,
+    stylePreviewError: stylePreview.isError ? "Could not load catalog products. Please try again." : null,
+    count: productScope ? items.length : data?.total ?? items.length,
     isSkeleton: (isLoading || isFetching) && items.length === 0,
     errorMessage: isError
       ? error instanceof Error
@@ -139,7 +148,7 @@ export function useCatalogController(): CatalogVm {
         const nextParams = new URLSearchParams(searchParams);
         nextParams.delete("category");
         navigate(
-          `${basePath}${nextParams.toString() ? `?${nextParams.toString()}` : ""}`,
+          `${basePath}/category/all-products${nextParams.toString() ? `?${nextParams.toString()}` : ""}`,
           { replace: false },
         );
         return;

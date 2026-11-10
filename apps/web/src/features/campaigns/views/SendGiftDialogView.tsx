@@ -7,13 +7,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ShopBanner } from "@/features/shops/banner";
 import { PreDesignedKits } from "@/features/kits/PreDesignedKits";
 import type { SendGiftVm } from "../controllers/useCampaignsController";
 
 type SendChoice = "kit" | "points";
 
-const titleStyle = { fontSize: 20, fontFamily: "var(--disp)" } as const;
+const titleStyle = { fontSize: 20, fontFamily: "var(--font-family-primary)" } as const;
 const descStyle = { fontSize: 14, margin: "8px 0 0" } as const;
 const actionRowStyle = { gap: 10, marginTop: 24 } as const;
 const actionBtnStyle = { flex: 1, justifyContent: "center" } as const;
@@ -52,7 +53,7 @@ export function SendGiftDialogView({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className={`sm-modal send-gift-modal${view === "choose" ? " send-gift-modal--choose" : ""}`}
+        className={`sm-modal send-gift-modal${view === "choose" ? " send-gift-modal--choose" : view === "kit" ? " send-gift-modal--kit" : ""}`}
         style={{ maxWidth: modalWidth }}
       >
         {view === "choose" ? (
@@ -216,35 +217,48 @@ export function SendGiftDialogView({
               <DialogHeader>
                 <DialogTitle style={titleStyle}>Choose a kit to send</DialogTitle>
                 <DialogDescription className="muted" style={descStyle}>
-                  {availableKits.length > 0
-                    ? "Select one of your existing kits, or create a new kit."
-                    : "Choose a pre-designed kit to send, or create your own."}
+                  Select a customized or curated kit to send, or create a new kit.
                 </DialogDescription>
               </DialogHeader>
 
-              {availableKits.length > 0 ? (
-                <div className="send-gift-kit-list" style={{ marginTop: 20 }}>
-                  {availableKits.map((k) => (
-                    <button
-                      key={k.id}
-                      type="button"
-                      className="send-gift-kit-card"
-                      onClick={() => onSelectKit(k.id)}
-                    >
-                      <div className="send-gift-kit-meta">
-                        <div className="send-gift-kit-name">{k.name}</div>
-                        <div className="send-gift-kit-sub">
-                          {k.items} item{k.items === 1 ? "" : "s"} · {k.status}
-                        </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              ) : (
-                <div style={{ marginTop: 16 }}>
+              <Tabs
+                defaultValue={availableKits.length > 0 ? "customized" : "curated"}
+                style={{ marginTop: 20 }}
+              >
+                <TabsList className="grid w-full grid-cols-2" aria-label="Kit type">
+                  <TabsTrigger value="customized">Customized</TabsTrigger>
+                  <TabsTrigger value="curated">Curated</TabsTrigger>
+                </TabsList>
+                <TabsContent value="customized">
+                  {availableKits.length > 0 ? (
+                    <div className="send-gift-kit-list">
+                      {availableKits.map((k) => (
+                        <button
+                          key={k.id}
+                          type="button"
+                          className="send-gift-kit-card"
+                          onClick={() => onSelectKit(k.id)}
+                        >
+                          <div className="send-gift-kit-meta">
+                            <div className="send-gift-kit-name">{k.name}</div>
+                            <div className="send-gift-kit-sub">
+                              {k.items} item{k.items === 1 ? "" : "s"} · {k.status}
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="muted" style={descStyle}>
+                      No customized kits yet.
+                    </p>
+                  )}
+                </TabsContent>
+
+                <TabsContent value="curated" className="send-gift-curated-kits">
                   <PreDesignedKits onBeforeSend={() => onOpenChange(false)} />
-                </div>
-              )}
+                </TabsContent>
+              </Tabs>
 
               <div className="row" style={actionRowStyle}>
                 <button

@@ -34,6 +34,11 @@ import {
 } from './mergeSyncStatus.js';
 import { deriveEffectiveEmploymentStatus } from './effectiveEmploymentStatus.js';
 import { deriveHrisDirectoryStatus } from './hrisDirectoryStatus.js';
+import { ZohoIntegration } from '../zoho/zohoIntegration.model.js';
+import {
+  listZohoDirectoryEmployees,
+  zohoIntegrationAsDirectoryConnection,
+} from '../zoho/zohoDirectoryEmployees.js';
 import { isMergeSyncAttemptTerminal } from './mergeSyncErrors.js';
 import {
   connectionStatusAfterSyncSuccess,
@@ -1795,36 +1800,46 @@ export async function listMergeHrisEmployees({ tenantId, connectionId, limit = 1
   if (connectionId) connFilter._id = connectionId;
 
   const connections = await MergeConnection.find(connFilter)
-    .select('_id lastSyncAt lastSyncStatus status')
+    .select('_id lastSyncAt lastSyncStatus status provider')
     .lean();
   const connectionById = new Map(connections.map((c) => [String(c._id), c]));
-  const directory = deriveHrisDirectoryStatus(connections);
+  // A specific Merge connection filter must not mix in the direct Zoho directory.
+  const zohoIntegration = connectionId
+    ? null
+    : await ZohoIntegration.findOne({ tenantId })
+        .select('_id status lastSyncedAt')
+        .lean();
+  const directoryConnections = zohoIntegration
+    ? [...connections, zohoIntegrationAsDirectoryConnection(zohoIntegration)]
+    : connections;
+  const directory = deriveHrisDirectoryStatus(directoryConnections);
 
-  if (!connections.length) {
+  if (!connections.length && !zohoIntegration) {
     return { employees: [], directory };
   }
 
-  const filter = {
-    tenantId,
-    $or: connections.map((c) => {
-      const clause = { connectionId: c._id };
-      if (c.lastSyncAt) {
-        // Drop leftover rows from a prior Linked Account / Merge UUID rotation.
-        // Rows with no lastSyncedAt are kept (tests and pre-timestamp imports).
-        clause.$or = [
-          { lastSyncedAt: { $exists: false } },
-          { lastSyncedAt: null },
-          { lastSyncedAt: { $gte: c.lastSyncAt } },
-        ];
-      }
-      return clause;
-    }),
-  };
+  const cap = Math.min(Number(limit) || 100, 500);
+  let rows = [];
+  if (connections.length) {
+    const filter = {
+      tenantId,
+      $or: connections.map((c) => {
+        const clause = { connectionId: c._id };
+        if (c.lastSyncAt) {
+          // Drop leftover rows from a prior Linked Account / Merge UUID rotation.
+          // Rows with no lastSyncedAt are kept (tests and pre-timestamp imports).
+          clause.$or = [
+            { lastSyncedAt: { $exists: false } },
+            { lastSyncedAt: null },
+            { lastSyncedAt: { $gte: c.lastSyncAt } },
+          ];
+        }
+        return clause;
+      }),
+    };
 
-  const rows = await MergeHrisEmployee.find(filter)
-    .sort({ updatedAt: -1 })
-    .limit(Math.min(Number(limit) || 100, 500))
-    .lean();
+    rows = await MergeHrisEmployee.find(filter).sort({ updatedAt: -1 }).limit(cap).lean();
+  }
 
   const connectionIds = [...new Set(rows.map((r) => String(r.connectionId)))];
   const [departments, locations, employments] = await Promise.all([
@@ -1857,9 +1872,7 @@ export async function listMergeHrisEmployees({ tenantId, connectionId, limit = 1
     }
   }
 
-  return {
-    directory,
-    employees: rows.map((r) => {
+  const mergeEmployees = rows.map((r) => {
       const connKey = String(r.connectionId);
       const departmentsById = new Map();
       if (Array.isArray(r.departmentMergeIds)) {
@@ -1909,6 +1922,26 @@ export async function listMergeHrisEmployees({ tenantId, connectionId, limit = 1
         lastSyncedAt: r.lastSyncedAt,
         source: r.source,
       };
-    }),
+    });
+
+  const excludeEmails = new Set(
+    mergeEmployees
+      .map((employee) => String(employee.workEmail || '').trim().toLowerCase())
+      .filter(Boolean),
+  );
+  const excludeMergeEmployeeIds = new Set(
+    mergeEmployees.map((employee) => String(employee.mergeEmployeeId || '').trim()).filter(Boolean),
+  );
+  const zohoEmployees = await listZohoDirectoryEmployees({
+    tenantId,
+    integration: zohoIntegration,
+    excludeEmails,
+    excludeMergeEmployeeIds,
+    limit: cap,
+  });
+
+  return {
+    directory,
+    employees: [...mergeEmployees, ...zohoEmployees].slice(0, cap),
   };
 }

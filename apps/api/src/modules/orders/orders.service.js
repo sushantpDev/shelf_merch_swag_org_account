@@ -165,6 +165,109 @@ export async function getOrder({ tenantId, user, orderId }) {
   });
 }
 
+const ORDER_READ_PAGE = { defaultLimit: 10, maxLimit: 25 };
+
+function publicOrderItem(item) {
+  const [safe] = sanitizeOrderItems([item]);
+  const variant = safe?.variant ?? {};
+  return {
+    name: String(safe?.name ?? ''),
+    sku: String(safe?.sku ?? ''),
+    variant: {
+      size: variant.size ? String(variant.size) : '',
+      color: variant.color ? String(variant.color) : '',
+    },
+    quantity: Number(safe?.qty ?? 0),
+    unitPriceInr: Math.round(Number(safe?.unitPriceInr) || 0),
+  };
+}
+
+function publicAmountBreakdown(amount) {
+  const value = (field) => Math.round(Number(amount?.[field]) || 0);
+  return {
+    subtotal: value('subtotal'),
+    packaging: value('packaging'),
+    shipping: value('shipping'),
+    serviceFee: value('serviceFee'),
+    gst: value('gst'),
+    total: value('total'),
+  };
+}
+
+function publicOrderSummary(order, { campaignName, invoiceNumber }) {
+  return {
+    id: String(order._id),
+    orderNumber: String(order.orderNumber ?? ''),
+    status: String(order.status ?? ''),
+    campaignName: campaignName ?? '',
+    items: (order.items ?? []).map(publicOrderItem),
+    amountBreakdown: publicAmountBreakdown(order.amountBreakdown),
+    trackingNumber: String(order.trackingNumber ?? ''),
+    invoiceNumber: String(invoiceNumber || order.orderNumber || ''),
+  };
+}
+
+async function invoiceNumbersByOrder(tenantId, orderIds) {
+  const invoices = await OrderInvoice.find({ orderId: { $in: orderIds }, tenantId })
+    .select('orderId invoiceNumber')
+    .lean();
+  return Object.fromEntries(invoices.map((invoice) => [String(invoice.orderId), invoice.invoiceNumber]));
+}
+
+/**
+ * Read-only order page. Does not repair kit fulfillment and does not rewrite
+ * amount breakdowns. Callers must not pass this result through listOrders.
+ */
+export async function searchOrdersRead({ tenantId, user, query }) {
+  const { page, limit, skip } = getPagination(query, ORDER_READ_PAGE);
+  const filter = { tenantId };
+  if (query.status) filter.status = query.status;
+
+  const scopedCampaignIds = await campaignIdsForUser(tenantId, user);
+  if (scopedCampaignIds) {
+    if (!scopedCampaignIds.length) return paginatedResponse([], 0, { page, limit });
+    filter.campaignId = { $in: scopedCampaignIds };
+  }
+
+  const [rows, total] = await Promise.all([
+    Order.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+    Order.countDocuments(filter),
+  ]);
+  const campaignIds = [...new Set(rows.map((order) => String(order.campaignId)))];
+  const [campaigns, invoiceByOrderId] = await Promise.all([
+    Campaign.find({ _id: { $in: campaignIds }, tenantId }).select('name').lean(),
+    invoiceNumbersByOrder(tenantId, rows.map((order) => order._id)),
+  ]);
+  const campaignNameById = Object.fromEntries(campaigns.map((campaign) => [String(campaign._id), campaign.name]));
+  const items = rows.map((order) =>
+    publicOrderSummary(order, {
+      campaignName: campaignNameById[String(order.campaignId)] ?? '',
+      invoiceNumber: invoiceByOrderId[String(order._id)],
+    }),
+  );
+  return paginatedResponse(items, total, { page, limit });
+}
+
+/** Read-only order detail. Uses the same access checks as getOrder and does not write. */
+export async function getOrderRead({ tenantId, user, orderId }) {
+  const order = await Order.findOne({ _id: orderId, tenantId }).lean();
+  if (!order) throw new NotFoundError('Order not found');
+  await assertOrderAccess({ tenantId, user, order });
+
+  const [campaign, recipient, invoiceByOrderId] = await Promise.all([
+    Campaign.findOne({ _id: order.campaignId, tenantId }).select('name').lean(),
+    Recipient.findOne({ _id: order.recipientId, tenantId }).select('name').lean(),
+    invoiceNumbersByOrder(tenantId, [order._id]),
+  ]);
+  return {
+    ...publicOrderSummary(order, {
+      campaignName: campaign?.name ?? '',
+      invoiceNumber: invoiceByOrderId[String(order._id)],
+    }),
+    recipientName: recipient?.name ?? '',
+  };
+}
+
 export async function updateOrderStatus({ tenantId, user, orderId, status, note, trackingNumber }) {
   const order = await Order.findOne({ _id: orderId, tenantId });
   if (!order) throw new NotFoundError('Order not found');

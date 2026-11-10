@@ -10,6 +10,8 @@ export type SpaSeo = {
 };
 
 export function normalizePath(input: string): string;
+export function workspaceSlugForPath(pathname: string): string | null;
+export function isWorkspaceAppPath(pathname: string): boolean;
 export function resolveSpaSeo(catalog: unknown, pathname: string): SpaSeo;
 export function applySpaSeo(html: string, seo: SpaSeo): string;
 export function applyPrivateShell(html: string): string;

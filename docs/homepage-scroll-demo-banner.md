@@ -1,0 +1,9 @@
+# Homepage scroll demo banner
+
+Added `HomeDemoBanner` to LandingPage, scoped to the public homepage. It uses a generated fictional woman's portrait, lavender pill styling, the copy "Great merch starts here." and a "Book a demo" link to `/request-demo`. The desktop banner is 620px wide and 64px tall, reduced from 900px by 86px. The portrait is decorative and is not presented as a real employee or customer.
+
+Portrait asset: `apps/web/public/images/landing/demo-woman-portrait.png` (192px square). Created with the built-in image generation tool. Prompt: "Natural photographic head-and-shoulders portrait of a fictional adult English woman in her early 30s, warm approachable smile, shoulder-length chestnut brown hair, cream blouse and understated navy blazer. Facing camera, centered composition, entire head visible, shoulders visible, face readable at a 48px circular crop. Soft studio daylight, realistic skin texture, plain pale lavender background. No text, logos, watermark or props."
+
+IntersectionObserver shows it only after the hero has passed and hides it while the final CTA or footer is visible. A close button dismisses it for the mounted homepage visit. CSS suppresses it while the consent banner is present without modifying consent handling. The mobile layout stacks the CTA, supports safe-area offsets and uses a 44px minimum CTA height. Keyboard focus rings and reduced-motion behavior are included. Observers disconnect on unmount; no scroll listeners are installed.
+
+Validation: web build passed. Local headless Edge checks at 1440, 768, 390 and 320px verified hero threshold, cookie notice priority, final-section suppression, dismissal, CTA navigation, reduced motion and no horizontal overflow. Screenshots: `previews/home-demo-banner-1440.png`, `previews/home-demo-banner-390.png`. Script: `previews/verify-home-demo-banner.mjs`.

@@ -40,7 +40,6 @@ export function SignupView(vm: SignupVm) {
                 value={vm.firstName}
                 onChange={(e) => vm.onFirstName(e.target.value)}
                 className={authInputClassName}
-                autoFocus
               />
             </div>
             <div className="auth-simple-field">

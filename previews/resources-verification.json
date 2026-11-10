@@ -1,0 +1,636 @@
+[
+  {
+    "width": 1920,
+    "scrollWidth": 1920,
+    "font": "Arial, Helvetica, sans-serif",
+    "headings": 1,
+    "images": [
+      {
+        "src": "/images/resources/resources-editorial-hero-transparent.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-welcome.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-embroidery.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-fulfillment.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-events.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-clients.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-design.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-welcome.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-embroidery.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-fulfillment.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-events.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-clients.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-design.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/planning-together.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/notebook-and-mug.webp",
+        "loaded": true
+      }
+    ],
+    "links": [
+      "/resources/hr",
+      "/resources/sales",
+      "/resources/events"
+    ],
+    "demo": "/request-demo",
+    "footer": "rgb(255, 255, 255)",
+    "heroHeight": 523.1875
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "font": "Arial, Helvetica, sans-serif",
+    "headings": 1,
+    "images": [
+      {
+        "src": "/images/resources/resources-editorial-hero-transparent.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-welcome.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-embroidery.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-fulfillment.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-events.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-clients.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-design.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-welcome.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-embroidery.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-fulfillment.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-events.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-clients.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-design.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/planning-together.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/notebook-and-mug.webp",
+        "loaded": true
+      }
+    ],
+    "links": [
+      "/resources/hr",
+      "/resources/sales",
+      "/resources/events"
+    ],
+    "demo": "/request-demo",
+    "footer": "rgb(255, 255, 255)",
+    "heroHeight": 513.8125
+  },
+  {
+    "centeredHeading": true,
+    "ribbonMovesLeft": true,
+    "continuesOnHover": true,
+    "noPauseButton": true,
+    "reducedMotion": true
+  },
+  {
+    "width": 1280,
+    "scrollWidth": 1280,
+    "font": "Arial, Helvetica, sans-serif",
+    "headings": 1,
+    "images": [
+      {
+        "src": "/images/resources/resources-editorial-hero-transparent.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-welcome.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-embroidery.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-fulfillment.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-events.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-clients.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-design.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-welcome.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-embroidery.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-fulfillment.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-events.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-clients.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-design.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/planning-together.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/notebook-and-mug.webp",
+        "loaded": true
+      }
+    ],
+    "links": [
+      "/resources/hr",
+      "/resources/sales",
+      "/resources/events"
+    ],
+    "demo": "/request-demo",
+    "footer": "rgb(255, 255, 255)",
+    "heroHeight": 488.640625
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "font": "Arial, Helvetica, sans-serif",
+    "headings": 1,
+    "images": [
+      {
+        "src": "/images/resources/resources-editorial-hero-transparent.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-welcome.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-embroidery.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-fulfillment.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-events.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-clients.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-design.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-welcome.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-embroidery.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-fulfillment.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-events.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-clients.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-design.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/planning-together.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/notebook-and-mug.webp",
+        "loaded": true
+      }
+    ],
+    "links": [
+      "/resources/hr",
+      "/resources/sales",
+      "/resources/events"
+    ],
+    "demo": "/request-demo",
+    "footer": "rgb(255, 255, 255)",
+    "heroHeight": 448.515625
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "font": "Arial, Helvetica, sans-serif",
+    "headings": 1,
+    "images": [
+      {
+        "src": "/images/resources/resources-editorial-hero-transparent.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-welcome.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-embroidery.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-fulfillment.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-events.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-clients.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-design.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-welcome.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-embroidery.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-fulfillment.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-events.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-clients.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-design.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/planning-together.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/notebook-and-mug.webp",
+        "loaded": true
+      }
+    ],
+    "links": [
+      "/resources/hr",
+      "/resources/sales",
+      "/resources/events"
+    ],
+    "demo": "/request-demo",
+    "footer": "rgb(255, 255, 255)",
+    "heroHeight": 551.1875
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "font": "Arial, Helvetica, sans-serif",
+    "headings": 1,
+    "images": [
+      {
+        "src": "/images/resources/resources-editorial-hero-transparent.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-welcome.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-embroidery.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-fulfillment.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-events.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-clients.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-design.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-welcome.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-embroidery.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-fulfillment.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-events.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-clients.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-design.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/planning-together.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/notebook-and-mug.webp",
+        "loaded": true
+      }
+    ],
+    "links": [
+      "/resources/hr",
+      "/resources/sales",
+      "/resources/events"
+    ],
+    "demo": "/request-demo",
+    "footer": "rgb(255, 255, 255)",
+    "heroHeight": 750.21875
+  },
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "font": "Arial, Helvetica, sans-serif",
+    "headings": 1,
+    "images": [
+      {
+        "src": "/images/resources/resources-editorial-hero-transparent.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-welcome.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-embroidery.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-fulfillment.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-events.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-clients.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-design.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-welcome.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-embroidery.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-fulfillment.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-events.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-clients.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/ribbon-design.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/team-merchandise.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/planning-together.webp",
+        "loaded": true
+      },
+      {
+        "src": "/images/resources/notebook-and-mug.webp",
+        "loaded": true
+      }
+    ],
+    "links": [
+      "/resources/hr",
+      "/resources/sales",
+      "/resources/events"
+    ],
+    "demo": "/request-demo",
+    "footer": "rgb(255, 255, 255)",
+    "heroHeight": 777.625
+  },
+  {
+    "anchor": "#playbook-hr"
+  },
+  {
+    "teamRoute": "/resources/hr",
+    "hubStyleAbsent": true
+  },
+  {
+    "mobileMenuAndFooter": true,
+    "errors": []
+  }
+]

@@ -1,11 +1,13 @@
 import { Link } from "react-router";
 import { ShelfMerchLogo } from "@/components/brand/ShelfMerchLogo";
 import "./legal.css";
+import { LegalArticle } from "./LegalArticle";
+import { FileText } from "lucide-react";
 
 /** Public Terms of Service — also served as static HTML at GET /legal/terms-of-service. */
 export function TermsOfServicePage() {
   return (
-    <div className="legal-shell">
+    <div className="legal-shell legal-shell--terms">
       <header className="legal-header">
         <div className="legal-header-inner">
           <Link to="/" className="legal-logo-link" aria-label="ShelfMerch home">
@@ -20,9 +22,12 @@ export function TermsOfServicePage() {
       </header>
 
       <main className="legal-main">
-        <article className="legal-article">
-          <h1>Terms of Service</h1>
+        <header className="legal-hero">
+          <span className="legal-eyebrow"><FileText size={20} aria-hidden="true" /> THE DETAILS, MADE CLEAR</span>
+          <h1>Terms of <em>Service</em></h1>
           <p className="legal-updated">Last updated: 30 July 2026</p>
+        </header>
+        <LegalArticle collapsedContents>
 
           <p className="legal-intro">
             These Terms of Service (“<strong>Terms</strong>”) govern access to and use of{" "}
@@ -363,7 +368,7 @@ export function TermsOfServicePage() {
             a whole — should be reviewed by a qualified Indian lawyer before publication or customer
             contracting.
           </p>
-        </article>
+        </LegalArticle>
       </main>
 
       <footer className="legal-footer">

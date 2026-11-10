@@ -458,71 +458,46 @@ function zohoResponseHeadersToObject(headers) {
   return out;
 }
 
+function safeZohoErrorCode(error, responseBody) {
+  const direct = error?.code;
+  if (typeof direct === 'string' || typeof direct === 'number') return String(direct);
+  const nested = responseBody?.response?.errors?.code ?? responseBody?.error?.code ?? responseBody?.code;
+  if (typeof nested === 'string' || typeof nested === 'number') return String(nested);
+  return null;
+}
+
 /**
- * Internal-only debug dump for Zoho employee fetch failures.
- * Never logs access tokens or Authorization headers.
+ * Structured failure log for Zoho employee fetches.
+ * Logs operation, HTTP status, Zoho error code, and request path only.
+ * Never logs response bodies, headers, tokens, or employee fields.
  */
-function logZohoEmployeeFetchDebug({
+export function logZohoEmployeeFetchDebug({
   phase,
   requestUrl,
   httpStatus,
   responseBody,
-  responseHeaders,
   error,
 }) {
   const status = httpStatus ?? error?.response?.status ?? null;
-  const body = responseBody ?? error?.response?.data ?? null;
-  const debugPayload = {
-    phase,
-    requestUrl: requestUrl ? sanitizeZohoRequestUrl(requestUrl) : null,
-    httpStatus: status,
-    responseBody: body,
-    responseHeaders: responseHeaders ?? null,
-  };
-
-  if (error) {
-    debugPayload.errorMessage = error.message ?? String(error);
-    debugPayload.errorCode = error.code ?? null;
-    debugPayload.errorName = error.name ?? null;
-    if (error.response) {
-      debugPayload.errorResponseStatus = error.response.status ?? null;
-      debugPayload.errorResponseData = error.response.data ?? null;
-    }
-    if (error.cause) {
-      debugPayload.errorCause =
-        error.cause?.message ?? (typeof error.cause === 'string' ? error.cause : String(error.cause));
+  let requestPath = null;
+  if (requestUrl) {
+    try {
+      requestPath = new URL(sanitizeZohoRequestUrl(requestUrl)).pathname;
+    } catch {
+      requestPath = null;
     }
   }
 
-  // eslint-disable-next-line no-console -- intentional ops debug for Zoho sync failures
-  console.log('ZOHO EMPLOYEE FETCH DEBUG');
-  // eslint-disable-next-line no-console
-  console.log('Phase:', phase);
-  // eslint-disable-next-line no-console
-  console.log('Request URL:', debugPayload.requestUrl);
-  // eslint-disable-next-line no-console
-  console.log('Status:', status);
-  // eslint-disable-next-line no-console
-  console.log('Response:', JSON.stringify(body, null, 2));
-  // eslint-disable-next-line no-console
-  console.log('Response headers:', JSON.stringify(debugPayload.responseHeaders, null, 2));
-  if (error) {
-    // eslint-disable-next-line no-console
-    console.log('Message:', debugPayload.errorMessage);
-    // eslint-disable-next-line no-console
-    console.log('Error code:', debugPayload.errorCode);
-    if (debugPayload.errorResponseStatus != null) {
-      // eslint-disable-next-line no-console
-      console.log('error.response.status:', debugPayload.errorResponseStatus);
-      // eslint-disable-next-line no-console
-      console.log(
-        'error.response.data:',
-        JSON.stringify(debugPayload.errorResponseData, null, 2),
-      );
-    }
-  }
-
-  logger.error(debugPayload, 'ZOHO EMPLOYEE FETCH DEBUG');
+  logger.error(
+    {
+      event: 'zoho_employee_fetch',
+      phase: phase || 'unknown',
+      httpStatus: status,
+      errorCode: safeZohoErrorCode(error, responseBody),
+      requestPath,
+    },
+    'Zoho employee fetch failed',
+  );
 }
 
 async function fetchEmployeePage({ peopleBaseUrl, path, accessToken, sIndex, limit, useRecLimit }) {

@@ -13,7 +13,7 @@
 
 .bonus-integ-page h1 {
   margin: 0;
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: var(--page-title-size);
   font-weight: var(--page-title-weight);
   letter-spacing: var(--page-title-tracking);
@@ -48,10 +48,10 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: 20px;
   line-height: 1.2;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   letter-spacing: -0.02em;
   color: var(--ink);
 }
@@ -64,8 +64,8 @@
   background: color-mix(in srgb, var(--brand, #3152ff) 12%, #fff);
   color: var(--brand, #3152ff);
   font-family: inherit;
-  font-size: 10.5px;
-  font-weight: 800;
+  font-size: var(--workspace-font-caption, 10.5px);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -75,7 +75,7 @@
   margin: 0;
   max-width: 62ch;
   color: var(--ink-2);
-  font-size: 14px;
+  font-size: var(--workspace-font-body, 14px);
   line-height: 1.5;
 }
 
@@ -86,8 +86,8 @@
   flex: none;
   margin-top: 4px;
   color: var(--brand, #3152ff);
-  font-size: 13.5px;
-  font-weight: 600;
+  font-size: var(--workspace-font-body, 13.5px);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.2;
   text-decoration: none;
   white-space: nowrap;
@@ -177,8 +177,8 @@
   align-items: center;
   gap: 5px;
   text-align: center;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: var(--workspace-font-caption, 13px);
+  font-weight: var(--font-weight-bold);
   line-height: 1.25;
   color: var(--ink);
 }
@@ -190,8 +190,8 @@
   border-radius: 999px;
   background: color-mix(in srgb, #0b63ce 12%, #fff);
   color: #0b63ce;
-  font-size: 10.5px;
-  font-weight: 800;
+  font-size: var(--workspace-font-caption, 10.5px);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.02em;
 }
 
@@ -203,7 +203,7 @@
 .bonus-integ-logo-card__status--setup {
   background: #f3f4f6;
   color: #6b7280;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 /* Collaboration / display tiles */
@@ -303,7 +303,7 @@
   height: 100%;
   border-radius: 9px;
   color: #fff;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   font-size: 16px;
   border: none;
 }
@@ -321,9 +321,9 @@
   align-items: center;
   gap: 8px;
   color: var(--ink);
-  font-size: 15px;
+  font-size: var(--workspace-font-body, 15px);
   line-height: 1.25;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .bonus-integ-recommended,
@@ -333,9 +333,9 @@
   margin-top: 0;
   padding: 2px 8px;
   border-radius: 999px;
-  font-size: 10.5px;
+  font-size: var(--workspace-font-caption, 10.5px);
   line-height: 1.2;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.02em;
 }
 
@@ -353,7 +353,7 @@
   margin-top: 2px;
   max-width: 36ch;
   color: var(--ink-2);
-  font-size: 13px;
+  font-size: var(--workspace-font-caption, 13px);
   line-height: 1.4;
 }
 
@@ -395,9 +395,9 @@
 .bonus-integ-plan-h h3 {
   margin: 0;
   color: var(--ink);
-  font-size: 16px;
+  font-size: var(--workspace-font-heading, 16px);
   line-height: 1.3;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   letter-spacing: -0.02em;
 }
 
@@ -409,7 +409,7 @@
 .bonus-integ-plan p {
   max-width: 54ch;
   margin: 0 0 6px;
-  font-size: 14px;
+  font-size: var(--workspace-font-body, 14px);
   line-height: 1.45;
   color: var(--ink-2);
 }
@@ -418,9 +418,9 @@
   display: block;
   margin: 0;
   color: var(--ink-3);
-  font-size: 12.5px;
+  font-size: var(--workspace-font-body, 12.5px);
   line-height: 1.4;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .bonus-integ-plan button {
@@ -432,8 +432,8 @@
   border-radius: 12px;
   background: var(--ink);
   color: #fff;
-  font-size: 13.5px;
-  font-weight: 700;
+  font-size: var(--workspace-font-body, 13.5px);
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
   white-space: nowrap;
 }
@@ -539,8 +539,8 @@
 }
 
 .bonus-integ-back {
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--workspace-font-body, 13px);
+  font-weight: var(--font-weight-medium);
   letter-spacing: 0;
   text-transform: none;
 }
@@ -554,8 +554,8 @@
   border: 1px solid transparent;
   border-radius: 999px;
   background: #f9fafb;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--workspace-font-caption, 12px);
+  font-weight: var(--font-weight-semibold);
   line-height: 1;
   color: #4b5563;
 }
@@ -584,8 +584,8 @@
   min-height: 22px;
   padding: 0 9px 0 7px;
   gap: 5px;
-  font-size: 11px;
-  font-weight: 650;
+  font-size: var(--workspace-font-caption, 11px);
+  font-weight: var(--font-weight-semibold);
 }
 
 .bonus-integ-slack-summary__item .bonus-integ-status-pill__dot {
@@ -628,5 +628,5 @@
 
 .bonus-integ-help button {
   color: #4f46e5;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }

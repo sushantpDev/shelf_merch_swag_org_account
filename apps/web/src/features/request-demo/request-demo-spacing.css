@@ -1,0 +1,73 @@
+.request-demo {
+  --demo-section-space: clamp(40px, 4vw, 56px);
+  --demo-section-half: calc(var(--demo-section-space) / 2);
+}
+
+.request-demo .request-demo__hero {
+  padding-bottom: 32px;
+}
+
+.request-demo .request-demo__shell {
+  min-height: 0;
+  padding-top: 32px;
+}
+
+.request-demo .request-demo__lead {
+  margin-top: 24px;
+}
+
+.request-demo .request-demo__plans {
+  padding-block: var(--demo-section-space);
+}
+
+/* Adjacent sections share the gap instead of stacking full section padding. */
+.request-demo .request-demo__testimonial {
+  padding-block: var(--demo-section-space) var(--demo-section-half);
+}
+
+.request-demo :is(.request-demo__section, .request-demo__steps) {
+  padding-block: var(--demo-section-half);
+}
+
+.request-demo .request-demo__faq {
+  padding-block: var(--demo-section-half) var(--demo-section-space);
+}
+
+.request-demo .request-demo__testimonial h2 + p {
+  margin-block: 16px 20px;
+}
+
+.request-demo .request-demo__steps h2 {
+  margin-bottom: 32px;
+}
+
+.request-demo .request-demo__steps li {
+  padding-bottom: 28px;
+}
+
+.request-demo .request-demo__steps h3 {
+  margin-bottom: 12px;
+}
+
+.request-demo .request-demo__faq h2 {
+  margin-bottom: 24px;
+}
+
+.request-demo .request-demo__footer-cta {
+  padding-block: var(--demo-section-space);
+}
+
+@media (max-width: 640px) {
+  .request-demo .request-demo__shell {
+    padding-top: 24px;
+    row-gap: 28px;
+  }
+
+  .request-demo .request-demo__steps-grid {
+    row-gap: 28px;
+  }
+
+  .request-demo .request-demo__steps h2 {
+    margin-bottom: 24px;
+  }
+}

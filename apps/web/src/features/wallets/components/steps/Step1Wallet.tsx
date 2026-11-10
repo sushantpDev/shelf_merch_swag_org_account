@@ -33,11 +33,7 @@ export function Step1Wallet({
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 22 }}>
       <div className="card" style={{ padding: 24 }}>
-        <h3 style={{ fontSize: 18, marginBottom: 4 }}>Setup Organization Budget</h3>
-        <p className="muted" style={{ fontSize: 13, marginBottom: 18 }}>
-          Create your organization&apos;s merchandise budget. Submit a Purchase Order or Agreement
-          for ShelfMerch approval — this is your single budget for all campaigns and orders.
-        </p>
+        <h3 style={{ fontSize: 18, marginBottom: 18 }}>Setup Organization Budget</h3>
 
         <div className="field">
           <label className="lbl" htmlFor="org-wname">
@@ -77,7 +73,7 @@ export function Step1Wallet({
               onChange={(e) => setField("amount", parseAmt(e.target.value))}
             />
           </div>
-          <div className="mut3" style={{ fontSize: 11.5, marginTop: 6 }}>
+          <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11.5px)", marginTop: 6 }}>
             Total annual merchandise budget you want to fund.
           </div>
         </div>
@@ -249,7 +245,7 @@ export function Step1Wallet({
         )}
       </div>
 
-      <aside>
+      <aside style={{ display: "grid", gap: 16, alignContent: "start" }}>
         <div className="card" style={{ padding: 20 }}>
           <div
             className="row"
@@ -282,10 +278,10 @@ function SummaryRow({ label, value, big }: { label: string; value: string; big?:
       <div
         className="mut3"
         style={{
-          fontSize: 11,
+          fontSize: "var(--workspace-font-caption, 11px)",
           textTransform: "uppercase",
           letterSpacing: ".04em",
-          fontWeight: 700,
+          fontWeight: "var(--font-weight-bold)",
         }}
       >
         {label}
@@ -294,8 +290,8 @@ function SummaryRow({ label, value, big }: { label: string; value: string; big?:
         className={big ? "num" : ""}
         style={
           big
-            ? { fontFamily: "var(--disp)", fontWeight: 800, fontSize: 24, marginTop: 3 }
-            : { fontWeight: 500, marginTop: 3, fontSize: 13.5 }
+            ? { fontFamily: "var(--font-family-primary)", fontWeight: "var(--font-weight-bold)", fontSize: 24, marginTop: 3 }
+            : { fontWeight: "var(--font-weight-medium)", marginTop: 3, fontSize: "var(--workspace-font-body, 13.5px)" }
         }
       >
         {value}

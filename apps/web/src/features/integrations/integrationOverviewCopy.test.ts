@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { USER_MANAGEMENT_TOOLS } from "./data";
 import {
   SYNC_NOW_HELPER,
+  ZOHO_MANUAL_SYNC_HELPER,
   directoryConnectionStatus,
   integrationOverviewSteps,
 } from "./integrationOverviewCopy";
@@ -17,7 +18,7 @@ const OPENING: Record<string, string> = {
   "google-workspace":
     "Connect Google Workspace once and ShelfMerch will automatically keep your company directory in sync.",
   "zoho-people":
-    "Connect Zoho People once and ShelfMerch will automatically keep your employee directory in sync.",
+    "A company administrator connects Zoho People with Zoho OAuth. Employee import does not start until someone runs a sync.",
 };
 
 describe("integration overview copy", () => {
@@ -27,7 +28,12 @@ describe("integration overview copy", () => {
       const steps = integrationOverviewSteps(tile.id, tile.name);
       expect(steps).toHaveLength(7);
       expect(steps[0]?.body).toBe(OPENING[tile.id]);
-      expect(steps[4]?.body).toContain("Sync now only when you want");
+      if (tile.id !== "zoho-people") {
+        expect(steps[4]?.body).toContain("Sync now only when you want");
+      } else {
+        expect(steps.map((step) => step.body).join(" ")).toContain("does not sync Zoho People automatically");
+        expect(steps.map((step) => step.body).join(" ")).not.toMatch(/automatically keep your employee/);
+      }
       expect(steps.map((step) => step.body).join(" ")).not.toMatch(/Merge|webhook|BullMQ|queue/i);
     }
   });
@@ -87,5 +93,21 @@ describe("integration overview copy", () => {
     expect(SYNC_NOW_HELPER).toBe(
       "Automatic sync is enabled. Use Sync now only if you want to refresh data immediately.",
     );
+  });
+
+  it("describes Zoho People sync as manual", () => {
+    expect(ZOHO_MANUAL_SYNC_HELPER).toContain("manual");
+    expect(
+      directoryConnectionStatus(
+        { syncing: false, needsAttention: false, disconnected: false, connected: true },
+        "manual",
+      )?.message,
+    ).toContain("Sync now");
+    expect(
+      directoryConnectionStatus(
+        { syncing: false, needsAttention: false, disconnected: false, connected: true },
+        "automatic",
+      )?.message,
+    ).toContain("automatically");
   });
 });

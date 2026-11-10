@@ -9,13 +9,18 @@ export function AcceptInviteView(vm: AcceptInviteVm) {
   if (!vm.token) {
     return (
       <AuthLayout
-        variant="compact"
+        variant="welcome"
+        showDivider={false}
         title="Invitation link invalid"
         subtitle="This invite link is missing or no longer valid. Ask your admin to resend the invitation."
         footerLink={{ hint: "", label: "Log in", to: "/login" }}
       >
         <div className="auth-expired-panel">
-          <Link to="/login" className="auth-simple-submit" style={{ display: "inline-flex", textDecoration: "none" }}>
+          <Link
+            to="/login"
+            className="auth-simple-submit"
+            style={{ display: "inline-flex", textDecoration: "none" }}
+          >
             Go to login
           </Link>
         </div>
@@ -25,11 +30,15 @@ export function AcceptInviteView(vm: AcceptInviteVm) {
 
   if (vm.done) {
     return (
-      <AuthLayout variant="compact" title="You're in">
+      <AuthLayout variant="welcome" showDivider={false} title="You're in">
         <div className="auth-success-panel" role="status">
-          <CheckCircle2 className="auth-success-icon auth-success-icon--pop" size={52} strokeWidth={1.75} />
+          <CheckCircle2
+            className="auth-success-icon auth-success-icon--pop"
+            size={52}
+            strokeWidth={1.75}
+          />
           <p className="auth-success-headline">Invitation accepted</p>
-          <p className="auth-success-copy">Taking you to your department dashboard…</p>
+          <p className="auth-success-copy">Taking you to your workspace…</p>
           <p className="auth-success-redirect" aria-live="polite">
             Redirecting…
           </p>
@@ -40,9 +49,10 @@ export function AcceptInviteView(vm: AcceptInviteVm) {
 
   return (
     <AuthLayout
-      variant="compact"
-      title="Accept your invitation"
-      subtitle="Set a password for the email this invite was sent to. We'll sign you in as your department manager."
+      variant="welcome"
+      showDivider={false}
+      title="Create your password"
+      subtitle="Set a password for your invited account. We'll sign you in to your workspace."
       footerLink={
         vm.showLoginHint ? { hint: "Already activated?", label: "Log in", to: "/login" } : undefined
       }
@@ -80,7 +90,11 @@ export function AcceptInviteView(vm: AcceptInviteVm) {
             </p>
           ) : null}
 
-          <button type="submit" className="auth-simple-submit" disabled={vm.loading || !vm.canSubmit}>
+          <button
+            type="submit"
+            className="auth-simple-submit"
+            disabled={vm.loading || !vm.canSubmit}
+          >
             {vm.loading ? (
               <span className="auth-submit-busy">
                 <Loader2 size={18} className="auth-spin" aria-hidden="true" />

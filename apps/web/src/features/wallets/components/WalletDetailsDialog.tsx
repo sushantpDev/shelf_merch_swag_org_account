@@ -70,7 +70,7 @@ export function WalletDetailsDialog({
       <DialogContent className="sm-modal" style={{ maxWidth: 520 }}>
         <div className="modal-pad">
           <DialogHeader>
-            <DialogTitle style={{ fontSize: 20, fontFamily: "var(--disp)" }}>
+            <DialogTitle style={{ fontSize: 20, fontFamily: "var(--font-family-primary)" }}>
               Wallet details
             </DialogTitle>
             <DialogDescription className="muted" style={{ fontSize: 14, margin: "8px 0 0" }}>

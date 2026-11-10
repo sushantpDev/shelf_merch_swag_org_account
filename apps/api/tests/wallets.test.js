@@ -140,6 +140,69 @@ describe('wallets API — authz', () => {
     expect(res.status).toBe(403);
   });
 
+  it('hides organization cash from an entity manager on wallet reads', async () => {
+    const reserve = await makeFundedWallet(tenant, { name: 'Reserve', amount: 80_000 });
+    const sales = await makeEntity(tenant, wallet, 'Sales');
+    await ledger.createTransaction({
+      tenantId: tenant._id,
+      walletId: wallet._id,
+      type: 'allocation_to_entity',
+      amount: 12_000,
+      relatedEntityId: sales._id,
+    });
+    await ledger.createTransaction({
+      tenantId: tenant._id,
+      walletId: wallet._id,
+      type: 'allocation_to_entity',
+      amount: 7_000,
+      relatedEntityId: entity._id,
+    });
+
+    const list = await request(app).get('/api/v1/wallets').set(authHeader(managerToken));
+    expect(list.status).toBe(200);
+    expect(list.body.map((row) => row.name)).toEqual(['Org Wallet']);
+    expect(JSON.stringify(list.body)).not.toContain('500000');
+    expect(JSON.stringify(list.body)).not.toContain('80000');
+    expect(list.body[0]).not.toHaveProperty('balance');
+    expect(list.body[0]).not.toHaveProperty('allocatedAmount');
+    expect(list.body[0]).not.toHaveProperty('unallocatedAmount');
+
+    const adminList = await request(app).get('/api/v1/wallets').set(authHeader(adminToken));
+    expect(adminList.body.map((row) => row.name).sort()).toEqual(['Org Wallet', 'Reserve']);
+    expect(adminList.body.find((row) => row.name === 'Org Wallet').balance).toBe(500_000);
+
+    const hidden = await request(app).get(`/api/v1/wallets/${reserve._id}`).set(authHeader(managerToken));
+    expect(hidden.status).toBe(404);
+
+    const history = await request(app)
+      .get(`/api/v1/wallets/${wallet._id}/transactions`)
+      .set(authHeader(managerToken));
+    expect(history.status).toBe(200);
+    expect(history.body.items.map((row) => row.type)).toEqual(['allocation_to_entity']);
+    expect(history.body.items[0]).toMatchObject({ amount: 7_000, availableAfter: 7_000 });
+    expect(history.body.items[0]).not.toHaveProperty('balanceAfter');
+    expect(JSON.stringify(history.body)).not.toContain('fund_in');
+    expect(JSON.stringify(history.body)).not.toContain('12000');
+    expect(JSON.stringify(history.body)).not.toContain('500000');
+
+    const departmentHistory = await request(app)
+      .get(`/api/v1/entities/${entity._id}/transactions`)
+      .set(authHeader(managerToken));
+    expect(departmentHistory.status).toBe(200);
+    expect(departmentHistory.body.items[0]).not.toHaveProperty('balanceAfter');
+    expect(departmentHistory.body.items[0].amount).toBe(7_000);
+
+    const adminDepartmentHistory = await request(app)
+      .get(`/api/v1/entities/${entity._id}/transactions`)
+      .set(authHeader(adminToken));
+    expect(adminDepartmentHistory.status).toBe(200);
+    expect(adminDepartmentHistory.body.items[0]).toHaveProperty('balanceAfter');
+    const adminWalletHistory = await request(app)
+      .get(`/api/v1/wallets/${wallet._id}/transactions`)
+      .set(authHeader(adminToken));
+    expect(adminWalletHistory.body.items.some((row) => row.type === 'fund_in' && row.balanceAfter === 500_000)).toBe(true);
+  });
+
   it('isolates wallets across tenants (404 / empty list)', async () => {
     const other = await makeTenant({ slug: 'wallet-other' });
     const { token: otherToken } = await makeUser(other, 'company_admin', 'tenant');

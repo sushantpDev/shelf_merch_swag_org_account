@@ -54,9 +54,9 @@ function OrdersTooltip({
   return (
     <div
       className="card"
-      style={{ padding: "8px 12px", fontSize: 12, boxShadow: "0 4px 14px rgba(0,0,0,.08)" }}
+      style={{ padding: "8px 12px", fontSize: "var(--workspace-font-caption, 12px)", boxShadow: "0 4px 14px rgba(0,0,0,.08)" }}
     >
-      <div style={{ fontWeight: 700, marginBottom: 2 }}>Week of {weekLabel(p.weekStart)}</div>
+      <div style={{ fontWeight: "var(--font-weight-bold)", marginBottom: 2 }}>Week of {weekLabel(p.weekStart)}</div>
       <div className="muted">
         {p.orders.toLocaleString("en-IN")} {p.orders === 1 ? "order" : "orders"}
       </div>
@@ -79,9 +79,9 @@ function HBar({
     <div style={{ marginBottom: 14 }}>
       <div
         className="row"
-        style={{ justifyContent: "space-between", fontSize: 13, marginBottom: 5 }}
+        style={{ justifyContent: "space-between", fontSize: "var(--workspace-font-body, 13px)", marginBottom: 5 }}
       >
-        <span style={{ fontWeight: 600 }}>{label}</span>
+        <span style={{ fontWeight: "var(--font-weight-semibold)" }}>{label}</span>
         <span className="muted">{right}</span>
       </div>
       <div
@@ -184,7 +184,7 @@ export function ReportsTab({ shop }: { shop: UiShop }) {
             <div className="k">{k}</div>
             <div className="v num">{v}</div>
             {sub ? (
-              <div className="muted" style={{ fontSize: 11.5, marginTop: 2 }}>
+              <div className="muted" style={{ fontSize: "var(--workspace-font-caption, 11.5px)", marginTop: 2 }}>
                 {sub}
               </div>
             ) : null}
@@ -198,8 +198,8 @@ export function ReportsTab({ shop }: { shop: UiShop }) {
       >
         {/* Orders over time */}
         <div className="card" style={{ padding: 22 }}>
-          <h3 style={{ fontSize: 16, marginBottom: 2 }}>Orders per week</h3>
-          <p className="muted" style={{ fontSize: 12.5, marginBottom: 14 }}>
+          <h3 style={{ fontSize: "var(--workspace-font-heading, 16px)", marginBottom: 2 }}>Orders per week</h3>
+          <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 12.5px)", marginBottom: 14 }}>
             Redemption orders placed in this shop for the last 12 weeks
           </p>
           {weeklyHasOrders ? (
@@ -236,7 +236,7 @@ export function ReportsTab({ shop }: { shop: UiShop }) {
               </ResponsiveContainer>
             </div>
           ) : (
-            <p className="muted" style={{ fontSize: 13, padding: "40px 0", textAlign: "center" }}>
+            <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)", padding: "40px 0", textAlign: "center" }}>
               No orders in the last 12 weeks.
             </p>
           )}
@@ -244,8 +244,8 @@ export function ReportsTab({ shop }: { shop: UiShop }) {
 
         {/* Redemption funnel */}
         <div className="card" style={{ padding: 22 }}>
-          <h3 style={{ fontSize: 16, marginBottom: 2 }}>Redemption funnel</h3>
-          <p className="muted" style={{ fontSize: 12.5, marginBottom: 16 }}>
+          <h3 style={{ fontSize: "var(--workspace-font-heading, 16px)", marginBottom: 2 }}>Redemption funnel</h3>
+          <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 12.5px)", marginBottom: 16 }}>
             How far recipients get after being invited
           </p>
           {funnel.map((f) => (
@@ -262,8 +262,8 @@ export function ReportsTab({ shop }: { shop: UiShop }) {
       {/* Top products */}
       {topProducts.length > 0 ? (
         <div className="card" style={{ padding: 22 }}>
-          <h3 style={{ fontSize: 16, marginBottom: 2 }}>Top products</h3>
-          <p className="muted" style={{ fontSize: 12.5, marginBottom: 16 }}>
+          <h3 style={{ fontSize: "var(--workspace-font-heading, 16px)", marginBottom: 2 }}>Top products</h3>
+          <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 12.5px)", marginBottom: 16 }}>
             Most-redeemed items across this shop&apos;s campaigns
           </p>
           {topProducts.map((p) => (

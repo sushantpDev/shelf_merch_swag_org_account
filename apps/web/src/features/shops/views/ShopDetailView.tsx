@@ -86,7 +86,7 @@ export function ShopDetailView(vm: ShopDetailVm) {
                 Publish
               </button>
             ) : (
-              <span className="mut3" style={{ fontSize: 13 }}>
+              <span className="mut3" style={{ fontSize: "var(--workspace-font-caption, 13px)" }}>
                 Publish to view shop
               </span>
             )}

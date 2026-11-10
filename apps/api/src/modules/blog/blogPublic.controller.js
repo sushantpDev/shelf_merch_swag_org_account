@@ -1,3 +1,4 @@
+import { BLOG_PUBLIC_STYLES, blogHeader, blogFooter, renderBlogHub } from './blogPublicView.js';
 import { BlogPost } from './blogPost.model.js';
 import { BlogAsset } from './blogAsset.model.js';
 import { escapeHtml, renderBlogContent } from './blogContent.js';
@@ -6,27 +7,6 @@ import { readStoredFile } from '../../services/storage.service.js';
 import { pipeline } from 'node:stream/promises';
 import mongoose from 'mongoose';
 
-const STYLES = `
-  :root{font-family:Inter,Arial,sans-serif;color:#121212;background:#f7f3ea}
-  *{box-sizing:border-box}body{margin:0}a{color:inherit}img{max-width:100%}
-  .blog-header{background:#fff;border-bottom:1px solid #e7e2d9;padding:18px max(20px,5vw);display:flex;align-items:center;justify-content:space-between;gap:20px}
-  .blog-brand{font-family:'Bricolage Grotesque',sans-serif;font-size:22px;font-weight:800;text-decoration:none;letter-spacing:-.05em}
-  .blog-header nav{display:flex;gap:22px;font-size:14px;font-weight:600}.blog-header nav a{text-decoration:none}
-  .blog-wrap{width:min(1100px,calc(100% - 40px));margin:0 auto;padding:65px 0 100px}
-  .blog-eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:12px;color:#3155ff;font-weight:800}
-  h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif;letter-spacing:-.045em}h1{font-size:clamp(42px,6vw,78px);line-height:1.02;margin:12px 0 20px}
-  .blog-intro{font-size:18px;line-height:1.65;color:#555;max-width:720px}.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
-  .blog-card{background:#fff;border:1px solid #e7e2d9;border-radius:18px;overflow:hidden}.blog-card img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
-  .blog-card-body{padding:22px}.blog-card h2{font-size:26px;line-height:1.12;margin:12px 0}.blog-card h2 a{text-decoration:none}.blog-card p{line-height:1.6;color:#555}
-  .blog-meta{font-size:13px;color:#777}.blog-pagination{display:flex;justify-content:space-between;margin-top:40px}
-  .blog-article{max-width:760px;margin:auto}.blog-article .blog-intro{font-size:22px}.blog-cover{width:100%;max-height:470px;object-fit:cover;border-radius:20px;margin:30px 0}
-  .blog-content{font-size:18px;line-height:1.8}.blog-content h2{font-size:36px;margin-top:55px}.blog-content h3{font-size:27px;margin-top:38px}
-  .blog-content p,.blog-content ul,.blog-content ol{margin:22px 0}.blog-content blockquote{border-left:4px solid #3155ff;padding-left:20px;color:#444;margin:30px 0}
-  .blog-content figure{margin:36px 0}.blog-content figure img{border-radius:14px}.blog-content a{color:#3155ff}
-  .blog-footer{background:#121212;color:#fff;padding:35px max(20px,5vw);font-size:14px}.blog-footer a{margin-right:20px}
-  @media(max-width:800px){.blog-grid{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:580px){.blog-grid{grid-template-columns:1fr}.blog-header nav{gap:12px;font-size:12px}.blog-wrap{padding-top:42px}}
-`;
 
 function absoluteImage(url) {
   return url?.startsWith('/') ? `${SITE_ORIGIN}${url}` : url;
@@ -47,11 +27,9 @@ function htmlPage({ title, description, canonical, body, image = '', type = 'web
     ${canonical ? `<meta property="og:url" content="${escapeHtml(canonical)}" />` : ''}
     ${socialImage}<meta name="twitter:card" content="${image ? 'summary_large_image' : 'summary'}" />
     <link rel="icon" href="/favicon-32x32.png" type="image/png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" />
-    <style>${STYLES}</style>${structuredData}</head><body>
-    <header class="blog-header"><a class="blog-brand" href="/">shelfmerch</a><nav aria-label="Site"><a href="/blog">Blog</a><a href="/resources">Resources</a><a href="/apps/catalog">Catalog</a><a href="/request-demo">Book a demo</a></nav></header>
-    ${body}<footer class="blog-footer"><a href="/">ShelfMerch</a><a href="/blog">Blog</a><a href="/legal/privacy-policy">Privacy</a></footer>
+    <style>${BLOG_PUBLIC_STYLES}</style>${structuredData}</head><body>
+    ${blogHeader()}
+    ${body}${blogFooter()}
     </body></html>`;
 }
 
@@ -76,19 +54,10 @@ export async function sendBlogIndex(req, res) {
       title: 'Blog page not found', description: '', robots: 'noindex,follow', body: '<main class="blog-wrap"><h1>Page not found</h1></main>',
     }));
   }
-  const cards = posts.map((post) => `<article class="blog-card">
-    ${post.coverImageUrl ? `<a href="/blog/${post.slug}"><img src="${escapeHtml(post.coverImageUrl)}" alt="${escapeHtml(post.coverImageAlt)}" loading="lazy" /></a>` : ''}
-    <div class="blog-card-body"><span class="blog-meta">${dateText(post.publishedAt)}</span>
-    <h2><a href="/blog/${post.slug}">${escapeHtml(post.title)}</a></h2><p>${escapeHtml(post.excerpt)}</p>
-    <a href="/blog/${post.slug}">Read article →</a></div></article>`).join('');
-  const body = `<main class="blog-wrap"><span class="blog-eyebrow">ShelfMerch Blog</span>
-    <h1>Ideas for better merch and recognition.</h1><p class="blog-intro">Stories, guides and practical ideas from ShelfMerch.</p>
-    ${posts.length ? `<div class="blog-grid">${cards}</div>` : '<p>New articles are on their way.</p>'}
-    <nav class="blog-pagination" aria-label="Blog pages">${page > 1 ? `<a href="${page === 2 ? '/blog' : `/blog?page=${page - 1}`}">← Previous</a>` : '<span></span>'}
-    ${page * limit < total ? `<a href="/blog?page=${page + 1}">Next →</a>` : ''}</nav></main>`;
+  const body = renderBlogHub({ posts, page, total, limit, dateText });
   const canonical = `${SITE_ORIGIN}/blog${page > 1 ? `?page=${page}` : ''}`;
   res.status(200).type('html').set('Cache-Control', 'no-store').send(htmlPage({
-    title: 'Blog | ShelfMerch', description: 'Stories, guides and practical ideas for merchandise, gifting and recognition.', canonical, body,
+    title: 'Blog & Guides | Shelf Merch', description: 'Stories, guides and practical ideas for merchandise, gifting and recognition.', canonical, body,
   }));
 }
 

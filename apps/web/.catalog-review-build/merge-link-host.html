@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connect HRIS</title>
+    <link rel="preload" href="/fonts/hanken-grotesk/normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/fonts/typography.css" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: transparent;
+        color: #e2e8f0;
+        font: 14px/1.4 var(--font-family-primary);
+      }
+      .status {
+        margin: 0;
+        padding: 28px 20px;
+        text-align: center;
+        color: #cbd5e1;
+      }
+      .status[hidden] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="status" id="status">Opening secure connection…</p>
+    <script src="https://cdn.merge.dev/initialize.js"></script>
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var linkToken = params.get("linkToken") || "";
+        var statusEl = document.getElementById("status");
+        var SOURCE = "shelfmerch-merge-link";
+        var targetOrigin = window.location.origin;
+
+        function notify(type, payload) {
+          var message = Object.assign({ source: SOURCE, type: type }, payload || {});
+          // Prefer parent (in-app iframe modal). Fall back to opener (legacy popup).
+          if (window.parent && window.parent !== window) {
+            window.parent.postMessage(message, targetOrigin);
+            return;
+          }
+          if (window.opener && !window.opener.closed) {
+            window.opener.postMessage(message, targetOrigin);
+          }
+        }
+
+        function fail(message) {
+          if (statusEl) statusEl.textContent = message || "Could not open Merge Link";
+          notify("error", { message: message || "Could not open Merge Link" });
+        }
+
+        if (!linkToken) {
+          fail("Missing link token");
+          return;
+        }
+
+        function boot() {
+          if (!window.MergeLink) {
+            fail("Merge Link failed to load");
+            return;
+          }
+
+          // initialize → onReady (CDN then posts token via E()) → openLink on next tick.
+          window.MergeLink.initialize({
+            linkToken: linkToken,
+            shouldSendTokenOnSuccessfulLink: true,
+            onSuccess: function (publicToken) {
+              notify("success", { publicToken: publicToken });
+            },
+            onExit: function () {
+              notify("exit");
+            },
+            onReady: function () {
+              notify("ready");
+              if (statusEl) statusEl.hidden = true;
+              setTimeout(function () {
+                window.MergeLink.openLink();
+              }, 0);
+            },
+          });
+        }
+
+        if (window.MergeLink) boot();
+        else {
+          var script = document.querySelector('script[src="https://cdn.merge.dev/initialize.js"]');
+          if (!script) {
+            fail("Merge script missing");
+            return;
+          }
+          script.addEventListener("load", boot);
+          script.addEventListener("error", function () {
+            fail("Merge script failed to load");
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

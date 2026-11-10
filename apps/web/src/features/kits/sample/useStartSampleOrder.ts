@@ -91,5 +91,8 @@ export function useStartSampleOrder() {
     startFromWorkspaceKit,
     startFromPlatformKit,
     pending: ensureCuratedKit.isPending,
+    pendingKitId: ensureCuratedKit.isPending
+      ? (ensureCuratedKit.variables?.platformKitId ?? null)
+      : null,
   };
 }

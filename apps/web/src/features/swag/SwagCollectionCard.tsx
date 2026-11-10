@@ -1,6 +1,7 @@
 import { Archive, Pencil, Store, Trash2 } from "lucide-react";
 import type { UiCollection, UiProduct } from "@/services/mappers";
 import { CollectionInlineCard } from "./CollectionInlineCard";
+import { collectionLinkedToShop } from "./collectionEditability";
 
 export function SwagCollectionCard({
   collection,
@@ -31,7 +32,7 @@ export function SwagCollectionCard({
   onProductClick?: (product: UiProduct, pIdx: number) => void;
   busy?: boolean;
 }) {
-  const isPublished = !archived && shopNames.length > 0;
+  const isPublished = !archived && collectionLinkedToShop(collection);
   // Shop link wins over status — a published collection must never read as Draft.
   const showAsDraft = isDraft && !isPublished;
   const statusLabel = archived
@@ -61,7 +62,7 @@ export function SwagCollectionCard({
               ))}
             </div>
           ) : null}
-          {!archived && showAsDraft && canDesign ? (
+          {!archived && !isPublished && canDesign ? (
             <button type="button" className="btn btn-ghost btn-sm" onClick={onEditDraft}>
               <Pencil size={14} /> Edit &amp; publish
             </button>

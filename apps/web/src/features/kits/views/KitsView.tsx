@@ -18,7 +18,14 @@ import {
 import { toast } from "sonner";
 import { LoadingState } from "@/components/LoadingState";
 import { useWorkspace } from "@/hooks/useWorkspace";
-import { useUpdateKit, useCreateKit, useEnsureCuratedKit, usePlatformKits, type PlatformKitTemplate, type UiKit } from "../model";
+import {
+  useUpdateKit,
+  useCreateKit,
+  useEnsureCuratedKit,
+  usePlatformKits,
+  type PlatformKitTemplate,
+  type UiKit,
+} from "../model";
 import { kitPickedIndices } from "../wizard/kitDraft";
 import {
   KitPreviewDialog,
@@ -70,14 +77,29 @@ function KitsSectionEmptyState({
           style={{ maxHeight: 140, marginBottom: 20, objectFit: "contain" }}
         />
       ) : null}
-      <h3 style={{ fontSize: 18, fontWeight: 800, color: "var(--ink)", margin: "0 0 8px" }}>
+      <h3
+        style={{
+          fontSize: 18,
+          fontWeight: "var(--font-weight-bold)",
+          color: "var(--ink)",
+          margin: "0 0 8px",
+        }}
+      >
         {title}
       </h3>
       <p className="muted" style={{ fontSize: 14, lineHeight: 1.55, margin: 0, maxWidth: 420 }}>
         {description}
       </p>
       {secondary ? (
-        <p className="muted" style={{ fontSize: 13, lineHeight: 1.5, margin: "10px 0 0", maxWidth: 420 }}>
+        <p
+          className="muted"
+          style={{
+            fontSize: "var(--workspace-font-caption, 13px)",
+            lineHeight: 1.5,
+            margin: "10px 0 0",
+            maxWidth: 420,
+          }}
+        >
           {secondary}
         </p>
       ) : null}
@@ -91,7 +113,7 @@ const previewBtnStyle: CSSProperties = {
   border: "1px solid var(--line)",
   height: 32,
   fontSize: 13,
-  fontWeight: 700,
+  fontWeight: "var(--font-weight-bold)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -105,7 +127,7 @@ const sendBtnStyle: CSSProperties = {
   flex: 1,
   height: 32,
   fontSize: 13,
-  fontWeight: 700,
+  fontWeight: "var(--font-weight-bold)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -183,7 +205,7 @@ function getCuratedKitMeta(kit: any) {
     if (parsed && parsed.curated) {
       return parsed;
     }
-  } catch (e) { }
+  } catch (e) {}
   return null;
 }
 
@@ -220,7 +242,8 @@ function StatCard({ label, value, hint, tone, live = false }: StatCardProps) {
 //         flexWrap: "wrap",
 //       }}
 //     >
-{/* <div style={{ display: "flex", alignItems: "center", gap: 12, flex: 1, minWidth: 220 }}>
+{
+  /* <div style={{ display: "flex", alignItems: "center", gap: 12, flex: 1, minWidth: 220 }}>
         <div
           style={{
             width: 32,
@@ -239,8 +262,10 @@ function StatCard({ label, value, hint, tone, live = false }: StatCardProps) {
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
           <Box size={18} color="var(--brand)" />
-        </div> */}
-{/* <div>
+        </div> */
+}
+{
+  /* <div>
           <div style={{ fontWeight: 700, fontSize: 13, color: "#101a15" }}>Create a kit</div>
           <div style={{ fontSize: 11, color: "#5b665f", lineHeight: 1.3 }}>
             Choose products from catalog and name kit.
@@ -301,9 +326,12 @@ function StatCard({ label, value, hint, tone, live = false }: StatCardProps) {
           <div style={{ fontSize: 11, color: "#5b665f", lineHeight: 1.3 }}>
             Launch your kit and monitor delivery status.
           </div>
-        </div> */}
-{/* </div>
-    </div> */}
+        </div> */
+}
+{
+  /* </div>
+    </div> */
+}
 // );
 // }
 
@@ -378,13 +406,14 @@ export function KitsView(vm: KitsVm) {
       });
 
       // Prefer explicit itemImages; fall back to workspace clone / legacy gallery count.
-      const imageItemCount = Array.isArray(kit.itemImages) && kit.itemImages.length
-        ? kit.itemImages.length
-        : (kit.imageUrls?.length ?? 0) > 1
-          ? (kit.imageUrls!.length - 1)
-          : (kit.imageUrls?.length ?? 0) === 1
-            ? 1
-            : 0;
+      const imageItemCount =
+        Array.isArray(kit.itemImages) && kit.itemImages.length
+          ? kit.itemImages.length
+          : (kit.imageUrls?.length ?? 0) > 1
+            ? kit.imageUrls!.length - 1
+            : (kit.imageUrls?.length ?? 0) === 1
+              ? 1
+              : 0;
       const itemCount =
         (kit.items?.length && kit.items.length > 0
           ? kit.items.length
@@ -401,7 +430,11 @@ export function KitsView(vm: KitsVm) {
         image: coverImg,
         items: itemCount,
         status: matchedWk
-          ? (matchedWk.status === "live" ? "live" : matchedWk.status === "archived" ? "archived" : "draft")
+          ? matchedWk.status === "live"
+            ? "live"
+            : matchedWk.status === "archived"
+              ? "archived"
+              : "draft"
           : "live",
         lastSent: sent.primary,
         sentDate: sent.secondary,
@@ -435,7 +468,9 @@ export function KitsView(vm: KitsVm) {
     }
     if (recentSearch.trim()) {
       const q = recentSearch.toLowerCase();
-      list = list.filter((r) => r.name.toLowerCase().includes(q) || r.description.toLowerCase().includes(q));
+      list = list.filter(
+        (r) => r.name.toLowerCase().includes(q) || r.description.toLowerCase().includes(q),
+      );
     }
     if (lastSentFilter !== "any") {
       list = list.filter((r) => matchesLastSentFilter(r.lastSentAt, lastSentFilter));
@@ -457,16 +492,16 @@ export function KitsView(vm: KitsVm) {
 
   const RECENT_ITEMS_PER_PAGE = 8;
 
-  const recentTotalPages = Math.max(1, Math.ceil(processedRecentRows.length / RECENT_ITEMS_PER_PAGE));
+  const recentTotalPages = Math.max(
+    1,
+    Math.ceil(processedRecentRows.length / RECENT_ITEMS_PER_PAGE),
+  );
   const paginatedRecentRows = useMemo(() => {
     const start = (recentPage - 1) * RECENT_ITEMS_PER_PAGE;
     return processedRecentRows.slice(start, start + RECENT_ITEMS_PER_PAGE);
   }, [processedRecentRows, recentPage]);
 
-  const firstLiveKitId = useMemo(
-    () => vm.kits.find((k) => k.status === "live")?.id,
-    [vm.kits],
-  );
+  const firstLiveKitId = useMemo(() => vm.kits.find((k) => k.status === "live")?.id, [vm.kits]);
 
   // ── Handlers for Curated Action & Send ──
 
@@ -538,7 +573,10 @@ export function KitsView(vm: KitsVm) {
     }
   };
 
-  const handleCuratedAction = async (kit: PlatformKitTemplate, status: "archived" | "draft" | "live") => {
+  const handleCuratedAction = async (
+    kit: PlatformKitTemplate,
+    status: "archived" | "draft" | "live",
+  ) => {
     const catalogProducts = workspace?.catalogProducts ?? [];
     const pickedIndices: number[] = [];
     if (kit.items) {
@@ -586,7 +624,8 @@ export function KitsView(vm: KitsVm) {
   };
 
   // ── Early returns ──
-  if (vm.isLoading) return <LoadingState message="Loading kits..." fullScreen={false} variant="page" />;
+  if (vm.isLoading)
+    return <LoadingState message="Loading kits..." fullScreen={false} variant="page" />;
   if (vm.errorMessage) {
     return (
       <div className="card" style={{ padding: 16, color: "var(--danger)" }}>
@@ -696,7 +735,7 @@ export function KitsView(vm: KitsVm) {
                     textAlign: "left",
                     background: "none",
                     border: "none",
-                    fontSize: 13,
+                    fontSize: "var(--workspace-font-body, 13px)",
                     cursor: "pointer",
                     borderRadius: 4,
                   }}
@@ -713,7 +752,7 @@ export function KitsView(vm: KitsVm) {
                     textAlign: "left",
                     background: "none",
                     border: "none",
-                    fontSize: 13,
+                    fontSize: "var(--workspace-font-body, 13px)",
                     cursor: "pointer",
                     borderRadius: 4,
                   }}
@@ -730,7 +769,7 @@ export function KitsView(vm: KitsVm) {
                     textAlign: "left",
                     background: "none",
                     border: "none",
-                    fontSize: 13,
+                    fontSize: "var(--workspace-font-body, 13px)",
                     cursor: "pointer",
                     borderRadius: 4,
                   }}
@@ -747,7 +786,7 @@ export function KitsView(vm: KitsVm) {
                     textAlign: "left",
                     background: "none",
                     border: "none",
-                    fontSize: 13,
+                    fontSize: "var(--workspace-font-body, 13px)",
                     cursor: "pointer",
                     borderRadius: 4,
                   }}
@@ -814,73 +853,77 @@ export function KitsView(vm: KitsVm) {
         />
       </div>
 
-        {allKits.length === 0 ? (
-            <KitsSectionEmptyState
-              title="No kits yet"
-              description="Create a custom kit or send a curated kit to get started."
-              action={
-                canSendKits || canCreateKits ? (
-                  <Link
-                    to={firstLiveKitId ? `/app/kits/${firstLiveKitId}/send` : "/app/kits/new"}
-                    className="btn btn-brand"
-                  >
-                    Send Your First Kit
-                  </Link>
-                ) : null
-              }
-            />
-          ) : (
-          <div className="kits-list-card">
-            {/* Toolbar */}
-            <div className="kits-list-toolbar">
-              <div className="kits-tabs" aria-label="Kit filters">
-                {(["all", "live", "draft", "archived"] as const).map((tab) => (
-                  <button
-                    key={tab}
-                    type="button"
-                    className={`kits-tab${recentTab === tab ? " kits-tab--active" : ""}`}
-                    onClick={() => {
-                      setRecentTab(tab);
-                      setRecentPage(1);
-                    }}
-                  >
-                    {tab === "all" ? "All kits" : tab === "draft" ? "Drafts" : tab.charAt(0).toUpperCase() + tab.slice(1)}
-                    <span>
-                      {tab === "all"
-                        ? allKits.filter((r) => r.status !== "archived").length
-                        : allKits.filter((r) => r.status === tab).length}
-                    </span>
-                  </button>
-                ))}
-              </div>
+      {allKits.length === 0 ? (
+        <KitsSectionEmptyState
+          title="No kits yet"
+          description="Create a custom kit or send a curated kit to get started."
+          action={
+            canSendKits || canCreateKits ? (
+              <Link
+                to={firstLiveKitId ? `/app/kits/${firstLiveKitId}/send` : "/app/kits/new"}
+                className="btn btn-brand"
+              >
+                Send Your First Kit
+              </Link>
+            ) : null
+          }
+        />
+      ) : (
+        <div className="kits-list-card">
+          {/* Toolbar */}
+          <div className="kits-list-toolbar">
+            <div className="kits-tabs" aria-label="Kit filters">
+              {(["all", "live", "draft", "archived"] as const).map((tab) => (
+                <button
+                  key={tab}
+                  type="button"
+                  className={`kits-tab${recentTab === tab ? " kits-tab--active" : ""}`}
+                  onClick={() => {
+                    setRecentTab(tab);
+                    setRecentPage(1);
+                  }}
+                >
+                  {tab === "all"
+                    ? "All kits"
+                    : tab === "draft"
+                      ? "Drafts"
+                      : tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  <span>
+                    {tab === "all"
+                      ? allKits.filter((r) => r.status !== "archived").length
+                      : allKits.filter((r) => r.status === tab).length}
+                  </span>
+                </button>
+              ))}
+            </div>
 
-              <div className="kits-tools">
-                <div className="kits-search">
-                  <Search size={16} aria-hidden="true" />
-                  <input
-                    placeholder="Search kits"
-                    value={recentSearch}
-                    onChange={(e) => {
-                      setRecentSearch(e.target.value);
-                      setRecentPage(1);
-                    }}
-                  />
-                </div>
-                <div className="kits-filter-wrap">
-                  <button
-                    type="button"
-                    className={`kits-tool-btn${lastSentFilter !== "any" ? " kits-tool-btn--active" : ""}`}
-                    aria-expanded={filtersOpen}
-                    onClick={() => setFiltersOpen((o) => !o)}
-                  >
-                    <SlidersHorizontal size={16} />
-                    {lastSentFilter === "any"
-                      ? "Filters"
-                      : LAST_SENT_FILTER_OPTIONS.find((o) => o.id === lastSentFilter)?.label ||
-                        "Filters"}
-                  </button>
-                  {filtersOpen ? (
-                    <>
+            <div className="kits-tools">
+              <div className="kits-search">
+                <Search size={16} aria-hidden="true" />
+                <input
+                  placeholder="Search kits"
+                  value={recentSearch}
+                  onChange={(e) => {
+                    setRecentSearch(e.target.value);
+                    setRecentPage(1);
+                  }}
+                />
+              </div>
+              <div className="kits-filter-wrap">
+                <button
+                  type="button"
+                  className={`kits-tool-btn${lastSentFilter !== "any" ? " kits-tool-btn--active" : ""}`}
+                  aria-expanded={filtersOpen}
+                  onClick={() => setFiltersOpen((o) => !o)}
+                >
+                  <SlidersHorizontal size={16} />
+                  {lastSentFilter === "any"
+                    ? "Filters"
+                    : LAST_SENT_FILTER_OPTIONS.find((o) => o.id === lastSentFilter)?.label ||
+                      "Filters"}
+                </button>
+                {filtersOpen ? (
+                  <>
                     <button
                       type="button"
                       className="menu-dismiss-scrim"
@@ -905,205 +948,229 @@ export function KitsView(vm: KitsVm) {
                         </button>
                       ))}
                     </div>
-                    </>
-                  ) : null}
-                </div>
-                <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
-                  <select
-                    value={recentSort}
-                    onChange={(e) => {
-                      setRecentSort(e.target.value as any);
-                      setRecentPage(1);
-                    }}
-                    style={{
-                      padding: "0 28px 0 12px",
-                      borderRadius: 8,
-                      border: "1px solid var(--line)",
-                      background: "var(--bg-card)",
-                      fontSize: 13,
-                      fontWeight: 800,
-                      height: 40,
-                      appearance: "none",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <option value="newest">Newest</option>
-                    <option value="name">Name</option>
-                    <option value="items">Items</option>
-                  </select>
-                  <ChevronDown
-                    size={14}
-                    style={{
-                      position: "absolute",
-                      right: 10,
-                      pointerEvents: "none",
-                      color: "var(--ink-2)",
-                    }}
-                  />
-                </div>
+                  </>
+                ) : null}
+              </div>
+              <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+                <select
+                  value={recentSort}
+                  onChange={(e) => {
+                    setRecentSort(e.target.value as any);
+                    setRecentPage(1);
+                  }}
+                  style={{
+                    padding: "0 28px 0 12px",
+                    borderRadius: 8,
+                    border: "1px solid var(--line)",
+                    background: "var(--bg-card)",
+                    fontSize: "var(--workspace-font-body, 13px)",
+                    fontWeight: "var(--font-weight-bold)",
+                    height: 40,
+                    appearance: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  <option value="newest">Newest</option>
+                  <option value="name">Name</option>
+                  <option value="items">Items</option>
+                </select>
+                <ChevronDown
+                  size={14}
+                  style={{
+                    position: "absolute",
+                    right: 10,
+                    pointerEvents: "none",
+                    color: "var(--ink-2)",
+                  }}
+                />
               </div>
             </div>
+          </div>
 
-            {/* Table */}
-            <div className="kits-table" role="table" aria-label="Kits list">
-              {paginatedRecentRows.length > 0 ? (
-                paginatedRecentRows.map((row) => (
-                  <div className="kits-table__row" role="row" key={row.id}>
-                    <div className="kits-kit-cell">
-                      {row.kit ? (
-                        <Link to={`/app/kits/${row.id}`}>
-                          <img src={row.image} alt="" />
-                        </Link>
-                      ) : (
+          {/* Table */}
+          <div className="kits-table" role="table" aria-label="Kits list">
+            {paginatedRecentRows.length > 0 ? (
+              paginatedRecentRows.map((row) => (
+                <div className="kits-table__row" role="row" key={row.id}>
+                  <div className="kits-kit-cell">
+                    {row.kit ? (
+                      <Link to={`/app/kits/${row.id}`}>
                         <img src={row.image} alt="" />
-                      )}
-                      <div>
-                        <div className="kits-kit-title">
-                          {row.kit ? (
-                            <Link to={`/app/kits/${row.id}`} className="lnk">
-                              {row.name}
-                            </Link>
-                          ) : (
-                            <span>{row.name}</span>
-                          )}
-                          {row.featured && (
-                            <span className="kits-featured">
-                              <Star size={11} fill="currentColor" /> Featured
-                            </span>
-                          )}
-                        </div>
-                        <span className="kits-audience">{row.audience}</span>
+                      </Link>
+                    ) : (
+                      <img src={row.image} alt="" />
+                    )}
+                    <div>
+                      <div className="kits-kit-title">
+                        {row.kit ? (
+                          <Link to={`/app/kits/${row.id}`} className="lnk">
+                            {row.name}
+                          </Link>
+                        ) : (
+                          <span>{row.name}</span>
+                        )}
+                        {row.featured && (
+                          <span className="kits-featured">
+                            <Star size={11} fill="currentColor" /> Featured
+                          </span>
+                        )}
                       </div>
+                      <span className="kits-audience">{row.audience}</span>
                     </div>
+                  </div>
 
-                    <div className="kits-metric-cell">
-                      <span>Items</span>
-                      <strong>{row.items}</strong>
-                    </div>
+                  <div className="kits-metric-cell">
+                    <span>Items</span>
+                    <strong>{row.items}</strong>
+                  </div>
 
-                    <div className="kits-metric-cell">
-                      <span>Status</span>
-                      <strong className={`kits-status kits-status--${row.status}`}>
-                        <i />
-                        {row.status === "live" ? "Live" : row.status === "archived" ? "Archived" : "Draft"}
-                      </strong>
-                    </div>
+                  <div className="kits-metric-cell">
+                    <span>Status</span>
+                    <strong className={`kits-status kits-status--${row.status}`}>
+                      <i />
+                      {row.status === "live"
+                        ? "Live"
+                        : row.status === "archived"
+                          ? "Archived"
+                          : "Draft"}
+                    </strong>
+                  </div>
 
-                    <div className="kits-sent-cell">
-                      <span>Last sent</span>
-                      <strong>{row.lastSent}</strong>
-                      <em>{row.sentDate}</em>
-                    </div>
+                  <div className="kits-sent-cell">
+                    <span>Last sent</span>
+                    <strong>{row.lastSent}</strong>
+                    <em>{row.sentDate}</em>
+                  </div>
 
-                    <div className="kits-row-actions">
+                  <div className="kits-row-actions">
+                    <button
+                      type="button"
+                      className="kits-row-btn"
+                      onClick={() => openRowPreview(row)}
+                    >
+                      Preview
+                    </button>
+
+                    {canSendKits && (
                       <button
                         type="button"
                         className="kits-row-btn"
-                        onClick={() => openRowPreview(row)}
+                        onClick={() => {
+                          if (row.platformKit) {
+                            void sampleOrder.startFromPlatformKit(row.platformKit, row.kit);
+                          } else {
+                            sampleOrder.startFromWorkspaceKit(row.kit);
+                          }
+                        }}
+                        disabled={sampleOrder.pendingKitId === row.platformKit?._id}
+                        aria-busy={sampleOrder.pendingKitId === row.platformKit?._id}
                       >
-                        Preview
+                        {sampleOrder.pendingKitId === row.platformKit?._id
+                          ? "Opening…"
+                          : "Request a Sample"}
                       </button>
+                    )}
 
-                      {canSendKits && (
-                        <button
-                          type="button"
-                          className="kits-row-btn"
-                          onClick={() => {
-                            if (row.platformKit) {
-                              void sampleOrder.startFromPlatformKit(row.platformKit, row.kit);
-                            } else {
-                              sampleOrder.startFromWorkspaceKit(row.kit);
-                            }
-                          }}
-                          disabled={sampleOrder.pending}
-                        >
-                          Request a Sample
-                        </button>
-                      )}
-
-                      {canSendKits && (
-                        <button
-                          type="button"
-                          className="kits-send-btn"
-                          onClick={() => {
-                            if (row.platformKit) {
-                              handleSendCuratedKit(row.platformKit, row.kit);
-                            } else {
-                              handleSendWorkspaceKit(row.kit);
-                            }
-                          }}
-                          style={{ height: 36, padding: "0 16px", fontSize: 13 }}
-                          disabled={ensureCuratedKit.isPending}
-                        >
-                          Send
-                        </button>
-                      )}
-                    </div>
+                    {canSendKits && (
+                      <button
+                        type="button"
+                        className="kits-send-btn"
+                        onClick={() => {
+                          if (row.platformKit) {
+                            handleSendCuratedKit(row.platformKit, row.kit);
+                          } else {
+                            handleSendWorkspaceKit(row.kit);
+                          }
+                        }}
+                        style={{
+                          height: 36,
+                          padding: "0 16px",
+                          fontSize: "var(--workspace-font-body, 13px)",
+                        }}
+                        disabled={
+                          ensureCuratedKit.isPending &&
+                          ensureCuratedKit.variables?.platformKitId === row.platformKit?._id
+                        }
+                        aria-busy={
+                          ensureCuratedKit.isPending &&
+                          ensureCuratedKit.variables?.platformKitId === row.platformKit?._id
+                        }
+                      >
+                        {ensureCuratedKit.isPending &&
+                        ensureCuratedKit.variables?.platformKitId === row.platformKit?._id
+                          ? "Opening…"
+                          : "Send"}
+                      </button>
+                    )}
                   </div>
-                ))
-              ) : (
-                <div style={{ padding: 40, textAlign: "center", color: "var(--gray-500)" }}>
-                  No kits match the current filters.
                 </div>
-              )}
-            </div>
-
-            {/* Pagination footer */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "16px 20px",
-                borderTop: "1px solid var(--line)",
-              }}
-            >
-              <span style={{ fontSize: 13, color: "var(--gray-500)" }}>
-                Showing {processedRecentRows.length > 0 ? (recentPage - 1) * RECENT_ITEMS_PER_PAGE + 1 : 0} to{" "}
-                {Math.min(processedRecentRows.length, recentPage * RECENT_ITEMS_PER_PAGE)} of{" "}
-                {processedRecentRows.length} records
-              </span>
-              {recentTotalPages > 1 && (
-                <div style={{ display: "flex", gap: 8 }}>
-                  <button
-                    type="button"
-                    disabled={recentPage === 1}
-                    onClick={() => setRecentPage(recentPage - 1)}
-                    style={{
-                      padding: "6px 12px",
-                      border: "1px solid var(--line)",
-                      background: "transparent",
-                      borderRadius: 6,
-                      fontSize: 13,
-                      fontWeight: 700,
-                      cursor: recentPage === 1 ? "not-allowed" : "pointer",
-                      opacity: recentPage === 1 ? 0.5 : 1,
-                    }}
-                  >
-                    Previous
-                  </button>
-                  <button
-                    type="button"
-                    disabled={recentPage === recentTotalPages}
-                    onClick={() => setRecentPage(recentPage + 1)}
-                    style={{
-                      padding: "6px 12px",
-                      border: "1px solid var(--line)",
-                      background: "transparent",
-                      borderRadius: 6,
-                      fontSize: 13,
-                      fontWeight: 700,
-                      cursor: recentPage === recentTotalPages ? "not-allowed" : "pointer",
-                      opacity: recentPage === recentTotalPages ? 0.5 : 1,
-                    }}
-                  >
-                    Next
-                  </button>
-                </div>
-              )}
-            </div>
+              ))
+            ) : (
+              <div style={{ padding: 40, textAlign: "center", color: "var(--gray-500)" }}>
+                No kits match the current filters.
+              </div>
+            )}
           </div>
-        )}
+
+          {/* Pagination footer */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "16px 20px",
+              borderTop: "1px solid var(--line)",
+            }}
+          >
+            <span
+              style={{ fontSize: "var(--workspace-font-body, 13px)", color: "var(--gray-500)" }}
+            >
+              Showing{" "}
+              {processedRecentRows.length > 0 ? (recentPage - 1) * RECENT_ITEMS_PER_PAGE + 1 : 0} to{" "}
+              {Math.min(processedRecentRows.length, recentPage * RECENT_ITEMS_PER_PAGE)} of{" "}
+              {processedRecentRows.length} records
+            </span>
+            {recentTotalPages > 1 && (
+              <div style={{ display: "flex", gap: 8 }}>
+                <button
+                  type="button"
+                  disabled={recentPage === 1}
+                  onClick={() => setRecentPage(recentPage - 1)}
+                  style={{
+                    padding: "6px 12px",
+                    border: "1px solid var(--line)",
+                    background: "transparent",
+                    borderRadius: 6,
+                    fontSize: "var(--workspace-font-body, 13px)",
+                    fontWeight: "var(--font-weight-bold)",
+                    cursor: recentPage === 1 ? "not-allowed" : "pointer",
+                    opacity: recentPage === 1 ? 0.5 : 1,
+                  }}
+                >
+                  Previous
+                </button>
+                <button
+                  type="button"
+                  disabled={recentPage === recentTotalPages}
+                  onClick={() => setRecentPage(recentPage + 1)}
+                  style={{
+                    padding: "6px 12px",
+                    border: "1px solid var(--line)",
+                    background: "transparent",
+                    borderRadius: 6,
+                    fontSize: "var(--workspace-font-body, 13px)",
+                    fontWeight: "var(--font-weight-bold)",
+                    cursor: recentPage === recentTotalPages ? "not-allowed" : "pointer",
+                    opacity: recentPage === recentTotalPages ? 0.5 : 1,
+                  }}
+                >
+                  Next
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       <KitPreviewDialog
         data={kitPreview}

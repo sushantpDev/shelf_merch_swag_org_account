@@ -1,0 +1,621 @@
+/* Reserve space for the existing fixed ShelfMerch Header. */
+.slack-terms-page .slack-terms-header {
+  min-height: 69.7px;
+}
+.slack-terms {
+  --slt-ink: #171717;
+  --slt-muted: #505b6c;
+  --slt-plum: #171717;
+  --slt-paper: #fff;
+  --slt-line: #dfe5ee;
+  background: #fff;
+  color: #171717;
+  font-family: var(--font-family-public-sans, Arial), Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  min-height: 100vh;
+  text-align: left;
+}
+.slack-terms,
+.slack-terms * {
+  box-sizing: border-box;
+}
+.slack-terms a {
+  color: inherit;
+  text-underline-offset: 4px;
+}
+.slack-terms a:focus-visible,
+.slack-terms summary:focus-visible {
+  outline: 3px solid #3155ff;
+  outline-offset: 5px;
+  border-radius: 3px;
+}
+.slack-terms .slt-wrap {
+  width: min(1440px, 90%);
+  margin-inline: auto;
+}
+.slack-terms .slt-skip {
+  position: absolute;
+  left: 20px;
+  top: -90px;
+  z-index: 20;
+  padding: 12px 18px;
+  background: white;
+}
+.slack-terms .slt-skip:focus {
+  top: 16px;
+}
+.slack-terms .slt-hero {
+  background: #eef3fd;
+  overflow: hidden;
+}
+.slack-terms .slt-hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 58px;
+  align-items: center;
+  padding-block: 28px;
+}
+.slack-terms .slt-hero-text {
+  min-width: 0;
+  padding-bottom: 0;
+}
+.slack-terms h1 {
+  font-size: clamp(42px, 4.2vw, 60px);
+  line-height: 1.06;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+  margin: 0 0 22px;
+  color: #171717;
+}
+.slack-terms h1 em {
+  display: block;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.035em;
+  color: #171717;
+}
+.slack-terms .slt-hero-copy {
+  color: #171717;
+  font-size: 17px;
+  line-height: 1.6;
+  max-width: 585px;
+  margin: 0 0 22px;
+}
+.slack-terms .slt-hero-actions {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.slack-terms .slt-primary {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  padding: 16px 25px;
+  min-height: 56px;
+  color: #fff;
+  background: #171717;
+  border-radius: 99px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+}
+.slack-terms .slt-primary span {
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 400;
+}
+.slack-terms .slt-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.slack-terms .slt-secondary span {
+  font-size: 20px;
+  font-weight: 400;
+}
+.slack-terms .slt-hero-visual {
+  min-width: 0;
+  align-self: center;
+  width: min(460px, 100%);
+  justify-self: center;
+}
+.slack-terms .slt-brand-connection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  margin: 0 0 18px;
+}
+.slack-terms .slt-brand-connection img {
+  display: block;
+  object-fit: contain;
+  height: auto;
+  max-width: 42%;
+}
+.slack-terms .slt-brand-connection .slt-slack-logo {
+  width: 155px;
+}
+.slack-terms .slt-brand-connection .slt-partner-logo {
+  width: 200px;
+}
+.slack-terms .slt-brand-connection > span {
+  font-size: 27px;
+}
+.slack-terms .slt-hero-art {
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  margin: 0 auto;
+}
+.slack-terms .slt-eyebrow {
+  font:
+    700 10px/1.5 Arial,
+    sans-serif;
+  letter-spacing: 0.16em;
+  margin: 0 0 18px;
+}
+.slack-terms .slt-help h2 em {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  color: #171717;
+  font-weight: 400;
+}
+.slack-terms .slt-draft {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--slt-line);
+  font-size: 12px;
+  color: var(--slt-muted);
+}
+.slack-terms .slt-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #916e32;
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+.slack-terms .slt-draft strong {
+  color: #5b4624;
+  font-size: 12px;
+}
+.slack-terms .slt-draft p {
+  margin: 2px 0 0;
+  font-size: 11px;
+  line-height: 1.65;
+  max-width: 740px;
+}
+.slack-terms .slt-draft > a {
+  white-space: nowrap;
+  margin-left: auto;
+  font-size: 11px;
+  padding-top: 3px;
+}
+.slack-terms .slt-reading {
+  display: grid;
+  grid-template-columns: 238px minmax(0, 1fr);
+  gap: 82px;
+  align-items: start;
+  padding: 62px 0 80px;
+}
+.slack-terms .slt-sidebar {
+  position: sticky;
+  top: 30px;
+  max-height: calc(100svh - 60px);
+  overflow: auto;
+  padding-right: 12px;
+}
+.slack-terms .slt-sidebar > .slt-eyebrow {
+  color: #6d7482;
+  margin-bottom: 19px;
+}
+.slack-terms .slt-sidebar nav {
+  display: grid;
+  gap: 3px;
+}
+.slack-terms .slt-sidebar nav a {
+  display: flex;
+  gap: 11px;
+  padding: 6px 0;
+  font-size: 11px;
+  text-decoration: none;
+  line-height: 1.7;
+  color: var(--slt-muted);
+}
+.slack-terms .slt-sidebar nav a:hover {
+  color: var(--slt-plum);
+  text-decoration: underline;
+}
+.slack-terms .slt-sidebar nav a span {
+  font-size: 9px;
+  color: #78859b;
+  min-width: 16px;
+  padding-top: 2px;
+}
+.slack-terms .slt-sidebar-note {
+  border-top: 1px solid var(--slt-line);
+  margin-top: 24px;
+  padding-top: 18px;
+  display: flex;
+  gap: 12px;
+  color: var(--slt-plum);
+}
+.slack-terms .slt-sidebar-note p {
+  font-size: 11px;
+  line-height: 1.8;
+  margin: 0;
+}
+.slack-terms .slt-document {
+  min-width: 0;
+  max-width: 790px;
+}
+.slack-terms .slt-document section {
+  scroll-margin-top: 30px;
+  padding: 0 0 35px;
+  margin: 0 0 34px;
+  border-bottom: 1px solid var(--slt-line);
+}
+.slack-terms .slt-document section:last-child {
+  margin-bottom: 0;
+}
+.slack-terms .slt-section-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #6a7b9d;
+  margin-bottom: 12px;
+}
+.slack-terms .slt-document h2 {
+  font-size: 30px;
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+.slack-terms .slt-document h3 {
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 25px 0 9px;
+  font-weight: 650;
+}
+.slack-terms .slt-document p {
+  font-size: 19px;
+  line-height: 1.65;
+  font-weight: 400;
+  letter-spacing: normal;
+  margin: 0 0 24px;
+  color: var(--slt-ink);
+  overflow-wrap: anywhere;
+}
+.slack-terms .slt-document strong {
+  color: var(--slt-ink);
+  font-weight: 700;
+}
+.slack-terms .slt-document a {
+  color: #3155ff;
+}
+.slack-terms .slt-callout {
+  border-left: 3px solid #3155ff;
+  background: #eef3fd;
+  padding: 19px 23px;
+  margin-top: 24px;
+  border-radius: 0 5px 5px 0;
+}
+.slack-terms .slt-callout > strong {
+  font-size: 13px;
+}
+.slack-terms .slt-callout p {
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 6px 0 0;
+}
+.slack-terms .slt-permissions {
+  margin: 25px 0 30px;
+  border-top: 1px solid var(--slt-line);
+}
+.slack-terms .slt-permissions > div {
+  display: grid;
+  grid-template-columns: 175px 1fr;
+  gap: 18px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--slt-line);
+  align-items: start;
+}
+.slack-terms .slt-permissions code {
+  font: 11px/1.7 monospace;
+  color: #3155ff;
+  background: #e9efff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  justify-self: start;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+.slack-terms .slt-permissions p {
+  font-size: 12px;
+  line-height: 1.8;
+  margin: 0;
+}
+.slack-terms .slt-company {
+  margin: 24px 0 0;
+}
+.slack-terms .slt-company > div {
+  display: grid;
+  grid-template-columns: 95px 1fr;
+  gap: 20px;
+  padding: 12px 0;
+  border-top: 1px solid var(--slt-line);
+  font-size: 12px;
+}
+.slack-terms .slt-company dt {
+  color: #6d7482;
+}
+.slack-terms .slt-company dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.slack-terms .slt-help {
+  border-radius: 8px;
+  padding: 40px 48px;
+  background: #eef3fd;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: center;
+  margin-bottom: 55px;
+}
+.slack-terms .slt-help .slt-eyebrow {
+  color: #50638b;
+  font-size: 9px;
+}
+.slack-terms .slt-help h2 {
+  font-size: 40px;
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+  margin: 0;
+  font-weight: 600;
+}
+.slack-terms .slt-help > div > p:not(.slt-eyebrow) {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #505b6c;
+  margin: 0 0 18px;
+}
+.slack-terms .slt-help > div > a {
+  display: flex;
+  justify-content: space-between;
+  gap: 35px;
+  background: #3155ff;
+  color: white;
+  border-radius: 5px;
+  padding: 11px 16px;
+  font-size: 12px;
+  text-decoration: none;
+}
+.slack-terms .slt-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0 0 28px;
+  font-size: 11px;
+  color: #505b6c;
+}
+.slack-terms .slt-footer p {
+  margin: 0;
+  font-weight: 600;
+}
+.slack-terms .slt-footer p span {
+  display: block;
+  font-size: 9px;
+  font-weight: 400;
+  margin-top: 3px;
+  color: #78859b;
+}
+.slack-terms .slt-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  font-size: 10px;
+}
+
+@media (max-width: 1100px) {
+  .slack-terms .slt-hero-grid {
+    gap: 30px;
+  }
+  .slack-terms .slt-hero-copy {
+    font-size: 17px;
+  }
+  .slack-terms .slt-brand-connection {
+    gap: 18px;
+  }
+  .slack-terms .slt-reading {
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 40px;
+  }
+  .slack-terms .slt-permissions > div {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+@media (max-width: 800px) {
+  .slack-terms .slt-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding-top: 28px;
+  }
+  .slack-terms .slt-hero-text {
+    padding: 0;
+  }
+  .slack-terms h1 {
+    font-size: clamp(42px, 6vw, 54px);
+    max-width: 650px;
+  }
+  .slack-terms .slt-hero-copy {
+    max-width: 620px;
+  }
+  .slack-terms .slt-hero-visual {
+    width: min(390px, 90%);
+    margin: 18px auto 0;
+  }
+  .slack-terms .slt-brand-connection {
+    margin-bottom: 20px;
+  }
+  .slack-terms .slt-hero-art {
+    width: 100%;
+    margin: 0;
+  }
+  .slack-terms .slt-reading {
+    display: block;
+    padding: 35px 0 20px;
+  }
+  .slack-terms .slt-sidebar {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    padding: 0 0 28px;
+    margin-bottom: 38px;
+    border-bottom: 1px solid var(--slt-line);
+  }
+  .slack-terms .slt-sidebar nav {
+    grid-template-columns: 1fr 1fr;
+    gap: 5px 18px;
+  }
+  .slack-terms .slt-sidebar nav a {
+    font-size: 11px;
+    gap: 7px;
+  }
+  .slack-terms .slt-sidebar-note {
+    display: none;
+  }
+}
+@media (max-width: 500px) {
+  .slack-terms .slt-wrap {
+    width: calc(100% - 40px);
+  }
+  .slack-terms h1 {
+    font-size: 42px;
+    margin-bottom: 23px;
+  }
+  .slack-terms .slt-hero-copy {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  .slack-terms .slt-hero-actions {
+    gap: 22px;
+  }
+  .slack-terms .slt-primary {
+    font-size: 13px;
+    min-height: 49px;
+    padding: 12px 21px;
+  }
+  .slack-terms .slt-secondary {
+    font-size: 12px;
+    gap: 9px;
+  }
+  .slack-terms .slt-brand-connection {
+    gap: 22px;
+    margin-top: 10px;
+  }
+  .slack-terms .slt-brand-connection .slt-slack-logo {
+    width: 115px;
+  }
+  .slack-terms .slt-brand-connection .slt-partner-logo {
+    width: 145px;
+  }
+  .slack-terms .slt-brand-connection > span {
+    font-size: 22px;
+  }
+  .slack-terms .slt-draft {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 21px 0;
+  }
+  .slack-terms .slt-draft > div {
+    flex: 1;
+    min-width: 0;
+  }
+  .slack-terms .slt-draft > a {
+    margin-left: 17px;
+    padding-top: 0;
+  }
+  .slack-terms .slt-document h2 {
+    font-size: 27px;
+  }
+  .slack-terms .slt-document p {
+    font-size: 18px;
+    line-height: 1.65;
+  }
+  .slack-terms .slt-document section {
+    padding-bottom: 28px;
+    margin-bottom: 30px;
+  }
+  .slack-terms .slt-help {
+    display: block;
+    padding: 30px 26px;
+    margin-bottom: 35px;
+  }
+  .slack-terms .slt-help h2 {
+    font-size: 36px;
+    margin-bottom: 25px;
+  }
+  .slack-terms .slt-help > div > a {
+    max-width: 270px;
+  }
+  .slack-terms .slt-footer {
+    display: block;
+  }
+  .slack-terms .slt-footer nav {
+    margin-top: 20px;
+    gap: 20px;
+  }
+}
+@media (max-width: 360px) {
+  .slack-terms h1 {
+    font-size: 39px;
+  }
+  .slack-terms .slt-sidebar nav {
+    grid-template-columns: 1fr;
+  }
+  .slack-terms .slt-brand-connection {
+    gap: 16px;
+  }
+}
+@media print {
+  .slack-terms .slt-sidebar,
+  .slack-terms .slt-help,
+  .slack-terms .slt-hero-visual,
+  .slack-terms .slt-footer nav {
+    display: none;
+  }
+  .slack-terms .slt-wrap {
+    width: 100%;
+  }
+  .slack-terms .slt-hero-grid,
+  .slack-terms .slt-reading {
+    display: block;
+    min-height: 0;
+  }
+  .slack-terms .slt-document {
+    max-width: none;
+  }
+  .slack-terms .slt-document section {
+    break-inside: avoid;
+  }
+  .slack-terms .slt-hero {
+    padding: 20px 0;
+  }
+  .slack-terms h1 {
+    font-size: 45px;
+  }
+}

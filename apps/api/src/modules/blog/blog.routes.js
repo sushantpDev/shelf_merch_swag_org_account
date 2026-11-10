@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import mongoose from 'mongoose';
 import { z } from 'zod';
 import { asyncHandler } from '../../utils/asyncHandler.js';
 import { authenticate } from '../../middleware/auth.middleware.js';
@@ -13,6 +14,8 @@ import { objectId } from '../users/users.validation.js';
 import { BlogPost } from './blogPost.model.js';
 import { BlogAsset } from './blogAsset.model.js';
 import { blogPlainText, validateBlogContent } from './blogContent.js';
+import { assertSeoPublication } from '../seoGrowth/seoGrowth.approval.js';
+import { SeoContent, SeoJob, SeoKeyword, SCOPE } from '../seoGrowth/seoGrowth.models.js';
 
 const router = Router();
 router.use(authenticate, resolveTenant, platformArea('blog', 'read'));
@@ -94,6 +97,11 @@ router.post('/', ...blogWrite, validate({ body: postFields }), asyncHandler(asyn
 router.patch('/:id', ...blogWrite, validate({ params: idParam, body: patchFields }), asyncHandler(async (req, res) => {
   const post = await BlogPost.findById(req.params.id);
   if (!post) throw new NotFoundError('Blog post not found');
+  if (post.seoManaged && post.publishedAt) {
+    throw new ConflictError(
+      'Unpublish this SEO-managed article before editing it.',
+    );
+  }
   if (post.publishedAt && req.body.slug && req.body.slug !== post.slug) {
     throw new ConflictError('Slug cannot change after publication');
   }
@@ -103,6 +111,13 @@ router.patch('/:id', ...blogWrite, validate({ params: idParam, body: patchFields
     throw new ApiError(422, 'Published articles need an excerpt and article content', 'INCOMPLETE_BLOG_POST');
   }
   Object.assign(post, req.body);
+  if (post.seoManaged) {
+    post.seoApprovedHash = '';
+    await SeoContent.updateOne(
+      { scope: SCOPE, articleId: post._id },
+      { $set: { approvedHash: '', status: 'review' } },
+    );
+  }
   try {
     await post.save();
   } catch (err) { handleDuplicate(err); }
@@ -117,6 +132,7 @@ router.post('/:id/publish', ...blogWrite, validate({ params: idParam }), asyncHa
   if (!post.excerpt || !blogPlainText(post.content)) {
     throw new ApiError(422, 'Add an excerpt and article content before publishing', 'INCOMPLETE_BLOG_POST');
   }
+  await assertSeoPublication(post);
   post.status = 'published';
   post.publishedAt ||= new Date();
   await post.save();
@@ -131,6 +147,51 @@ router.post('/:id/unpublish', ...blogWrite, validate({ params: idParam }), async
   await post.save();
   writeAudit({ req, action: 'blog.unpublish', entityType: 'BlogPost', entityId: post._id });
   res.json(post);
+}));
+
+router.delete('/:id', ...blogWrite, validate({ params: idParam }), asyncHandler(async (req, res) => {
+  await mongoose.connection.transaction(async (session) => {
+    const post = await BlogPost.findById(req.params.id).session(session);
+    if (!post) throw new NotFoundError('Blog post not found');
+    if (post.status !== 'draft') {
+      throw new ConflictError('Unpublish this article before deleting it.');
+    }
+    const contents = await SeoContent.find({ scope: SCOPE, articleId: post._id }).session(session);
+    const jobs = await SeoJob.find({
+      scope: SCOPE,
+      $or: [{ articleId: post._id }, { _id: { $in: contents.map((item) => item.jobId) } }],
+    }).session(session);
+    if (jobs.some((job) => ['queued', 'running', 'retry'].includes(job.status))) {
+      throw new ConflictError('Research or regeneration is in progress for this draft. Wait for it to finish before deleting.');
+    }
+
+    await BlogPost.deleteOne({ _id: post._id, status: 'draft' }, { session });
+    await SeoContent.deleteMany({ scope: SCOPE, articleId: post._id }, { session });
+    // Keep execution history and usage reservations, but prevent a retry from
+    // restoring a draft that an administrator intentionally deleted.
+    await SeoJob.updateMany({ scope: SCOPE, _id: { $in: jobs.map((job) => job._id) } }, {
+      $set: { status: 'completed', stage: 'draft_deleted', reason: 'Draft deleted by an administrator.', error: '', leaseUntil: null },
+      $unset: { articleId: 1, owner: 1 },
+    }, { session });
+    const keywordIds = [...contents, ...jobs].map((item) => item.keywordId).filter(Boolean);
+    // The editor can change an unpublished slug without changing the original
+    // generated URL stored on the keyword.
+    const draftUrls = [post.slug, ...contents.map((item) => item.generated?.slug), ...jobs.map((item) => item.generated?.slug)]
+      .filter(Boolean).map((value) => `https://shelfmerch.io/blog/${value}`);
+    const retainedKeywordIds = await SeoContent.distinct('keywordId', {
+      scope: SCOPE, keywordId: { $in: keywordIds },
+    }).session(session);
+    await SeoKeyword.updateMany({
+      scope: SCOPE,
+      _id: { $in: keywordIds, $nin: retainedKeywordIds },
+      state: 'drafted',
+      pageType: 'educational_blog',
+      existingPage: { $in: ['', null] },
+      targetUrl: { $in: draftUrls },
+    }, { $set: { state: 'available', targetUrl: '' } }, { session });
+  });
+  writeAudit({ req, action: 'blog.delete', entityType: 'BlogPost', entityId: req.params.id });
+  res.json({ deleted: true, id: req.params.id });
 }));
 
 const imageUpload = uploader({ allow: IMAGE_TYPES, maxSizeMb: 5 });

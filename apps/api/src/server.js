@@ -3,9 +3,12 @@ import { logger, logActiveLoggerConfig } from './config/logger.js';
 import { connectDb, disconnectDb } from './config/db.js';
 import { initObservability } from './config/observability.js';
 import { createApp } from './app.js';
+import { getOidcProvider } from './modules/oauth/createOidcProvider.js';
+import { mcpResourceUrl, oauthIssuer } from './modules/oauth/oauth.config.js';
 import { startScheduledCampaignWorker } from './jobs/scheduledCampaign.worker.js';
 import { startNotificationWorker } from './jobs/notification.worker.js';
 import { ensureRedisReady } from './config/redis.js';
+import { ensureBuiltInPlatformTeam } from './modules/platform/team.service.js';
 
 async function main() {
   const mergeEnv = validateMergeEnvironment();
@@ -19,12 +22,14 @@ async function main() {
   // Prove which logger module production is running (no secrets / env dumps).
   logActiveLoggerConfig();
   await connectDb();
+  await ensureBuiltInPlatformTeam();
 
   // Ensure overdue scheduled sends are recovered even when the dedicated
   // worker process is not running (common in local / single-node deploys).
   const scheduleWorker = await startScheduledCampaignWorker();
   const notificationWorker = (await ensureRedisReady()) ? startNotificationWorker() : null;
 
+  getOidcProvider();
   const app = createApp();
   const server = app.listen(env.PORT, env.HOST, () => {
     const addr = server.address();
@@ -39,6 +44,8 @@ async function main() {
         port: env.PORT,
         nodeEnv: env.NODE_ENV,
         appUrl: base,
+        oauthIssuer: oauthIssuer(),
+        mcpResource: mcpResourceUrl(),
       },
       `ShelfMerch listening on ${base}`,
     );

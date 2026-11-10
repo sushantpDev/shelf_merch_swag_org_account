@@ -1,0 +1,30 @@
+{
+  "name": "shelfmerch: Recognition & Swag Platform",
+  "short_name": "shelfmerch",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B6CFF",
+  "theme_color": "#0B6CFF",
+  "icons": [
+    {
+      "src": "/favicon-48x48.png?v=16",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png?v=16",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png?v=16",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png?v=16",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

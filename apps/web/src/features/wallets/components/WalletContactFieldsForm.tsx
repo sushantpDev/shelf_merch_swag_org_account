@@ -3,7 +3,7 @@ import type { WalletContactFieldErrors, WalletContactFields } from "../walletCon
 function FieldError({ message }: { message?: string }) {
   if (!message) return null;
   return (
-    <div className="mut3" style={{ color: "var(--danger)", fontSize: 11, marginTop: 4 }}>
+    <div className="mut3" style={{ color: "var(--danger)", fontSize: "var(--workspace-font-caption, 11px)", marginTop: 4 }}>
       {message}
     </div>
   );
@@ -72,7 +72,7 @@ export function WalletContactFieldsForm({
         </div>
       </div>
 
-      <div className="field">
+      <div className="field" style={{ marginTop: 16 }}>
         <label className="lbl" htmlFor={`${idPrefix}-gstin`}>
           GSTIN *
         </label>

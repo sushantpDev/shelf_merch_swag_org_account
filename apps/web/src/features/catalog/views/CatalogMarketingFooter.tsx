@@ -214,7 +214,7 @@ export function CatalogMarketingFooter({ onViewCatalog }: { onViewCatalog?: () =
           <p className="sm-cat-copy">Shelf Merch. All rights reserved © 2026</p>
           <nav className="sm-cat-legal" aria-label="Legal">
             <Link to="/request-demo">Accessibility Support</Link>
-            <Link to="/terms">Terms</Link>
+            <Link to="/terms-condition">Terms</Link>
             <Link to="/privacy">Privacy Policy</Link>
           </nav>
         </div> */}

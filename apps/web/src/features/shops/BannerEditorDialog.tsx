@@ -101,7 +101,7 @@ export function BannerEditorDialog({
           <div className="modal-pad">
             <DialogHeader>
               <DialogTitle>Edit shop look</DialogTitle>
-              <DialogDescription className="muted" style={{ fontSize: 13, marginTop: 4 }}>
+              <DialogDescription className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)", marginTop: 4 }}>
                 Update the banner and logo for <b>{shop.name}</b>.
               </DialogDescription>
             </DialogHeader>
@@ -137,7 +137,7 @@ export function BannerEditorDialog({
             <div className="lbl" style={{ marginTop: 18 }}>
               Banner library
             </div>
-            <p className="mut3" style={{ fontSize: 12, margin: "4px 0 8px" }}>
+            <p className="mut3" style={{ fontSize: "var(--workspace-font-caption, 12px)", margin: "4px 0 8px" }}>
               Or pick a ready-made banner for your shop storefront.
             </p>
             <div
@@ -222,7 +222,7 @@ export function BannerEditorDialog({
                         style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
                       />
                     </div>
-                    <div className="mut3" style={{ fontSize: 11 }}>
+                    <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11px)" }}>
                       PNG, SVG, WEBP or JPEG · max 5 MB
                     </div>
                   </div>
@@ -251,8 +251,8 @@ export function BannerEditorDialog({
                   onClick={() => fileRef.current?.click()}
                 >
                   <Upload size={20} />
-                  <div style={{ fontWeight: 600, marginTop: 6 }}>Upload shop logo</div>
-                  <div className="mut3" style={{ fontSize: 11.5, marginTop: 6 }}>
+                  <div style={{ fontWeight: "var(--font-weight-semibold)", marginTop: 6 }}>Upload shop logo</div>
+                  <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11.5px)", marginTop: 6 }}>
                     SVG, PNG, WEBP, JPEG · max 5 MB
                   </div>
                 </button>

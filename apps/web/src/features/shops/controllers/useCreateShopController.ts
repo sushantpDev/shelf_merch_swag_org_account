@@ -1,4 +1,4 @@
-import { useReducer, type Dispatch } from "react";
+import { useReducer, useRef, useState, type Dispatch } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { useInvalidateWorkspace } from "@/hooks/useWorkspace";
@@ -8,6 +8,7 @@ import {
   setDefaultArtwork,
 } from "@/features/swag/wizard/artworkHistory";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
+import { readArtworkFile } from "@/lib/artworkValidation";
 import { bannerConfigFromSource } from "../banner";
 import { useCreateShop } from "../model";
 import { markShopCelebration } from "../shopCelebration";
@@ -18,16 +19,14 @@ import {
   type ShopDraftAction,
 } from "../shopDraft";
 
-const LOGO_ACCEPT = /\.(svg|png|webp|jpe?g)$/i;
-const LOGO_MAX = 5 * 1024 * 1024;
-
 export type CreateShopVm = {
   draft: ShopDraft;
   dispatch: Dispatch<ShopDraftAction>;
   publishing: boolean;
+  validatingLogo: boolean;
   onExit: () => void;
   onNext: () => void;
-  onPickLogo: (file: File) => void;
+  onPickLogo: (file: File) => Promise<void>;
   onRemoveLogo: () => void;
   onPublish: () => void;
 };
@@ -38,6 +37,8 @@ export function useCreateShopController(): CreateShopVm {
   const createShop = useCreateShop();
   const invalidateWorkspace = useInvalidateWorkspace();
   const [draft, dispatch] = useReducer(shopDraftReducer, INITIAL_SHOP_DRAFT);
+  const [validatingLogo, setValidatingLogo] = useState(false);
+  const logoReadId = useRef(0);
 
   function onNext() {
     if (!draft.name.trim()) {
@@ -47,18 +48,12 @@ export function useCreateShopController(): CreateShopVm {
     dispatch({ type: "set", patch: { step: 1 } });
   }
 
-  function onPickLogo(file: File) {
-    if (!LOGO_ACCEPT.test(file.name)) {
-      toast.error("Use SVG, PNG, WEBP, or JPG");
-      return;
-    }
-    if (file.size > LOGO_MAX) {
-      toast.error("Maximum file size is 5 MB");
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      const preview = String(reader.result);
+  async function onPickLogo(file: File) {
+    const readId = ++logoReadId.current;
+    setValidatingLogo(true);
+    try {
+      const { preview } = await readArtworkFile(file);
+      if (readId !== logoReadId.current) return;
       dispatch({ type: "set", patch: { logoUrl: preview } });
       setDefaultArtwork({
         id: `shop-logo-${Date.now()}`,
@@ -67,16 +62,24 @@ export function useCreateShopController(): CreateShopVm {
         fileType: fileTypeFromName(file.name),
         source: "shop-logo",
       });
-    };
-    reader.readAsDataURL(file);
+    } catch (err) {
+      if (readId === logoReadId.current) {
+        toast.error(err instanceof Error ? err.message : "Could not read logo. Please try again.");
+      }
+    } finally {
+      if (readId === logoReadId.current) setValidatingLogo(false);
+    }
   }
 
   function onRemoveLogo() {
+    logoReadId.current++;
+    setValidatingLogo(false);
     dispatch({ type: "set", patch: { logoUrl: "" } });
     clearDefaultArtwork();
   }
 
   async function onPublish() {
+    if (validatingLogo) return;
     const name = draft.name.trim();
     if (!name) {
       toast.error("Enter a shop name");
@@ -124,6 +127,7 @@ export function useCreateShopController(): CreateShopVm {
     draft,
     dispatch,
     publishing: createShop.isPending,
+    validatingLogo,
     onExit: () => navigate("/app/shops"),
     onNext,
     onPickLogo,

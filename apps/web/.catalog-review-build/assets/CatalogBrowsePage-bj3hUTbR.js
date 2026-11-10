@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-n5LQ9ujS.js";import{n as t}from"./kits-CQBkW-5R.js";import{t as n}from"./CatalogBrowseView-3M0Hi_Z7.js";var r=e();function i(){return(0,r.jsx)(n,{...t()})}export{i as CatalogBrowsePage};

@@ -1,6 +1,10 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
+import { useEffect, useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { DesignedProductThumb } from "./DesignedProductThumb";
 import type { UiCollection, UiProduct } from "@/services/mappers";
+import { savedDesignPreview } from "@/features/swag/mockup-bake";
 
 function colorSwatches(p: UiProduct) {
   const hexes: string[] = [];
@@ -33,9 +37,14 @@ export function CollectionInlineCard({
   /** Opens product detail when a product card is clicked. */
   onProductClick?: (product: UiProduct, pIdx: number) => void;
 }) {
+  const [expanded, setExpanded] = useState(false);
+
   const defaultSub = `${collection.code ? `${collection.code} · ` : ""}${collection.products.length} ${
     collection.products.length === 1 ? "item" : "items"
   }`;
+
+  /* Only show the toggle when there are enough products to warrant it */
+  const showToggle = collection.products.length > 3;
 
   return (
     <article className="swag-col-card card">
@@ -44,18 +53,42 @@ export function CollectionInlineCard({
           <h3 className="swag-col-card-name">{collection.name}</h3>
           <span className="swag-col-card-sub muted">{subtitle ?? defaultSub}</span>
         </div>
-        {actions ? <div className="swag-col-card-actions">{actions}</div> : null}
+        <div className="swag-col-card-actions">
+          {showToggle ? (
+            <button
+              type="button"
+              className="swag-col-view-toggle"
+              onClick={() => setExpanded((v) => !v)}
+              aria-expanded={expanded}
+            >
+              {expanded ? (
+                <>Show less <ChevronUp size={14} /></>
+              ) : (
+                <>View all <ChevronDown size={14} /></>
+              )}
+            </button>
+          ) : null}
+          {actions}
+        </div>
       </div>
 
-      <div className="swag-col-card-products">
+      <div
+        className={
+          expanded
+            ? "swag-col-card-products swag-col-card-products--grid"
+            : "swag-col-card-products"
+        }
+      >
         {collection.products.map((p, i) => {
           const swatches = colorSwatches(p);
+          const preview = savedDesignPreview(p, collection.artworkUrl);
           const body = (
             <>
               <div className="swag-col-pcard-img">
                 <DesignedProductThumb
                   product={p}
-                  artworkUrl={collection.artworkUrl}
+                  artworkUrl={preview.artworkUrl}
+                  preferBakedMockup={preview.preferBakedMockup}
                   hoverSwapViews
                 />
               </div>

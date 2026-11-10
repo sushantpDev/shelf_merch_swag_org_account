@@ -231,7 +231,7 @@ export function TenantsView(vm: TenantsVm) {
                   display: "grid",
                   placeItems: "center",
                   fontSize: 11,
-                  fontWeight: 600,
+                  fontWeight: "var(--font-weight-semibold)",
                   color: "var(--muted)",
                 }}
               >
@@ -241,7 +241,7 @@ export function TenantsView(vm: TenantsVm) {
             <div>
               <Link
                 to={`/platform/tenants/${row._id}`}
-                style={{ fontWeight: 600, color: "inherit", textDecoration: "none" }}
+                style={{ fontWeight: "var(--font-weight-semibold)", color: "inherit", textDecoration: "none" }}
               >
                 {row.name}
               </Link>

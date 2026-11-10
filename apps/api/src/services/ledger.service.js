@@ -47,15 +47,33 @@ async function withSession(session, fn) {
   }
 }
 
+function duplicateKey(err) {
+  return err?.code === 11000 || err?.cause?.code === 11000 || err?.errorResponse?.code === 11000;
+}
+
+let ledgerIndexesReady;
+
 export async function createTransaction(
-  { tenantId, walletId, type, amount, relatedEntityId = null, description = '', performedBy = null },
+  { tenantId, walletId, type, amount, relatedEntityId = null, description = '', performedBy = null, idempotencyKey = null },
   session = null,
 ) {
   if (!Number.isFinite(amount) || amount === 0) {
     throw new ApiError(422, 'Transaction amount must be a non-zero number', 'INVALID_AMOUNT');
   }
+  if (idempotencyKey != null && typeof idempotencyKey !== 'string') {
+    throw new ApiError(422, 'Ledger idempotency key must be a string', 'INVALID_IDEMPOTENCY_KEY');
+  }
+  if (idempotencyKey) {
+    ledgerIndexesReady ??= WalletTransaction.syncIndexes();
+    await ledgerIndexesReady;
+  }
 
-  return withSession(session, async (s) => {
+  try {
+    return await withSession(session, async (s) => {
+    if (idempotencyKey) {
+      const existing = await WalletTransaction.findOne({ tenantId, idempotencyKey }).session(s);
+      if (existing) return existing;
+    }
     const wallet = await Wallet.findOne({ _id: walletId, tenantId })
       .setOptions({ includeDeleted: true })
       .session(s);
@@ -119,6 +137,7 @@ export async function createTransaction(
           relatedEntityId,
           description,
           performedBy,
+          ...(idempotencyKey ? { idempotencyKey } : {}),
         },
       ],
       { session: s },
@@ -146,7 +165,14 @@ export async function createTransaction(
     }
 
     return txn;
-  });
+    });
+  } catch (err) {
+    if (idempotencyKey && duplicateKey(err)) {
+      const existing = await WalletTransaction.findOne({ tenantId, idempotencyKey });
+      if (existing) return existing;
+    }
+    throw err;
+  }
 }
 
 /** Resolve which wallet backs an entity-tied spend (handles removed source wallets). */
@@ -164,6 +190,14 @@ export async function resolveSpendWalletForEntity({ tenantId, entityId }) {
   return { entity, wallet: fallback };
 }
 
+function sameAllocation(existing, { walletId, entityId, amount }) {
+  return existing
+    && existing.type === 'allocation_to_entity'
+    && String(existing.walletId) === String(walletId)
+    && String(existing.relatedEntityId) === String(entityId)
+    && Number(existing.amount) === Number(amount);
+}
+
 /** Allocate budget to multiple entities atomically (§7.4 /allocate). */
 export async function allocateToEntities({ tenantId, walletId, allocations, performedBy }) {
   const session = await mongoose.startSession();
@@ -171,9 +205,25 @@ export async function allocateToEntities({ tenantId, walletId, allocations, perf
     let txns;
     await session.withTransaction(async () => {
       txns = [];
-      for (const { entityId, amount } of allocations) {
+      for (const { entityId, amount, idempotencyKey = null } of allocations) {
         const entity = await Entity.findOne({ _id: entityId, tenantId }).session(session);
         if (!entity) throw new NotFoundError(`Entity ${entityId} not found`);
+        if (idempotencyKey) {
+          const existing = await WalletTransaction.findOne({ tenantId, idempotencyKey }).session(session);
+          if (existing) {
+            if (!sameAllocation(existing, { walletId, entityId, amount })) {
+              throw new ApiError(409, 'This allocation key was used for a different movement', 'ALLOCATION_KEY_CONFLICT');
+            }
+            txns.push(existing);
+            continue;
+          }
+        }
+        if (amount < 0) {
+          const remaining = Number(entity.allocatedAmount || 0) - Number(entity.spentAmount || 0);
+          if (Math.abs(amount) > remaining) {
+            throw new ApiError(422, 'Cannot withdraw budget that has already been spent', 'ALLOCATION_EXCEEDS_UNSPENT');
+          }
+        }
         const txn = await createTransaction(
           {
             tenantId,
@@ -186,6 +236,7 @@ export async function allocateToEntities({ tenantId, walletId, allocations, perf
                 ? `Budget allocation to ${entity.name}`
                 : `Budget returned from ${entity.name}`,
             performedBy,
+            idempotencyKey,
           },
           session,
         );
@@ -286,16 +337,16 @@ export async function recomputeAllocatedAmount({ tenantId, walletId }) {
   return Math.max(0, (allocRows[0]?.allocated ?? 0) - (spendRows[0]?.spent ?? 0));
 }
 
-export async function repairEntityCache({ tenantId, entityId }) {
-  const entity = await Entity.findOne({ _id: entityId, tenantId });
-  if (!entity) return null;
-
+/** Ledger totals for one entity. Read-only — does not persist cache repairs. */
+export async function readEntityLedgerTotals({ tenantId, entityId }) {
+  const tid = new mongoose.Types.ObjectId(String(tenantId));
+  const eid = new mongoose.Types.ObjectId(String(entityId));
   const [allocRows, spentRows] = await Promise.all([
     WalletTransaction.aggregate([
       {
         $match: {
-          tenantId: new mongoose.Types.ObjectId(String(tenantId)),
-          relatedEntityId: entity._id,
+          tenantId: tid,
+          relatedEntityId: eid,
           type: 'allocation_to_entity',
         },
       },
@@ -304,17 +355,46 @@ export async function repairEntityCache({ tenantId, entityId }) {
     WalletTransaction.aggregate([
       {
         $match: {
-          tenantId: new mongoose.Types.ObjectId(String(tenantId)),
-          relatedEntityId: entity._id,
+          tenantId: tid,
+          relatedEntityId: eid,
           type: { $in: ['campaign_spend', 'order_payment'] },
         },
       },
       { $group: { _id: null, spent: { $sum: { $abs: '$amount' } } } },
     ]),
   ]);
+  return {
+    allocatedAmount: allocRows[0]?.allocated ?? 0,
+    spentAmount: spentRows[0]?.spent ?? 0,
+  };
+}
 
-  const allocatedAmount = allocRows[0]?.allocated ?? 0;
-  const spentAmount = spentRows[0]?.spent ?? 0;
+/**
+ * Wallet cash + earmarked totals from the ledger.
+ * Read-only view for MCP PREPARE (no cache writes).
+ */
+export async function readWalletLedgerView({ tenantId, walletId }) {
+  const wallet = await Wallet.findOne({ _id: walletId, tenantId });
+  if (!wallet) return null;
+  const [balance, allocatedAmount] = await Promise.all([
+    recomputeBalance({ tenantId, walletId }),
+    recomputeAllocatedAmount({ tenantId, walletId }),
+  ]);
+  return {
+    _id: wallet._id,
+    name: wallet.name,
+    currency: wallet.currency,
+    status: wallet.status,
+    balance,
+    allocatedAmount,
+  };
+}
+
+export async function repairEntityCache({ tenantId, entityId }) {
+  const entity = await Entity.findOne({ _id: entityId, tenantId });
+  if (!entity) return null;
+
+  const { allocatedAmount, spentAmount } = await readEntityLedgerTotals({ tenantId, entityId });
   let dirty = false;
   if (entity.allocatedAmount !== allocatedAmount) {
     entity.allocatedAmount = allocatedAmount;

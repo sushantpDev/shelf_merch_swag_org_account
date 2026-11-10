@@ -1,0 +1,110 @@
+[
+  {
+    "importKey": "competitor-research:2026-10-30:axomo:store",
+    "kind": "competitor_research",
+    "subject": "AXOMO",
+    "text": "AXOMO describes company stores with a customized product catalog, private employee or public access, and centralized purchasing categories.",
+    "sourceRef": "AXOMO official Company Store page; vendor-stated capabilities, not independently product-tested",
+    "sourceUrl": "https://axomo.com/company-store/",
+    "researchedAt": "2026-10-30T00:00:00.000Z"
+  },
+  {
+    "importKey": "competitor-research:2026-10-30:axomo:budget",
+    "kind": "competitor_research",
+    "subject": "AXOMO",
+    "text": "AXOMO states that admins can assign fixed or recurring budgets to users and distribute store credit for employee rewards or company gear.",
+    "sourceRef": "AXOMO official Company Store page; vendor-stated capabilities, not independently product-tested",
+    "sourceUrl": "https://axomo.com/company-store/",
+    "researchedAt": "2026-10-30T00:00:00.000Z"
+  },
+  {
+    "importKey": "competitor-research:2026-10-30:stadium:choice",
+    "kind": "competitor_research",
+    "subject": "Stadium",
+    "text": "Stadium describes branded shops with curated catalogs and points, currency or priceless gifting. Recipients choose items and enter their own details.",
+    "sourceRef": "Stadium official Shops page; vendor-stated capabilities, not independently product-tested",
+    "sourceUrl": "https://www.bystadium.com/shops",
+    "researchedAt": "2026-10-30T00:00:00.000Z"
+  },
+  {
+    "importKey": "competitor-research:2026-10-30:stadium:programs",
+    "kind": "competitor_research",
+    "subject": "Stadium",
+    "text": "Stadium lists employee recognition, company swag and occasion-specific shops, sending points or budget, and reporting on redemptions and categories.",
+    "sourceRef": "Stadium official Shops page; vendor-stated capabilities, not independently product-tested",
+    "sourceUrl": "https://www.bystadium.com/shops",
+    "researchedAt": "2026-10-30T00:00:00.000Z"
+  },
+  {
+    "importKey": "competitor-research:2026-10-30:swagup:shops",
+    "kind": "competitor_research",
+    "subject": "SwagUp",
+    "text": "SwagUp describes branded swag shops stocked from existing inventory or pre-orders, with recipient payment through cards, points or shop credit.",
+    "sourceRef": "SwagUp official Shops page; vendor-stated capabilities, not independently product-tested",
+    "sourceUrl": "https://www.swagup.com/shops",
+    "researchedAt": "2026-10-30T00:00:00.000Z"
+  },
+  {
+    "importKey": "competitor-research:2026-10-30:swagup:employee",
+    "kind": "competitor_research",
+    "subject": "SwagUp",
+    "text": "SwagUp presents employee stores with redeemable points and recipient choice, alongside event stores, customer rewards and centralized company merchandise hubs.",
+    "sourceRef": "SwagUp official Shops page; vendor-stated capabilities, not independently product-tested",
+    "sourceUrl": "https://www.swagup.com/shops",
+    "researchedAt": "2026-10-30T00:00:00.000Z"
+  },
+  {
+    "importKey": "competitor-research:2026-10-30:merchology:store",
+    "kind": "competitor_research",
+    "subject": "Merchology",
+    "text": "Merchology's MerchStore page describes configuring a branded storefront with selected products and logos, then placing subsequent orders through that store.",
+    "sourceRef": "Merchology official MerchStore page; vendor-stated capabilities, not independently product-tested",
+    "sourceUrl": "https://www.merchology.com/pages/merchstore",
+    "researchedAt": "2026-10-30T00:00:00.000Z"
+  },
+  {
+    "importKey": "competitor-research:2026-10-30:merchology:guides",
+    "kind": "competitor_research",
+    "subject": "Merchology",
+    "text": "Merchology's MerchStore page links to setup guidance for accounts, product selection, artwork requirements, gift codes and discount codes.",
+    "sourceRef": "Merchology official MerchStore page; observed page content, not a test of linked features",
+    "sourceUrl": "https://www.merchology.com/pages/merchstore",
+    "researchedAt": "2026-10-30T00:00:00.000Z"
+  },
+  {
+    "importKey": "competitor-research:2026-10-30:swageazy:gifts",
+    "kind": "competitor_research",
+    "subject": "Swageazy",
+    "text": "Swageazy positions itself as an India-focused corporate gifting company and presents employee and client hampers, festive gifting and branded merchandise categories.",
+    "sourceRef": "Swageazy official homepage; vendor positioning and observed categories",
+    "sourceUrl": "https://swageazy.com/",
+    "researchedAt": "2026-10-30T00:00:00.000Z"
+  },
+  {
+    "importKey": "competitor-research:2026-10-30:swageazy:redemption",
+    "kind": "competitor_research",
+    "subject": "Swageazy",
+    "text": "Swageazy describes a redemption link through which employees choose gifts from a curated catalog, and an ordering workflow covering packaging, mockup approval, production and delivery tracking.",
+    "sourceRef": "Swageazy official homepage; vendor-stated capabilities, not independently product-tested",
+    "sourceUrl": "https://swageazy.com/",
+    "researchedAt": "2026-10-30T00:00:00.000Z"
+  },
+  {
+    "importKey": "competitor-research:2026-10-30:sendoso:positioning",
+    "kind": "competitor_research",
+    "subject": "Sendoso",
+    "text": "Sendoso positions its platform around corporate gifting and direct mail for prospects, customers and employees, including customized merchandise, eGifts and experiences.",
+    "sourceRef": "Sendoso official homepage; adjacent competitor positioning, vendor-stated capabilities",
+    "sourceUrl": "https://www.sendoso.com/",
+    "researchedAt": "2026-10-30T00:00:00.000Z"
+  },
+  {
+    "importKey": "competitor-research:2026-10-30:sendoso:operations",
+    "kind": "competitor_research",
+    "subject": "Sendoso",
+    "text": "Sendoso describes gifting campaigns and fulfillment services spanning procurement, storage, inventory management, packing, shipping and returns.",
+    "sourceRef": "Sendoso official homepage; vendor-stated capabilities, not independently product-tested",
+    "sourceUrl": "https://www.sendoso.com/",
+    "researchedAt": "2026-10-30T00:00:00.000Z"
+  }
+]

@@ -9,6 +9,7 @@ import {
   disconnectZoho,
   fetchZohoStatus,
   startZohoConnect,
+  formatZohoSyncResult,
   syncZohoEmployees,
   type ZohoConnectionStatus,
   type ZohoIntegrationPublic,
@@ -323,9 +324,9 @@ export function useIntegrationsController(): IntegrationsVm {
   const syncMutation = useMutation({
     mutationFn: syncZohoEmployees,
     onSuccess: (summary) => {
-      toast.success(
-        "Employee sync complete",
-      );
+      const message = formatZohoSyncResult(summary);
+      if (summary.failed > 0) toast.error(message);
+      else toast.success(message);
       void queryClient.invalidateQueries({ queryKey: ZOHO_QUERY_KEY });
     },
     onError: (err) => {

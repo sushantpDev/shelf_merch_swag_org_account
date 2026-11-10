@@ -80,10 +80,10 @@ export function KitsEmptyState({ canCreateKits = true }: KitsEmptyStateProps) {
           style={{ justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}
         >
           <div>
-            <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--ink)", marginBottom: 3 }}>
+            <h3 style={{ fontSize: "var(--workspace-font-heading, 16px)", fontWeight: "var(--font-weight-bold)", color: "var(--ink)", marginBottom: 3 }}>
               Pre-designed kits
             </h3>
-            <div className="muted" style={{ fontSize: 12 }}>
+            <div className="muted" style={{ fontSize: "var(--workspace-font-caption, 12px)" }}>
               Choose a ready-made template and customize it.
             </div>
           </div>

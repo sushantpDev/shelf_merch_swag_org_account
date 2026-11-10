@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
+import { useCatalogFavicon } from "./useCatalogFavicon";
 import "@/components/landing-page.css";
 
 function isCatalogIndexPath(pathname: string) {
@@ -13,6 +14,7 @@ function isCatalogProductPath(pathname: string) {
 }
 
 export function PublicCatalogLayout() {
+  useCatalogFavicon();
   const location = useLocation();
   const isCatalogIndex = isCatalogIndexPath(location.pathname);
 
@@ -31,11 +33,9 @@ export function PublicCatalogLayout() {
       <main className="public-catalog-main public-catalog-main--flush">
         <Outlet />
       </main>
-      {isCatalogIndex ? null : (
-        <div className="shelf-landing public-catalog-chrome">
-          <Footer />
-        </div>
-      )}
+      <div className="shelf-landing public-catalog-chrome">
+        <Footer />
+      </div>
     </div>
   );
 }

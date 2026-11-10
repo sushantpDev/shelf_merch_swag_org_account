@@ -40,7 +40,7 @@ export function seedAllocateWizard(org: OrgSnapshot, startStep = 2): WizardState
         ...d,
         color: deptPaletteColor(i),
         allocated: 0,
-        selected: true,
+        selected: false,
         seedAllocated: d.allocated || 0,
         allocBaselineReset: false,
         mgr: {
@@ -135,6 +135,7 @@ export type WizardAction =
   | { type: "updateDept"; id: string | number; name: string; desc: string; users: number }
   | { type: "deleteDept"; id: string | number }
   | { type: "toggleDeptSelect"; id: string | number }
+  | { type: "setAllDeptSelected"; selected: boolean }
   | { type: "setAlloc"; id: string | number; amount: number }
   | { type: "splitEven" }
   | { type: "mgrField"; id: string | number; field: keyof WizardDept["mgr"]; value: string }
@@ -240,6 +241,15 @@ export function wizardReducer(state: WizardState, action: WizardState | WizardAc
         departments: state.departments.filter((d) => String(d.id) !== String(action.id)),
       };
     }
+    case "setAllDeptSelected":
+      return {
+        ...state,
+        departments: state.departments.map((d) =>
+          action.selected
+            ? restoreSelectedDept(d)
+            : { ...d, selected: false, allocated: 0, allocBaselineReset: false },
+        ),
+      };
     case "toggleDeptSelect": {
       const target = state.departments.find((d) => String(d.id) === String(action.id));
       if (!target) return state;

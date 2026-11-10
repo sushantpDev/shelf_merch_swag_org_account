@@ -1,24 +1,24 @@
-import type { LucideIcon } from "lucide-react";
 import {
-  Award,
   Box,
-  Briefcase,
-  Cake,
   ChevronLeft,
   ChevronRight,
-  Flower2,
+  FilePenLine,
   Gift,
-  Heart,
+  ListFilter,
+  Megaphone,
   PackagePlus,
-  PartyPopper,
+  Radio,
   Search,
   Send,
-  Sparkles,
-  Star,
-  Sun,
-  Trees,
   Users,
 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { COMPLETE_STATUSES, isIncompleteCampaign, isLiveCampaign, isPointsCampaign, isSentKitCampaign } from "../model";
 import type { UiCampaign } from "../model";
 import type {
@@ -44,61 +44,23 @@ const TYPE_TABS: { id: CampaignTypeTab; label: string }[] = [
   { id: "points", label: "Points" },
 ];
 
-const POINTS_ICONS: LucideIcon[] = [
-  Gift,
-  Sparkles,
-  PartyPopper,
-  Star,
-  Heart,
-  Award,
-  Users,
-  Sun,
-  Flower2,
-  Cake,
-  Briefcase,
-  Trees,
-];
-
-const POINTS_TONES = ["indigo", "rose", "amber", "emerald", "sky", "violet"] as const;
-
-const NAME_ICON_RULES: { match: RegExp; icon: LucideIcon; tone: (typeof POINTS_TONES)[number] }[] = [
-  { match: /holi|festival|diwali|deepavali|navratri|eid|christmas|xmas/i, icon: PartyPopper, tone: "amber" },
-  { match: /women|mother|valentine|love|heart/i, icon: Heart, tone: "rose" },
-  { match: /birthday|annivers|cake|celebrate/i, icon: Cake, tone: "violet" },
-  { match: /weekend|summer|sun|spring|picnic/i, icon: Sun, tone: "sky" },
-  { match: /new\s*year|welcome|onboard|join/i, icon: Sparkles, tone: "indigo" },
-  { match: /team|employee|staff|people|hr/i, icon: Users, tone: "emerald" },
-  { match: /award|recogni|bonus|reward|points/i, icon: Award, tone: "amber" },
-  { match: /work|office|biz|corp|business/i, icon: Briefcase, tone: "sky" },
-  { match: /gift|swag|surprise|treat/i, icon: Gift, tone: "rose" },
-  { match: /order|shop|merch|pack/i, icon: Box, tone: "indigo" },
-];
-
-function hashKey(value: string) {
-  let h = 0;
-  for (let i = 0; i < value.length; i++) h = (h * 31 + value.charCodeAt(i)) >>> 0;
-  return h;
+function campaignInitials(name: string) {
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  if (words.length > 1) {
+    return `${words[0][0]}${words[1][0]}`.toUpperCase();
+  }
+  return (words[0] || "CP").slice(0, 2).toUpperCase();
 }
 
-function campaignVisual(c: UiCampaign): {
-  Icon: LucideIcon;
-  tone: (typeof POINTS_TONES)[number] | "kit";
-} {
-  if (!isPointsCampaign(c)) {
-    return { Icon: Box, tone: "kit" };
-  }
+const CAMPAIGN_AVATAR_TONES = ["blue", "lavender", "rose", "amber", "mint"] as const;
 
-  const name = c.name ?? "";
-  for (const rule of NAME_ICON_RULES) {
-    if (rule.match.test(name)) return { Icon: rule.icon, tone: rule.tone };
+function campaignAvatarTone(campaign: UiCampaign) {
+  const key = `${campaign.id}:${campaign.name}`;
+  let hash = 0;
+  for (let index = 0; index < key.length; index += 1) {
+    hash = (hash * 31 + key.charCodeAt(index)) >>> 0;
   }
-
-  const key = `${c.id}:${name}`;
-  const h = hashKey(key);
-  return {
-    Icon: POINTS_ICONS[h % POINTS_ICONS.length],
-    tone: POINTS_TONES[h % POINTS_TONES.length],
-  };
+  return CAMPAIGN_AVATAR_TONES[hash % CAMPAIGN_AVATAR_TONES.length];
 }
 
 function statusChip(c: UiCampaign) {
@@ -151,7 +113,7 @@ function campaignSubtext(c: UiCampaign) {
 }
 
 function typeLabel(c: UiCampaign) {
-  return isPointsCampaign(c) ? "Send points" : "Kit send";
+  return isPointsCampaign(c) ? "Points" : "Kit";
 }
 
 /** Campaigns list: hero, KPI strip, unified panel with filters and dense rows. */
@@ -206,28 +168,28 @@ export function CampaignsTableView({
       value: stats.total.toLocaleString("en-IN"),
       hint: "Across points and kits",
       tone: "slate",
-      live: false,
+      Icon: Megaphone,
     },
     {
       label: "Live",
       value: stats.live.toLocaleString("en-IN"),
       hint: "Currently running",
       tone: "blue",
-      live: true,
+      Icon: Radio,
     },
     {
       label: "Draft",
       value: stats.draft.toLocaleString("en-IN"),
       hint: "Ready to finish",
       tone: "amber",
-      live: false,
+      Icon: FilePenLine,
     },
     {
       label: "Recipients",
       value: stats.recipients.toLocaleString("en-IN"),
       hint: "People reached",
       tone: "green",
-      live: false,
+      Icon: Users,
     },
   ] as const;
 
@@ -259,10 +221,12 @@ export function CampaignsTableView({
       <div className="camp-kpi" aria-label="Campaign metrics">
         {kpis.map((item) => (
           <div key={item.label} className={`camp-kpi__item camp-kpi__item--${item.tone}`}>
+            <span className="camp-kpi__icon" aria-hidden="true">
+              <item.Icon size={18} strokeWidth={2} />
+            </span>
             <span className="camp-kpi__content">
               <span className="camp-kpi__label">{item.label}</span>
               <span className="camp-kpi__line">
-                {item.live ? <span className="camp-kpi__dot" aria-hidden="true" /> : null}
                 <span className="camp-kpi__value">{item.value}</span>
               </span>
               <span className="camp-kpi__hint">{item.hint}</span>
@@ -301,18 +265,29 @@ export function CampaignsTableView({
                 />
               </label>
 
-              <div className="camp-seg camp-status-seg" role="group" aria-label="Status filter">
-                {CAMPAIGN_FILTERS.map((t) => (
-                  <button
-                    key={t}
-                    type="button"
-                    className={`camp-seg__btn${filter === t ? " is-active" : ""}`}
-                    onClick={() => onFilter(t)}
-                  >
-                    {TAB_LABELS[t]}
-                  </button>
-                ))}
-              </div>
+              <Select
+                value={filter}
+                onValueChange={(value) => onFilter(value as CampaignFilter)}
+              >
+                <SelectTrigger className="camp-status-select" aria-label="Filter campaigns by status">
+                  <span className="camp-status-select__value">
+                    <ListFilter size={14} aria-hidden="true" />
+                    <span className="camp-status-select__label">Status</span>
+                    <SelectValue />
+                  </span>
+                </SelectTrigger>
+                <SelectContent className="camp-status-select__content" align="end">
+                  {CAMPAIGN_FILTERS.map((status) => (
+                    <SelectItem
+                      key={status}
+                      value={status}
+                      className="camp-status-select__option"
+                    >
+                      {TAB_LABELS[status]}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </>
           ) : null}
         </div>
@@ -335,7 +310,8 @@ export function CampaignsTableView({
             <div className="camp-list-body" role="list">
               {pageItems.length ? (
                 pageItems.map((c) => {
-                  const { Icon, tone } = campaignVisual(c);
+                  const pointsCampaign = isPointsCampaign(c);
+                  const avatarTone = campaignAvatarTone(c);
                   const resumable =
                     canSend &&
                     isIncompleteCampaign(c) &&
@@ -360,8 +336,17 @@ export function CampaignsTableView({
                       }
                     >
                       <div className="camp-row__main">
-                        <div className={`camp-row__icon camp-row__icon--${tone}`} aria-hidden="true">
-                          <Icon size={17} strokeWidth={2} />
+                        <div
+                          className={`camp-row__icon camp-row__icon--${pointsCampaign ? "points" : "kit"}`}
+                          aria-hidden="true"
+                        >
+                          {pointsCampaign ? (
+                            <span className={`camp-row__initials camp-row__initials--${avatarTone}`}>
+                              {campaignInitials(c.name)}
+                            </span>
+                          ) : (
+                            <Box size={16} strokeWidth={2} />
+                          )}
                         </div>
                         <div className="camp-row__text">
                           <span className="camp-row__title">{campaignTitle(c)}</span>
@@ -374,7 +359,16 @@ export function CampaignsTableView({
                         </div>
                       </div>
                       <div className="camp-row__type">
-                        <span className="camp-chip">{typeLabel(c)}</span>
+                        <span
+                          className={`camp-chip camp-chip--type camp-chip--type-${pointsCampaign ? "points" : "kit"}`}
+                        >
+                          {pointsCampaign ? (
+                            <Send size={12} strokeWidth={2} aria-hidden="true" />
+                          ) : (
+                            <Box size={12} strokeWidth={2} aria-hidden="true" />
+                          )}
+                          {typeLabel(c)}
+                        </span>
                       </div>
                       <div className="camp-row__status">{statusChip(c)}</div>
                       <div className="camp-row__num">{c.recipientCount.toLocaleString("en-IN")}</div>

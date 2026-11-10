@@ -38,7 +38,7 @@
 .shelf-landing .contacts-header__nav a {
   color: var(--ink);
   font-size: 17px;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
 }
 
@@ -59,7 +59,7 @@
   background: #25ad63;
   color: #fff;
   font-size: 18px;
-  font-weight: 850;
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
   box-shadow: 0 12px 22px rgba(25, 116, 70, 0.16);
 }
@@ -91,7 +91,7 @@
   margin: 0;
   color: #fff;
   font-size: clamp(66px, 7vw, 116px);
-  font-weight: 850;
+  font-weight: var(--font-weight-bold);
   line-height: 0.9;
   letter-spacing: -0.045em;
 }
@@ -100,10 +100,10 @@
   display: block;
   margin-top: 12px;
   color: var(--yellow);
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: var(--font-family-primary);
   font-size: 0.74em;
   font-style: italic;
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   line-height: 1.06;
   letter-spacing: 0;
 }
@@ -134,7 +134,7 @@
   border-radius: 999px;
   color: #fff;
   font-size: 17px;
-  font-weight: 850;
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
 }
 
@@ -163,7 +163,7 @@
   align-items: center;
   gap: 16px;
   font-size: 18px;
-  font-weight: 850;
+  font-weight: var(--font-weight-bold);
 }
 
 .shelf-landing .contacts-hero__proof-icon {
@@ -238,7 +238,7 @@
   background: #fff;
   color: var(--ink);
   font-size: 16px;
-  font-weight: 850;
+  font-weight: var(--font-weight-bold);
   box-shadow: 0 18px 36px rgba(18, 18, 18, 0.18);
 }
 
@@ -275,7 +275,7 @@
   background: #25ad63;
   color: #fff;
   font-size: 18px;
-  font-weight: 850;
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
   box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
 }

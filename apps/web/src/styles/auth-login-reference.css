@@ -1,0 +1,367 @@
+/* Login composition matched to the supplied Shelf Merch reference. */
+.auth-simple.auth-welcome-redesign.auth-login-reference {
+  background: #3155ff;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference::after {
+  display: block;
+  inset: 0;
+  background: #263ed8;
+  clip-path: polygon(75% 0, 100% 0, 100% 55%, 95.5% 60%, 100% 65%, 100% 100%, 35% 100%, 68% 45%);
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-corner-logo {
+  top: 5.4svh;
+  left: 3.6vw;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-corner-logo-image {
+  filter: brightness(0);
+  height: clamp(26px, 2.1vw, 36px) !important;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-body {
+  padding: 0;
+  min-height: 100svh;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-shell {
+  width: 100%;
+  min-height: 100svh;
+  grid-template-columns: minmax(0, 1.687fr) minmax(0, 1fr);
+  gap: 0;
+  overflow: hidden;
+  border-radius: 0;
+  align-items: stretch;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-art {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 2svh, 24px);
+  position: relative;
+  min-height: 100svh;
+  padding: 10svh 4% 4svh;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-align: center;
+}
+.auth-reference-visual {
+  position: relative;
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 900px;
+  height: 54svh;
+  max-height: 560px;
+}
+.auth-reference-copy {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin: 0;
+}
+.auth-reference-pills {
+  position: absolute;
+  z-index: 3;
+  top: 12%;
+  left: 8%;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 6px 8px;
+}
+.auth-reference-pills span {
+  padding: 7px 18px;
+  border-radius: 99px;
+  background: #171717;
+  color: #fff;
+  font-size: clamp(12px, 1.1vw, 18px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+.auth-reference-pills span:last-child {
+  grid-column: 1 / -1;
+  justify-self: center;
+}
+.auth-reference-plane {
+  position: absolute;
+  z-index: 3;
+  top: 42%;
+  left: 4%;
+  width: clamp(44px, 5.2vw, 76px);
+  height: auto;
+  transform: rotate(-9deg);
+}
+.auth-reference-eyebrow {
+  margin: 0 0 10px;
+  color: white;
+  font-size: clamp(11px, 1.2vw, 20px);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.auth-reference-headline {
+  margin: 0;
+  color: white;
+  font-family: var(--font-family-public-sans);
+  font-size: clamp(28px, min(4.4vw, 8svh), 76px);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+}
+.auth-reference-headline em {
+  display: inline;
+  color: #ffd84a;
+  font-family: var(--font-family-public-serif);
+  font-weight: 400;
+}
+.auth-reference-shape {
+  position: absolute;
+  width: 82%;
+  height: 96%;
+  left: 9%;
+  top: 7%;
+}
+.auth-reference-kit {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-width: none;
+}
+.auth-reference-badge {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 25%;
+  width: clamp(72px, 10svh, 110px);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #ffdc49;
+  color: #111;
+  font-size: clamp(11px, 1vw, 16px);
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  transform: rotate(-8deg);
+}
+.auth-reference-badge > span {
+  white-space: nowrap;
+}
+.auth-reference-star {
+  position: absolute;
+  right: 12%;
+  top: 38%;
+  font-size: clamp(28px, 3vw, 46px);
+  color: #3155ff;
+}
+.auth-reference-rays {
+  position: absolute;
+  right: 23%;
+  top: 0;
+  width: clamp(36px, 5svh, 64px);
+  height: auto;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-form-col {
+  max-width: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border-radius: 0;
+  position: relative;
+  z-index: 4;
+  padding: 4svh 3vw;
+  align-self: stretch;
+  min-height: 100svh;
+  box-sizing: border-box;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 22px 28px;
+  border-radius: 8px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 12px 40px rgb(45 33 95 / 8%);
+  background: #fff;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-title {
+  font-size: clamp(28px, 2.3vw, 38px);
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-card > .auth-simple-subtitle {
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 8px 0 0;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-form {
+  margin-top: 18px;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-field {
+  margin-bottom: 12px;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-field .auth-simple-label {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-field .auth-simple-input {
+  height: 44px;
+  border-radius: 12px;
+  font-size: 16px;
+  background: #eaf0fc;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-forgot-below {
+  font-size: 14px;
+  margin-top: 8px;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-submit {
+  margin-top: 4px;
+  height: 44px;
+  border-radius: 12px;
+  font-size: 16px;
+}
+.auth-reference-divider {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 12px;
+  color: #5d6472;
+  font-size: 14px;
+}
+.auth-reference-divider::before,
+.auth-reference-divider::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: #d5d9e2;
+}
+.auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-switch {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+@media (min-width: 701px) {
+  .auth-simple.auth-login-reference.auth-simple--dense .auth-simple-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .auth-simple.auth-login-reference.auth-simple--dense .auth-simple-name-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-column: 1 / -1;
+    gap: 12px;
+    margin: 0;
+  }
+  .auth-simple.auth-login-reference.auth-simple--dense .auth-simple-field {
+    min-width: 0;
+    margin: 0;
+  }
+  .auth-simple.auth-login-reference.auth-simple--dense .auth-simple-label-row {
+    margin: 0;
+  }
+  .auth-simple.auth-login-reference.auth-simple--dense .auth-simple-legal,
+  .auth-simple.auth-login-reference.auth-simple--dense .auth-simple-submit {
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+}
+@media (max-height: 700px) and (min-width: 701px) {
+  .auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-form-col {
+    padding-block: 16px;
+  }
+  .auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-card {
+    padding: 20px;
+  }
+  .auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-form {
+    margin-top: 18px;
+  }
+  .auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-field {
+    margin-bottom: 12px;
+  }
+  .auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-field .auth-simple-label {
+    margin-bottom: 6px;
+  }
+  .auth-simple.auth-welcome-redesign.auth-login-reference
+    .auth-simple-card
+    > .auth-simple-subtitle {
+    margin-top: 8px;
+  }
+  .auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-switch {
+    margin-top: 12px;
+  }
+}
+@media (max-width: 1000px) and (min-width: 701px) {
+  .auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-form-col {
+    padding-inline: 24px;
+  }
+  .auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-title {
+    font-size: 30px;
+  }
+  .auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-switch {
+    font-size: 14px;
+  }
+}
+@media (max-width: 700px) {
+  .auth-simple.auth-welcome-redesign.auth-login-reference::after {
+    display: none;
+  }
+  .auth-simple.auth-welcome-redesign.auth-login-reference .auth-corner-logo {
+    position: absolute;
+    margin: 0;
+    top: 20px;
+    left: 20px;
+  }
+  .auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-shell {
+    display: flex;
+    gap: 0;
+  }
+  .auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-art {
+    order: 0;
+    width: 100%;
+    min-height: 0;
+    padding: 66px 20px 18px;
+    gap: 8px;
+  }
+  .auth-reference-star,
+  .auth-reference-rays,
+  .auth-reference-pills {
+    display: none;
+  }
+  .auth-reference-plane {
+    width: 32px;
+    top: 42%;
+    left: 3%;
+  }
+  .auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-form-col {
+    order: 1;
+    background: #263ed8;
+    border-radius: 0;
+    padding: 18px 16px 24px;
+    min-height: 0;
+  }
+  .auth-simple.auth-welcome-redesign.auth-login-reference .auth-simple-card {
+    padding: 22px 20px;
+  }
+}
+
+@media (max-width: 700px) {
+  .auth-reference-visual {
+    height: clamp(110px, 18svh, 150px);
+    max-width: 300px;
+  }
+  .auth-reference-headline {
+    font-size: clamp(24px, 6.7vw, 30px);
+  }
+  .auth-reference-eyebrow {
+    font-size: 9px;
+    margin-bottom: 5px;
+  }
+  .auth-reference-badge {
+    width: 64px;
+    font-size: 11px;
+  }
+}

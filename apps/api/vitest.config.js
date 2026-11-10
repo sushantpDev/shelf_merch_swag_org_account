@@ -5,6 +5,9 @@ export default defineConfig({
     environment: 'node',
     env: {
       NODE_ENV: 'test',
+      // Existing MCP Inspector tests still present a ShelfMerch access JWT.
+      // Production ignores this flag.
+      MCP_ALLOW_LEGACY_JWT: 'true',
       RAZORPAY_KEY_ID: 'rzp_test_key',
       RAZORPAY_KEY_SECRET: 'rzp_test_secret',
       RAZORPAY_WEBHOOK_SECRET: 'test-webhook-secret',

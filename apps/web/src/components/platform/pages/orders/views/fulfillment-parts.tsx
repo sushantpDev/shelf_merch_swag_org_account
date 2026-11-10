@@ -387,7 +387,7 @@ export function PrintAreaPreview({
                 top: 2,
                 left: 2,
                 fontSize: 10,
-                fontWeight: 700,
+                fontWeight: "var(--font-weight-bold)",
                 color: "var(--ink)",
                 background: "rgba(255,255,255,.92)",
                 padding: "1px 5px",
@@ -413,14 +413,14 @@ export function Chip({ children, mono }: { children: ReactNode; mono?: boolean }
         alignItems: "center",
         gap: 5,
         fontSize: 12,
-        fontWeight: 600,
+        fontWeight: "var(--font-weight-semibold)",
         color: "var(--ink-2)",
         background: "var(--surface)",
         border: "1px solid var(--line)",
         borderRadius: 999,
         padding: "3px 9px",
         whiteSpace: "nowrap",
-        fontFamily: mono ? "ui-monospace, SFMono-Regular, Menlo, monospace" : undefined,
+        fontFamily: mono ? "var(--font-family-code)" : undefined,
       }}
     >
       {children}
@@ -817,21 +817,21 @@ export function PrintSpecTable({ areas }: { areas: PrintArea[] }) {
             const hasIn = wIn > 0 && hIn > 0;
             return (
               <tr key={a.key ?? i}>
-                <td style={{ fontWeight: 600 }}>{a.label}</td>
+                <td style={{ fontWeight: "var(--font-weight-semibold)" }}>{a.label}</td>
                 <td style={{ textTransform: "uppercase", letterSpacing: ".03em" }}>
                   {a.methods?.length ? a.methods.join(", ") : "N/A"}
                 </td>
-                <td style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>
+                <td style={{ fontFamily: "var(--font-family-code)" }}>
                   {hasIn
                     ? `${wIn}×${hIn} in`
                     : a.maxWidthCm || a.maxHeightCm
                       ? `${a.maxWidthCm ?? "N/A"}×${a.maxHeightCm ?? "N/A"} cm`
                       : "N/A"}
                 </td>
-                <td style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>
+                <td style={{ fontFamily: "var(--font-family-code)" }}>
                   {hasIn ? `${Math.round(wIn * dpi)}×${Math.round(hIn * dpi)}` : "N/A"}
                 </td>
-                <td style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>
+                <td style={{ fontFamily: "var(--font-family-code)" }}>
                   {a.dpi ?? "N/A"}
                 </td>
               </tr>

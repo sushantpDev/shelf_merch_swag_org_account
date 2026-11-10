@@ -25,6 +25,101 @@ function isNoindexPath(catalog, path) {
   });
 }
 
+const RESERVED_TOP_LEVEL_PATHS = new Set([
+  'about',
+  'accept-invite',
+  'app',
+  'apps',
+  'auth',
+  'blog',
+  'careers',
+  'case-studies',
+  'catalog',
+  'compare',
+  'contact',
+  'contact-us',
+  'contacts',
+  'dashboard',
+  'docs',
+  'email-assets',
+  'forgot-password',
+  'integrations',
+  'legal',
+  'jwks',
+  'login',
+  'mcp',
+  'oauth',
+  'platform',
+  'token',
+  'privacy',
+  'redeem',
+  'request-demo',
+  'reset-password',
+  'resources',
+  's',
+  'shop',
+  'signup',
+  'sitemap-blog.xml',
+  'sitemap-catalog.xml',
+  'sitemap-compare.xml',
+  'sitemap-solutions.xml',
+  'sitemap-static.xml',
+  'sitemap.xml',
+  'solutions',
+  'support',
+  'terms',
+  'terms-condition',
+  'uploads',
+  'zoho',
+]);
+
+const WORKSPACE_CHILD_PATHS = new Set([
+  'orders',
+  'wallets',
+  'shops',
+  'swag',
+  'kits',
+  'campaigns',
+  'contacts',
+  'support',
+  'integrations',
+  'settings',
+  'billing',
+  'catalog',
+]);
+
+function isSlugSegment(value) {
+  return /^[a-z0-9][a-z0-9-]{1,62}$/.test(value);
+}
+
+export function workspaceSlugForPath(pathname) {
+  const path = normalizePath(pathname);
+  const segments = path.split('/').filter(Boolean);
+  if (segments.length === 0) return null;
+
+  const [slug, child] = segments;
+  if (!isSlugSegment(slug) || RESERVED_TOP_LEVEL_PATHS.has(slug)) return null;
+  if (segments.length === 1) return slug;
+  return WORKSPACE_CHILD_PATHS.has(child) ? slug : null;
+}
+
+export function isWorkspaceAppPath(pathname) {
+  return Boolean(workspaceSlugForPath(pathname));
+}
+
+function privateSeo() {
+  return {
+    mode: 'private',
+    title: null,
+    description: null,
+    robots: 'noindex, nofollow',
+    canonical: null,
+    image: null,
+    ogType: 'website',
+    jsonLd: null,
+  };
+}
+
 /** Public storefronts keep the historical document shell. */
 function isPreservedStorePath(path) {
   return /^\/shop\/[^/]+$/.test(path) || /^\/s\/[^/]+$/.test(path);
@@ -99,18 +194,7 @@ export function resolveSpaSeo(catalog, pathname) {
     if (new RegExp(pattern.match).test(path)) return toSeo(catalog, pattern, path);
   }
 
-  if (isNoindexPath(catalog, path)) {
-    return {
-      mode: 'private',
-      title: null,
-      description: null,
-      robots: 'noindex, nofollow',
-      canonical: null,
-      image: null,
-      ogType: 'website',
-      jsonLd: null,
-    };
-  }
+  if (isNoindexPath(catalog, path) || isWorkspaceAppPath(path)) return privateSeo();
 
   return {
     mode: 'unknown',

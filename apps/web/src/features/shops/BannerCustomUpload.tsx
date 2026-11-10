@@ -33,7 +33,7 @@ export function BannerCustomUpload({
       <div className="lbl" style={compact ? undefined : { marginTop: 16 }}>
         Custom banner
       </div>
-      <p className="mut3" style={{ fontSize: 12, margin: "4px 0 8px" }}>
+      <p className="mut3" style={{ fontSize: "var(--workspace-font-caption, 12px)", margin: "4px 0 8px" }}>
         Upload your own image. Recommended size: <b>{BANNER_IMAGE_DIMENSIONS}</b> · PNG, WEBP or
         JPEG · max 10 MB
       </p>
@@ -63,7 +63,7 @@ export function BannerCustomUpload({
                 flex: "none",
               }}
             />
-            <div className="mut3" style={{ fontSize: 11 }}>
+            <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11px)" }}>
               Custom image · {BANNER_IMAGE_DIMENSIONS}
             </div>
           </div>
@@ -101,8 +101,8 @@ export function BannerCustomUpload({
           onClick={() => fileRef.current?.click()}
         >
           <Upload size={18} />
-          <div style={{ fontWeight: 600, marginTop: 6 }}>Upload custom banner</div>
-          <div className="mut3" style={{ fontSize: 11.5, marginTop: 4 }}>
+          <div style={{ fontWeight: "var(--font-weight-semibold)", marginTop: 6 }}>Upload custom banner</div>
+          <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11.5px)", marginTop: 4 }}>
             {BANNER_IMAGE_DIMENSIONS} · PNG, WEBP, JPEG · max 10 MB
           </div>
         </button>

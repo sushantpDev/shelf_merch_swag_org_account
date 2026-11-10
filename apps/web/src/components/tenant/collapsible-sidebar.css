@@ -80,12 +80,12 @@ button.sidebar-rail__toggle:focus-visible {
   align-items: center;
   border: 1.5px solid transparent; /* outline base */
   background: none;
-  font-family: "Hanken Grotesk", system-ui, sans-serif;
+  font-family: var(--font-family-primary);
   text-align: left;
   border-radius: 10px;
   color: var(--sidebar-rail-icon);
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--workspace-font-body, 14px);
   line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
@@ -163,9 +163,9 @@ button.sidebar-rail__toggle:focus-visible {
   background: #ffffff;
   border: 1px solid #e2e8f0;
   color: var(--sidebar-rail-ink);
-  font-family: "Hanken Grotesk", system-ui, sans-serif;
-  font-size: 13.5px;
-  font-weight: 600;
+  font-family: var(--font-family-primary);
+  font-size: var(--workspace-font-body, 13.5px);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.2;
   white-space: nowrap;
   pointer-events: none;
@@ -195,14 +195,14 @@ button.sidebar-rail__toggle:focus-visible {
 .sidebar-rail--expanded .sidebar-rail__item--active .sidebar-rail__item-label,
 .sidebar-rail--expanded .sidebar-rail__item:hover .sidebar-rail__item-label {
   color: var(--sidebar-rail-icon);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   font-size: 14px;
 }
 
 .sidebar-rail__item-label {
-  font-family: "Hanken Grotesk", system-ui, sans-serif;
+  font-family: var(--font-family-primary);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   letter-spacing: 0;
   line-height: 1.2;
   white-space: nowrap;
@@ -245,7 +245,7 @@ button.sidebar-rail__toggle:focus-visible {
 .sidebar-rail--expanded .sidebar-rail__logout .sidebar-rail__item-label,
 .sidebar-rail--expanded .sidebar-rail__logout:hover .sidebar-rail__item-label {
   color: var(--danger);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 @media (max-width: 760px) {

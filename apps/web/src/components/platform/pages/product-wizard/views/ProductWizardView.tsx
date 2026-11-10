@@ -89,7 +89,7 @@ export function ProductWizardView({
             key={label}
             className="chip"
             style={
-              i === step ? { borderColor: "var(--brand)", color: "var(--brand-d)", fontWeight: 700 } : undefined
+              i === step ? { borderColor: "var(--brand)", color: "var(--brand-d)", fontWeight: "var(--font-weight-bold)" } : undefined
             }
             disabled={!id && i > 0}
             onClick={() => onStep(i)}
@@ -423,7 +423,7 @@ export function ProductWizardView({
                   className="chip"
                   style={
                     imageView === view.key
-                      ? { borderColor: "var(--brand)", color: "var(--brand-d)", fontWeight: 700 }
+                      ? { borderColor: "var(--brand)", color: "var(--brand-d)", fontWeight: "var(--font-weight-bold)" }
                       : undefined
                   }
                   onClick={() => onImageView(view.key)}
@@ -498,8 +498,8 @@ export function ProductWizardView({
                               background: activeSwatch.hex,
                             }}
                           />
-                          <span style={{ fontWeight: 600, fontSize: 13 }}>{activeSwatch.name}</span>
-                          <span className="muted" style={{ fontSize: 12, fontFamily: "monospace" }}>
+                          <span style={{ fontWeight: "var(--font-weight-semibold)", fontSize: 13 }}>{activeSwatch.name}</span>
+                          <span className="muted" style={{ fontSize: 12, fontFamily: "var(--font-family-code)" }}>
                             {activeSwatch.hex}
                           </span>
                         </div>

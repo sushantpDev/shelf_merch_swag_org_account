@@ -1,6 +1,9 @@
 import { Link } from "react-router";
 import { DocsHeading, DocsShell } from "../DocsShell";
 import { useDocsMeta } from "../useDocsMeta";
+import { ShelfMerchLogo } from "@/components/brand/ShelfMerchLogo";
+import zohoPeopleLogo from "../../../../assets/integrations/zoho-people.png";
+import "./zoho-admin-guide.css";
 
 export function ZohoPeopleUserGuidePage() {
   useDocsMeta({
@@ -15,6 +18,7 @@ export function ZohoPeopleUserGuidePage() {
 
   return (
     <DocsShell
+      className="zoho-admin-guide zoho-user-guide"
       activePath="/docs/zoho-people/user-guide"
       breadcrumbs={[
         { label: "Home", to: "/" },
@@ -22,16 +26,23 @@ export function ZohoPeopleUserGuidePage() {
         { label: "User Guide" },
       ]}
     >
-      <h1>ShelfMerch for Zoho People — User Guide</h1>
+      <header className="zag-hero">
+      <div className="zag-hero-copy">
+      <span className="zag-eyebrow">ZOHO PEOPLE DOCUMENTATION</span>
+      <h1>User <em>guide.</em></h1>
       <p className="docs-sub">
         Connect Zoho People, sync employees, and manage onboarding recipients in ShelfMerch.
       </p>
+      </div>
+      <div className="zag-hero-visual">
+        <div className="zag-partner-logos"><img src={zohoPeopleLogo} alt="Zoho People" /><span aria-hidden="true">+</span><ShelfMerchLogo height={26} theme="dark" /></div>
+        <img className="zag-welcome-art" src="/images/resources/zoho/zoho-user-guide-hero-v1.png" alt="A colleague connecting and checking employee records from a laptop" width="1536" height="1024" />
+      </div>
+      </header>
 
       <DocsHeading id="introduction">1. Introduction</DocsHeading>
       <p>
-        This guide is for company administrators who use the ShelfMerch Web Tab inside Zoho People (or
-        ShelfMerch directly) to connect Zoho People and import employees. Synced contacts can be used as
-        recipients for onboarding kits, rewards, and corporate gifts.
+        This guide is for company administrators who connect Zoho People from ShelfMerch Integrations and manually import employees. A Zoho Web Tab is not required. Synced contacts can be used as recipients for onboarding kits, rewards, and corporate gifts.
       </p>
 
       <DocsHeading id="requirements">2. Requirements</DocsHeading>
@@ -44,17 +55,15 @@ export function ZohoPeopleUserGuidePage() {
 
       <DocsHeading id="signing-in">3. Signing in to ShelfMerch</DocsHeading>
       <p>
-        When you open ShelfMerch from Zoho People and you are not signed in, ShelfMerch opens a secure
-        popup for ShelfMerch sign-in. Complete sign-in in the popup, then return to the Web Tab. If the
-        popup is blocked, allow popups for ShelfMerch and try again.
+        Open ShelfMerch and sign in at /login. New customers can create a company account at /signup and complete email verification first. After signing in, navigate to Integrations → Zoho People → Connect. Use a company administrator account.
       </p>
 
       <DocsHeading id="connecting">4. Connecting Zoho People</DocsHeading>
       <ol>
-        <li>Open ShelfMerch from the Zoho People Web Tab.</li>
+        <li>Open ShelfMerch Integrations and select Zoho People.</li>
         <li>Sign in to ShelfMerch if prompted.</li>
         <li>
-          Click <strong>Connect Zoho People</strong>.
+          Click <strong>Connect</strong>.
         </li>
         <li>Review the requested Zoho permissions (employee forms read and organisation read).</li>
         <li>Select the approval checkbox in Zoho’s consent screen.</li>
@@ -68,13 +77,14 @@ export function ZohoPeopleUserGuidePage() {
       </ol>
 
       <DocsHeading id="syncing">5. Syncing employees</DocsHeading>
+      <p>Employee sync is manual. Connecting authorizes access; it does not start automatic synchronization. Click Sync now whenever you want to import or refresh employee records.</p>
       <ol>
-        <li>Open the ShelfMerch Web Tab.</li>
+        <li>Open Integrations → Zoho People in ShelfMerch.</li>
         <li>
           Confirm the status shows <strong>Connected</strong>.
         </li>
         <li>
-          Click <strong>Sync Employees</strong>.
+          Click <strong>Sync now</strong>.
         </li>
         <li>
           Wait for the success message summarising fetched, created, updated, skipped, and failed counts.
@@ -109,7 +119,12 @@ export function ZohoPeopleUserGuidePage() {
 
       <DocsHeading id="disconnecting">8. Disconnecting Zoho People</DocsHeading>
       <ul>
-        <li>Disconnect stops future syncing and clears stored Zoho OAuth tokens for your organisation.</li>
+        <li>
+          Disconnect asks Zoho to revoke authorization and stops future syncing. If Zoho confirms
+          revocation, stored tokens are removed. If Zoho cannot confirm, ShelfMerch keeps the
+          authorization encrypted and unused until revocation succeeds. You can also revoke
+          ShelfMerch under Zoho Accounts → Sessions → Connected Apps.
+        </li>
         <li>Previously imported contacts are not automatically deleted.</li>
         <li>
           You may remove applicable contacts in ShelfMerch, or request deletion via{" "}

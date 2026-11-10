@@ -242,7 +242,7 @@ export function OrgDoneScreen({
                     {d.name}
                   </div>
                   <div className="num">{inr(d.allocated)}</div>
-                  <div className="muted" style={{ fontSize: 12.5 }}>
+                  <div className="muted" style={{ fontSize: "var(--workspace-font-caption, 12.5px)" }}>
                     {d.mgr.name || d.mgr.email || "Manager not assigned"}
                   </div>
                   <div>
@@ -263,16 +263,16 @@ export function OrgDoneScreen({
             <div className="wallet-done-panel card" style={{ marginTop: 18 }}>
               <div className="wallet-done-panel__head">Invite links (dev)</div>
               <div className="wallet-done-invites">
-                <p className="mut3" style={{ fontSize: 12, margin: "0 0 12px" }}>
+                <p className="mut3" style={{ fontSize: "var(--workspace-font-caption, 12px)", margin: "0 0 12px" }}>
                   Gmail often filters localhost invite links to spam. Share these links directly if
                   needed.
                 </p>
                 {inviteLinks.map((i) => (
                   <div key={i.inviteToken} className="wallet-done-invite">
-                    <div style={{ fontWeight: 600, fontSize: 13, marginBottom: 4 }}>
+                    <div style={{ fontWeight: "var(--font-weight-semibold)", fontSize: "var(--workspace-font-body, 13px)", marginBottom: 4 }}>
                       {i.name || i.email} · {i.entityName}
                     </div>
-                    <div className="mut3" style={{ fontSize: 11.5, wordBreak: "break-all" }}>
+                    <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11.5px)", wordBreak: "break-all" }}>
                       {`${location.origin}/accept-invite?token=${i.inviteToken}`}
                     </div>
                     <button

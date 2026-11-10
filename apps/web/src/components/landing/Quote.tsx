@@ -1,10 +1,11 @@
 export function Quote() {
   return (
     <section className="quote-section">
-      <span className="quote-mark">&ldquo;</span>
+      <span className="lh-label">ONE PARTNER. EVERY MOMENT.</span>
       <blockquote>
-        We consolidated four vendors into one dashboard, cut our gifting turnaround from weeks to
-        days, and finally have one number to show finance.
+        <span>We consolidated four vendors<br className="quote-desktop-break" /> into one dashboard,</span>{" "}
+        <em>cut our gifting turnaround<br className="quote-desktop-break" /> from weeks to days,</em>{" "}
+        <span className="quote-closing">and finally have one number to show finance.</span>
       </blockquote>
       <div className="quote-author">
         <span>AS</span>

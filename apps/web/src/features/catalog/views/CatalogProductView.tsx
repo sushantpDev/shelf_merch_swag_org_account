@@ -6,6 +6,7 @@ import { LoadingState } from "@/components/LoadingState";
 import type { CatalogProductVm } from "../controllers/useCatalogProductController";
 import { ProductDetail } from "./ProductDetail";
 import { ProductCard } from "./ProductCard";
+import "./catalog-product-detail.css";
 
 /** Catalog product detail page: loading/error/not-found states + product detail. */
 export function CatalogProductView(vm: CatalogProductVm) {
@@ -37,7 +38,7 @@ export function CatalogProductView(vm: CatalogProductVm) {
     "fromCatalog" in location.state &&
     typeof location.state.fromCatalog === "string"
       ? location.state.fromCatalog
-      : catalogHome;
+      : `${catalogHome}/browse`;
 
   if (vm.isLoading) {
     return <LoadingState message="Loading product…" fullScreen={false} />;
@@ -56,7 +57,7 @@ export function CatalogProductView(vm: CatalogProductVm) {
       <div className="card empty" style={{ padding: 48 }}>
         <h3>Product not found</h3>
         <p>This product may have been removed from the catalog.</p>
-        <Link to={catalogHome} className="btn btn-soft" style={{ marginTop: 14 }}>
+        <Link to={`${catalogHome}/browse`} className="btn btn-soft" style={{ marginTop: 14 }}>
           Back to catalog
         </Link>
       </div>

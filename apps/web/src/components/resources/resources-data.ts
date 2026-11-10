@@ -1,7 +1,7 @@
 export const RESOURCE_NAV = [
   {
     slug: "hr" as const,
-    label: "HR",
+    label: "Human Resource",
     blurb: "Onboarding, milestones & recognition",
     icon: "♙",
   },

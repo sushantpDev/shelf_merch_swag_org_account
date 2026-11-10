@@ -53,10 +53,10 @@ export function KitDetailDialog({
                 <div
                   className="mut3"
                   style={{
-                    fontSize: 10,
+                    fontSize: "var(--workspace-font-caption, 10px)",
                     letterSpacing: ".08em",
                     textTransform: "uppercase",
-                    fontWeight: 700,
+                    fontWeight: "var(--font-weight-bold)",
                     marginBottom: 8,
                   }}
                 >
@@ -73,7 +73,7 @@ export function KitDetailDialog({
                       style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
                     />
                   </div>
-                  <span className="muted" style={{ fontSize: 13 }}>
+                  <span className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)" }}>
                     Branded across all items
                   </span>
                 </div>
@@ -85,10 +85,10 @@ export function KitDetailDialog({
                 <div
                   className="mut3"
                   style={{
-                    fontSize: 10,
+                    fontSize: "var(--workspace-font-caption, 10px)",
                     letterSpacing: ".08em",
                     textTransform: "uppercase",
-                    fontWeight: 700,
+                    fontWeight: "var(--font-weight-bold)",
                     marginBottom: 10,
                   }}
                 >

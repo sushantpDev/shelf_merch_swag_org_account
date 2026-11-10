@@ -36,8 +36,12 @@ export function IntegrationOverview({
           onClick={() => setOpen(null)}
         />
       ) : null}
-      <div className="integ-overview__auto">
-        <p>ShelfMerch handles syncing in the background. You do not need to click Sync now.</p>
+      <div className={`integ-overview__auto${providerId === "zoho-people" ? " integ-overview__auto--wrap" : ""}`}>
+        <p>
+          {providerId === "zoho-people"
+            ? "Zoho People employee sync is manual. Click Sync now to import or update employees from Zoho People. Employees are not synced automatically."
+            : "ShelfMerch handles syncing in the background. You do not need to click Sync now."}
+        </p>
       </div>
       <div className="integ-overview__steps">
         {steps.map((step, index) => {

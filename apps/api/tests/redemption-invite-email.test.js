@@ -170,4 +170,17 @@ describe('surprise gift email template', () => {
     expect(html).not.toContain('/redeem/');
     expect(text).toContain('shipped automatically to your address on file');
   });
+
+  it('omits the personal-message quote when no message was entered', () => {
+    const { html, text } = buildSurpriseGiftEmail({
+      recipientName: 'Priya Sharma',
+      senderName: 'Zira',
+      message: '',
+      giftName: 'Welcome Kit',
+      companyName: 'Zira',
+    });
+
+    expect(html).not.toContain('&ldquo;');
+    expect(text).not.toContain('""');
+  });
 });

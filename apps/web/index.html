@@ -3,13 +3,72 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','%VITE_GTM_ID%');</script>
-    <!-- End Google Tag Manager -->
+    <!-- Consent and Google Tag Manager -->
+    <script>
+      (function () {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag("set", "ads_data_redaction", true);
+        gtag("consent", "default", {
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied",
+          analytics_storage: "denied",
+          functionality_storage: "granted",
+          security_storage: "granted",
+          wait_for_update: 500
+        });
+        function readChoice() {
+          try {
+            var raw = localStorage.getItem("shelfmerch.consent");
+            if (raw) {
+              var parsed = JSON.parse(raw);
+              if (parsed && parsed.v === 1 && typeof parsed.analytics === "boolean" && typeof parsed.advertising === "boolean") {
+                return parsed;
+              }
+            }
+            var legacy = localStorage.getItem("shelfmerch.advertising-measurement-consent");
+            if (legacy === "granted" || legacy === "denied") {
+              var allowed = legacy === "granted";
+              return { v: 1, analytics: allowed, advertising: allowed };
+            }
+          } catch (e) {}
+          return null;
+        }
+        function signals(choice) {
+          var ads = choice.advertising ? "granted" : "denied";
+          var analytics = choice.analytics ? "granted" : "denied";
+          return {
+            ad_storage: ads,
+            ad_user_data: ads,
+            ad_personalization: ads,
+            analytics_storage: analytics
+          };
+        }
+        function loadGtm(id) {
+          if (!id || id.indexOf("%") === 0 || window.__shelfmerchGtmLoaded) return;
+          window.__shelfmerchGtmLoaded = true;
+          window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+          var script = document.createElement("script");
+          script.async = true;
+          script.src = "https://www.googletagmanager.com/gtm.js?id=" + encodeURIComponent(id);
+          var first = document.getElementsByTagName("script")[0];
+          first.parentNode.insertBefore(script, first);
+        }
+        var gtmId = "%VITE_GTM_ID%";
+        window.__shelfmerchSyncConsent = function (choice) {
+          gtag("consent", "update", signals(choice));
+          if (choice.analytics || choice.advertising) loadGtm(gtmId);
+          if (!choice.advertising && window.fbq) {
+            try { window.fbq("consent", "revoke"); } catch (e) {}
+          }
+        };
+        var saved = readChoice();
+        if (saved) window.__shelfmerchSyncConsent(saved);
+      })();
+    </script>
+    <!-- End Consent and Google Tag Manager -->
     <title>shelfmerch: Recognition &amp; Swag Platform</title>
     <meta name="description" content="Celebrate milestones, appreciate efforts, and build a culture of recognition with premium swag, gifts, and experiences—delivered globally." />
     <meta name="robots" content="index, follow" />
@@ -31,18 +90,9 @@
     <link rel="icon" href="/favicon-16x16.png?v=16" type="image/png" sizes="16x16" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=16" sizes="180x180" />
     <link rel="manifest" href="/site.webmanifest?v=16" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
-    />
+    <link rel="preload" href="/fonts/hanken-grotesk/normal-latin.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=%VITE_GTM_ID%"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

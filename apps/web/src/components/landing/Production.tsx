@@ -11,7 +11,7 @@ export function Production() {
           alt="Premium embroidery and apparel production in the Shelf Merch studio"
           loading="lazy"
         />
-        <div className="image-tag">
+        <div className="image-tag desktop-only">
           <svg
             aria-hidden="true"
             width="20"

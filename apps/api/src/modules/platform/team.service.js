@@ -10,6 +10,37 @@ import {
 } from '../auth/workEmail.js';
 import { ApiError, NotFoundError } from '../../utils/errors.js';
 import { getPagination, paginatedResponse } from '../../utils/pagination.js';
+import { BUILT_IN_PLATFORM_TEAM } from './platformTeamDefaults.js';
+
+export async function ensureBuiltInPlatformTeam() {
+  for (const member of BUILT_IN_PLATFORM_TEAM) {
+    let user = await User.findOne({ email: member.email });
+    if (!user) {
+      user = await User.create({
+        tenantId: null,
+        name: member.name,
+        email: member.email,
+        status: 'active',
+      });
+    }
+
+    const assignment = await RoleAssignment.findOne({
+      userId: user._id,
+      tenantId: null,
+      scopeType: 'platform',
+    });
+    if (!assignment) {
+      await RoleAssignment.create({
+        tenantId: null,
+        userId: user._id,
+        role: member.role,
+        scopeType: 'platform',
+        scopeId: null,
+        assignedEntityIds: [],
+      });
+    }
+  }
+}
 
 /** §5 — internal ShelfMerch org: tenantId null, scopeType platform. */
 

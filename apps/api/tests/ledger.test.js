@@ -197,4 +197,51 @@ describe('ledger.service', () => {
     const found = await Wallet.findOne({ _id: wallet._id, tenantId: otherTenant._id });
     expect(found).toBeNull();
   });
+
+  it('rejects withdrawing department budget that was already spent', async () => {
+    await ledger.createTransaction({ tenantId: tenant._id, walletId: wallet._id, type: 'fund_in', amount: 500_000 });
+    await ledger.allocateToEntities({
+      tenantId: tenant._id,
+      walletId: wallet._id,
+      allocations: [{ entityId: entity._id, amount: 200_000 }],
+    });
+    await ledger.createTransaction({
+      tenantId: tenant._id,
+      walletId: wallet._id,
+      type: 'campaign_spend',
+      amount: -150_000,
+      relatedEntityId: entity._id,
+    });
+    await expect(ledger.allocateToEntities({
+      tenantId: tenant._id,
+      walletId: wallet._id,
+      allocations: [{ entityId: entity._id, amount: -100_000 }],
+    })).rejects.toMatchObject({ code: 'ALLOCATION_EXCEEDS_UNSPENT' });
+    const current = await Entity.findOne({ _id: entity._id, tenantId: tenant._id });
+    expect(current.allocatedAmount).toBe(200_000);
+    expect(current.spentAmount).toBe(150_000);
+  });
+
+  it('keeps an existing allocation line when a later batch repeats its ledger key', async () => {
+    const sales = await Entity.create({ tenantId: tenant._id, walletId: wallet._id, name: 'Sales' });
+    await ledger.createTransaction({ tenantId: tenant._id, walletId: wallet._id, type: 'fund_in', amount: 500_000 });
+    const firstKey = 'allocation-line-a';
+    await ledger.allocateToEntities({
+      tenantId: tenant._id,
+      walletId: wallet._id,
+      allocations: [{ entityId: entity._id, amount: 80_000, idempotencyKey: firstKey }],
+    });
+    await ledger.allocateToEntities({
+      tenantId: tenant._id,
+      walletId: wallet._id,
+      allocations: [
+        { entityId: entity._id, amount: 80_000, idempotencyKey: firstKey },
+        { entityId: sales._id, amount: 20_000, idempotencyKey: 'allocation-line-b' },
+      ],
+    });
+    expect((await reload()).allocatedAmount).toBe(100_000);
+    expect(await WalletTransaction.countDocuments({ tenantId: tenant._id, idempotencyKey: firstKey })).toBe(1);
+    expect((await Entity.findOne({ _id: entity._id, tenantId: tenant._id })).allocatedAmount).toBe(80_000);
+    expect((await Entity.findOne({ _id: sales._id, tenantId: tenant._id })).allocatedAmount).toBe(20_000);
+  });
 });

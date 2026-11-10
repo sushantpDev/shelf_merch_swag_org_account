@@ -35,8 +35,23 @@ describe('Privacy Policy public page', () => {
     const body = String(res.text || '');
     expect(body).toContain('Chitlu Innovations Private Limited');
     expect(body).toContain('support@shelfmerch.com');
-    expect(body).toContain('Last updated: 30 July 2026');
+    expect(body).toContain('Last updated: 27 October 2026');
     expect(body).toContain('ShelfMerch for Zoho People');
+    expect(body).toContain('rel="canonical" href="https://shelfmerch.io/legal/privacy-policy"');
+    expect(body).toContain('Privacy Policy · ShelfMerch');
+    expect(body).toContain('including ShelfMerch for Zoho People.');
+  });
+
+  it('discloses OpenAI automatic advanced matching without claiming it is disabled', async () => {
+    const res = await request(app).get('/legal/privacy-policy');
+    const body = String(res.text || '').replace(/\s+/g, ' ');
+    expect(body).toContain('If Shelf Merch enables the pixel, OpenAI automatic advanced matching hashes recognizable form details in your browser, such as a name, email address, or phone number.');
+    expect(body).toContain('OpenAI does not provide a supported way to turn that hashing off.');
+    expect(body).toContain('The pixel stays unloaded until you allow advertising measurement and Shelf Merch has explicitly accepted that behavior.');
+    expect(body).not.toMatch(/automatic advanced matching is disabled/i);
+    expect(body).not.toMatch(/advanced matching has been turned off/i);
+    expect(body).not.toContain('VITE_OPENAI_PIXEL_ID');
+    expect(body).not.toContain('VITE_OPENAI_AAM_REVIEWED');
   });
 
   it('does not expose OAuth tokens, secrets, employee records, or env values', async () => {

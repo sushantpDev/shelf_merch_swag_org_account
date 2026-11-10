@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { ResourceDropdown } from "../resources/ResourceDropdown";
+import { CatalogDropdown } from "./CatalogDropdown";
 import "../landing-mobile.css";
 import "../resources/resource-nav.css";
 
@@ -71,9 +72,7 @@ export function Header() {
             Platform
           </Link>
           <ResourceDropdown onNavigate={closeMenu} />
-          <Link to="/app/catalog" onClick={closeMenu}>
-            Catalog
-          </Link>
+          <CatalogDropdown onNavigate={closeMenu} />
           <Link to="/about" onClick={closeMenu}>
             About
           </Link>

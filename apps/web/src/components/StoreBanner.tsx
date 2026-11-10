@@ -108,7 +108,7 @@ export function StoreBanner({ shop, eyebrow = "Welcome to" }: { shop: StoreShop;
             style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
           />
         ) : (
-          <span style={{ fontWeight: 800, color: "var(--brand)", fontSize: 20 }}>
+          <span style={{ fontWeight: "var(--font-weight-bold)", color: "var(--brand)", fontSize: 20 }}>
             {shop.name.charAt(0).toUpperCase()}
           </span>
         )}
@@ -117,7 +117,7 @@ export function StoreBanner({ shop, eyebrow = "Welcome to" }: { shop: StoreShop;
         <div style={{ fontSize: 12, opacity: 0.8, textTransform: "uppercase", letterSpacing: ".06em" }}>
           {eyebrow}
         </div>
-        <div style={{ fontSize: 22, fontWeight: 700 }}>{shop.name}</div>
+        <div style={{ fontSize: 22, fontWeight: "var(--font-weight-bold)" }}>{shop.name}</div>
       </div>
     </div>
   );

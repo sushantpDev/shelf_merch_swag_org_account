@@ -183,6 +183,32 @@ const envSchema = z.object({
    * Production: https://shelfmerch.io/api/integrations/slack/callback
    */
   SLACK_REDIRECT_URI: z.string().optional().default(''),
+
+  /**
+   * Public origin of this API, with no path. OAuth issuer and the MCP resource
+   * URL are derived from it. Required HTTPS in production. Empty in local/test
+   * means http://127.0.0.1:$PORT.
+   */
+  MCP_OAUTH_ISSUER: z.string().optional().default(''),
+  /**
+   * Private JWKS JSON shared by every API replica. Required in production.
+   * Never log this value.
+   */
+  MCP_OIDC_JWKS: z.string().optional().default(''),
+  /** Signs oidc-provider cookies. Required, unique, and at least 32 characters in production. */
+  MCP_OIDC_COOKIE_SECRET: z.string().optional().default(''),
+  /**
+   * Development and test only. When "true", /mcp still accepts a ShelfMerch
+   * access JWT so local MCP Inspector keeps working. Ignored in production.
+   */
+  MCP_ALLOW_LEGACY_JWT: z.enum(['true', 'false']).optional().default('false'),
+
+  /** SEO growth engine — server-only; never expose via VITE_ or client bundles. */
+  ANTHROPIC_API_KEY: z.string().optional().default(''),
+  ANTHROPIC_MODEL: z.string().optional().default(''),
+  ANTHROPIC_API_VERSION: z.string().optional().default('2023-06-01'),
+  WINDSOR_API_KEY: z.string().optional().default(''),
+  SEMRUSH_API_KEY: z.string().optional().default(''),
 });
 
 const parsed = envSchema.safeParse(processEnv);

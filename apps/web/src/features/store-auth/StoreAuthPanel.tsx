@@ -14,20 +14,20 @@ import {
   verifyShopSignupOtp,
   type StorefrontData,
 } from "@/services/api-bridge";
-import {
-  setShopCustomerSession,
-  type ShopCustomerSession,
-} from "@/services/shop-customer-store";
+import { setShopCustomerSession, type ShopCustomerSession } from "@/services/shop-customer-store";
 import { shopStorefrontHref, shopStorefrontPath } from "@/lib/shopRedeemUrl";
 
 type AuthMode = "signin" | "signup" | "verify" | "forgot" | "reset" | "claim";
 
-function persistSession(shopId: string, res: {
-  accessToken: string;
-  customer: ShopCustomerSession["customer"];
-  creditAmount: number;
-  redemptionToken: string | null;
-}): ShopCustomerSession {
+function persistSession(
+  shopId: string,
+  res: {
+    accessToken: string;
+    customer: ShopCustomerSession["customer"];
+    creditAmount: number;
+    redemptionToken: string | null;
+  },
+): ShopCustomerSession {
   const session: ShopCustomerSession = {
     accessToken: res.accessToken,
     customer: res.customer,
@@ -76,9 +76,11 @@ export function StoreAuthPanel({
   const [resendIn, setResendIn] = useState(30);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [claimInfo, setClaimInfo] = useState<{ email: string; emailMasked: string; name: string } | null>(
-    null,
-  );
+  const [claimInfo, setClaimInfo] = useState<{
+    email: string;
+    emailMasked: string;
+    name: string;
+  } | null>(null);
 
   const domainHint = useMemo(() => {
     const d = String(shop.companyEmailDomain || "").replace(/^@/, "");
@@ -280,7 +282,7 @@ export function StoreAuthPanel({
             : `Welcome to ${shop.name}`;
 
   return (
-    <AuthLayout variant="welcome" title={title} subtitle={subtitle}>
+    <AuthLayout variant="welcome" showDivider={false} title={title} subtitle={subtitle}>
       {mode === "signin" ? (
         <form className="auth-simple-form" onSubmit={onSignIn}>
           <div className="auth-simple-field">
@@ -300,7 +302,11 @@ export function StoreAuthPanel({
             <AuthLabel
               htmlFor="store-password"
               action={
-                <button type="button" className="auth-simple-label-action" onClick={() => setMode("forgot")}>
+                <button
+                  type="button"
+                  className="auth-simple-label-action"
+                  onClick={() => setMode("forgot")}
+                >
                   Forgot password
                 </button>
               }
@@ -309,18 +315,31 @@ export function StoreAuthPanel({
             </AuthLabel>
             <PasswordField id="store-password" value={password} onValueChange={setPassword} />
           </div>
-          {error ? <p className="auth-simple-error" role="alert">{error}</p> : null}
+          {error ? (
+            <p className="auth-simple-error" role="alert">
+              {error}
+            </p>
+          ) : null}
           <button type="submit" className="auth-simple-submit" disabled={busy}>
             {busy ? "Signing in…" : "Sign in"}
           </button>
           <p className="auth-simple-switch">
             Don&apos;t have an account?{" "}
-            <button type="button" className="auth-simple-switch-link" onClick={() => setMode("signup")}>
+            <button
+              type="button"
+              className="auth-simple-switch-link"
+              onClick={() => setMode("signup")}
+            >
               Create account
             </button>
           </p>
           {onCancel ? (
-            <button type="button" className="auth-simple-switch-link" onClick={onCancel} style={{ marginTop: 8 }}>
+            <button
+              type="button"
+              className="auth-simple-switch-link"
+              onClick={onCancel}
+              style={{ marginTop: 8 }}
+            >
               Continue browsing
             </button>
           ) : null}
@@ -370,13 +389,21 @@ export function StoreAuthPanel({
               autoComplete="new-password"
             />
           </div>
-          {error ? <p className="auth-simple-error" role="alert">{error}</p> : null}
+          {error ? (
+            <p className="auth-simple-error" role="alert">
+              {error}
+            </p>
+          ) : null}
           <button type="submit" className="auth-simple-submit" disabled={busy}>
             {busy ? "Sending code…" : "Continue"}
           </button>
           <p className="auth-simple-switch">
             Already have an account?{" "}
-            <button type="button" className="auth-simple-switch-link" onClick={() => setMode("signin")}>
+            <button
+              type="button"
+              className="auth-simple-switch-link"
+              onClick={() => setMode("signin")}
+            >
               Sign in
             </button>
           </p>
@@ -386,7 +413,11 @@ export function StoreAuthPanel({
       {mode === "verify" ? (
         <form className="auth-simple-form" onSubmit={onVerify}>
           <OtpInput value={otp} onChange={setOtp} disabled={busy} />
-          {error ? <p className="auth-simple-error" role="alert">{error}</p> : null}
+          {error ? (
+            <p className="auth-simple-error" role="alert">
+              {error}
+            </p>
+          ) : null}
           <button type="submit" className="auth-simple-submit" disabled={busy || otp.length !== 6}>
             {busy ? "Verifying…" : "Verify & continue"}
           </button>
@@ -394,12 +425,21 @@ export function StoreAuthPanel({
             {resendIn > 0 ? (
               <>Resend code in {resendIn}s</>
             ) : (
-              <button type="button" className="auth-simple-switch-link" onClick={onResend} disabled={busy}>
+              <button
+                type="button"
+                className="auth-simple-switch-link"
+                onClick={onResend}
+                disabled={busy}
+              >
                 Resend code
               </button>
             )}
             {" · "}
-            <button type="button" className="auth-simple-switch-link" onClick={() => setMode("signup")}>
+            <button
+              type="button"
+              className="auth-simple-switch-link"
+              onClick={() => setMode("signup")}
+            >
               Change email
             </button>
           </p>
@@ -420,12 +460,20 @@ export function StoreAuthPanel({
               autoFocus
             />
           </div>
-          {error ? <p className="auth-simple-error" role="alert">{error}</p> : null}
+          {error ? (
+            <p className="auth-simple-error" role="alert">
+              {error}
+            </p>
+          ) : null}
           <button type="submit" className="auth-simple-submit" disabled={busy}>
             {busy ? "Sending…" : "Send reset link"}
           </button>
           <p className="auth-simple-switch">
-            <button type="button" className="auth-simple-switch-link" onClick={() => setMode("signin")}>
+            <button
+              type="button"
+              className="auth-simple-switch-link"
+              onClick={() => setMode("signin")}
+            >
               Back to sign in
             </button>
           </p>
@@ -452,7 +500,11 @@ export function StoreAuthPanel({
               autoComplete="new-password"
             />
           </div>
-          {error ? <p className="auth-simple-error" role="alert">{error}</p> : null}
+          {error ? (
+            <p className="auth-simple-error" role="alert">
+              {error}
+            </p>
+          ) : null}
           <button type="submit" className="auth-simple-submit" disabled={busy || !resetToken}>
             {busy ? "Saving…" : "Update password"}
           </button>
@@ -461,7 +513,11 @@ export function StoreAuthPanel({
 
       {mode === "claim" ? (
         <form className="auth-simple-form" onSubmit={onClaim}>
-          {error && !claimInfo ? <p className="auth-simple-error" role="alert">{error}</p> : null}
+          {error && !claimInfo ? (
+            <p className="auth-simple-error" role="alert">
+              {error}
+            </p>
+          ) : null}
           {claimInfo ? (
             <>
               <div className="auth-simple-field">
@@ -482,7 +538,11 @@ export function StoreAuthPanel({
                   autoComplete="new-password"
                 />
               </div>
-              {error ? <p className="auth-simple-error" role="alert">{error}</p> : null}
+              {error ? (
+                <p className="auth-simple-error" role="alert">
+                  {error}
+                </p>
+              ) : null}
               <button type="submit" className="auth-simple-submit" disabled={busy}>
                 {busy ? "Creating account…" : "Continue to store"}
               </button>

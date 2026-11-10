@@ -145,8 +145,8 @@ export function EditKitView(vm: EditKitVm) {
           }}
         >
           <div className="row" style={{ gap: 12, alignItems: "center" }}>
-            <b style={{ fontSize: 15, color: "var(--ink)" }}>{draft.name}</b>
-            <span className="tag tag-soft" style={{ fontWeight: 700 }}>
+            <b style={{ fontSize: "var(--workspace-font-body, 15px)", color: "var(--ink)" }}>{draft.name}</b>
+            <span className="tag tag-soft" style={{ fontWeight: "var(--font-weight-bold)" }}>
               {draft.picked.length} item{draft.picked.length === 1 ? "" : "s"} selected
             </span>
           </div>

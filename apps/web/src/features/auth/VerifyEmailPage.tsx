@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { trackOpenAiRegistrationCompleted } from "@/lib/openaiPixel";
 import { resendSignupOtp, verifySignupOtp, isPlatformUser, ApiError } from "./model";
 import { OtpInput } from "./components/OtpInput";
 import { AuthLayout } from "./views/AuthLayout";
@@ -68,6 +69,12 @@ export function VerifyEmailPage() {
     setError("");
     try {
       const user = await verifySignupOtp(pendingId, otp);
+      try {
+        // Stores the user id. The next page sends registration_completed once.
+        trackOpenAiRegistrationCompleted(user.id);
+      } catch {
+        /* A measurement failure must not block a created account. */
+      }
       clearSignupDraft();
       toast.success(`Welcome to Shelf Merch, ${user.name.split(" ")[0]} 👋`);
       const destination = isPlatformUser(user) ? "/platform/dashboard" : "/dashboard";

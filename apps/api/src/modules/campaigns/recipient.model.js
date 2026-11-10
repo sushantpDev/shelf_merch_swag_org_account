@@ -24,6 +24,7 @@ const recipientSchema = new mongoose.Schema(
     // "redemption" state machine via the service layer.
     redemptionStatus: { type: String, enum: REDEMPTION_STATUSES, default: 'invited' },
     invitedAt: { type: Date, default: null },
+    inviteClaimedAt: { type: Date, default: null },
     openedAt: { type: Date, default: null },
     verifiedAt: { type: Date, default: null },
     redeemedAt: { type: Date, default: null },

@@ -242,11 +242,28 @@ export type CatalogProductsResult = {
 export async function refreshCatalogProducts(category?: string): Promise<CatalogProductsResult> {
   const params = new URLSearchParams({ limit: "100" });
   if (category) params.set("category", category);
-  const catalog = await apiFetch<{
+  type CatalogPage = {
     items: unknown[];
-    pagination?: { total?: number };
-  }>(`/catalog/products?${params.toString()}`);
-  const items = (catalog.items || []).map((p) => mapCatalogProduct(p));
+    pagination?: { total?: number; limit?: number };
+  };
+  const catalog = await apiFetch<CatalogPage>(`/catalog/products?${params.toString()}`);
+  const allItems = [...(catalog.items || [])];
+  const total = catalog.pagination?.total ?? allItems.length;
+  const pageSize = catalog.pagination?.limit ?? allItems.length;
+  // Category filtering runs in the browser, so include every page in the parent.
+  // Fetch in small groups to avoid flooding the API for large catalogs.
+  const pages = pageSize > 0 ? Math.ceil(total / pageSize) : 1;
+  for (let start = 2; start <= pages; start += 4) {
+    const batch = await Promise.all(
+      Array.from({ length: Math.min(4, pages - start + 1) }, (_, index) => {
+        const pageParams = new URLSearchParams(params);
+        pageParams.set("page", String(start + index));
+        return apiFetch<CatalogPage>(`/catalog/products?${pageParams.toString()}`);
+      }),
+    );
+    for (const page of batch) allItems.push(...(page.items || []));
+  }
+  const items = allItems.map((p) => mapCatalogProduct(p));
   return {
     items,
     total: catalog.pagination?.total ?? items.length,
@@ -303,6 +320,8 @@ export type PublicCatalogCategory = {
   sortOrder: number;
   description?: string;
   children: PublicCatalogCategory[];
+  /** Client-side browse adapter only; absent from the API/database. */
+  productScope?: string;
 };
 
 /** Active Parent → Category → Sub-Category tree for public catalog browse. */

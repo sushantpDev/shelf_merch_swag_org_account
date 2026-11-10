@@ -144,7 +144,7 @@ export function initialSendKitDraft(
   picked: number[],
   packaging: "none" | "box",
   firstRecips: string[],
-  account: string,
+  _account: string,
 ): SendKitDraft {
   const tomorrow = new Date(Date.now() + 86_400_000).toISOString().slice(0, 10);
   return {
@@ -153,8 +153,8 @@ export function initialSendKitDraft(
     selRecips: firstRecips,
     singleLocation: { ...EMPTY_SINGLE_LOCATION },
     note: "Welcome to the team. We are thrilled to have you!",
-    from: `People Team, ${account}`,
-    msg: "Your welcome kit is on its way! A little something from all of us. We're so glad you're here.",
+    from: "",
+    msg: "",
     when: "now",
     schedule: { date: tomorrow, time: "10:00", tz: "Asia/Kolkata (IST)" },
     preview: "landing",

@@ -1,3 +1,8 @@
+import {
+  ARTWORK_ACCEPT,
+  ARTWORK_REQUIREMENTS,
+  readArtworkFile,
+} from "@/lib/artworkValidation";
 import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import { Check, CircleHelp, Eye, Image as ImageIcon, Info, Trash2, Upload, X } from "lucide-react";
 import { toast } from "sonner";
@@ -50,9 +55,6 @@ import {
   sliceProductAreaArts,
   sliceProductPlacements,
 } from "./artworkStepModel";
-
-const ART_ACCEPT = /\.(svg|png|jpe?g|ai)$/i;
-const ART_MAX = 5 * 1024 * 1024;
 
 type ArtTab = "upload" | "previous";
 type PrintQuality = "good" | "poor";
@@ -139,20 +141,14 @@ export function ArtworkStep({
     setStaging(null);
   }
 
-  function onPick(file: File) {
-    if (!ART_ACCEPT.test(file.name)) {
-      toast.error("Use SVG, PNG, JPG, or AI");
-      return;
+  async function onPick(file: File) {
+    try {
+      const artwork = await readArtworkFile(file);
+      setStaging(artwork);
+      setTab("upload");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not read artwork");
     }
-    if (file.size > ART_MAX) {
-      toast.error("Maximum file size is 5 MB");
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () =>
-      setStaging({ name: file.name, preview: String(reader.result), file });
-    reader.readAsDataURL(file);
-    setTab("upload");
   }
 
   function onDrop(e: DragEvent) {
@@ -332,7 +328,7 @@ export function ArtworkStep({
           <input
             ref={fileRef}
             type="file"
-            accept=".svg,.png,.jpg,.jpeg,.ai,image/svg+xml,image/png,image/jpeg"
+            accept={ARTWORK_ACCEPT}
             style={{ display: "none" }}
             onChange={(e) => {
               const f = e.target.files?.[0];
@@ -344,9 +340,7 @@ export function ArtworkStep({
           <div className="sw-art-quality-tip">
             <CircleHelp size={14} />
             <span>
-              Choose a high-quality file to prevent production delays and ensure the best results.
-              Use a logo with a transparent background and ensure all other artwork has a resolution
-              of at least 300 DPI.
+              {ARTWORK_REQUIREMENTS} Use a transparent background for logos.
             </span>
           </div>
 
@@ -657,20 +651,12 @@ function SwagProductBrandingModal({
     toast.success(`Artwork added to ${areaLabelForKey(product, key)}`);
   }
 
-  function onModalPick(file: File) {
-    if (!ART_ACCEPT.test(file.name)) {
-      toast.error("Use SVG, PNG, JPG, or AI");
-      return;
+  async function onModalPick(file: File) {
+    try {
+      assignArtToActive(await readArtworkFile(file));
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not read artwork");
     }
-    if (file.size > ART_MAX) {
-      toast.error("Maximum file size is 5 MB");
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      assignArtToActive({ name: file.name, preview: String(reader.result), file });
-    };
-    reader.readAsDataURL(file);
   }
 
   return (
@@ -850,7 +836,7 @@ function SwagProductBrandingModal({
                         displayOnly
                         onRemove={removeActiveArt}
                       />
-                      <p className="mut3" style={{ fontSize: 12, marginTop: 8 }}>
+                      <p className="mut3" style={{ fontSize: "var(--workspace-font-caption, 12px)", marginTop: 8 }}>
                         Drag the logo on the mockup to reposition. Remove to clear this placeholder
                         only.
                       </p>
@@ -882,6 +868,7 @@ function SwagProductBrandingModal({
                       >
                         <Upload size={18} />
                         <span>Upload artwork for {activeLabel || "placeholder"}</span>
+                        <span className="sw-art-upload-sub">{ARTWORK_REQUIREMENTS}</span>
                       </button>
                     </>
                   )}
@@ -911,7 +898,7 @@ function SwagProductBrandingModal({
                   <input
                     ref={modalFileRef}
                     type="file"
-                    accept=".svg,.png,.jpg,.jpeg,.ai,image/svg+xml,image/png,image/jpeg"
+                    accept={ARTWORK_ACCEPT}
                     style={{ display: "none" }}
                     onChange={(e) => {
                       const f = e.target.files?.[0];
@@ -987,7 +974,7 @@ function SwagProductBrandingModal({
               ) : (
                 <div className="sw-art-panel sw-art-panel--side">
                   <h2 className="sw-art-panel-title">Preview</h2>
-                  <p className="mut3" style={{ fontSize: 13 }}>
+                  <p className="mut3" style={{ fontSize: "var(--workspace-font-caption, 13px)" }}>
                     Clean product view with logos applied. Return to edit to adjust placement or
                     placeholders.
                   </p>

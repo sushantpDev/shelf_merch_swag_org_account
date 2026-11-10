@@ -40,7 +40,7 @@ function UserAvatar({ name, size = 36 }: { name: string; size?: number }) {
         color: fg,
         display: "grid",
         placeItems: "center",
-        fontWeight: 700,
+        fontWeight: "var(--font-weight-bold)",
         fontSize: Math.round(size * 0.36),
         flexShrink: 0,
         letterSpacing: "0.02em",
@@ -104,8 +104,8 @@ export function TransferOwnershipDialogView(vm: TransferOwnershipVm) {
             <AlertDialogTitle
               style={{
                 fontSize: 18,
-                fontFamily: "var(--disp)",
-                fontWeight: 700,
+                fontFamily: "var(--font-family-primary)",
+                fontWeight: "var(--font-weight-bold)",
                 color: "var(--ink)",
                 letterSpacing: "-0.02em",
                 lineHeight: 1.2,
@@ -116,7 +116,7 @@ export function TransferOwnershipDialogView(vm: TransferOwnershipVm) {
 
             <p
               style={{
-                fontSize: 13.5,
+                fontSize: "var(--workspace-font-body, 13.5px)",
                 color: "var(--ink-2)",
                 lineHeight: 1.6,
                 marginTop: 6,
@@ -150,7 +150,7 @@ export function TransferOwnershipDialogView(vm: TransferOwnershipVm) {
                     alignItems: "center",
                     gap: 10,
                     color: "var(--ink-3)",
-                    fontSize: 13.5,
+                    fontSize: "var(--workspace-font-body, 13.5px)",
                     padding: "8px 0",
                   }}
                 >
@@ -173,7 +173,7 @@ export function TransferOwnershipDialogView(vm: TransferOwnershipVm) {
                     size={16}
                     style={{ color: "var(--info)", flexShrink: 0, marginTop: 2 }}
                   />
-                  <p style={{ fontSize: 13.5, color: "var(--ink-2)", lineHeight: 1.6 }}>
+                  <p style={{ fontSize: "var(--workspace-font-body, 13.5px)", color: "var(--ink-2)", lineHeight: 1.6 }}>
                     No other active company admins in this workspace.{" "}
                     <Link to="/app/contacts" className="lnk" onClick={vm.onInviteAdmin}>
                       Invite an admin
@@ -226,8 +226,8 @@ export function TransferOwnershipDialogView(vm: TransferOwnershipVm) {
                           <div style={{ flex: 1, minWidth: 0 }}>
                             <div
                               style={{
-                                fontWeight: 600,
-                                fontSize: 13.5,
+                                fontWeight: "var(--font-weight-semibold)",
+                                fontSize: "var(--workspace-font-body, 13.5px)",
                                 color: "var(--ink)",
                                 lineHeight: 1.3,
                                 overflow: "hidden",
@@ -239,7 +239,7 @@ export function TransferOwnershipDialogView(vm: TransferOwnershipVm) {
                             </div>
                             <div
                               style={{
-                                fontSize: 12,
+                                fontSize: "var(--workspace-font-caption, 12px)",
                                 color: "var(--ink-3)",
                                 marginTop: 2,
                                 overflow: "hidden",
@@ -277,9 +277,9 @@ export function TransferOwnershipDialogView(vm: TransferOwnershipVm) {
                 >
                   <span
                     style={{
-                      fontSize: 11,
+                      fontSize: "var(--workspace-font-caption, 11px)",
                       color: "var(--ink-3)",
-                      fontWeight: 700,
+                      fontWeight: "var(--font-weight-bold)",
                       letterSpacing: "0.07em",
                       textTransform: "uppercase",
                       flexShrink: 0,
@@ -290,9 +290,9 @@ export function TransferOwnershipDialogView(vm: TransferOwnershipVm) {
                   <UserAvatar name={currentOwner.name} size={22} />
                   <span
                     style={{
-                      fontSize: 13,
+                      fontSize: "var(--workspace-font-body, 13px)",
                       color: "var(--ink-2)",
-                      fontWeight: 600,
+                      fontWeight: "var(--font-weight-semibold)",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
@@ -327,10 +327,10 @@ export function TransferOwnershipDialogView(vm: TransferOwnershipVm) {
                     <UserAvatar name={currentOwner.name} size={42} />
                     <div
                       style={{
-                        fontSize: 11,
+                        fontSize: "var(--workspace-font-caption, 11px)",
                         color: "var(--ink-3)",
                         marginTop: 5,
-                        fontWeight: 600,
+                        fontWeight: "var(--font-weight-semibold)",
                       }}
                     >
                       You (owner)
@@ -341,10 +341,10 @@ export function TransferOwnershipDialogView(vm: TransferOwnershipVm) {
                     <UserAvatar name={selected.name} size={42} />
                     <div
                       style={{
-                        fontSize: 11,
+                        fontSize: "var(--workspace-font-caption, 11px)",
                         color: "var(--brand-d)",
                         marginTop: 5,
-                        fontWeight: 600,
+                        fontWeight: "var(--font-weight-semibold)",
                       }}
                     >
                       New owner
@@ -368,7 +368,7 @@ export function TransferOwnershipDialogView(vm: TransferOwnershipVm) {
                     size={14}
                     style={{ color: "var(--danger)", flexShrink: 0, marginTop: 1 }}
                   />
-                  <p style={{ fontSize: 12.5, color: "#8B2520", lineHeight: 1.6 }}>
+                  <p style={{ fontSize: "var(--workspace-font-body, 12.5px)", color: "#8B2520", lineHeight: 1.6 }}>
                     This action <strong>cannot be undone</strong>. <strong>{selected.name}</strong>{" "}
                     ({selected.email}) will become the new workspace owner.
                   </p>

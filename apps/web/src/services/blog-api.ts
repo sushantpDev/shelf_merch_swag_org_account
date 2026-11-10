@@ -49,6 +49,10 @@ export function unpublishBlogPost(id: string) {
   return apiFetch<BlogPost>(`/platform/blog-posts/${id}/unpublish`, { method: "POST" });
 }
 
+export function deleteBlogDraft(id: string) {
+  return apiFetch<{ deleted: boolean; id: string }>(`/platform/blog-posts/${id}`, { method: "DELETE" });
+}
+
 export function uploadBlogImage(file: File) {
   const form = new FormData();
   form.append("image", file);

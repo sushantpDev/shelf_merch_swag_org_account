@@ -112,7 +112,7 @@ export function KitWizardView({
             key={label}
             className="chip"
             style={
-              i === step ? { borderColor: "var(--brand)", color: "var(--brand-d)", fontWeight: 700 } : undefined
+              i === step ? { borderColor: "var(--brand)", color: "var(--brand-d)", fontWeight: "var(--font-weight-bold)" } : undefined
             }
             disabled={!id && i > 0}
             onClick={() => id && onStep(i)}
@@ -222,7 +222,7 @@ export function KitWizardView({
                 }}
               >
                 <span style={{ flex: 1, lineHeight: 1.4 }}>
-                  <span style={{ fontWeight: 600, display: "block" }}>Require logo</span>
+                  <span style={{ fontWeight: "var(--font-weight-semibold)", display: "block" }}>Require logo</span>
                   <span className="muted" style={{ fontSize: 12 }}>
                     On: tenants must upload a logo. Off: hide the logo step (for kits that do not need one).
                   </span>
@@ -493,7 +493,7 @@ export function KitWizardView({
                       alt=""
                       style={{ width: 56, height: 56, objectFit: "cover", borderRadius: 6, border: "1px solid var(--line)" }}
                     />
-                    <span style={{ fontSize: 13, fontWeight: 600 }}>Image {idx + 1}</span>
+                    <span style={{ fontSize: 13, fontWeight: "var(--font-weight-semibold)" }}>Image {idx + 1}</span>
                   </label>
                 ))}
               </div>
@@ -533,7 +533,7 @@ export function KitWizardView({
                       alt=""
                       style={{ width: 56, height: 56, objectFit: "cover", borderRadius: 6, border: "1px solid var(--line)" }}
                     />
-                    <span style={{ fontSize: 13, fontWeight: 600 }}>Image {idx + 1}</span>
+                    <span style={{ fontSize: 13, fontWeight: "var(--font-weight-semibold)" }}>Image {idx + 1}</span>
                   </label>
                 ))}
               </div>
@@ -584,7 +584,7 @@ export function KitWizardView({
                           alt=""
                           style={{ width: 56, height: 56, objectFit: "cover", borderRadius: 6, border: "1px solid var(--line)" }}
                         />
-                        <span style={{ fontSize: 13, fontWeight: 600 }}>Image {idx + 1}</span>
+                        <span style={{ fontSize: 13, fontWeight: "var(--font-weight-semibold)" }}>Image {idx + 1}</span>
                       </label>
                       {selected ? (
                         <input
@@ -647,7 +647,7 @@ export function KitWizardView({
                           alt=""
                           style={{ width: 56, height: 56, objectFit: "cover", borderRadius: 6, border: "1px solid var(--line)" }}
                         />
-                        <span style={{ fontSize: 13, fontWeight: 600 }}>Image {idx + 1}</span>
+                        <span style={{ fontSize: 13, fontWeight: "var(--font-weight-semibold)" }}>Image {idx + 1}</span>
                       </label>
                       {selected ? (
                         <input

@@ -1,0 +1,7 @@
+# Platform overview redesign
+
+The Platform overview uses the shared marketing header and footer, black text, Arial body copy at 19px desktop and 18px mobile, and bold sans-serif / italic serif headings. Recognition and milestones use keyboard-accessible tabs. Existing platform detail routes are preserved.
+
+New hero: `apps/web/public/images/platform/platform-overview-hero.webp`. Generated with the built-in imagegen tool and converted to WebP with alpha preserved.
+
+Prompt: Original Shelf Merch SaaS platform hero illustration, landscape 3:2, actual transparent background. Minimal editorial line artwork with crisp thin charcoal outlines, monochrome white faces and solid black hair. One friendly HR program manager seated at a laptop desk, another colleague standing holding a premium cobalt welcome kit, three small floating symbols arranged loosely above: heart recognition, calendar milestone, shopping bag company store. Selective cobalt blue, emerald green, violet and tiny warm yellow accents, mostly white clothing and clean simple furniture. Sophisticated contemporary corporate software website illustration, balanced open composition, complete heads hands feet and desk visible with generous clear margin. No enclosing background panel, no enclosing card, no decorative blob, no text, no logos or letters, no metrics or fabricated dashboard, no pink skin, no 3D characters, no plants animals leaves or trees. Artwork should blend directly into pale blue website background.

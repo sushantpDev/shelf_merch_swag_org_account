@@ -1,3 +1,4 @@
+import { validateArtworkFile } from "@/lib/artworkValidation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -521,8 +522,10 @@ export function useRequestSampleController(): RequestSampleVm {
 
   async function onLogoFile(file: File | null) {
     if (!kit || !file) return;
-    if (!file.type.startsWith("image/")) {
-      toast.error("Upload a PNG, JPG, or SVG file");
+    try {
+      await validateArtworkFile(file);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not read artwork");
       return;
     }
     if (logoObjectUrlRef.current) URL.revokeObjectURL(logoObjectUrlRef.current);

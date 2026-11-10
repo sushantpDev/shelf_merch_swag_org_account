@@ -1,4 +1,4 @@
-import budgetEmptyArt from "../../../../../assets/budget-empty-generated.png";
+import budgetEmptyArt from "../../../../../assets/budget-empty-rounded.png";
 
 type Props = {
   onSetup: () => void;

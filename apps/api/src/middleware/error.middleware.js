@@ -33,6 +33,18 @@ export function errorHandler(err, req, res, _next) {
       },
     });
   }
+  // body-parser sets status 400 on malformed JSON. Leaving it unhandled made
+  // POST /mcp (and every other JSON route) answer 500, which MCP clients treat
+  // as a transport failure instead of a client error.
+  if (
+    err?.type === 'entity.parse.failed' ||
+    (err instanceof SyntaxError && err.expose === true && (err.status === 400 || err.statusCode === 400))
+  ) {
+    logger.warn({ path: safeRequestPath(req), code: 'INVALID_JSON' }, 'Rejected invalid JSON body');
+    return res.status(400).json({
+      error: { code: 'INVALID_JSON', message: 'Request body must be valid JSON' },
+    });
+  }
   if (err?.code === 11000) {
     const field =
       (err.keyPattern && Object.keys(err.keyPattern).join(', ')) ||

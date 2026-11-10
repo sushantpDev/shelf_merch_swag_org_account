@@ -22,9 +22,9 @@ export function ImportGroup({
         className="row"
         style={{ justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}
       >
-        <div style={{ fontWeight: 700, fontSize: 13.5 }}>
+        <div style={{ fontWeight: "var(--font-weight-bold)", fontSize: 13.5 }}>
           {label}{" "}
-          <span className="muted" style={{ fontWeight: 500 }}>
+          <span className="muted" style={{ fontWeight: "var(--font-weight-medium)" }}>
             ({total})
           </span>
         </div>

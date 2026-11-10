@@ -247,7 +247,7 @@ describe('collection shop links', () => {
 describe('collection mockup uploads', () => {
   it('stores mockupUrl on product refs via multipart upload', async () => {
     const png = Buffer.from(
-      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+      'iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAFElEQVR4nGP4z8DAAMIM////ZwAAHu8E/KPItPcAAAAASUVORK5CYII=',
       'base64',
     );
     const res = await request(app)
@@ -274,7 +274,7 @@ describe('collection mockup uploads', () => {
 
   it('persists the Konva placement with the mockup and serves it to the storefront', async () => {
     const png = Buffer.from(
-      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+      'iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAFElEQVR4nGP4z8DAAMIM////ZwAAHu8E/KPItPcAAAAASUVORK5CYII=',
       'base64',
     );
     const placement = { xPct: 42.5, yPct: 31, wPct: 28, rot: -7.5 };
@@ -315,7 +315,7 @@ describe('collection mockup uploads', () => {
     });
     await collection.save();
     const png = Buffer.from(
-      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+      'iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAFElEQVR4nGP4z8DAAMIM////ZwAAHu8E/KPItPcAAAAASUVORK5CYII=',
       'base64',
     );
     const first = await request(app)
@@ -352,7 +352,7 @@ describe('collection mockup uploads', () => {
     });
     await collection.save();
     const png = Buffer.from(
-      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+      'iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAFElEQVR4nGP4z8DAAMIM////ZwAAHu8E/KPItPcAAAAASUVORK5CYII=',
       'base64',
     );
     const res = await request(app)
@@ -394,7 +394,7 @@ describe('collection mockup uploads', () => {
     );
     await collection.save();
     const png = Buffer.from(
-      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+      'iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAFElEQVR4nGP4z8DAAMIM////ZwAAHu8E/KPItPcAAAAASUVORK5CYII=',
       'base64',
     );
     const ids = collection.productRefs.map((ref) => String(ref.catalogProductId));
@@ -455,5 +455,200 @@ describe('collection re-publish and shop rollback', () => {
     expect((refreshed.shopIds || []).map(String)).not.toContain(String(shopB._id));
     const shopARecord = await Shop.findOne({ _id: shopA._id, tenantId: tenant._id });
     expect(shopARecord.activeListingKeys || []).toEqual([]);
+  });
+});
+
+describe("collection design save without publishing", () => {
+  const png = Buffer.from(
+    "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAFElEQVR4nGP4z8DAAMIM////ZwAAHu8E/KPItPcAAAAASUVORK5CYII=",
+    "base64",
+  );
+
+  it("saves artwork and mockups without linking shops or creating listings", async () => {
+    const draft = await Collection.create({
+      tenantId: tenant._id,
+      code: "C555555555",
+      name: "MCP Mug Draft",
+      status: "draft",
+      productRefs: [{ catalogProductId: product._id, brand: "Rubix", name: "Core Cotton Tee", group: "tee" }],
+    });
+    const shop = await Shop.create({
+      tenantId: tenant._id,
+      name: "QA Store",
+      status: "live",
+      activeListingKeys: ["keep:me"],
+    });
+
+    const art = await request(app)
+      .post(`/api/v1/collections/${draft._id}/artwork`)
+      .set("Authorization", `Bearer ${adminToken}`)
+      .attach("artwork", png, { filename: "logo.png", contentType: "image/png" });
+    expect(art.status).toBe(200);
+    expect(art.body.artworkUrl).toBeTruthy();
+    expect(art.body.status).toBe("ready");
+    expect(art.body.shopIds || []).toEqual([]);
+
+    const mock = await request(app)
+      .post(`/api/v1/collections/${draft._id}/mockups`)
+      .set("Authorization", `Bearer ${adminToken}`)
+      .field("meta", JSON.stringify([{ catalogProductId: String(product._id), placement: { xPct: 10, yPct: 20, wPct: 30, rot: 0 } }]))
+      .attach("mockups", png, { filename: "mockup.png", contentType: "image/png" });
+    expect(mock.status).toBe(200);
+    expect(mock.body.productRefs[0].mockupUrl).toBeTruthy();
+    expect(mock.body.productRefs[0].placement).toMatchObject({ xPct: 10, yPct: 20, wPct: 30, rot: 0 });
+
+    const stored = await Collection.findOne({ _id: draft._id, tenantId: tenant._id });
+    expect(stored.shopId).toBeFalsy();
+    expect(stored.shopIds || []).toEqual([]);
+    expect(stored.artworkUrl).toBeTruthy();
+    expect(stored.productRefs[0].mockupUrl).toBeTruthy();
+
+    const shopAfter = await Shop.findOne({ _id: shop._id, tenantId: tenant._id });
+    expect(shopAfter.activeListingKeys).toEqual(["keep:me"]);
+  });
+
+  it("allows renaming and productRefs updates on ready unpublished collections", async () => {
+    const draft = await Collection.create({
+      tenantId: tenant._id,
+      code: "C666666666",
+      name: "Ready Unpublished",
+      status: "draft",
+      productRefs: [{ catalogProductId: product._id, brand: "Rubix", name: "Core Cotton Tee", group: "tee" }],
+    });
+    const artReady = await request(app)
+      .post(`/api/v1/collections/${draft._id}/artwork`)
+      .set("Authorization", `Bearer ${adminToken}`)
+      .attach("artwork", png, { filename: "logo.png", contentType: "image/png" });
+    expect(artReady.status).toBe(200);
+    expect(artReady.body.status).toBe("ready");
+
+    const productB = await CatalogProduct.create({
+      sku: `SM-HAT-${Date.now()}`,
+      name: "Cap",
+      category: "Apparel",
+      basePriceInr: 199,
+    });
+    const patched = await request(app)
+      .patch(`/api/v1/collections/${draft._id}`)
+      .set("Authorization", `Bearer ${adminToken}`)
+      .send({
+        name: "Ready Renamed",
+        productRefs: [{ catalogProductId: String(productB._id), name: "Cap", group: "cap" }],
+      });
+    expect(patched.status).toBe(200);
+    expect(patched.body.name).toBe("Ready Renamed");
+    expect(patched.body.productRefs[0].name).toBe("Cap");
+    expect(patched.body.shopIds || []).toEqual([]);
+  });
+
+  it("rejects productRefs edits after the collection is linked to a shop", async () => {
+    const shop = await Shop.create({ tenantId: tenant._id, name: "Live Shop", status: "live" });
+    collection.shopIds = [shop._id];
+    collection.shopId = shop._id;
+    await collection.save();
+
+    const res = await request(app)
+      .patch(`/api/v1/collections/${collection._id}`)
+      .set("Authorization", `Bearer ${adminToken}`)
+      .send({ name: "Should Fail" });
+    expect(res.status).toBe(400);
+    expect(res.body.error.code).toBe("COLLECTION_NOT_DRAFT");
+  });
+
+it("preserves existing mockups when PATCH omits design fields", async () => {
+    const draft = await Collection.create({
+      tenantId: tenant._id,
+      code: "C777777777",
+      name: "Preserve Design",
+      status: "ready",
+      artworkUrl: "https://cdn.test/art.png",
+      productRefs: [{
+        catalogProductId: product._id,
+        brand: "Rubix",
+        name: "Core Cotton Tee",
+        group: "tee",
+        mockupUrl: "https://cdn.test/keep-mock.png",
+        designOnlyImageUrl: "https://cdn.test/keep-design.png",
+        placement: { xPct: 15, yPct: 25, wPct: 35, rot: 2 },
+      }],
+    });
+
+    const patched = await request(app)
+      .patch(`/api/v1/collections/${draft._id}`)
+      .set("Authorization", `Bearer ${adminToken}`)
+      .send({
+        name: "Preserve Design Renamed",
+        productRefs: [{ catalogProductId: String(product._id), name: "Core Cotton Tee", group: "tee", brand: "Rubix" }],
+      });
+    expect(patched.status).toBe(200);
+    expect(patched.body.name).toBe("Preserve Design Renamed");
+    expect(patched.body.productRefs[0].mockupUrl).toBe("https://cdn.test/keep-mock.png");
+    expect(patched.body.productRefs[0].designOnlyImageUrl).toBe("https://cdn.test/keep-design.png");
+    expect(patched.body.productRefs[0].placement).toMatchObject({ xPct: 15, yPct: 25, wPct: 35, rot: 2 });
+  });
+
+  it("rejects artwork and mockup uploads after the collection is linked to a shop", async () => {
+    const shop = await Shop.create({ tenantId: tenant._id, name: "Locked Shop", status: "live" });
+    collection.shopIds = [shop._id];
+    collection.shopId = shop._id;
+    await collection.save();
+
+    const art = await request(app)
+      .post(`/api/v1/collections/${collection._id}/artwork`)
+      .set("Authorization", `Bearer ${adminToken}`)
+      .attach("artwork", png, { filename: "logo.png", contentType: "image/png" });
+    expect(art.status).toBe(409);
+    expect(art.body.error.code).toBe("COLLECTION_PUBLISHED");
+
+    const mock = await request(app)
+      .post(`/api/v1/collections/${collection._id}/mockups`)
+      .set("Authorization", `Bearer ${adminToken}`)
+      .field("meta", JSON.stringify([{ catalogProductId: String(product._id) }]))
+      .attach("mockups", png, { filename: "mockup.png", contentType: "image/png" });
+    expect(mock.status).toBe(409);
+    expect(mock.body.error.code).toBe("COLLECTION_PUBLISHED");
+  });
+
+  it("keeps prior mockups across repeated design saves that only rename", async () => {
+    const draft = await Collection.create({
+      tenantId: tenant._id,
+      code: "C888888888",
+      name: "Repeat Save",
+      status: "draft",
+      productRefs: [{ catalogProductId: product._id, brand: "Rubix", name: "Core Cotton Tee", group: "tee" }],
+    });
+    await request(app)
+      .post(`/api/v1/collections/${draft._id}/artwork`)
+      .set("Authorization", `Bearer ${adminToken}`)
+      .attach("artwork", png, { filename: "logo.png", contentType: "image/png" });
+    const firstMock = await request(app)
+      .post(`/api/v1/collections/${draft._id}/mockups`)
+      .set("Authorization", `Bearer ${adminToken}`)
+      .field("meta", JSON.stringify([{ catalogProductId: String(product._id), placement: { xPct: 5, yPct: 6, wPct: 7, rot: 0 } }]))
+      .attach("mockups", png, { filename: "mockup.png", contentType: "image/png" });
+    expect(firstMock.status).toBe(200);
+    const mockUrl = firstMock.body.productRefs[0].mockupUrl;
+
+    const renamed = await request(app)
+      .patch(`/api/v1/collections/${draft._id}`)
+      .set("Authorization", `Bearer ${adminToken}`)
+      .send({
+        name: "Repeat Save 2",
+        productRefs: [{ catalogProductId: String(product._id), name: "Core Cotton Tee", group: "tee" }],
+      });
+    expect(renamed.status).toBe(200);
+    expect(renamed.body.productRefs[0].mockupUrl).toBe(mockUrl);
+    expect(renamed.body.productRefs[0].placement).toMatchObject({ xPct: 5, yPct: 6, wPct: 7, rot: 0 });
+  });
+
+
+  it("rejects artwork upload from another tenant", async () => {
+    const other = await Tenant.create({ name: "Other Co", slug: `other-${Date.now()}` });
+    const otherToken = await makeUser(other, "company_admin", "tenant");
+    const res = await request(app)
+      .post(`/api/v1/collections/${collection._id}/artwork`)
+      .set("Authorization", `Bearer ${otherToken}`)
+      .attach("artwork", png, { filename: "logo.png", contentType: "image/png" });
+    expect(res.status).toBe(404);
   });
 });

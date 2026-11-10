@@ -130,7 +130,24 @@ export type CatalogCategoryNode = {
   name: string;
   slug: string;
   children: CatalogCategoryChild[];
+  /** Client-only product scope for a flat public category; never persisted. */
+  productScope?: string;
 };
+
+/** Existing production collection names use the same editorial designs. */
+export function catalogCollectionName(name: string): string {
+  const aliases: Record<string, string> = {
+    office: "Stationery",
+    "office supplies": "Stationery",
+    technology: "Electronics & Gadgets",
+  };
+  return aliases[name.trim().toLowerCase()] ?? name;
+}
+
+export function productMatchesCollection(product: UiProduct, name: string): boolean {
+  return productMatchesLevel(product, "category", name) ||
+    productMatchesLevel(product, "category", catalogCollectionName(name));
+}
 
 function buildFallbackChildren(
   entries: readonly (string | { name: string; children: readonly string[] })[],
@@ -230,6 +247,7 @@ export function resolveCatalogBrowseTarget(
   const key = String(raw || "").trim().toLowerCase();
   const slug = catalogCategorySlug(key);
   const list = nodes.length ? nodes : FALLBACK_CATALOG_NODES;
+  const queryFor = (parent: string) => list.find((node) => node.name === parent)?.productScope ? ALL_PRODUCTS : parent;
 
   if (!key) {
     return {
@@ -249,7 +267,7 @@ export function resolveCatalogBrowseTarget(
             parent: parent.name,
             category: category.name,
             subcategory: leaf.name,
-            query: parent.name,
+            query: queryFor(parent.name),
           };
         }
       }
@@ -264,9 +282,17 @@ export function resolveCatalogBrowseTarget(
         parent: parent.name,
         category: child.name,
         subcategory: null,
-        query: parent.name,
+        query: queryFor(parent.name),
       };
     }
+  }
+
+  // Real roots take priority over old Accessories aliases. Presentation aliases
+  // also keep older Stationery/Electronics links working with Office/Technology.
+  const root = list.find((node) => matchesNameOrSlug(node, key, slug)) ??
+    list.find((node) => catalogCategorySlug(catalogCollectionName(node.name)) === slug);
+  if (root) {
+    return { parent: root.name, category: null, subcategory: null, query: queryFor(root.name) };
   }
 
   // Legacy aliases (bags → Accessories / Bags).

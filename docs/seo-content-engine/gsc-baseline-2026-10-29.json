@@ -1,0 +1,758 @@
+{
+  "property": "sc-domain:shelfmerch.io",
+  "periodStart": "2026-10-01",
+  "periodEnd": "2026-10-28",
+  "retrievedAt": "2026-10-29T15:12:55.618Z",
+  "access": "server_windsor_api_key",
+  "reports": {
+    "queries": {
+      "status": "available",
+      "rowCount": 5,
+      "rows": [
+        {
+          "account_id": "shelfmerch.io",
+          "query": "bamboo bookshelf speaker",
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "position": 10
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "query": "bamboo card holder",
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 75.5
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "query": "shelf attendant",
+          "clicks": 0,
+          "impressions": 9,
+          "ctr": 0,
+          "position": 76.2222
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "query": "shelf merch",
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 7
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "query": "shelfmerch",
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0,
+          "position": 5.75
+        }
+      ],
+      "metadata": {}
+    },
+    "pages": {
+      "status": "available",
+      "rowCount": 35,
+      "rows": [
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/",
+          "clicks": 1,
+          "impressions": 13,
+          "ctr": 0.0769,
+          "position": 4.0769
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/support",
+          "clicks": 1,
+          "impressions": 2,
+          "ctr": 0.5,
+          "position": 2
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://app.shelfmerch.io/",
+          "clicks": 0,
+          "impressions": 6,
+          "ctr": 0,
+          "position": 4.8333
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/about",
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 4
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 8
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a69a29528d51c137c8e9593",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 7
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a69a2a728d51c137c8e9635",
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "position": 53.6667
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a69a2b528d51c137c8e9654",
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 8.5
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a69a2ba28d51c137c8e965e",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 7
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a69a2bf28d51c137c8e9666",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 8
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a69a2c328d51c137c8e969d",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 3
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a69a2c428d51c137c8e969f",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 2
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a69a2cc28d51c137c8e970c",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 6
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a69a2e028d51c137c8e987e",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 2
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a69a2e728d51c137c8e98a8",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 9
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a69a2e928d51c137c8e98bd",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 9
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a69a2f028d51c137c8e994d",
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "position": 7
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a69a2fd28d51c137c8e9978",
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 8.5
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a69a30228d51c137c8e99e2",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 8
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a82b81ea03ad62bdb7f3dd5",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 9
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6a8c3ff29d19e345e7c3f5a2",
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "position": 10
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/apps/catalog/6aa151aa04f6e0fa49c2223c",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 3
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/blog",
+          "clicks": 0,
+          "impressions": 8,
+          "ctr": 0,
+          "position": 4.625
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/careers",
+          "clicks": 0,
+          "impressions": 15,
+          "ctr": 0,
+          "position": 48.4
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/case-studies/zoho-people",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 7
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/docs/zoho-people",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 9
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/docs/zoho-people/admin-guide",
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "position": 4.6667
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/docs/zoho-people/user-guide",
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "position": 5
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/legal/privacy-policy",
+          "clicks": 0,
+          "impressions": 8,
+          "ctr": 0,
+          "position": 6.125
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/legal/terms-of-service",
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 8
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/platform",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 2
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/privacy",
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 4
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/resources",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 5
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/resources/hr",
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0,
+          "position": 17.25
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "page": "https://shelfmerch.io/terms",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 10
+        }
+      ],
+      "metadata": {}
+    },
+    "daily": {
+      "status": "available",
+      "rowCount": 27,
+      "rows": [
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-01",
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": null,
+          "position": 0
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-02",
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": null,
+          "position": 0
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-03",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 4
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-04",
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 4.5
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-05",
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": null,
+          "position": 0
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-06",
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": null,
+          "position": 0
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-07",
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 7.5
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-08",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 7
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-09",
+          "clicks": 0,
+          "impressions": 8,
+          "ctr": 0,
+          "position": 5.875
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-10",
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": null,
+          "position": 0
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-11",
+          "clicks": 1,
+          "impressions": 1,
+          "ctr": 1,
+          "position": 3
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-12",
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": null,
+          "position": 0
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-13",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 2
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-14",
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "position": 31
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-15",
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 40.5
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-16",
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": null,
+          "position": 0
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-17",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 78
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-18",
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 44
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-19",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 76
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-20",
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "position": 46.3333
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-21",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 76
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-22",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 75
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-23",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 73
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-24",
+          "clicks": 0,
+          "impressions": 8,
+          "ctr": 0,
+          "position": 12.75
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-25",
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 42
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-26",
+          "clicks": 1,
+          "impressions": 6,
+          "ctr": 0.1667,
+          "position": 4
+        },
+        {
+          "account_id": "shelfmerch.io",
+          "date": "2026-10-27",
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 8
+        }
+      ],
+      "metadata": {}
+    }
+  },
+  "summary": {
+    "totalClicks": 2,
+    "totalImpressions": 49,
+    "latestReturnedDate": "2026-10-27",
+    "branded": [
+      {
+        "account_id": "shelfmerch.io",
+        "query": "shelfmerch",
+        "clicks": 0,
+        "impressions": 4,
+        "ctr": 0,
+        "position": 5.75,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "query": "shelf merch",
+        "clicks": 0,
+        "impressions": 2,
+        "ctr": 0,
+        "position": 7,
+        "calculatedCtrPercent": 0
+      }
+    ],
+    "nonBranded": [
+      {
+        "account_id": "shelfmerch.io",
+        "query": "shelf attendant",
+        "clicks": 0,
+        "impressions": 9,
+        "ctr": 0,
+        "position": 76.2222,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "query": "bamboo bookshelf speaker",
+        "clicks": 0,
+        "impressions": 3,
+        "ctr": 0,
+        "position": 10,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "query": "bamboo card holder",
+        "clicks": 0,
+        "impressions": 2,
+        "ctr": 0,
+        "position": 75.5,
+        "calculatedCtrPercent": 0
+      }
+    ],
+    "topPages": [
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://shelfmerch.io/careers",
+        "clicks": 0,
+        "impressions": 15,
+        "ctr": 0,
+        "position": 48.4,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://shelfmerch.io/",
+        "clicks": 1,
+        "impressions": 13,
+        "ctr": 0.0769,
+        "position": 4.0769,
+        "calculatedCtrPercent": 7.6923076923076925
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://shelfmerch.io/blog",
+        "clicks": 0,
+        "impressions": 8,
+        "ctr": 0,
+        "position": 4.625,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://shelfmerch.io/legal/privacy-policy",
+        "clicks": 0,
+        "impressions": 8,
+        "ctr": 0,
+        "position": 6.125,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://app.shelfmerch.io/",
+        "clicks": 0,
+        "impressions": 6,
+        "ctr": 0,
+        "position": 4.8333,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://shelfmerch.io/resources/hr",
+        "clicks": 0,
+        "impressions": 4,
+        "ctr": 0,
+        "position": 17.25,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://shelfmerch.io/apps/catalog/6a69a2a728d51c137c8e9635",
+        "clicks": 0,
+        "impressions": 3,
+        "ctr": 0,
+        "position": 53.6667,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://shelfmerch.io/apps/catalog/6a69a2f028d51c137c8e994d",
+        "clicks": 0,
+        "impressions": 3,
+        "ctr": 0,
+        "position": 7,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://shelfmerch.io/apps/catalog/6a8c3ff29d19e345e7c3f5a2",
+        "clicks": 0,
+        "impressions": 3,
+        "ctr": 0,
+        "position": 10,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://shelfmerch.io/docs/zoho-people/admin-guide",
+        "clicks": 0,
+        "impressions": 3,
+        "ctr": 0,
+        "position": 4.6667,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://shelfmerch.io/docs/zoho-people/user-guide",
+        "clicks": 0,
+        "impressions": 3,
+        "ctr": 0,
+        "position": 5,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://shelfmerch.io/support",
+        "clicks": 1,
+        "impressions": 2,
+        "ctr": 0.5,
+        "position": 2,
+        "calculatedCtrPercent": 50
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://shelfmerch.io/about",
+        "clicks": 0,
+        "impressions": 2,
+        "ctr": 0,
+        "position": 4,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://shelfmerch.io/apps/catalog/6a69a2b528d51c137c8e9654",
+        "clicks": 0,
+        "impressions": 2,
+        "ctr": 0,
+        "position": 8.5,
+        "calculatedCtrPercent": 0
+      },
+      {
+        "account_id": "shelfmerch.io",
+        "page": "https://shelfmerch.io/apps/catalog/6a69a2fd28d51c137c8e9978",
+        "clicks": 0,
+        "impressions": 2,
+        "ctr": 0,
+        "position": 8.5,
+        "calculatedCtrPercent": 0
+      }
+    ],
+    "highImpressionLowCtr": []
+  }
+}

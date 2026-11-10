@@ -56,12 +56,10 @@ function conditionalGtmPlugin(envDir: string): Plugin {
     },
     transformIndexHtml(html) {
       if (gtmId) return html;
-      return html
-        .replace(/<!-- Google Tag Manager -->[\s\S]*?<!-- End Google Tag Manager -->\s*/g, "")
-        .replace(
-          /<!-- Google Tag Manager \(noscript\) -->[\s\S]*?<!-- End Google Tag Manager \(noscript\) -->\s*/g,
-          "",
-        );
+      return html.replace(
+        /<!-- Consent and Google Tag Manager -->[\s\S]*?<!-- End Consent and Google Tag Manager -->\s*/g,
+        "",
+      );
     },
   };
 }
@@ -117,6 +115,7 @@ export default defineConfig({
     // Node's default request/socket timeouts (~2–5 min) otherwise close the proxied
     // connection and the browser reports net::ERR_EMPTY_RESPONSE.
     proxy: {
+      "/blog": { target: "http://127.0.0.1:3001", changeOrigin: true },
       "/api": {
         target: "http://127.0.0.1:3001",
         changeOrigin: true,
@@ -128,6 +127,12 @@ export default defineConfig({
           });
         },
       },
+      "/auth": { target: "http://127.0.0.1:3001", changeOrigin: true },
+      "/token": { target: "http://127.0.0.1:3001", changeOrigin: true },
+      "/jwks": { target: "http://127.0.0.1:3001", changeOrigin: true },
+      "/.well-known": { target: "http://127.0.0.1:3001", changeOrigin: true },
+      "/oauth/consent/session": { target: "http://127.0.0.1:3001", changeOrigin: true },
+      "/oauth/consent/decision": { target: "http://127.0.0.1:3001", changeOrigin: true },
       "/uploads": {
         target: "http://127.0.0.1:3001",
         changeOrigin: true,

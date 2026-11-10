@@ -13,6 +13,7 @@ export const ZOHO_DOCS_NAV = [
 type Crumb = { label: string; to?: string };
 
 type DocsShellProps = {
+  className?: string;
   activePath: string;
   breadcrumbs: Crumb[];
   children: ReactNode;
@@ -35,11 +36,11 @@ function NavLinks({ activePath }: { activePath: string }) {
 }
 
 /** Shared chrome for public Zoho People documentation pages. */
-export function DocsShell({ activePath, breadcrumbs, children }: DocsShellProps) {
+export function DocsShell({ activePath, breadcrumbs, children, className = "" }: DocsShellProps) {
   const [navOpen, setNavOpen] = useState(false);
 
   return (
-    <div className="docs-shell">
+    <div className={`docs-shell ${className}`}>
       <header className="docs-top">
         <div className="docs-top-inner">
           <Link to="/" className="docs-logo-link" aria-label="ShelfMerch home">

@@ -3,17 +3,15 @@ import { validNextStatuses } from '../../services/stateMachine.service.js';
 import { writeAudit } from '../../services/audit.service.js';
 
 export async function list(req, res) {
-  res.json(await walletsService.listWallets({ tenantId: req.tenantId }));
+  res.json(await walletsService.listWalletsForCaller({ tenantId: req.tenantId, user: req.user }));
 }
 
 export async function getOne(req, res) {
-  const wallet = await walletsService.getWallet({ tenantId: req.tenantId, walletId: req.params.id });
-  const obj = wallet.toObject();
-  res.json({
-    ...obj,
-    unallocatedAmount: obj.balance - obj.allocatedAmount,
-    validNextStatuses: validNextStatuses('wallet', obj.status),
-  });
+  res.json(await walletsService.getWalletForCaller({
+    tenantId: req.tenantId,
+    walletId: req.params.id,
+    user: req.user,
+  }));
 }
 
 export async function create(req, res) {
@@ -97,11 +95,18 @@ export async function uploadFundingDocument(req, res) {
 }
 
 export async function allocate(req, res) {
+  const requestKey = req.get("Idempotency-Key");
+  const allocations = (req.body.allocations || []).map((line) => {
+    const idempotencyKey = requestKey
+      ? walletsService.allocationLedgerKey(req.params.id, line.entityId, requestKey)
+      : null;
+    return idempotencyKey ? { ...line, idempotencyKey } : line;
+  });
   const result = await walletsService.allocate({
     tenantId: req.tenantId,
     walletId: req.params.id,
     userId: req.user.userId,
-    allocations: req.body.allocations,
+    allocations,
   });
   writeAudit({
     req,
@@ -133,10 +138,11 @@ export async function transfer(req, res) {
 
 export async function transactions(req, res) {
   res.json(
-    await walletsService.listTransactions({
+    await walletsService.listTransactionsForCaller({
       tenantId: req.tenantId,
       walletId: req.params.id,
       query: req.query,
+      user: req.user,
     }),
   );
 }

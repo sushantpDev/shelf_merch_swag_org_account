@@ -58,6 +58,22 @@ describe('idempotency service', () => {
     expect(result).toEqual({ action: 'replay', statusCode: 201, response: { ok: true } });
   });
 
+  it('resumes an expired recoverable reservation and keeps a live one in flight', async () => {
+    ensureRedisReady.mockResolvedValue(true);
+    redisMock.set.mockResolvedValue(null);
+    redisMock.get.mockImplementation((key) => {
+      if (String(key).endsWith(':lease')) return JSON.stringify({ expiresAt: Date.now() - 1000 });
+      return '__pending__';
+    });
+    await expect(beginIdempotency(scope, { recover: true })).resolves.toEqual({ action: 'proceed' });
+
+    redisMock.get.mockImplementation((key) => {
+      if (String(key).endsWith(':lease')) return JSON.stringify({ expiresAt: Date.now() + 60_000 });
+      return '__pending__';
+    });
+    await expect(beginIdempotency(scope, { recover: true })).resolves.toEqual({ action: 'in_flight' });
+  });
+
   it('detects in-flight Redis requests', async () => {
     ensureRedisReady.mockResolvedValue(true);
     redisMock.set.mockResolvedValue(null);

@@ -1,4 +1,4 @@
-import { useState, type KeyboardEvent } from "react";
+import { useState, type CSSProperties, type KeyboardEvent } from "react";
 import { ArrowIcon } from "./icons";
 import { SOLUTIONS } from "./solutions-data";
 
@@ -32,7 +32,10 @@ export function Solutions() {
             key={solution.tab}
             type="button"
             role="tab"
+            id={`solution-tab-${index}`}
+            aria-controls="solution-tab-panel"
             aria-selected={index === activeIndex}
+            tabIndex={index === activeIndex ? 0 : -1}
             onClick={() => setActiveIndex(index)}
             onKeyDown={(event) => handleKeyDown(index, event)}
           >
@@ -40,7 +43,18 @@ export function Solutions() {
           </button>
         ))}
       </div>
-      <div className={`solution-panel panel-${item.color}`}>
+      <div
+        id="solution-tab-panel"
+        className={`solution-panel${item.tab === "Human Resources" ? " solution-panel-hr" : ""}`}
+        role="tabpanel"
+        aria-labelledby={`solution-tab-${activeIndex}`}
+        style={
+          {
+            "--solution-panel-bg": item.panelColor,
+            "--solution-art-bg": item.artColor,
+          } as CSSProperties
+        }
+      >
         <div className="solution-copy">
           <span className="solution-icon">
             <svg
@@ -64,9 +78,7 @@ export function Solutions() {
           <p>{item.body}</p>
           <ul>
             {item.points.map((point) => (
-              <li key={point}>
-                ✓ <span>{point}</span>
-              </li>
+              <li key={point}>{point}</li>
             ))}
           </ul>
           <a href="#contact" className="text-link">
@@ -77,12 +89,7 @@ export function Solutions() {
           </a>
         </div>
         <div className="solution-visual">
-          <img 
-            src={item.image} 
-            alt={item.title} 
-            className="solution-image" 
-            style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain' }}
-          />
+          <img src={item.image} alt="" className="solution-image" />
         </div>
       </div>
     </section>

@@ -71,21 +71,37 @@ export async function deliverNotification({
 }
 
 /**
- * Enqueue notification delivery via BullMQ when Redis is up.
- * Never block the HTTP request on SMTP/SMS — that was making campaign launch
+ * Persist in-app notifications immediately, then enqueue external delivery via
+ * BullMQ when Redis is up. Never block the HTTP request on SMTP/SMS — that was making campaign launch
  * (send points) feel hung while emails sent one-by-one in-process.
  * Falls back to async inline delivery when Redis/worker is unavailable;
  * tests still await delivery so assertions stay deterministic.
  */
 export async function notify(payload) {
+  if (payload.userId) {
+    await Notification.create({
+      tenantId: payload.tenantId ?? null,
+      userId: payload.userId,
+      type: payload.type,
+      title: payload.title,
+      body: payload.body ?? '',
+      link: payload.link ?? '',
+    });
+  }
+
+  // Persist the in-app notification before queuing external delivery.
+  // Clearing userId prevents the worker from creating a duplicate record.
+  const deliveryPayload = { ...payload, userId: null };
+  if (!deliveryPayload.email && !deliveryPayload.phone) return;
+
   const deliver = () =>
-    deliverNotification(payload).catch((err) =>
+    deliverNotification(deliveryPayload).catch((err) =>
       logger.error({ err }, 'Direct notification delivery failed'),
     );
 
   try {
     if (!(await ensureRedisReady())) throw new Error('Redis not ready');
-    await getNotificationQueue().add(payload.type, payload, {
+    await getNotificationQueue().add(payload.type, deliveryPayload, {
       removeOnComplete: 100,
       removeOnFail: 50,
     });

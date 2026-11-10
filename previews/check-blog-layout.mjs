@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import { renderBlogHub, BLOG_PUBLIC_STYLES } from '../apps/api/src/modules/blog/blogPublicView.js';
+
+const post = { slug: 'welcome-kits', title: 'Planning welcome kits', excerpt: 'A practical guide for your team.', publishedAt: '2026-10-30T00:00:00Z', coverImageUrl: '', coverImageAlt: '' };
+const render = posts => renderBlogHub({ posts, page: 1, total: posts.length, limit: 12, dateText: () => '30 October 2026' });
+const single = render([post]);
+assert(single.includes('class="blog-article-grid blog-article-grid--single"'));
+assert(single.includes('/images/landing/resource-careful-packing.webp'));
+assert(single.includes('class="blog-card-copy"'));
+assert(single.includes(post.excerpt));
+assert(single.includes('href="/blog/welcome-kits"'));
+const custom = render([{ ...post, coverImageUrl: '/uploads/custom.jpg', coverImageAlt: 'Custom cover' }]);
+assert(custom.includes('src="/uploads/custom.jpg" alt="Custom cover"'));
+assert(!custom.includes('src="/images/landing/resource-careful-packing.webp"'));
+const multiple = render([post, { ...post, slug: 'second-post' }]);
+assert(multiple.includes('class="blog-article-grid"'));
+assert.equal((multiple.match(/class="blog-card"/g) || []).length, 2);
+assert(render([]).includes('New articles are on their way.'));
+assert(BLOG_PUBLIC_STYLES.includes('@media(max-width:760px){.blog-article-grid--single'));
+assert(render([{ ...post, title: '<script>unsafe</script>' }]).includes('&lt;script&gt;unsafe&lt;/script&gt;'));
+console.log('Single, multiple, empty, cover fallback, custom covers, article links and escaped content passed.');

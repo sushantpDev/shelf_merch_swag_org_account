@@ -382,19 +382,19 @@ export function designPlacementOnMockup(args: {
   rotationDeg: number;
 } {
   const frame = physicalFrameForView(args.physicalDimensions, args.viewKey);
-  const ppi = Math.min(
-    args.mockupWidthPx / frame.width,
-    args.mockupHeightPx / frame.height,
-  );
-  const offsetX = (args.mockupWidthPx - frame.width * ppi) / 2;
-  const offsetY = (args.mockupHeightPx - frame.height * ppi) / 2;
-  const scale = args.placeholder.scale && args.placeholder.scale > 0 ? args.placeholder.scale : 1;
+  // The editor maps each physical axis across the displayed image. Use the
+  // same mapping when baking artwork into the image's native pixel bounds.
+  const stage = placeholderToStagePixels(args.placeholder, frame, {
+    canvasWidth: args.mockupWidthPx,
+    canvasHeight: args.mockupHeightPx,
+    padding: 0,
+  });
   return {
-    x: offsetX + args.placeholder.xIn * ppi,
-    y: offsetY + args.placeholder.yIn * ppi,
-    w: args.placeholder.widthIn * ppi * scale,
-    h: args.placeholder.heightIn * ppi * scale,
-    pxPerInch: ppi,
+    x: stage.x,
+    y: stage.y,
+    w: stage.w,
+    h: stage.h,
+    pxPerInch: stage.pxPerInch,
     rotationDeg: args.placeholder.rotationDeg || 0,
   };
 }

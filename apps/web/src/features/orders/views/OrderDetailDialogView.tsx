@@ -61,7 +61,7 @@ export function OrderDetailDialogView({
                     marginBottom: 8,
                   }}
                 >
-                  <span style={{ fontWeight: 600 }}>{name}</span>
+                  <span style={{ fontWeight: "var(--font-weight-semibold)" }}>{name}</span>
                   <span className="muted">Qty {qty}</span>
                 </div>
               ))}
@@ -111,8 +111,8 @@ function ShipmentHead({ order }: { order: UiOrder }) {
       >
         <div
           style={{
-            fontFamily: "var(--disp)",
-            fontWeight: 800,
+            fontFamily: "var(--font-family-primary)",
+            fontWeight: "var(--font-weight-bold)",
             fontSize: 22,
             color: "var(--brand-d)",
           }}
@@ -140,7 +140,7 @@ function ShipmentHead({ order }: { order: UiOrder }) {
         }}
       >
         <div
-          style={{ fontFamily: "var(--disp)", fontWeight: 800, fontSize: 22, color: "var(--info)" }}
+          style={{ fontFamily: "var(--font-family-primary)", fontWeight: "var(--font-weight-bold)", fontSize: 22, color: "var(--info)" }}
         >
           SHIPPED
         </div>

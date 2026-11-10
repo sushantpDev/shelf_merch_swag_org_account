@@ -237,7 +237,7 @@ export function IntegrationsView(vm: IntegrationsVm) {
 
       <Section
         title="User management"
-        desc="Connect your HRIS, HRMS, or company directory to sync employee names, emails, and directory data automatically."
+        desc="Connect your HRIS, HRMS, or company directory so Shelf Merch can use employee names, emails, and directory data."
         action={
           hasMergeConnection ? (
             <Link to="/app/integrations/hris-employees" className="bonus-integ-section__action">
@@ -253,7 +253,12 @@ export function IntegrationsView(vm: IntegrationsVm) {
             const mergeConn = isMergeHrisIntegration(tile.id)
               ? vm.mergeConnectionsByProvider[tile.id]
               : undefined;
-            const needsAttention = mergeConn?.status === "needs_attention";
+            const zohoNeedsAttention =
+              tile.id === "zoho-people" &&
+              (vm.zoho.status === "needs_attention" ||
+                vm.zoho.status === "expired" ||
+                vm.zoho.status === "error");
+            const needsAttention = mergeConn?.status === "needs_attention" || zohoNeedsAttention;
             const connected =
               mergeConn?.status === "connected" ||
               (tile.id === "zoho-people" && zohoConnected);

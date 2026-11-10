@@ -29,6 +29,7 @@ export type UiPrintArea = {
 
 export type UiProduct = {
   id?: string;
+  createdAt?: string;
   g: string;
   brand: string;
   nm: string;
@@ -368,6 +369,7 @@ export function mapCatalogProduct(p: ApiProduct): UiProduct {
       : undefined;
   return {
     id: String(p._id),
+    createdAt: typeof p.createdAt === "string" ? p.createdAt : undefined,
     g: p.group || GROUP_BY_CATEGORY[p.category] || "tee",
     brand: p.brand || "",
     nm: p.name,

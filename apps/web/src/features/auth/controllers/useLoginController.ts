@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import { toast } from "sonner";
 import { login, isPlatformUser } from "../model";
+import { safeOauthReturnPath } from "@/features/oauth/safeOauthReturn";
 import { loginErrorToast } from "../loginErrors";
 
 const SESSION_EXPIRED_NOTICE = "Your session expired. Please sign in again.";
@@ -49,7 +50,7 @@ export function useLoginController(): LoginVm {
       const user = await login(trimmedEmail, password);
       toast.success(`Welcome back, ${user.name.split(" ")[0]} 👋`);
       const destination = isPlatformUser(user) ? "/platform/dashboard" : "/dashboard";
-      window.location.assign(destination);
+      window.location.assign(safeOauthReturnPath(searchParams.get("return")) ?? destination);
     } catch (err) {
       submitInFlight.current = false;
       setBusy(false);

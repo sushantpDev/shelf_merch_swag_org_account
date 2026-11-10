@@ -1,6 +1,7 @@
 import { ArrowIcon } from "./icons";
 
 const HERO_IMAGE = "/images/landing/hero.png";
+const MOBILE_HERO_IMAGE = "/images/landing/hero-mobile-merch-flatlay.png";
 
 export function Hero() {
   return (
@@ -14,22 +15,14 @@ export function Hero() {
           <br />
           <em>one shelf.</em>
         </h1>
-        <p className="hero-lead desktop-only">
-          Run your company&apos;s swag, onboarding kits and employee gifting from a single platform,
-          designed, printed and delivered anywhere in India.
-        </p>
-        <p className="hero-lead mobile-only">
-          Create, send and manage custom swag for your team, clients and events — printed and
-          delivered across India.
+        <p className="hero-lead">
+          <span className="hero-lead__line">Run your company&apos;s swag, onboarding kits and</span>{' '}
+          <span className="hero-lead__line">employee gifting from a single platform, designed,</span>{' '}
+          <span className="hero-lead__line">printed and delivered anywhere in India.</span>
         </p>
         <div className="hero-actions">
-          <a className="button button-dark" href="#contact">
+          <a className="button button-dark" href="/request-demo">
             Get started <ArrowIcon />
-          </a>
-          <a className="play-link" href="#platform">
-            <span className="play">▶</span>
-            <span className="desktop-only">See how it works</span>
-            <span className="mobile-only">Watch video</span>
           </a>
         </div>
         <div className="hero-proof desktop-only">
@@ -48,10 +41,13 @@ export function Hero() {
       <div className="hero-visual" aria-label="Colorful corporate onboarding kit">
         <div className="hero-color-shape shape-one" />
         <div className="hero-color-shape shape-two" />
-        <img
-          src={HERO_IMAGE}
-          alt="Premium corporate onboarding kit with apparel, drinkware, stationery and tech accessories"
-        />
+        <picture>
+          <source media="(max-width: 860px)" srcSet={MOBILE_HERO_IMAGE} />
+          <img
+            src={HERO_IMAGE}
+            alt="Premium corporate merchandise with apparel, drinkware, stationery and tech accessories"
+          />
+        </picture>
         <div className="floating-card float-top desktop-only">
           <span className="status-dot" />
           Order #SM-2481 <strong>In production</strong>

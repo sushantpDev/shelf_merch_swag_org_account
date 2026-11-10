@@ -14,6 +14,12 @@ export function Step5Review({ state, dispatch, account }: StepProps & { account:
   const o = state.wallet;
   const total = o.amount;
   const depts = selectedDepartments(state.departments);
+  const selectedAllocation = depts.reduce((sum, d) => sum + wizardTargetAllocation(d), 0);
+  const otherBudget = Math.max(0, total - selectedAllocation);
+  const distribution = [
+    ...depts.map((d) => ({ id: String(d.id), name: d.name, color: d.color, allocated: wizardTargetAllocation(d) })),
+    ...(otherBudget > 0 ? [{ id: "other-budget", name: "Other budget", color: "#e5e7eb", allocated: otherBudget }] : []),
+  ];
   const isEdit = isAllocateEditFlow(state.flow, state.mode);
   const fromPool = allocationFromPool(state.departments);
   const rem = remainingWalletBalanceForWizard(total, state.departments, {
@@ -26,7 +32,7 @@ export function Step5Review({ state, dispatch, account }: StepProps & { account:
     <>
       <div style={{ marginBottom: 14 }}>
         <h3 style={{ fontSize: 18 }}>Review allocation</h3>
-        <p className="muted" style={{ fontSize: 13, marginTop: 2 }}>
+        <p className="muted" style={{ fontSize: 14, marginTop: 2 }}>
           Confirm departments, budgets and managers before finishing.
         </p>
       </div>
@@ -50,11 +56,11 @@ export function Step5Review({ state, dispatch, account }: StepProps & { account:
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: 20 }}>
+      <div className="allocation-review-grid">
         <div>
           <div className="card" style={{ padding: 20, marginBottom: 16 }}>
             <div className="row" style={{ justifyContent: "space-between", marginBottom: 10 }}>
-              <b style={{ fontSize: 14 }}>Wallet</b>
+              <b style={{ fontSize: 18 }}>Wallet</b>
             </div>
             <ReviewRow label="Organization" value={account} />
             <ReviewRow label="Wallet" value={o.name} />
@@ -64,9 +70,10 @@ export function Step5Review({ state, dispatch, account }: StepProps & { account:
 
           <div className="card" style={{ padding: 20 }}>
             <div className="row" style={{ justifyContent: "space-between", marginBottom: 6 }}>
-              <b style={{ fontSize: 14 }}>Departments &amp; managers</b>
+              <b style={{ fontSize: 18 }}>Departments &amp; managers</b>
               <span
                 className="lnk"
+                style={{ fontSize: 16 }}
                 role="button"
                 tabIndex={0}
                 onClick={() => dispatch({ type: "goto", step: 2 })}
@@ -77,9 +84,9 @@ export function Step5Review({ state, dispatch, account }: StepProps & { account:
             {depts.map((d) => (
               <div key={d.id} className="rev-dept">
                 <span className="sw" style={{ background: d.color }} />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 600, fontSize: 13.5 }}>{d.name}</div>
-                  <div className="mut3" style={{ fontSize: 11.5 }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontWeight: "var(--font-weight-semibold)", fontSize: 16 }}>{d.name}</div>
+                  <div className="mut3" style={{ fontSize: 14, lineHeight: 1.5, overflowWrap: "anywhere" }}>
                     {d.mgr.name
                       ? `${d.mgr.name}${d.mgr.email ? ` · ${d.mgr.email}` : ""}`
                       : "No manager assigned"}
@@ -92,10 +99,10 @@ export function Step5Review({ state, dispatch, account }: StepProps & { account:
                         : ""}
                   </div>
                 </div>
-                <span className="num" style={{ fontWeight: 700, fontSize: 13 }}>
+                <span className="num" style={{ fontWeight: "var(--font-weight-bold)", fontSize: 16 }}>
                   {inr(wizardTargetAllocation(d))}
                 </span>
-                <span className="pct-pill">
+                <span className="pct-pill" style={{ fontSize: 14 }}>
                   {total ? Math.round((wizardTargetAllocation(d) / total) * 100) : 0}%
                 </span>
               </div>
@@ -103,43 +110,34 @@ export function Step5Review({ state, dispatch, account }: StepProps & { account:
           </div>
         </div>
 
-        <aside className="card" style={{ padding: 20 }}>
-          <div
-            className="mut3"
-            style={{
-              fontSize: 11,
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: ".05em",
-              marginBottom: 6,
-            }}
-          >
-            Budget distribution
+        <aside className="card allocation-distribution" aria-labelledby="allocation-distribution-title">
+          <h3 id="allocation-distribution-title">Budget distribution</h3>
+          <p className="allocation-distribution-summary">
+            {inr(selectedAllocation)} across {depts.length} {depts.length === 1 ? "department" : "departments"}
+          </p>
+          <div className="allocation-distribution-content">
+            <Donut
+              segments={distribution}
+              centerValue={depts.length}
+              centerLabel={depts.length === 1 ? "Department" : "Departments"}
+              size={140}
+              centerFontSize={30}
+              centerLabelFontSize={13}
+            />
+            <ul className="allocation-distribution-legend">
+              {distribution.map((d) => (
+                <li key={d.id}>
+                  <span className="allocation-distribution-dot" style={{ background: d.color }} />
+                  <span className="allocation-distribution-name">{d.name}</span>
+                  <span className="allocation-distribution-amount">
+                    <strong>{inr(d.allocated)}</strong>
+                    <span>{total ? Math.round((d.allocated / total) * 100) : 0}%</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <Donut
-            segments={depts.map((d) => ({ color: d.color, allocated: wizardTargetAllocation(d) }))}
-            centerValue={depts.length}
-            centerLabel="Departments"
-            centerFontSize={26}
-          />
-          <div style={{ marginTop: 6 }}>
-            {depts.map((d) => (
-              <div
-                key={d.id}
-                className="row"
-                style={{ justifyContent: "space-between", padding: "5px 0", fontSize: 12.5 }}
-              >
-                <span className="row" style={{ gap: 7, alignItems: "center" }}>
-                  <span
-                    className="lc"
-                    style={{ width: 10, height: 10, borderRadius: 3, background: d.color }}
-                  />
-                  {d.name}
-                </span>
-                <b>{total ? Math.round((wizardTargetAllocation(d) / total) * 100) : 0}%</b>
-              </div>
-            ))}
-          </div>
+          <div className="allocation-distribution-total"><span>Total budget</span><strong>{inr(total)}</strong></div>
         </aside>
       </div>
     </>
@@ -162,17 +160,19 @@ function ReviewRow({
       className="row"
       style={{
         justifyContent: "space-between",
-        padding: "7px 0",
+        padding: "10px 0",
+        gap: 16,
+        flexWrap: "wrap",
         borderBottom: last ? "none" : "1px solid var(--line)",
       }}
     >
-      <span className="muted" style={{ fontSize: 13 }}>
+      <span className="muted" style={{ fontSize: 16 }}>
         {label}
       </span>
       <span
         style={{
-          fontWeight: accent ? 700 : 600,
-          fontSize: 13,
+          fontWeight: accent ? "var(--font-weight-bold)" : "var(--font-weight-semibold)",
+          fontSize: 16,
           color: accent ? "var(--brand-d)" : undefined,
         }}
       >

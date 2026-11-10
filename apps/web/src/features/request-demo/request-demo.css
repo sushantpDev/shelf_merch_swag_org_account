@@ -21,7 +21,7 @@
   overflow-x: hidden;
   background: #f6f5f2;
   color: var(--demo-ink);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-family-public-sans);
 }
 
 .request-demo a {
@@ -67,7 +67,7 @@
   margin: 0;
   color: #111;
   font-size: clamp(56px, 5.35vw, 104px);
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   line-height: 0.96;
   letter-spacing: -0.06em;
 }
@@ -90,7 +90,7 @@
   border-radius: 22px;
   background: var(--demo-card);
   box-shadow: 0 26px 80px rgba(33, 61, 101, 0.16);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-family-public-sans);
 }
 
 .request-demo__form-heading {
@@ -105,7 +105,7 @@
   margin-bottom: 12px;
   color: #2b2b2b;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .request-demo__g2-badge {
@@ -118,7 +118,7 @@
   background: #ff494a;
   color: #fff;
   font-size: 11px;
-  font-weight: 900;
+  font-weight: var(--font-weight-bold);
   line-height: 1;
 }
 
@@ -129,7 +129,7 @@
 
 .request-demo__g2-score {
   color: #111;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .request-demo__g2-divider {
@@ -146,7 +146,7 @@
   margin: 0 auto;
   color: #111;
   font-size: clamp(26px, 1.95vw, 36px);
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   line-height: 1.08;
   letter-spacing: -0.04em;
   text-align: center;
@@ -182,7 +182,7 @@
 .request-demo__field label {
   color: #171717;
   font-size: var(--demo-text-sm);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .request-demo__field:not(.request-demo__field--wide) {
@@ -221,7 +221,7 @@
 .request-demo__field label small {
   color: #777;
   font-size: var(--demo-text-xs);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .request-demo__field input,
@@ -236,9 +236,7 @@
   background: #f3f3f3;
   color: #111;
   font:
-    var(--demo-text-md) Arial,
-    Helvetica,
-    sans-serif;
+    var(--demo-text-md) var(--font-family-primary);
   transition:
     border-color 160ms ease,
     box-shadow 160ms ease,
@@ -311,9 +309,7 @@
   display: flex;
   align-items: center;
   font:
-    var(--demo-text-sm) Arial,
-    Helvetica,
-    sans-serif;
+    var(--demo-text-sm) var(--font-family-primary);
   text-align: left;
   cursor: pointer;
 }
@@ -324,7 +320,7 @@
 }
 
 .request-demo__select-option.is-selected {
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .request-demo__select-wrap select {
@@ -371,9 +367,7 @@
   justify-content: center;
   gap: 14px;
   font:
-    800 var(--demo-text-md) Arial,
-    Helvetica,
-    sans-serif;
+    var(--font-weight-bold) var(--demo-text-md) var(--font-family-primary);
   cursor: pointer;
 }
 
@@ -395,7 +389,7 @@
   padding: 11px 13px;
   border-radius: 10px;
   font-size: var(--demo-text-sm);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   line-height: 1.45;
 }
 
@@ -443,9 +437,7 @@
   justify-content: center;
   gap: 10px;
   font:
-    800 var(--demo-text-md) Arial,
-    Helvetica,
-    sans-serif;
+    var(--font-weight-bold) var(--demo-text-md) var(--font-family-primary);
   cursor: pointer;
 }
 
@@ -457,7 +449,7 @@
   gap: 6px;
   color: #4c4944;
   font-size: var(--demo-text-xs);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .request-demo__success {
@@ -489,7 +481,7 @@
   margin: 0 0 16px !important;
   color: var(--demo-ink) !important;
   font-size: 18px !important;
-  font-weight: 850;
+  font-weight: var(--font-weight-bold);
 }
 
 .request-demo__success-copy p {
@@ -541,7 +533,7 @@
   justify-content: space-between;
   color: inherit;
   font-size: var(--demo-text-sm);
-  font-weight: 850;
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
 }
 
@@ -604,7 +596,7 @@
   margin: 0 0 14px;
   color: #6e49ff;
   font-size: var(--demo-text-xs);
-  font-weight: 900;
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
@@ -618,7 +610,7 @@
   margin: 0;
   color: #151515;
   font-size: clamp(32px, 4.2vw, 64px);
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   line-height: 1;
   letter-spacing: -0.055em;
 }
@@ -730,7 +722,7 @@
   place-items: center;
   color: #111;
   font-size: var(--demo-text-md);
-  font-weight: 900;
+  font-weight: var(--font-weight-bold);
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
   background: var(--demo-yellow);
 }
@@ -823,7 +815,7 @@
   border-radius: 50%;
   color: #3155ff;
   font-style: normal;
-  font-weight: 900;
+  font-weight: var(--font-weight-bold);
 }
 
 .request-demo__success-strip {
@@ -836,7 +828,7 @@
   border-radius: 8px;
   background: #daf5d3;
   color: #327a26;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   text-align: center;
   transform: translateX(-50%);
 }
@@ -919,7 +911,7 @@
 }
 
 .request-demo__feature-card a {
-  margin-top: 0;
+  margin-top: auto;
 }
 
 .request-demo__feature-card a,
@@ -936,7 +928,7 @@
   justify-content: center;
   gap: 8px;
   font-size: var(--demo-text-sm);
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
 }
 
@@ -976,7 +968,7 @@
 .request-demo__plan p {
   margin: 0;
   font-size: var(--demo-text-md);
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
 }
 
 .request-demo__plan h3 {
@@ -1124,7 +1116,7 @@
   background: #6e49ff;
   color: #fff;
   font-size: 22px;
-  font-weight: 900;
+  font-weight: var(--font-weight-bold);
 }
 
 .request-demo__steps h3 {
@@ -1152,7 +1144,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
 }
 
@@ -1185,7 +1177,7 @@
 .request-demo__faq summary {
   padding: 18px 0;
   cursor: pointer;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
 }
 
 .request-demo__faq p {
@@ -1208,7 +1200,15 @@
 }
 
 @media (max-width: 1080px) {
-  .request-demo__shell,
+  .request-demo__shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .request-demo__intro,
+  .request-demo__form-card {
+    min-width: 0;
+  }
+
   .request-demo__compare,
   .request-demo__cards,
   .request-demo__plan-grid,
@@ -1250,13 +1250,17 @@
 
   .request-demo__shell {
     min-height: 0;
-    padding-top: 64px;
+    padding-top: 28px;
     gap: 28px;
   }
 
   .request-demo__intro h1 {
     width: auto;
     font-size: clamp(38px, 11.2vw, 54px);
+  }
+
+  .request-demo__intro h1 span {
+    white-space: normal;
   }
 
   .request-demo__lead {
@@ -1278,8 +1282,12 @@
 
   .request-demo__form,
   .request-demo__form--landing {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 16px;
+  }
+
+  .request-demo__field {
+    min-width: 0;
   }
 
   .request-demo__field label {

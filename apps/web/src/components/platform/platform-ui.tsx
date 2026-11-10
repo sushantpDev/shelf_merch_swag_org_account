@@ -176,7 +176,7 @@ export function PlatformModal({
           </button>
         </div>
         {subtitle && (
-          <p className="muted" style={{ fontSize: 12, marginBottom: 16, flex: "none" }}>
+          <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 12px)", marginBottom: 16, flex: "none" }}>
             {subtitle}
           </p>
         )}
@@ -306,7 +306,7 @@ export function MetricGrid({ items }: { items: [string, string | number][] }) {
     >
       {items.map(([label, value]) => (
         <div key={label} className="card" style={{ padding: 16 }}>
-          <div className="muted" style={{ fontSize: 13 }}>
+          <div className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)" }}>
             {label}
           </div>
           <div className="h1" style={{ fontSize: 24, marginTop: 8 }}>

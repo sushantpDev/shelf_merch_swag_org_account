@@ -1,0 +1,122 @@
+[
+  {
+    "route": "login",
+    "width": 1920,
+    "overflow": false,
+    "radius": "8px",
+    "labels": true,
+    "inputs": true,
+    "images": true,
+    "title": "Welcome back"
+  },
+  {
+    "route": "login",
+    "width": 1440,
+    "overflow": false,
+    "radius": "8px",
+    "labels": true,
+    "inputs": true,
+    "images": true,
+    "title": "Welcome back"
+  },
+  {
+    "route": "login",
+    "width": 1024,
+    "overflow": false,
+    "radius": "8px",
+    "labels": true,
+    "inputs": true,
+    "images": true,
+    "title": "Welcome back"
+  },
+  {
+    "route": "login",
+    "width": 768,
+    "overflow": false,
+    "radius": "8px",
+    "labels": true,
+    "inputs": true,
+    "images": true,
+    "title": "Welcome back"
+  },
+  {
+    "route": "login",
+    "width": 390,
+    "overflow": false,
+    "radius": "8px",
+    "labels": true,
+    "inputs": true,
+    "images": true,
+    "title": "Welcome back"
+  },
+  {
+    "route": "login",
+    "width": 320,
+    "overflow": false,
+    "radius": "8px",
+    "labels": true,
+    "inputs": true,
+    "images": true,
+    "title": "Welcome back"
+  },
+  {
+    "route": "signup",
+    "width": 1920,
+    "overflow": false,
+    "radius": "8px",
+    "labels": true,
+    "inputs": true,
+    "images": true,
+    "title": "Create your account"
+  },
+  {
+    "route": "signup",
+    "width": 1440,
+    "overflow": false,
+    "radius": "8px",
+    "labels": true,
+    "inputs": true,
+    "images": true,
+    "title": "Create your account"
+  },
+  {
+    "route": "signup",
+    "width": 1024,
+    "overflow": false,
+    "radius": "8px",
+    "labels": true,
+    "inputs": true,
+    "images": true,
+    "title": "Create your account"
+  },
+  {
+    "route": "signup",
+    "width": 768,
+    "overflow": false,
+    "radius": "8px",
+    "labels": true,
+    "inputs": true,
+    "images": true,
+    "title": "Create your account"
+  },
+  {
+    "route": "signup",
+    "width": 390,
+    "overflow": false,
+    "radius": "8px",
+    "labels": true,
+    "inputs": true,
+    "images": true,
+    "title": "Create your account"
+  },
+  {
+    "route": "signup",
+    "width": 320,
+    "overflow": false,
+    "radius": "8px",
+    "labels": true,
+    "inputs": true,
+    "images": true,
+    "title": "Create your account"
+  }
+]

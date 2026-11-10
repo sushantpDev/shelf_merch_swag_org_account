@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 
 export type CategoryTile = {
   label: string;
@@ -10,7 +10,7 @@ export type CategoryTile = {
 };
 
 type CategoryCarouselProps = {
-  title: string;
+  title: ReactNode;
   titleId?: string;
   viewAllLabel: string;
   items: readonly CategoryTile[];
@@ -35,12 +35,14 @@ export function CategoryCarousel({
   const [selected, setSelected] = useState(0);
   const [snaps, setSnaps] = useState<number[]>([]);
   const [canScrollNext, setCanScrollNext] = useState(false);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
 
   const onReInit = useCallback(() => {
     if (!emblaApi) return;
     setSnaps(emblaApi.scrollSnapList());
     setSelected(emblaApi.selectedScrollSnap());
     setCanScrollNext(emblaApi.canScrollNext());
+    setCanScrollPrev(emblaApi.canScrollPrev());
   }, [emblaApi]);
 
   useEffect(() => {
@@ -87,12 +89,21 @@ export function CategoryCarousel({
 
         <button
           type="button"
+          className="sm-cat-next sm-cat-next--previous"
+          aria-label="Previous categories"
+          disabled={!canScrollPrev}
+          onClick={() => emblaApi?.scrollPrev()}
+        >
+          <ArrowLeft size={18} strokeWidth={2} aria-hidden="true" />
+        </button>
+        <button
+          type="button"
           className="sm-cat-next"
           aria-label="Next categories"
           disabled={!canScrollNext}
           onClick={() => emblaApi?.scrollNext()}
         >
-          <ArrowRight size={18} strokeWidth={2} />
+          <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
         </button>
       </div>
 

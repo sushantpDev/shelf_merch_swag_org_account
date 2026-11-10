@@ -57,6 +57,8 @@ const campaignSchema = new mongoose.Schema(
       timezone: { type: String, default: 'Asia/Kolkata' },
       /** Set when deferred invites + point credits have been delivered. */
       invitesSentAt: { type: Date, default: null },
+      inviteClaimedAt: { type: Date, default: null },
+      invitesUnresolved: { type: Boolean, default: false },
     },
     status: { type: String, enum: CAMPAIGN_STATUSES, default: 'draft' },
     draftState: {
@@ -67,6 +69,11 @@ const campaignSchema = new mongoose.Schema(
       pay: { type: String, enum: ['wallet', 'upi', 'card'], default: 'wallet' },
       preview: { type: String, enum: ['landing', 'email'], default: 'landing' },
       when: { type: String, enum: ['now', 'scheduled', 'self'], default: 'now' },
+    },
+    launchLease: {
+      owner: { type: String, default: '' },
+      expiresAt: { type: Date, default: null },
+      fence: { type: Number, default: 0 },
     },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   },

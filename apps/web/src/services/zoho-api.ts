@@ -115,6 +115,14 @@ export async function startZohoConnect(): Promise<void> {
   window.location.assign(`${ZOHO_API_BASE}/connect`);
 }
 
+export function formatZohoSyncResult(summary: ZohoSyncSummary) {
+  const counts = `${summary.totalFetched} fetched, ${summary.created} created, ${summary.updated} updated, ${summary.skipped} skipped, ${summary.failed} failed`;
+  if (summary.failed > 0) {
+    return `Employee sync finished with failures: ${counts}.`;
+  }
+  return `Employee sync complete: ${counts}.`;
+}
+
 export function syncZohoEmployees() {
   return zohoFetch<ZohoSyncSummary>("/sync-employees", { method: "POST" });
 }

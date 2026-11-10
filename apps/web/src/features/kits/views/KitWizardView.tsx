@@ -43,7 +43,7 @@ export function KitWizardView(vm: KitWizardVm) {
   );
 
   const kitTag = (suffix?: string) => (
-    <span className="tag tag-soft" style={{ fontWeight: 700 }}>
+    <span className="tag tag-soft" style={{ fontWeight: "var(--font-weight-bold)" }}>
       {draft.picked.length} item{draft.picked.length === 1 ? "" : "s"}
       {suffix ? ` · ${suffix}` : ""}
     </span>
@@ -59,7 +59,7 @@ export function KitWizardView(vm: KitWizardVm) {
       }}
     >
       <div className="row" style={{ gap: 12, alignItems: "center" }}>
-        <b style={{ fontSize: 15, color: "var(--ink)" }}>{draft.name}</b>
+        <b style={{ fontSize: "var(--workspace-font-body, 15px)", color: "var(--ink)" }}>{draft.name}</b>
         {kitTag(suffix)}
       </div>
       <div className="row" style={{ gap: 12, alignItems: "center" }}>

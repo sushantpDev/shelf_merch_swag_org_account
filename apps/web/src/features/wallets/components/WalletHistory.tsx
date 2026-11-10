@@ -63,39 +63,9 @@ function entityTxnAmountDisplay(t: WalletTransactionRow): { text: string; color:
   };
 }
 
-/** Running unallocated balance (cash − earmarked to departments) after each row. */
+/** Department spend consumes an existing earmark, not the admin's available balance. */
 function isEntitySpend(t: WalletTransactionRow): boolean {
-  return t.type === "campaign_spend" || t.type === "order_payment";
-}
-
-function adminCashDelta(t: WalletTransactionRow): number {
-  if (t.type === "allocation_to_entity") return 0;
-  if (isEntitySpend(t)) return 0;
-  return t.amount;
-}
-
-function withAvailableBalance(txns: WalletTransactionRow[]) {
-  const adminTxns = txns.filter((t) => !isEntitySpend(t));
-  const chronological = [...adminTxns].sort(
-    (a, b) => new Date(a.createdAt ?? 0).getTime() - new Date(b.createdAt ?? 0).getTime(),
-  );
-  let cash = 0;
-  let allocated = 0;
-  const availableByKey = new Map<string, number>();
-
-  for (const t of chronological) {
-    cash += adminCashDelta(t);
-    if (t.type === "allocation_to_entity") {
-      allocated += t.amount;
-    }
-    const key = t._id ?? `${t.createdAt}-${t.amount}-${t.type}`;
-    availableByKey.set(key, cash - allocated);
-  }
-
-  return adminTxns.map((t) => {
-    const key = t._id ?? `${t.createdAt}-${t.amount}-${t.type}`;
-    return { ...t, availableAfter: availableByKey.get(key) };
-  });
+  return Boolean(t.relatedEntityId) && (t.type === "campaign_spend" || t.type === "order_payment");
 }
 
 function txnAmountDisplay(t: WalletTransactionRow): { text: string; color: string } {
@@ -146,7 +116,7 @@ export function WalletHistory({
   const isLoading = queries.some((q) => q.isLoading);
   const txns = queries.flatMap((q) => q.data ?? []);
   const rows = (
-    entityMode ? withEntityBudgetBalance(txns, entityIdList) : withAvailableBalance(txns)
+    entityMode ? withEntityBudgetBalance(txns, entityIdList) : txns.filter((t) => !isEntitySpend(t))
   ).sort((a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime());
   const title = entityMode ? "Budget history" : "Funding history";
   const balanceColumn = entityMode ? "Remaining budget" : "Available balance";
@@ -156,7 +126,7 @@ export function WalletHistory({
       <div className="data-list-title">{title}</div>
 
       {isLoading && (
-        <p className="muted" style={{ fontSize: 13 }}>
+        <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)" }}>
           Loading transactions…
         </p>
       )}
@@ -167,7 +137,7 @@ export function WalletHistory({
             <Wallet size={28} color="var(--brand)" />
           </div>
           <h4>{entityMode ? "No budget activity yet" : "No funding history yet"}</h4>
-          <p className="muted" style={{ fontSize: 13, maxWidth: 360, margin: "0 auto" }}>
+          <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)", maxWidth: 360, margin: "0 auto" }}>
             {entityMode
               ? "Allocations and campaign spend for your department will appear here."
               : "Funding events and budget activity will appear here after your first top-up."}

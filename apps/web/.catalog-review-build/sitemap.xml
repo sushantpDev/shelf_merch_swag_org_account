@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://shelfmerch.io/sitemap-static.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://shelfmerch.io/sitemap-catalog.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://shelfmerch.io/sitemap-blog.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://shelfmerch.io/sitemap-compare.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://shelfmerch.io/sitemap-solutions.xml</loc>
+  </sitemap>
+</sitemapindex>

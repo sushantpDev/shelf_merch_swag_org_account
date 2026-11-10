@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { inr } from "@/components/platform/platform-ui";
+import { managerMobileDigits, validateManager, type ManagerField } from "../../managerValidation";
 import { ORG_ROLES, selectedDepartments, wizardTargetAllocation } from "../../types";
 import type { StepProps } from "./StepProps";
 
@@ -22,30 +24,30 @@ function managerFooter(inviteStatus: string | undefined, hasEmail: boolean) {
       showInviteToggle: true,
     } as const;
   }
-  return {
-    title: "Add an email to continue",
-    detail: "Enter the manager’s work email to invite them or allocate budget.",
-    badge: "Needed",
-    badgeClass: "tag-draft",
-    showInviteToggle: false,
-  } as const;
+  return null;
 }
 
-export function Step4Managers({ state, dispatch }: StepProps) {
+export function Step4Managers({ state, dispatch, showErrors = false }: StepProps & { showErrors?: boolean }) {
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   return (
     <>
-      <div style={{ marginBottom: 14 }}>
-        <h3 style={{ fontSize: 18 }}>Assign department managers</h3>
-        <p className="muted" style={{ fontSize: 13, marginTop: 2 }}>
-          New managers get an invitation. Active managers keep their login — only additional budget
-          is added.
-        </p>
-      </div>
-
       {selectedDepartments(state.departments).map((d) => {
         const hasEmail = Boolean(d.mgr.email?.trim());
         const active = d.mgr.inviteStatus === "active";
         const footer = managerFooter(d.mgr.inviteStatus, hasEmail);
+        const errors = validateManager(d.mgr);
+        const fieldProps = (field: ManagerField) => {
+          const id = `mgr-${field}-${d.id}`;
+          const invalid = Boolean(errors[field] && (showErrors || touched[id]));
+          return {
+            "aria-invalid": invalid,
+            "aria-describedby": invalid ? `${id}-error` : undefined,
+            onBlur: () => setTouched((previous) => ({ ...previous, [id]: true })),
+          };
+        };
+        const fieldError = (field: ManagerField) => fieldProps(field)["aria-invalid"] ? (
+          <p id={`mgr-${field}-${d.id}-error`} className="mgr-field-error" role="alert">{errors[field]}</p>
+        ) : null;
         return (
         <div key={d.id} className="mgr-card">
           <div className="mgr-head">
@@ -55,22 +57,26 @@ export function Step4Managers({ state, dispatch }: StepProps) {
             >
               {d.name.charAt(0)}
             </div>
-            <div style={{ fontWeight: 700, fontSize: 15 }}>{d.name}</div>
+            <div style={{ fontWeight: "var(--font-weight-bold)", fontSize: 18 }}>{d.name}</div>
             <div className="mb">
               Budget <b>{inr(wizardTargetAllocation(d))}</b>
             </div>
-            <span className={`tag ${footer.badgeClass}`} style={{ marginLeft: 8 }}>
+            {footer && <span className={`tag ${footer.badgeClass}`} style={{ marginLeft: 8 }}>
               {footer.badge}
-            </span>
+            </span>}
           </div>
           <div className="mgr-body" style={{ display: "block", padding: 18 }}>
-            <div className="row" style={{ gap: 12, marginBottom: 14 }}>
+            <div className="mgr-fields" style={{ marginBottom: 14 }}>
               <div className="field" style={{ flex: 1, margin: 0 }}>
                 <label className="lbl" htmlFor={`mgr-name-${d.id}`}>
                   Manager name
                 </label>
                 <input
                   id={`mgr-name-${d.id}`}
+                  {...fieldProps("name")}
+                  required
+                  maxLength={100}
+                  autoComplete="name"
                   className="inp"
                   value={d.mgr.name}
                   placeholder="Full name"
@@ -78,6 +84,7 @@ export function Step4Managers({ state, dispatch }: StepProps) {
                     dispatch({ type: "mgrField", id: d.id, field: "name", value: e.target.value })
                   }
                 />
+                {fieldError("name")}
               </div>
               <div className="field" style={{ flex: 1, margin: 0 }}>
                 <label className="lbl" htmlFor={`mgr-role-${d.id}`}>
@@ -85,6 +92,8 @@ export function Step4Managers({ state, dispatch }: StepProps) {
                 </label>
                 <input
                   id={`mgr-role-${d.id}`}
+                  {...fieldProps("role")}
+                  maxLength={100}
                   className="inp"
                   list={`mgr-role-options-${d.id}`}
                   value={d.mgr.role}
@@ -99,15 +108,20 @@ export function Step4Managers({ state, dispatch }: StepProps) {
                     <option key={r} value={r} />
                   ))}
                 </datalist>
+                {fieldError("role")}
               </div>
             </div>
-            <div className="row" style={{ gap: 12 }}>
+            <div className="mgr-fields">
               <div className="field" style={{ flex: 1, margin: 0 }}>
                 <label className="lbl" htmlFor={`mgr-email-${d.id}`}>
                   Email
                 </label>
                 <input
                   id={`mgr-email-${d.id}`}
+                  {...fieldProps("email")}
+                  required
+                  maxLength={254}
+                  autoComplete="email"
                   className="inp"
                   type="email"
                   value={d.mgr.email}
@@ -117,24 +131,37 @@ export function Step4Managers({ state, dispatch }: StepProps) {
                     dispatch({ type: "mgrField", id: d.id, field: "email", value: e.target.value })
                   }
                 />
+                {fieldError("email")}
               </div>
               <div className="field" style={{ flex: 1, margin: 0 }}>
                 <label className="lbl" htmlFor={`mgr-mobile-${d.id}`}>
                   Mobile
                 </label>
+                <div className="mgr-mobile-control" data-invalid={fieldProps("mobile")["aria-invalid"]}>
+                  <span className="mgr-mobile-prefix" aria-hidden="true">+91</span>
                 <input
                   id={`mgr-mobile-${d.id}`}
-                  className="inp"
-                  value={d.mgr.mobile}
-                  placeholder="+91 ..."
-                  onChange={(e) =>
-                    dispatch({ type: "mgrField", id: d.id, field: "mobile", value: e.target.value })
-                  }
+                  {...fieldProps("mobile")}
+                  aria-label="Mobile number, country code +91"
+                  type="tel"
+                  inputMode="numeric"
+                  autoComplete="tel-national"
+                  value={managerMobileDigits(d.mgr.mobile)}
+                  placeholder="98765 43210"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (!/^[\d\s()+-]*$/.test(value)) return;
+                    const digits = managerMobileDigits(value);
+                    if (!/^\d{0,10}$/.test(digits)) return;
+                    dispatch({ type: "mgrField", id: d.id, field: "mobile", value: digits });
+                  }}
                 />
+                </div>
+                {fieldError("mobile")}
               </div>
             </div>
           </div>
-          <div
+          {footer && <div
             className="row"
             style={{
               justifyContent: "space-between",
@@ -146,8 +173,8 @@ export function Step4Managers({ state, dispatch }: StepProps) {
             }}
           >
             <div style={{ minWidth: 0 }}>
-              <div style={{ fontWeight: 600, fontSize: 13 }}>{footer.title}</div>
-              <div className="mut3" style={{ fontSize: 11.5, marginTop: 2, lineHeight: 1.45 }}>
+              <div style={{ fontWeight: "var(--font-weight-semibold)", fontSize: 16 }}>{footer.title}</div>
+              <div className="mut3" style={{ fontSize: 14, marginTop: 4, lineHeight: 1.45 }}>
                 {footer.detail}
               </div>
             </div>
@@ -165,7 +192,7 @@ export function Step4Managers({ state, dispatch }: StepProps) {
                 {footer.badge}
               </span>
             )}
-          </div>
+          </div>}
         </div>
         );
       })}

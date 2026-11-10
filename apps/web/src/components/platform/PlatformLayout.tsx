@@ -63,7 +63,7 @@ export default function PlatformLayout() {
         <div className="brandmark">
           <ShelfMerchLogo height={32} />
           <div>
-            <div className="v" style={{ fontFamily: "var(--disp)", fontWeight: 700, fontSize: 16 }}>
+            <div className="v" style={{ fontFamily: "var(--font-family-primary)", fontWeight: "var(--font-weight-bold)", fontSize: 16 }}>
               Control Plane
             </div>
           </div>

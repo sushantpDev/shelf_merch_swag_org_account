@@ -1,0 +1,57 @@
+/* Match the HR and Resources body type without changing shared headers or UI artwork. */
+.shelf-landing.landing-home {
+  --landing-body-size: 19px;
+  --landing-body-leading: 1.65;
+  font-family: var(--font-family-public-sans);
+}
+
+.shelf-landing.landing-home
+  :is(
+    .hero-copy > .hero-lead,
+    .section-heading > p,
+    .split-heading > p,
+    .split-heading > div > p,
+    .bento-shop > p,
+    .bento-mini p,
+    .production-copy > p,
+    .production-checks li,
+    .feature-card > p,
+    .recognition-heading > p,
+    .recognition-copy > p,
+    .recognition-copy li small,
+    .solution-copy > p,
+    .solution-copy li,
+    .festive-overlay > p,
+    .events-copy > p,
+    .event-image-card > p,
+    .choice-grid p,
+    .landing-plan__highlights small,
+    .testimonial-section-v2 article > p,
+    .final-cta > p
+  ) {
+  font-family: var(--font-family-public-sans);
+  font-size: var(--landing-body-size);
+  line-height: var(--landing-body-leading);
+  font-weight: 400;
+  letter-spacing: normal;
+  color: #161c2a;
+}
+
+.shelf-landing.landing-home
+  :is(
+    .hero-copy > .hero-lead,
+    .production-copy > p,
+    .production-checks li,
+    .feature-card.blue > p,
+    .feature-card.coral > p,
+    .festive-overlay > p,
+    .final-cta > p
+  ) {
+  color: #fff;
+}
+
+@media (max-width: 760px) {
+  .shelf-landing.landing-home {
+    --landing-body-size: 18px;
+  }
+}

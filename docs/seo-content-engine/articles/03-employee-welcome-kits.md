@@ -1,0 +1,108 @@
+# Employee Welcome Kits or a Swag Store? How to Choose
+
+Employee welcome kits and company swag stores offer two ways to organize a new hire merch program. A kit begins with a curated selection. A store gives employees a place to choose from available merchandise. The better fit depends on the experience your team wants to create and how you plan to run the program.
+
+ShelfMerch's enterprise workflow includes creating stores with catalog products and sending kits. It also includes assigning company and entity budgets, distributing employee points, and allowing employees to redeem points through a store. ShelfMerch receives and processes employee orders.
+
+Use the questions below to decide which approach to discuss for your onboarding program.
+
+## Start with the welcome experience you want to create
+
+Before choosing products, describe what the new employee should experience. Does your team want to curate a defined welcome selection, or would it prefer to give the employee a choice within the company's store?
+
+Neither approach needs to be the default for every organization. Begin with the purpose of the program, the intended recipients, and the people who will manage it.
+
+Write a brief that includes:
+
+- The audience for the welcome program.
+- The intended kit or store experience.
+- The program owner and participating entity managers.
+- The budget questions that need to be resolved.
+- Any date or location requirements to discuss with ShelfMerch.
+
+Treat timing and service coverage as requirements to confirm. Choosing a kit or a store does not itself establish when a recipient will receive merchandise.
+
+## When an employee welcome kit may fit
+
+A kit is worth discussing when your team wants to curate the selection for the welcome program. You begin by deciding what should be included and reviewing the current product options with ShelfMerch.
+
+### You want a defined product selection
+
+A curated selection gives the program owner a concrete starting point for the product and budget discussion. Your team can consider the purpose of each item and whether the selection fits the welcome experience it has described.
+
+Use the actual catalog and confirmed options when making that decision. A general list of popular onboarding products is not proof that those products, colors, branding treatments, or packaging options are available for your program.
+
+### Your team can own the preparation
+
+Name the person responsible for gathering the information needed to plan the kit program. Confirm the recipient details, product decisions, and other requirements with ShelfMerch rather than assuming what a standard kit includes.
+
+If your welcome program has a preferred arrival date, bring that requirement into the conversation early. Ask for the applicable production and delivery details before making a promise to new hires.
+
+## When a company swag store may fit
+
+A store is worth discussing when employee choice is part of the intended experience. Managers create a store, add catalog products, and distribute points from their allocated budgets. Employees visit the store and redeem points for merchandise.
+
+### You want employees to make a selection
+
+The store model places product choice within the employee journey. Your team still decides what is available in the store, while employees choose from that selection under the agreed program setup.
+
+Before launch, review the actual store and the points experience together. Ask whether the selected products and program instructions give employees a clear next step. Do not assume a point conversion, expiry period, or checkout rule until it has been confirmed.
+
+### Your team can explain the redemption process
+
+A choice-based program needs a clear invitation. Explain what the store is for, how employees should access it, and whom they can contact for help.
+
+Keep the message focused on the agreed workflow. Avoid adding unconfirmed claims about automatic onboarding triggers, guaranteed delivery, or integrations. Those capabilities and terms require their own verification.
+
+## Compare the responsibilities behind each approach
+
+The decision is easier when your team compares the work involved alongside the recipient experience.
+
+### Product decisions
+
+For a kit, start with the selection your team wants to curate. For a store, start with the range you want employees to choose from. In both cases, confirm current product options rather than relying on an old campaign or a reference image.
+
+### Budget decisions
+
+Identify the company and entity responsibilities for the program. Discuss how the planned approach fits the assigned and allocated budgets. For points-based redemption, ask about the rules that apply to distributing and using employee points.
+
+This is a discussion of program planning, not an assumption that a particular budget split or point value applies to every customer.
+
+### Employee communication
+
+A kit program needs clear expectations about what the employee should do and what happens next. A store program also needs to explain the selection and redemption journey. Prepare the communication after the workflow and relevant service details are confirmed.
+
+### Order and support questions
+
+Ask how orders reach ShelfMerch, how they are processed, and where the employee or program owner should take questions. Include that handoff in the planning discussion whichever approach you choose.
+
+## Consider different approaches for different programs
+
+Your company may have more than one merch initiative. A welcome program might involve a curated kit, while another employee program might emphasize store-based choice. Discuss those requirements together so the company and entity responsibilities are clear.
+
+This does not mean your company needs to launch multiple programs at once. Start with the use case you can define clearly. Use the demo to understand the workflow before expanding the scope.
+
+If your team is considering both kits and a store, ask ShelfMerch to demonstrate each journey. Compare the actual steps and the information your team needs to provide. A demonstration is more useful than assuming the two approaches work identically behind the scenes.
+
+## Prepare a practical onboarding merch brief
+
+Bring a concise brief to the product discussion. It should tell the team who the program is for, which experience you are considering, and what needs to be confirmed.
+
+Include the expected recipient group, program owner, proposed selection method, and budget questions. List any constraints as questions rather than promises: required destinations, preferred dates, branding needs, and internal responsibilities.
+
+Avoid filling the brief with assumptions about specific products or delivery arrangements. The purpose is to make the discussion precise enough to confirm a workable program.
+
+## Checklist before choosing a kit or store
+
+- Have we described the welcome experience we want?
+- Do we want a curated selection, employee choice, or a discussion of both?
+- Who owns the company program and each participating entity?
+- Which budget and point rules need confirmation?
+- Have we reviewed the current product options?
+- Have we confirmed service coverage and any timing requirements?
+- Can we explain the next step clearly to the employee?
+- Do we understand order processing and support responsibilities?
+
+Employee welcome kits and stores begin with different selection models. Choose the approach by considering the recipient experience and the program your team can operate, then confirm the details against ShelfMerch's actual offering.
+
+[Book a ShelfMerch demo](/request-demo) to walk through sending kits and setting up a points-based employee store for your organization.

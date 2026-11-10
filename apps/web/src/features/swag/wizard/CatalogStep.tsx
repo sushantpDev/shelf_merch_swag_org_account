@@ -96,7 +96,7 @@ export function CatalogStep({
         style={{
           fontSize: 24,
           marginBottom: 6,
-          fontFamily: "var(--disp)",
+          fontFamily: "var(--font-family-primary)",
           letterSpacing: "-.02em",
         }}
       >
@@ -153,6 +153,13 @@ export function CatalogStep({
           {entries.map(({ p, i }) => {
             const on = picked.includes(i);
             const swatches = productColorNames(p).slice(0, 6);
+            const sizes = [
+              ...new Set(
+                (p.variants ?? [])
+                  .map((variant) => variant.size?.trim())
+                  .filter((size): size is string => Boolean(size)),
+              ),
+            ];
             return (
               <button
                 key={p.id ?? `${p.nm}-${i}`}
@@ -181,10 +188,10 @@ export function CatalogStep({
                 </div>
                 <div className="meta">
                   {p.brand && <div className="brand">{p.brand}</div>}
-                  <div className="nm" style={{ fontWeight: 600, fontSize: 14, marginTop: 4 }}>
+                  <div className="nm" style={{ fontWeight: "var(--font-weight-semibold)", fontSize: "var(--workspace-font-body, 14px)", marginTop: 4 }}>
                     {p.nm}
                   </div>
-                  <div className="pr" style={{ fontWeight: 700, marginTop: 8 }}>
+                  <div className="pr" style={{ fontWeight: "var(--font-weight-bold)", marginTop: 8 }}>
                     {p.price}
                   </div>
                   {swatches.length > 0 && (
@@ -196,6 +203,21 @@ export function CatalogStep({
                           style={{ background: productColorHex(p, c) }}
                           title={c}
                         />
+                      ))}
+                    </div>
+                  )}
+                  {sizes.length > 0 && (
+                    <div
+                      style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 6, marginTop: 10, fontSize: 11 }}
+                    >
+                      <span className="muted">Sizes:</span>
+                      {sizes.map((size) => (
+                        <span
+                          key={size}
+                          style={{ padding: "2px 6px", borderRadius: 4, border: "1px solid var(--border)", background: "var(--surface-2)", fontWeight: 600 }}
+                        >
+                          {size}
+                        </span>
                       ))}
                     </div>
                   )}

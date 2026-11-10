@@ -4,10 +4,12 @@ import {
   CreditCard,
   Gift,
   MapPin,
+  MessageCircle,
   Paperclip,
   Plus,
   RefreshCw,
   Search,
+  Send,
   Truck,
   X,
 } from "lucide-react";
@@ -256,6 +258,15 @@ export function SupportTicketsView(vm: SupportTicketsVm) {
                   onClick={() => setFilter(key)}
                 >
                   {STATUS_LABELS[key]}
+                  <span className="sup-seg__count">
+                    {key === "all"
+                      ? stats.total
+                      : key === "open"
+                        ? stats.open
+                        : key === "in_progress"
+                          ? stats.progress
+                          : stats.closed}
+                  </span>
                 </button>
               ))}
             </div>
@@ -274,8 +285,8 @@ export function SupportTicketsView(vm: SupportTicketsVm) {
             <span className="sup-list-head__opened">Opened</span>
             <span>Subject</span>
             <span className="sup-list-head__type">Type</span>
-            <span>Status</span>
-            <span className="sup-list-head__num">Replies</span>
+            <span className="sup-list-head__status">Status</span>
+            <span className="sup-list-head__num">Conversation</span>
           </div>
 
           {filtered.length ? (
@@ -301,15 +312,18 @@ export function SupportTicketsView(vm: SupportTicketsVm) {
                     </span>
                   </span>
                   <span className="sup-row__type">
-                    <span className="sup-chip">{TYPE_LABELS[t.type] ?? t.type}</span>
+                    <span className="sup-row__type-label">{TYPE_LABELS[t.type] ?? t.type}</span>
                   </span>
-                  <span>
+                  <span className="sup-row__status">
                     <span className={`sup-chip sup-chip--${s}`}>
                       <span className="sup-chip__dot" />
                       {statusLabel(t.status)}
                     </span>
                   </span>
-                  <span className="sup-row__num">{t.messages?.length ?? 0}</span>
+                  <span className="sup-row__num sup-row__chat">
+                    <MessageCircle size={15} aria-hidden="true" />
+                    Open chat
+                  </span>
                 </button>
               );
             })
@@ -386,13 +400,13 @@ export function SupportTicketsView(vm: SupportTicketsVm) {
                 {vm.file ? (
                   <div
                     className="row"
-                    style={{ alignItems: "center", gap: 8, fontSize: 13, marginTop: 2 }}
+                    style={{ alignItems: "center", gap: 8, fontSize: "var(--workspace-font-body, 13px)", marginTop: 2 }}
                   >
                     <Paperclip size={14} aria-hidden="true" />
                     <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>
                       {vm.file.name}
                     </span>
-                    <span className="muted" style={{ fontSize: 12 }}>
+                    <span className="muted" style={{ fontSize: "var(--workspace-font-caption, 12px)" }}>
                       ({fmtBytes(vm.file.size)})
                     </span>
                     <button
@@ -486,6 +500,34 @@ export function SupportTicketsView(vm: SupportTicketsVm) {
                     ))
                   )}
                 </div>
+                {vm.canReply ? (
+                  <form
+                    className="sm-support-detail-composer"
+                    onSubmit={(event) => {
+                      event.preventDefault();
+                      if (!vm.replying && vm.reply.trim()) vm.onSendReply();
+                    }}
+                  >
+                    <textarea
+                      id="support-reply"
+                      aria-label="Reply"
+                      className="sm-support-detail-composer__input"
+                      rows={1}
+                      placeholder="Write a reply…"
+                      value={vm.reply}
+                      onChange={(e) => vm.onReply(e.target.value)}
+                    />
+                    <button
+                      type="submit"
+                      className="sm-support-detail-composer__send"
+                      disabled={vm.replying || !vm.reply.trim()}
+                      aria-label={vm.replying ? "Sending reply" : "Send reply"}
+                      title="Send reply"
+                    >
+                      <Send size={19} aria-hidden="true" />
+                    </button>
+                  </form>
+                ) : null}
               </div>
 
               {vm.selected.status === "resolved" ? (
@@ -508,29 +550,11 @@ export function SupportTicketsView(vm: SupportTicketsVm) {
                 </div>
               ) : null}
 
-              {vm.canReply ? (
-                <div className="sm-support-detail-composer">
-                  <textarea
-                    className="sm-support-detail-composer__input"
-                    rows={2}
-                    placeholder="Write a reply…"
-                    value={vm.reply}
-                    onChange={(e) => vm.onReply(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    className="sm-support-detail-composer__send"
-                    disabled={vm.replying || !vm.reply.trim()}
-                    onClick={vm.onSendReply}
-                  >
-                    {vm.replying ? "Sending…" : "Send reply"}
-                  </button>
-                </div>
-              ) : (
+              {!vm.canReply ? (
                 <p className="sm-support-detail__closed">
                   This ticket is closed. Raise a new ticket if you need more help.
                 </p>
-              )}
+              ) : null}
             </div>
           )}
         </DialogContent>

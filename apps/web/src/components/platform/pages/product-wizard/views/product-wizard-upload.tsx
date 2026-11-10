@@ -114,7 +114,7 @@ export function MasterImageUpload({
               <div style={{ color: "var(--brand)", display: "grid", placeItems: "center", marginBottom: 8 }}>
                 <UploadIcon />
               </div>
-              <div style={{ fontWeight: 600, fontSize: 13, color: "var(--ink-2)" }}>Upload image</div>
+              <div style={{ fontWeight: "var(--font-weight-semibold)", fontSize: 13, color: "var(--ink-2)" }}>Upload image</div>
               <div style={{ fontSize: 11.5, marginTop: 4, lineHeight: 1.45 }}>
                 Click or drag &amp; drop
               </div>
@@ -132,7 +132,7 @@ export function MasterImageUpload({
                 opacity: disabled ? 0.6 : hover ? 1 : 0,
                 transition: "opacity 0.15s",
                 fontSize: 12,
-                fontWeight: 600,
+                fontWeight: "var(--font-weight-semibold)",
                 gap: 6,
               }}
               className="master-upload-replace"
@@ -143,7 +143,7 @@ export function MasterImageUpload({
           )}
         </div>
         <div style={{ padding: "10px 12px", borderTop: "1px solid var(--line)", background: "#fff" }}>
-          <div style={{ fontSize: 12, fontWeight: 600, color: "var(--ink-2)" }}>
+          <div style={{ fontSize: 12, fontWeight: "var(--font-weight-semibold)", color: "var(--ink-2)" }}>
             {imageUrl ? "Change file" : "Choose file"}
           </div>
           <div style={{ fontSize: 11, color: "var(--ink-3)", marginTop: 2, lineHeight: 1.4 }}>{hint}</div>

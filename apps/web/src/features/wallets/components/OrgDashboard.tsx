@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation } from "react-router";
 import { ArrowDownToLine, CircleDollarSign, Pencil, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { inr } from "@/components/platform/platform-ui";
@@ -59,6 +60,16 @@ export function OrgDashboard({
   const [topupOpen, setTopupOpen] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const walletId = org.wallet.id;
+  const { hash } = useLocation();
+  const distributionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (hash !== "#budget-distribution") return;
+    const frame = requestAnimationFrame(() => {
+      distributionRef.current?.scrollIntoView({ block: "center" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [hash, org.active, hasBudget, walletId]);
   const walletContactInitial = useMemo(
     () => ({
       address: org.wallet.address || "",
@@ -172,7 +183,7 @@ export function OrgDashboard({
         <div className="banner" style={{ marginBottom: 18 }}>
           <CircleDollarSign size={16} aria-hidden="true" />
           <div>
-            <b>Budget funded — allocation not finished.</b> Split your balance across departments
+            <b>Budget funded allocation not finished.</b> Split your balance across departments
             and assign managers.{" "}
             <span className="lnk" role="button" tabIndex={0} onClick={handleAllocateClick}>
               Allocate budget
@@ -195,8 +206,8 @@ export function OrgDashboard({
             <div
               className="mut3"
               style={{
-                fontSize: 11,
-                fontWeight: 700,
+                fontSize: "var(--workspace-font-caption, 11px)",
+                fontWeight: "var(--font-weight-bold)",
                 textTransform: "uppercase",
                 letterSpacing: ".04em",
               }}
@@ -229,7 +240,7 @@ export function OrgDashboard({
             <div className="v num" style={{ fontSize: 26 }}>
               {inr(total)}
             </div>
-            <div className="mut3" style={{ fontSize: 11, marginTop: 6, lineHeight: 1.4 }}>
+            <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11px)", marginTop: 6, lineHeight: 1.4 }}>
               Total organization budget from funding
             </div>
           </div>
@@ -239,7 +250,7 @@ export function OrgDashboard({
             <div className="v num" style={{ fontSize: 26 }}>
               {inr(alloc)}
             </div>
-            <div className="mut3" style={{ fontSize: 11, marginTop: 6, lineHeight: 1.4 }}>
+            <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11px)", marginTop: 6, lineHeight: 1.4 }}>
               Earmarked for department budgets
             </div>
           </div>
@@ -249,12 +260,12 @@ export function OrgDashboard({
             <div className="v num" style={{ fontSize: 26, color: "var(--brand-d)" }}>
               {inr(rem)}
             </div>
-            <div className="mut3" style={{ fontSize: 11, marginTop: 6, lineHeight: 1.4 }}>
-              Unallocated — pay from budget at checkout
+            <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11px)", marginTop: 6, lineHeight: 1.4 }}>
+              Unallocated pay from budget at checkout
             </div>
           </div>
         </div>
-        <div className="muted" style={{ fontSize: 12.5, padding: "10px 22px 14px" }}>
+        <div className="muted" style={{ fontSize: "var(--workspace-font-caption, 12.5px)", padding: "10px 22px 14px" }}>
           <span>
             {inr(alloc)} allocated + {inr(rem)} available = {inr(total)} total balance
           </span>
@@ -277,13 +288,13 @@ export function OrgDashboard({
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1.3fr 1fr", gap: 18, marginBottom: 18 }}>
-        <div className="card" style={{ padding: 22 }}>
+      <div className="wallet-budget-overview-grid">
+        <div id="budget-distribution" ref={distributionRef} className="card wallet-budget-distribution-card">
           <div
             className="mut3"
             style={{
-              fontSize: 11,
-              fontWeight: 700,
+              fontSize: "var(--workspace-font-caption, 11px)",
+              fontWeight: "var(--font-weight-bold)",
               textTransform: "uppercase",
               letterSpacing: ".05em",
               marginBottom: 6,
@@ -291,7 +302,7 @@ export function OrgDashboard({
           >
             Budget distribution
           </div>
-          <div style={{ display: "flex", gap: 18, alignItems: "center" }}>
+          <div className="wallet-budget-distribution-content">
             <Donut
               segments={depts.map((d, i) => ({
                 color: deptPaletteColor(i),
@@ -299,10 +310,12 @@ export function OrgDashboard({
               }))}
               centerValue={depts.length}
               centerLabel="Depts"
+              size={112}
+              centerFontSize={20}
             />
-            <div style={{ flex: 1 }}>
+            <div className="wallet-budget-distribution-legend">
               {depts.length === 0 ? (
-                <p className="muted" style={{ fontSize: 13 }}>
+                <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)" }}>
                   No departments yet.{" "}
                   {canAllocate && canManageBudget ? (
                     <span className="lnk" role="button" tabIndex={0} onClick={handleAllocateClick}>
@@ -316,7 +329,7 @@ export function OrgDashboard({
                   <div
                     key={d.id}
                     className="row"
-                    style={{ justifyContent: "space-between", padding: "3px 0", fontSize: 12 }}
+                    style={{ justifyContent: "space-between", padding: "3px 0", fontSize: "var(--workspace-font-caption, 12px)" }}
                   >
                     <span className="row" style={{ gap: 6, alignItems: "center" }}>
                       <span
@@ -337,42 +350,32 @@ export function OrgDashboard({
             </div>
           </div>
         </div>
-        <div className="card" style={{ padding: 22 }}>
-          <div className="stat" style={{ padding: 0, marginBottom: 14 }}>
+        <div className="card wallet-budget-allocation-card">
+          <div className="stat">
             <div className="k">Allocated to departments</div>
             <div className="v num">{inr(alloc)}</div>
           </div>
-          <div className="stat" style={{ padding: 0 }}>
+          <div className="stat">
             <div className="k">Managers active</div>
             <div className="v num">
               {managersActive} / {depts.length || "—"}
               {managersPending > 0 ? (
                 <span
                   className="mut3"
-                  style={{ display: "block", fontSize: 11, fontWeight: 500, marginTop: 2 }}
+                  style={{ display: "block", fontSize: "var(--workspace-font-caption, 11px)", fontWeight: "var(--font-weight-medium)", marginTop: 2 }}
                 >
                   {managersPending} invite{managersPending === 1 ? "" : "s"} pending
                 </span>
               ) : null}
             </div>
           </div>
-          {canAllocate && canManageBudget && (
-            <button
-              type="button"
-              className="btn btn-ghost btn-sm"
-              style={{ marginTop: 16 }}
-              onClick={handleAllocateClick}
-            >
-              {depts.length ? "Edit allocation" : "Allocate budget"}
-            </button>
-          )}
         </div>
       </div>
 
       <div className="card" style={{ padding: 22 }}>
-        <h3 style={{ fontSize: 17, marginBottom: 14 }}>Budget allocated</h3>
+        <h3 style={{ fontSize: "var(--workspace-font-heading, 17px)", marginBottom: 14 }}>Budget allocated</h3>
         {depts.length === 0 ? (
-          <p className="muted" style={{ fontSize: 13.5 }}>
+          <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 13.5px)" }}>
             No departments configured yet.
             {canAllocate ? " Use Allocate budget to set up departments and managers." : ""}
           </p>
@@ -402,17 +405,17 @@ export function OrgDashboard({
                           background: deptPaletteColor(i),
                         }}
                       />
-                      <span style={{ fontWeight: 600 }}>{d.name}</span>
+                      <span style={{ fontWeight: "var(--font-weight-semibold)" }}>{d.name}</span>
                     </div>
                   </td>
                   <td>
                     {d.mgr.name || d.mgr.email ? (
                       <>
-                        <div style={{ fontWeight: 500, fontSize: 13 }}>
+                        <div style={{ fontWeight: "var(--font-weight-medium)", fontSize: "var(--workspace-font-body, 13px)" }}>
                           {d.mgr.name || d.mgr.email.split("@")[0]}
                         </div>
                         {d.mgr.email ? (
-                          <div className="mut3" style={{ fontSize: 11 }}>
+                          <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11px)" }}>
                             {d.mgr.email}
                           </div>
                         ) : null}
@@ -421,7 +424,7 @@ export function OrgDashboard({
                       <span className="muted">—</span>
                     )}
                   </td>
-                  <td className="muted" style={{ fontSize: 13 }}>
+                  <td className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)" }}>
                     {d.mgr.role || "—"}
                   </td>
                   <td className="num">{inr(d.allocated)}</td>

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./styles/typography.css" layer(base);
 /*
  * Legacy design-system CSS is imported into the `base` cascade layer so that
  * Tailwind utility classes (emitted in the `utilities` layer) win over its
@@ -7,6 +8,7 @@
  * unlayered legacy rules override every Tailwind utility on the auth pages.
  */
 @import "./styles/shelf-merch.css" layer(base);
+@import "./styles/workspace-typography.css" layer(base);
 
 /*
  * Tell Tailwind which files to scan for utility class names.
@@ -31,6 +33,15 @@
  */
 
 @theme inline {
+  --font-sans: var(--font-family-primary);
+  --font-serif: var(--font-family-primary);
+  --font-mono: var(--font-family-code);
+  --font-weight-normal: var(--font-weight-regular);
+  --font-weight-thin: var(--font-weight-regular);
+  --font-weight-extralight: var(--font-weight-regular);
+  --font-weight-light: var(--font-weight-regular);
+  --font-weight-extrabold: var(--font-weight-bold);
+  --font-weight-black: var(--font-weight-bold);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
