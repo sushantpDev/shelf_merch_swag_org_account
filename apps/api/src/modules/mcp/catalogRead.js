@@ -2,16 +2,19 @@ import { z } from 'zod';
 import { CatalogProduct } from '../catalog/catalogProduct.model.js';
 import { tenantCatalogFilter } from '../catalog/catalogFilters.js';
 import { listPublicCategories } from '../catalog/platformCatalog.service.js';
-import { CATALOG_INVENTORY_RULE, officialImageLink, officialImageNote, toCatalogSearchItem } from './catalogSearch.js';
+import { CATALOG_INVENTORY_RULE, officialImageNote, toCatalogSearchItem } from './catalogSearch.js';
 
 const PRODUCT_ID = /^[a-fA-F0-9]{24}$/;
 
 export const CATALOG_GET_PRODUCT_DESCRIPTION = [
   'Look up one ShelfMerch catalog product by id.',
-  'sellingPriceInr is the GST-inclusive price in rupees: the product base price, or a variant price override when one is set.',
+  'sellingPriceInr is the GST-inclusive catalog price in rupees and is not reduced by removing GST.',
+  'Every variant uses that same selling price. Selecting a color or size does not change it.',
   'Only active products a tenant can order are returned. Disabled variants are omitted.',
+  'description is the catalog product information.',
   'images lists official marketing photos, with primaryImageUrl first.',
-  'Display primaryImageUrl. Do not replace it with an image from web search. If it cannot be rendered, show the URL itself.',
+  'primaryImageUrl is the official catalog image for the catalog product card. Do not replace it with an image from web search.',
+  'When that card is visible, it is the only product presentation. Reply with one short sentence and do not repeat its description, price, image, or variants.',
   'Do not invent prices, variants, or stock.',
   'This product is ShelfMerch inventory. Anything not returned here is not available to order and, if offered as a general gift idea, must be labeled inspiration.',
   'Cost, margin, supplier, vendor, source identifiers, customization costs, and production-mask assets are not returned.',
@@ -44,13 +47,14 @@ export const catalogGetProductOutputSchema = z.object({
   sellingPriceInr: z.number().int(),
   gstRate: z.number(),
   moq: z.number(),
+  description: z.string(),
   primaryImageUrl: z.string(),
   images: z.array(z.string()),
   variants: z.array(catalogVariantSchema),
 });
 
 const DETAIL_FIELDS =
-  'sku name brand category subcategory childCategory basePriceInr gstRate moq primaryImageUrl imageUrls variants';
+  'sku name brand category subcategory childCategory basePriceInr gstRate moq description primaryImageUrl imageUrls variants';
 
 /** Same visibility rules as catalog search, narrowed to one id. */
 export function catalogProductMongoFilter(productId) {
@@ -77,7 +81,11 @@ export function toCatalogProductDetail(product) {
   };
   push(item.primaryImageUrl);
   for (const url of product.imageUrls ?? []) push(url);
-  return { ...item, images };
+  return {
+    ...item,
+    images,
+    description: typeof product.description === 'string' ? product.description.trim() : '',
+  };
 }
 
 export async function getCatalogProduct(productId) {
@@ -88,37 +96,33 @@ export async function getCatalogProduct(productId) {
   return toCatalogProductDetail(row);
 }
 
-export function catalogProductText(product) {
+export function catalogProductSummary() {
+  return [
+    'The catalog product card shows this ShelfMerch product.',
+    'That card is the only product presentation.',
+    'Reply with one short sentence.',
+    'Do not add a product card, image preview, variant table, or repeated product details.',
+  ].join(' ');
+}
+
+export function catalogProductText(product, options = {}) {
+  if (options.cardVisible) return catalogProductSummary();
   const variants = product.variants
     .map((variant) => `${variant.sku || variant.size || variant.color || 'variant'} ₹${variant.sellingPriceInr} stock ${variant.stock}`)
     .join(', ');
   const variantNote = variants ? ` variants: ${variants}` : '';
   const gallery = (product.images ?? []).filter((url) => url && url !== product.primaryImageUrl);
   const galleryNote = gallery.length ? ` Additional official images: ${gallery.join(' ')}` : '';
+  const information = String(product.description || '').replace(/\s+/g, ' ').trim();
   return [
     `ShelfMerch catalog product. ${CATALOG_INVENTORY_RULE}`,
     `${product.name} [${product.sku}] id ${product.id} ₹${product.sellingPriceInr} incl. GST (${product.gstRate}%) ${product.category}${variantNote} ${officialImageNote(product.primaryImageUrl)}${galleryNote}`,
+    `Product information: ${information || 'none'}`,
   ].join('\n');
 }
 
-export function catalogProductContent(product) {
-  const links = [];
-  const primary = officialImageLink(
-    product,
-    product.primaryImageUrl,
-    `Official ShelfMerch catalog image for ${product.name || product.sku}. Do not replace this URL.`,
-  );
-  if (primary) links.push(primary);
-  for (const url of product.images ?? []) {
-    if (url === product.primaryImageUrl) continue;
-    const extra = officialImageLink(
-      product,
-      url,
-      `Additional official ShelfMerch catalog image for ${product.name || product.sku}.`,
-    );
-    if (extra) links.push(extra);
-  }
-  return [{ type: 'text', text: catalogProductText(product) }, ...links];
+export function catalogProductContent(product, options = {}) {
+  return [{ type: 'text', text: catalogProductText(product, options) }];
 }
 
 export const CATALOG_LIST_CATEGORIES_DESCRIPTION = [

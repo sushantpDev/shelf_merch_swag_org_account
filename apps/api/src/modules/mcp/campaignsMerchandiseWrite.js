@@ -23,7 +23,7 @@ import { maskWalletImpact, visibleFunds } from './walletVisibility.js';
 import { McpMerchandiseClaim } from './mcpMerchandiseClaim.model.js';
 
 const ROLES = new Set(rolesForTenantArea('campaignOps', 'write'));
-const SUPPORTED_FULFILLMENT = ['surprise', 'single'];
+const SUPPORTED_FULFILLMENT = ['surprise', 'single', 'redeem'];
 
 const recipientSchema = z.object({
   name: z.string().trim().min(1).max(160),
@@ -52,7 +52,7 @@ const draftSchema = z.object({
   shopId: objectId,
   kitId: objectId,
   name: z.string().trim().min(1).max(160),
-  fulfillmentMode: z.enum(['surprise', 'single']),
+  fulfillmentMode: z.enum(['surprise', 'single', 'redeem']),
   packaging: z.enum(['none', 'box']).optional(),
   recipients: z.array(recipientSchema).min(1).max(500),
   singleLocation: locationSchema.optional(),
@@ -71,7 +71,8 @@ const launchSchema = z.object({
 
 export const MERCHANDISE_PREPARE_DRAFT_DESCRIPTION = [
   'Preview a kit campaign without saving it, debiting a wallet, or creating orders.',
-  'Supports surprise delivery and one shared delivery location.',
+  'Supports surprise delivery, one shared delivery location, and a private link where the recipient chooses the variant and address.',
+  'A private link does not create a fulfillment order until the recipient submits it.',
   'Company admins and the campaign department manager can prepare it.',
   'Shows item quantities, the recipient count, the server-priced total, and the wallet impact.',
   'For a department manager, balance and unallocatedAmount are that department remaining budget, not organization wallet cash.',
@@ -123,7 +124,7 @@ export const merchandisePrepareDraftOutputSchema = z.object({
   preview: z.object({
     name: z.string(),
     type: z.literal('kit'),
-    fulfillmentMode: z.enum(['surprise', 'single']),
+    fulfillmentMode: z.enum(['surprise', 'single', 'redeem']),
     fulfillment: z.string(),
     recipientCount: z.number().int(),
     packaging: z.string(),
@@ -201,7 +202,15 @@ function logicalKey(input) {
 }
 
 function fulfillmentLabel(mode) {
-  return mode === 'single' ? 'single_location' : 'one_order_per_recipient';
+  if (mode === 'single') return 'single_location';
+  if (mode === 'redeem') return 'recipient_chooses_later';
+  return 'one_order_per_recipient';
+}
+
+function expectedOrderCount(mode, recipientCount) {
+  if (mode === 'single') return 1;
+  if (mode === 'redeem') return 0;
+  return recipientCount;
 }
 
 let claimsReady;
@@ -516,7 +525,7 @@ function assertLaunchable(campaign) {
   if (campaign.type !== 'kit') throw new ApiError(422, 'Only kit campaigns can be launched from this tool', 'CAMPAIGN_NOT_KIT');
   if (campaign.isSample) throw new ApiError(422, 'Sample campaigns cannot be launched from this tool', 'CAMPAIGN_NOT_SENDABLE');
   if (!SUPPORTED_FULFILLMENT.includes(campaign.fulfillmentMode)) {
-    throw new ApiError(422, 'Only surprise and single-location kit sends are supported', 'FULFILLMENT_UNSUPPORTED');
+    throw new ApiError(422, 'This kit delivery mode is not supported', 'FULFILLMENT_UNSUPPORTED');
   }
   if (campaign.paymentMode && campaign.paymentMode !== 'wallet') {
     throw new ApiError(422, 'This campaign is not paid from the wallet', 'EXTERNAL_PAY_UNSUPPORTED');
@@ -643,7 +652,7 @@ export async function prepareMerchandiseLaunch({ tenantId, actorUserId, input, n
       status: state.launched ? state.campaign.status : 'redemption_open',
       fulfillment: fulfillmentLabel(state.campaign.fulfillmentMode),
       recipientCount: state.campaign.recipientCount,
-      orderCount: state.campaign.fulfillmentMode === 'single' ? 1 : state.campaign.recipientCount,
+      orderCount: expectedOrderCount(state.campaign.fulfillmentMode, state.campaign.recipientCount),
       items: state.quote.items,
       totalBudget: state.campaign.totalBudget,
       walletImpact: impact,
@@ -677,7 +686,7 @@ export async function executeMerchandiseLaunch({
       const launched = ['launched', 'redemption_open'].includes(campaign.status);
       const debit = await WalletTransaction.findOne({ tenantId, idempotencyKey: `campaign_spend:${campaign._id}` });
       const orders = await Order.countDocuments({ tenantId, campaignId: campaign._id });
-      const expectedOrders = campaign.fulfillmentMode === 'single' ? 1 : campaign.recipientCount;
+      const expectedOrders = expectedOrderCount(campaign.fulfillmentMode, campaign.recipientCount);
       if (!launched || !debit || orders < expectedOrders) {
         if (!launched) return { outcome: 'absent' };
         return { outcome: 'uncertain' };
@@ -755,7 +764,10 @@ export async function executeMerchandiseLaunchForCaller(ctx, args) {
 export function merchandiseText(output, heading) {
   const preview = output.preview;
   if (preview) {
-    return [heading, `${preview.recipientCount} recipients, total ${preview.totalBudget} INR`, 'Confirm this preview before it expires.'].join('\n');
+    const timing = preview.fulfillment === 'recipient_chooses_later'
+      ? 'No fulfillment order is created until a recipient submits the private link.'
+      : 'Fulfillment orders are created when the campaign is launched.';
+    return [heading, `${preview.recipientCount} recipients, total ${preview.totalBudget} INR`, timing, 'Confirm this preview before it expires.'].join('\n');
   }
   if (output.invitationsUnresolved) {
     return [heading, `Status ${output.status}. ${output.invitationsSent} invitations delivered. Some invitations are unresolved and were not sent again.`].join('\n');
@@ -774,7 +786,7 @@ const WRITE_ERRORS = {
   SURPRISE_ADDRESS_REQUIRED: 'Every surprise recipient needs a shipping address on file.',
   CAMPAIGN_NOT_KIT: 'Only kit campaigns can be launched from this tool.',
   CAMPAIGN_NOT_SENDABLE: 'This campaign cannot be sent from this tool.',
-  FULFILLMENT_UNSUPPORTED: 'Only surprise and single-location kit sends are supported.',
+  FULFILLMENT_UNSUPPORTED: 'This kit delivery mode is not supported.',
   EXTERNAL_PAY_UNSUPPORTED: 'This campaign is not paid from the wallet.',
   SCHEDULE_UNSUPPORTED: 'Only campaigns that send now are supported.',
   CAMPAIGN_NOT_APPROVED: 'Approve the kit campaign before launch.',

@@ -67,9 +67,9 @@
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-columns: 1fr 1.1fr;
+  grid-template-columns: 1.18fr 0.92fr;
   align-items: center;
-  gap: 30px;
+  gap: 32px;
   padding-block: 36px 32px;
 }
 .landing-home .lh-hero-grid::before {
@@ -86,10 +86,10 @@
   pointer-events: none;
 }
 .landing-home .lh-hero h1 {
-  font-size: clamp(64px, 8vw, 116px);
+  font-size: clamp(52px, 5.2vw, 76px);
   line-height: 1.02;
   letter-spacing: -0.045em;
-  margin: 24px 0 28px;
+  margin: 20px 0 24px;
 }
 .landing-home .lh-hero h1 em {
   display: block;
@@ -101,12 +101,14 @@
 }
 .landing-home .lh-hero p {
   max-width: 550px;
-  font-size: clamp(20px, 1.6vw, 24px);
+  font-size: clamp(19px, 1.55vw, 23px);
   line-height: 1.6;
+  margin: 0 0 26px;
   color: #fff;
 }
 .landing-home .lh-hero .lh-label {
   font-size: 16px;
+  margin-bottom: 20px;
 }
 .landing-home .lh-hero-image {
   display: block;
@@ -114,7 +116,7 @@
   max-width: none;
   height: 530px;
   object-fit: contain;
-  margin-left: 7%;
+  margin-left: 5%;
 }
 .landing-home .lh-hero-visual {
   display: contents;
@@ -122,8 +124,8 @@
 .landing-home .lh-hero-accent {
   position: absolute;
   left: 54%;
-  bottom: 30px;
-  width: clamp(220px, 18vw, 270px);
+  bottom: 28px;
+  width: clamp(210px, 17vw, 260px);
   height: auto;
   pointer-events: none;
 }
@@ -132,8 +134,8 @@
 }
 .landing-home .lh-hero-badge {
   position: absolute;
-  left: 59%;
-  top: 100px;
+  left: 58%;
+  top: 95px;
   display: grid;
   place-content: center;
   width: 100px;
@@ -1165,7 +1167,7 @@
     padding-block: 28px 26px;
   }
   .landing-home .lh-hero h1 {
-    font-size: clamp(62px, 13vw, 86px);
+    font-size: clamp(30px, 7.5vw, 42px);
     margin-top: 18px;
   }
   .landing-home .lh-hero .lh-label {

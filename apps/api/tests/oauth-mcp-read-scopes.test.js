@@ -14,6 +14,8 @@ import {
 } from '../src/modules/oauth/oauth.config.js';
 import { OauthGrantBinding } from '../src/modules/oauth/oauthGrantBinding.model.js';
 import { OFFLINE_ACCESS_SCOPE, RESOURCE_SCOPES } from '../src/modules/oauth/oauthScopes.js';
+import { CATALOG_PRODUCT_CARD_URI } from '../src/modules/mcp/catalogProductCard.js';
+import { KIT_CATALOG_CARD_URI } from '../src/modules/mcp/kitCatalogCard.js';
 
 const PROTOCOL = '2026-07-28';
 const READ_SCOPE = RESOURCE_SCOPES.join(' ');
@@ -199,5 +201,65 @@ describe('initial MCP read scopes', () => {
     const challenge = (wallets.headers['www-authenticate'] || '') + ' ' + JSON.stringify(wallets.body);
     expect(challenge).toContain('insufficient_scope');
     expect(challenge).toContain('wallets:read');
+  });
+
+  it('loads the kit card for company admins and entity managers with either kit read scope', async () => {
+    async function readCard(token) {
+      return request(app)
+        .post('/mcp')
+        .set('Accept', 'application/json, text/event-stream')
+        .set('Content-Type', 'application/json')
+        .set('MCP-Protocol-Version', PROTOCOL)
+        .set('Mcp-Method', 'resources/read')
+        .set('Mcp-Name', KIT_CATALOG_CARD_URI)
+        .set('Authorization', 'Bearer ' + token)
+        .send({
+          jsonrpc: '2.0',
+          id: 1,
+          method: 'resources/read',
+          params: {
+            uri: KIT_CATALOG_CARD_URI,
+            _meta: {
+              'io.modelcontextprotocol/protocolVersion': PROTOCOL,
+              'io.modelcontextprotocol/clientCapabilities': {},
+            },
+          },
+        });
+    }
+
+    const fullTenant = await makeTenant({ slug: 'kit-card-full' });
+    const full = await issueOauth(fullTenant, await adminSession(fullTenant), INITIAL_SCOPE);
+    const listed = rpcBody(await mcpCall(full.accessToken, 'tools/list'));
+    const kitTools = listed.result.tools.filter((tool) => tool.name.startsWith('kits_'));
+    expect(kitTools.map((tool) => tool.name).sort()).toEqual(['kits_get', 'kits_get_curated', 'kits_list', 'kits_list_curated']);
+    for (const tool of kitTools) {
+      expect(tool._meta.ui.resourceUri).toBe(KIT_CATALOG_CARD_URI);
+      expect(tool._meta['openai/outputTemplate']).toBe(KIT_CATALOG_CARD_URI);
+    }
+    const catalogSearch = listed.result.tools.find((tool) => tool.name === 'catalog_search');
+    expect(catalogSearch._meta.ui.resourceUri).toBe(CATALOG_PRODUCT_CARD_URI);
+    expect(catalogSearch._meta['openai/outputTemplate']).toBe(CATALOG_PRODUCT_CARD_URI);
+    expect(CATALOG_PRODUCT_CARD_URI).not.toBe(KIT_CATALOG_CARD_URI);
+
+    const campaignTenant = await makeTenant({ slug: 'kit-card-campaigns' });
+    const campaigns = await issueOauth(campaignTenant, await adminSession(campaignTenant), 'campaigns:read');
+    const campaignCard = await readCard(campaigns.accessToken);
+    expect(campaignCard.status).toBe(200);
+    expect(rpcBody(campaignCard).result.contents[0].uri).toBe(KIT_CATALOG_CARD_URI);
+
+    const managerTenant = await makeTenant({ slug: 'kit-card-manager' });
+    const managerEmail = 'manager-' + managerTenant.slug + '@test.io';
+    await makeUser(managerTenant, 'entity_manager', 'tenant', { email: managerEmail, password: 'correct-horse-1' });
+    const managerLogin = await request(app).post('/api/v1/auth/login').send({ email: managerEmail, password: 'correct-horse-1' });
+    expect(managerLogin.status).toBe(200);
+    const manager = await issueOauth(managerTenant, { token: managerLogin.body.accessToken }, 'catalog:read');
+    const managerCard = await readCard(manager.accessToken);
+    expect(managerCard.status).toBe(200);
+
+    const walletTenant = await makeTenant({ slug: 'kit-card-wallet' });
+    const wallets = await issueOauth(walletTenant, await adminSession(walletTenant), 'wallets:read');
+    const denied = await readCard(wallets.accessToken);
+    expect(denied.status).toBe(403);
+    expect((denied.headers['www-authenticate'] || '') + JSON.stringify(denied.body)).toContain('insufficient_scope');
   });
 });

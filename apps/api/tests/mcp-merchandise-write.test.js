@@ -13,6 +13,7 @@ import { Order } from '../src/modules/orders/order.model.js';
 import { Wallet } from '../src/modules/wallets/wallet.model.js';
 import { WalletTransaction } from '../src/modules/wallets/walletTransaction.model.js';
 import { OauthGrantBinding } from '../src/modules/oauth/oauthGrantBinding.model.js';
+import { McpWriteConfirmation } from '../src/modules/mcp/mcpWriteConfirmation.model.js';
 import { McpWriteIdempotency } from '../src/modules/mcp/mcpWriteIdempotency.model.js';
 import { LOCAL_OAUTH_CLIENT_ID, LOCAL_OAUTH_REDIRECT_URI, mcpResourceUrl } from '../src/modules/oauth/oauth.config.js';
 import { notify } from '../src/modules/notifications/notifications.service.js';
@@ -269,6 +270,86 @@ describe('kit campaign draft and launch', () => {
     expect((await CatalogProduct.findById(product._id)).basePriceInr).toBe(500);
   });
 
+  it('launches a recipient-choice kit without creating a fulfillment order', async () => {
+    const input = draftInput({ fulfillmentMode: 'redeem', name: 'Choose a size' });
+    const prepared = await prepareMerchandiseDraft({
+      tenantId: tenant._id,
+      actorUserId: admin.user._id,
+      input,
+    });
+    expect(prepared.preview.fulfillment).toBe('recipient_chooses_later');
+    expect(await Campaign.countDocuments({ tenantId: tenant._id })).toBe(0);
+    expect(await Order.countDocuments({ tenantId: tenant._id })).toBe(0);
+
+    const saved = await executeMerchandiseDraft({
+      tenantId: tenant._id,
+      actorUserId: admin.user._id,
+      input,
+      confirmationId: prepared.confirmationId,
+      idempotencyKey: 'kit-redeem-draft',
+    });
+    expect(saved.fulfillmentMode).toBe('redeem');
+    expect(await Order.countDocuments({ tenantId: tenant._id })).toBe(0);
+    const recipient = await Recipient.findOne({ tenantId: tenant._id, campaignId: saved.id });
+    expect(recipient.invitedAt).toBeFalsy();
+
+    const launchPreview = await prepareMerchandiseLaunch({
+      tenantId: tenant._id,
+      actorUserId: admin.user._id,
+      input: { campaignId: saved.id },
+    });
+    expect(launchPreview.preview.orderCount).toBe(0);
+    expect((await Wallet.findOne({ _id: wallet._id, tenantId: tenant._id })).balance).toBe(10_000);
+
+    const launched = await executeMerchandiseLaunch({
+      tenantId: tenant._id,
+      actorUserId: admin.user._id,
+      input: { campaignId: saved.id },
+      confirmationId: launchPreview.confirmationId,
+      idempotencyKey: 'kit-redeem-launch',
+    });
+    expect(launched).toMatchObject({ status: 'redemption_open', orderCount: 0, invitationsSent: 1 });
+    expect(await Order.countDocuments({ tenantId: tenant._id })).toBe(0);
+    expect(await WalletTransaction.countDocuments({ tenantId: tenant._id, type: 'campaign_spend' })).toBe(1);
+    const invite = vi.mocked(notify).mock.calls.map((call) => call[0]).find((row) => row?.type === 'redemption_invite');
+    expect(invite.link).toMatch(/^\/redeem\//);
+    expect(JSON.stringify(launched)).not.toContain(recipient.redemptionToken);
+
+    const again = await executeMerchandiseLaunch({
+      tenantId: tenant._id,
+      actorUserId: admin.user._id,
+      input: { campaignId: saved.id },
+      confirmationId: launchPreview.confirmationId,
+      idempotencyKey: 'kit-redeem-launch',
+    });
+    expect(again.campaignId).toBe(launched.campaignId);
+    expect(await Order.countDocuments({ tenantId: tenant._id })).toBe(0);
+    expect(await WalletTransaction.countDocuments({ tenantId: tenant._id, type: 'campaign_spend' })).toBe(1);
+  });
+
+  it('rejects an expired private-link confirmation before any debit', async () => {
+    const input = draftInput({ fulfillmentMode: 'redeem', name: 'Expired link' });
+    const prepared = await prepareMerchandiseDraft({
+      tenantId: tenant._id,
+      actorUserId: admin.user._id,
+      input,
+    });
+    await McpWriteConfirmation.updateOne(
+      { confirmationId: prepared.confirmationId, tenantId: tenant._id },
+      { expiresAt: new Date(Date.now() - 60_000) },
+    );
+    await expect(executeMerchandiseDraft({
+      tenantId: tenant._id,
+      actorUserId: admin.user._id,
+      input,
+      confirmationId: prepared.confirmationId,
+      idempotencyKey: 'expired-kit-draft',
+    })).rejects.toMatchObject({ code: 'CONFIRMATION_EXPIRED' });
+    expect(await Campaign.countDocuments({ tenantId: tenant._id })).toBe(0);
+    expect(await Order.countDocuments({ tenantId: tenant._id })).toBe(0);
+    expect(await WalletTransaction.countDocuments({ tenantId: tenant._id, type: 'campaign_spend' })).toBe(0);
+  });
+
   it('rejects the wrong role, another tenant, a short wallet, and a stale launch', async () => {
     const finance = await makeUser(tenant, 'company_finance_user', 'tenant');
     await expect(prepareMerchandiseDraft({
@@ -293,12 +374,6 @@ describe('kit campaign draft and launch', () => {
       input: draftInput({ entityId: String(poorEntity._id), name: 'Too expensive' }),
     })).rejects.toMatchObject({ code: 'INSUFFICIENT_FUNDS' });
     expect(await Campaign.countDocuments({ tenantId: tenant._id })).toBe(0);
-
-    await expect(prepareMerchandiseDraft({
-      tenantId: tenant._id,
-      actorUserId: admin.user._id,
-      input: draftInput({ fulfillmentMode: 'redeem' }),
-    })).rejects.toMatchObject({ code: 'VALIDATION' });
 
     const prepared = await prepareMerchandiseDraft({
       tenantId: tenant._id,

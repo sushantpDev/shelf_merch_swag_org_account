@@ -3,6 +3,7 @@ import { toNodeHandler } from '@modelcontextprotocol/node';
 import { logger } from '../../config/logger.js';
 import {
   CATALOG_SEARCH_DESCRIPTION,
+  catalogCardVisibleFromContext,
   catalogSearchContent,
   catalogSearchInputSchema,
   catalogSearchOutputSchema,
@@ -20,6 +21,20 @@ import {
   getCatalogProduct,
   listCatalogCategories,
 } from './catalogRead.js';
+import {
+  CATALOG_PRODUCT_CARD_MIME,
+  CATALOG_PRODUCT_CARD_URI,
+  catalogProductCardResourceMeta,
+  catalogProductCardToolMeta,
+  readCatalogProductCard,
+} from './catalogProductCard.js';
+import {
+  KIT_CATALOG_CARD_MIME,
+  KIT_CATALOG_CARD_URI,
+  kitCatalogCardResourceMeta,
+  kitCatalogCardToolMeta,
+  readKitCatalogCard,
+} from './kitCatalogCard.js';
 import {
   ORDERS_GET_DESCRIPTION,
   ORDERS_SEARCH_DESCRIPTION,
@@ -253,6 +268,26 @@ import {
   prepareBudgetAllocationForCaller,
 } from './budgetsWrite.js';
 import {
+  KITS_GET_CURATED_DESCRIPTION,
+  KITS_GET_DESCRIPTION,
+  KITS_LIST_CURATED_DESCRIPTION,
+  KITS_LIST_DESCRIPTION,
+  getCuratedKitForCaller,
+  getKitForCaller,
+  kitsError,
+  kitsGetCuratedInputSchema,
+  kitsGetCuratedOutputSchema,
+  kitsGetInputSchema,
+  kitsGetOutputSchema,
+  kitsListCuratedInputSchema,
+  kitsListCuratedOutputSchema,
+  kitsListInputSchema,
+  kitsListOutputSchema,
+  kitsText,
+  listCuratedKitsForCaller,
+  listKitsForCaller,
+} from './kitsRead.js';
+import {
   ENTITIES_LIST_DESCRIPTION,
   entitiesListInputSchema,
   entitiesListOutputSchema,
@@ -361,9 +396,50 @@ import {
  * request. Subscription streams are refused because an in-memory listen bus
  * would not be shared across replicas.
  */
+function requireAnyScope(...scopes) {
+  return ({ authInfo } = {}) => {
+    if (!authInfo) return;
+    const active = new Set(authInfo.scopes || []);
+    if (scopes.some((scope) => active.has(scope))) return;
+    return { scopes };
+  };
+}
 export const shelfMerchMcpHandler = createMcpHandler(
   () => {
     const server = new McpServer({ name: 'shelfmerch', version: '0.1.0' });
+    server.server.registerCapabilities({
+      extensions: {
+        'io.modelcontextprotocol/ui': {
+          mimeTypes: [CATALOG_PRODUCT_CARD_MIME],
+        },
+      },
+    });
+    server.registerResource(
+      'catalog_product_card',
+      CATALOG_PRODUCT_CARD_URI,
+      {
+        title: 'Catalog product card',
+        description:
+          'Read-only cards for catalog_search and catalog_get_product. It has no product records of its own.',
+        mimeType: CATALOG_PRODUCT_CARD_MIME,
+        scopeChallenge: requireScopes('catalog:read'),
+        _meta: catalogProductCardResourceMeta(),
+      },
+      async () => readCatalogProductCard(),
+    );
+    server.registerResource(
+      'catalog_kit_card',
+      KIT_CATALOG_CARD_URI,
+      {
+        title: 'Kit catalog card',
+        description:
+          'Read-only cards for kits_list, kits_get, kits_list_curated, and kits_get_curated. It does not send a kit or copy a curated kit.',
+        mimeType: KIT_CATALOG_CARD_MIME,
+        scopeChallenge: requireAnyScope('catalog:read', 'campaigns:read'),
+        _meta: kitCatalogCardResourceMeta(),
+      },
+      async () => readKitCatalogCard(),
+    );
     server.registerTool(
       'catalog_search',
       {
@@ -380,13 +456,14 @@ export const shelfMerchMcpHandler = createMcpHandler(
         scopeChallenge: requireScopes('catalog:read'),
         _meta: {
           securitySchemes: [{ type: 'oauth2', scopes: ['catalog:read'] }],
+          ...catalogProductCardToolMeta(),
         },
       },
-      async (args) => {
+      async (args, ctx) => {
         try {
           const output = await searchCatalog(args);
           return {
-            content: catalogSearchContent(output),
+            content: catalogSearchContent(output, { cardVisible: catalogCardVisibleFromContext(ctx) }),
             structuredContent: output,
           };
         } catch (err) {
@@ -414,9 +491,10 @@ export const shelfMerchMcpHandler = createMcpHandler(
         scopeChallenge: requireScopes('catalog:read'),
         _meta: {
           securitySchemes: [{ type: 'oauth2', scopes: ['catalog:read'] }],
+          ...catalogProductCardToolMeta(),
         },
       },
-      async (args) => {
+      async (args, ctx) => {
         try {
           const output = await getCatalogProduct(args.productId);
           if (!output) {
@@ -426,7 +504,7 @@ export const shelfMerchMcpHandler = createMcpHandler(
             };
           }
           return {
-            content: catalogProductContent(output),
+            content: catalogProductContent(output, { cardVisible: catalogCardVisibleFromContext(ctx) }),
             structuredContent: output,
           };
         } catch (err) {
@@ -1416,6 +1494,49 @@ export const shelfMerchMcpHandler = createMcpHandler(
             return {
               isError: true,
               content: [{ type: 'text', text: campaignSendError(err, fallback) }],
+            };
+          }
+        },
+      );
+    }
+    const kitReadTools = [
+      ['kits_list', 'List workspace kits', KITS_LIST_DESCRIPTION, kitsListInputSchema, kitsListOutputSchema, listKitsForCaller, 'Kit list failed.', 'campaigns:read'],
+      ['kits_get', 'Get workspace kit', KITS_GET_DESCRIPTION, kitsGetInputSchema, kitsGetOutputSchema, getKitForCaller, 'Kit lookup failed.', 'campaigns:read'],
+      ['kits_list_curated', 'List curated kits', KITS_LIST_CURATED_DESCRIPTION, kitsListCuratedInputSchema, kitsListCuratedOutputSchema, listCuratedKitsForCaller, 'Curated kit list failed.', 'catalog:read'],
+      ['kits_get_curated', 'Get curated kit', KITS_GET_CURATED_DESCRIPTION, kitsGetCuratedInputSchema, kitsGetCuratedOutputSchema, getCuratedKitForCaller, 'Curated kit lookup failed.', 'catalog:read'],
+    ];
+    for (const [name, title, description, inputSchema, outputSchema, call, fallback, scope] of kitReadTools) {
+      server.registerTool(
+        name,
+        {
+          title,
+          description,
+          inputSchema,
+          outputSchema,
+          annotations: {
+            readOnlyHint: true,
+            destructiveHint: false,
+            idempotentHint: true,
+            openWorldHint: false,
+          },
+          scopeChallenge: requireScopes(scope),
+          _meta: {
+            ...kitCatalogCardToolMeta(),
+            securitySchemes: [{ type: 'oauth2', scopes: [scope] }],
+          },
+        },
+        async (args, ctx) => {
+          try {
+            const output = await call(ctx, args);
+            return {
+              content: [{ type: 'text', text: kitsText(output, title, { cardVisible: catalogCardVisibleFromContext(ctx) }) }],
+              structuredContent: output,
+            };
+          } catch (err) {
+            logger.error({ errName: err?.name, errCode: err?.code }, `MCP ${name} failed`);
+            return {
+              isError: true,
+              content: [{ type: 'text', text: kitsError(err, fallback) }],
             };
           }
         },

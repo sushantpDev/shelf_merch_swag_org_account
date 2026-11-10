@@ -7,6 +7,20 @@ import { CatalogProduct } from '../src/modules/catalog/catalogProduct.model.js';
 import { Category } from '../src/modules/catalog/category.model.js';
 import { clearTenantLimitCache } from '../src/services/tenantGuardrails.service.js';
 import { authHeader, makeTenant, makeUser } from './helpers.js';
+import {
+  CATALOG_PRODUCT_CARD_MIME,
+  CATALOG_PRODUCT_CARD_URI,
+  catalogBrowseFilters,
+  catalogCardSession,
+  catalogColorPreview,
+  catalogPageNote,
+  catalogProductCardHtml,
+  publicCatalogProductUrl,
+  catalogProductCards,
+  catalogProductCardView,
+  CATALOG_GRID_PAGE,
+  officialCatalogImageUrl,
+} from '../src/modules/mcp/catalogProductCard.js';
 
 const PROTOCOL = '2026-07-28';
 const SECRET_SUPPLIER = 'Secret Mill Wave1';
@@ -28,6 +42,7 @@ function mcpRequest(token, method, params = {}) {
     .set('MCP-Protocol-Version', PROTOCOL)
     .set('Mcp-Method', method);
   if (typeof params.name === 'string') req.set('Mcp-Name', params.name);
+  if (method === 'resources/read' && typeof params.uri === 'string') req.set('Mcp-Name', params.uri);
   if (token) req.set(authHeader(token));
   return req.send({
     jsonrpc: '2.0',
@@ -82,6 +97,7 @@ async function seedVisibleProduct() {
     basePriceInr: 118,
     gstRate: 18,
     moq: 12,
+    description: 'A white and gold desk mug.',
     costPriceInr: SECRET_COST,
     supplierName: SECRET_SUPPLIER,
     vendorId,
@@ -158,6 +174,14 @@ describe('catalog read tools', () => {
     expect(productTool.description).toContain('primaryImageUrl');
     expect(productTool.description).toContain('web search');
     expect(productTool.description).toContain('inspiration');
+    expect(CATALOG_PRODUCT_CARD_URI).toBe('ui://shelfmerch/catalog-product-card-v7.html');
+    expect(productTool._meta.ui.resourceUri).toBe(CATALOG_PRODUCT_CARD_URI);
+    expect(productTool._meta['openai/outputTemplate']).toBe(CATALOG_PRODUCT_CARD_URI);
+    const searchTool = listed.result.tools.find((entry) => entry.name === 'catalog_search');
+    expect(searchTool._meta.ui.resourceUri).toBe(CATALOG_PRODUCT_CARD_URI);
+    expect(searchTool._meta['openai/outputTemplate']).toBe(CATALOG_PRODUCT_CARD_URI);
+    expect(searchTool.description).toContain('do not repeat the product list');
+    expect(productTool.description).toContain('do not repeat');
     for (const name of ['catalog_get_product', 'catalog_list_categories']) {
       const tool = listed.result.tools.find((entry) => entry.name === name);
       expect(tool.annotations.readOnlyHint).toBe(true);
@@ -201,6 +225,7 @@ describe('catalog read tools', () => {
         gstRate: 18,
         moq: 12,
         primaryImageUrl: PUBLIC_IMAGE,
+        description: 'A white and gold desk mug.',
       });
       expect(item.images).toEqual([
         PUBLIC_IMAGE,
@@ -208,19 +233,15 @@ describe('catalog read tools', () => {
       ]);
       expect(item.variants).toEqual([
         expect.objectContaining({ sku: 'MUG-DETAIL-WHT', sellingPriceInr: 118, stock: 4 }),
-        expect.objectContaining({ sku: 'MUG-DETAIL-LUX', sellingPriceInr: 236, stock: 2 }),
+        expect.objectContaining({ sku: 'MUG-DETAIL-LUX', sellingPriceInr: 118, stock: 2 }),
       ]);
       expectRedacted(result);
       expect(result.content[0].text).toContain('ShelfMerch catalog');
       expect(result.content[0].text).toContain(PUBLIC_IMAGE);
       expect(result.content[0].text).toContain('inspiration');
       expect(result.content[0].text).toContain('https://cdn.example/mug-side-wave1.jpg');
-      const links = result.content.filter((block) => block.type === 'resource_link');
-      expect(links.map((block) => block.uri)).toEqual([
-        PUBLIC_IMAGE,
-        'https://cdn.example/mug-side-wave1.jpg',
-      ]);
-      expect(links[0].description).toContain('Do not replace');
+      expect(result.content[0].text).toContain('A white and gold desk mug.');
+      expect(result.content.some((block) => block.type === 'resource_link')).toBe(false);
     }
   });
 
@@ -333,5 +354,204 @@ describe('catalog read tools', () => {
     expect(payload).not.toContain('archived');
     expect(result.content[0].text).toContain('Drinkware');
     expect(result.content[0].text).toContain('Mugs');
+  });
+
+  it('serves one product card resource for every catalog product', async () => {
+    const tenant = await makeTenant();
+    const { token } = await makeUser(tenant, 'company_admin', 'tenant');
+    const finance = await makeUser(tenant, 'company_finance_user', 'tenant');
+    const listed = rpcBody(await mcpRequest(token, 'resources/list'));
+    const card = listed.result.resources.find((entry) => entry.uri === CATALOG_PRODUCT_CARD_URI);
+    expect(card.mimeType).toBe(CATALOG_PRODUCT_CARD_MIME);
+    expect(card.description).toContain('catalog_get_product');
+
+    const read = rpcBody(await mcpRequest(token, 'resources/read', { uri: CATALOG_PRODUCT_CARD_URI }));
+    const content = read.result.contents[0];
+    expect(content.mimeType).toBe(CATALOG_PRODUCT_CARD_MIME);
+    expect(content.text).toContain('<!DOCTYPE html>');
+    expect(content.text).toContain('ui/notifications/tool-result');
+    expect(content.text).toContain('toolOutput');
+    expect(card._meta.ui.csp.resourceDomains).toContain('https://cdn.shopify.com');
+    expect(content.text).toContain('Image unavailable');
+    expect(content.text).toContain('Product Information');
+    expect(content.text).toContain('View details');
+    expect(content.text).toContain('Show more');
+    expect(content.text).toContain('Back');
+    expect(content.text).toContain('ui/notifications/tool-result');
+    expect(content.text.toLowerCase()).not.toContain('gst');
+    expect(content.text).not.toContain('Polo');
+    expect(content.text).not.toContain('Hoodies');
+    expect(content.text).not.toContain('6a82b7d8a03ad62bdb7f3bc9');
+    expect(content.text).not.toContain('Blue Travel');
+    expect(content._meta.ui.csp.resourceDomains).toContain('https://cdn.shopify.com');
+    expect(content._meta.ui.csp.connectDomains).toBeUndefined();
+
+    const initRes = await request(app)
+      .post('/mcp')
+      .set('Accept', 'application/json, text/event-stream')
+      .set('Content-Type', 'application/json')
+      .set(authHeader(token))
+      .send({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'initialize',
+        params: {
+          protocolVersion: '2025-03-26',
+          capabilities: {},
+          clientInfo: { name: 'product-card-test', version: '1.0' },
+        },
+      });
+    const init = rpcBody(initRes);
+    expect(init.result.capabilities.extensions['io.modelcontextprotocol/ui'].mimeTypes).toEqual([
+      CATALOG_PRODUCT_CARD_MIME,
+    ]);
+
+    const denied = await mcpRequest(finance.token, 'resources/read', { uri: CATALOG_PRODUCT_CARD_URI });
+    expect(denied.status).toBe(403);
+    expect(denied.body.error.code).toBe('FORBIDDEN');
+  });
+
+  it('builds the same card view for two products without a stored product', () => {
+    const image = 'https://cdn.shopify.com/s/files/1/example/pack.jpg?v=1';
+    const backpack = catalogProductCardView({
+      id: 'pack-1',
+      name: 'Travel Pack',
+      description: 'Padded laptop sleeve.',
+      sellingPriceInr: 700,
+      gstRate: 18,
+      primaryImageUrl: image,
+      images: ['https://cdn.shopify.com/s/files/1/example/other.jpg'],
+      variants: [
+        { sku: 'PACK-BLU', color: 'Blue', size: 'OS', sellingPriceInr: 700, stock: 3 },
+        { sku: 'PACK-RED', color: 'Red', size: 'OS', sellingPriceInr: 900, stock: 0 },
+      ],
+    });
+    const mug = catalogProductCardView({
+      id: 'mug-1',
+      name: 'Detail Mug',
+      description: '',
+      sellingPriceInr: 118,
+      primaryImageUrl: '',
+      variants: [{ sku: 'MUG-WHT', color: 'White', size: 'OS', sellingPriceInr: 118, stock: 4 }],
+    });
+
+    expect(backpack).toMatchObject({
+      name: 'Travel Pack',
+      productId: 'pack-1',
+      priceLabel: '₹700',
+      information: 'Padded laptop sleeve.',
+      imageUrl: image,
+      colors: ['Blue', 'Red'],
+    });
+    expect(backpack.variants[1].stockLabel).toBe('Out of stock');
+    expect(JSON.stringify(backpack)).not.toContain('900');
+    expect(JSON.stringify(backpack).toLowerCase()).not.toContain('gst');
+    expect(mug).toMatchObject({
+      name: 'Detail Mug',
+      priceLabel: '₹118',
+      information: 'No product information available.',
+      imageUrl: '',
+    });
+    const listed = catalogProductCards({
+      structuredContent: {
+        items: [
+          { id: 'polo-1', name: 'ActiveDry Polo', sellingPriceInr: 390, primaryImageUrl: 'https://cdn.shopify.com/s/files/1/example/13.png' },
+          { id: 'polo-2', name: 'Corporate Polo', sellingPriceInr: 610, primaryImageUrl: 'https://cdn.shopify.com/s/files/1/example/12.png' },
+          { id: 'crew-1', name: 'Alif Activewear Crew Neck', sellingPriceInr: 410, primaryImageUrl: '' },
+          { id: 'crew-2', name: 'Classic Crew Neck', sellingPriceInr: 410, primaryImageUrl: 'javascript:alert(1)' },
+        ],
+      },
+    });
+    expect(listed.map((item) => item.imageUrl)).toEqual([
+      'https://cdn.shopify.com/s/files/1/example/13.png',
+      'https://cdn.shopify.com/s/files/1/example/12.png',
+      '',
+      '',
+    ]);
+    expect(listed.map((item) => item.priceLabel)).toEqual(['₹390', '₹610', '₹410', '₹410']);
+    expect(catalogProductCards({
+      id: 'pack-1',
+      name: 'Travel Pack',
+      description: 'Padded laptop sleeve.',
+      sellingPriceInr: 700,
+      primaryImageUrl: image,
+    })[0]).toMatchObject({ name: 'Travel Pack', priceLabel: '₹700', imageUrl: image });
+    expect(publicCatalogProductUrl('507f1f77bcf86cd799439011', ['https://shelfmerch.io'])).toBe('https://shelfmerch.io/apps/catalog/507f1f77bcf86cd799439011');
+    expect(publicCatalogProductUrl('pack-1', ['https://shelfmerch.io'])).toBe('');
+    expect(publicCatalogProductUrl('507f1f77bcf86cd799439011', ['http://localhost:5173'])).toMatch(/\/apps\/catalog\/507f1f77bcf86cd799439011$/);
+    expect(catalogProductCardHtml()).toContain(catalogProductCardView.name);
+    expect(catalogProductCardHtml()).toContain('toolOutput');
+    expect(catalogProductCardHtml()).toContain('container-type: inline-size');
+    expect(catalogProductCardHtml()).toContain('@container (max-width: 360px)');
+    expect(catalogProductCardHtml()).toContain('layoutMode');
+    expect(catalogProductCardHtml()).toContain('list-stage');
+    expect(catalogProductCardHtml()).not.toContain('hero-stage');
+    expect(catalogProductCardHtml()).toContain('.details:hover');
+    expect(catalogProductCardHtml()).toContain('initialVisibleCount');
+    expect(catalogProductCardHtml()).toContain('rows.slice(0, shown)');
+    expect(catalogProductCardHtml()).toContain('linkish');
+    expect(catalogProductCardHtml()).toContain('row-media');
+    expect(catalogProductCardHtml()).toContain('list-stage');
+    expect(catalogProductCardHtml()).toContain('View on ShelfMerch');
+    expect(catalogProductCardHtml()).toContain('.row-media, .kit-product-media { width: 100px;');
+    expect(catalogProductCardHtml()).toContain('height: 110px');
+    expect(catalogProductCardHtml()).toContain('linkish');
+    expect(catalogProductCardHtml()).toContain("version: '0.8.0'");
+    expect(officialCatalogImageUrl('http://cdn.shopify.com/a.jpg')).toBe('');
+    expect(officialCatalogImageUrl('javascript:alert(1)')).toBe('');
+    expect(officialCatalogImageUrl('https://user:token@cdn.shopify.com/a.jpg')).toBe('');
+    expect(officialCatalogImageUrl(`${image}#fragment`)).toBe(`${image}#fragment`);
+  });
+
+  it('pages a loaded search, filters by the data on that page, and opens one product directly', () => {
+    const groups = ['Polo', 'Crew Neck', 'Hoodies', 'Jackets', 'Caps'];
+    const items = Array.from({ length: 19 }, (_, index) => ({
+      id: `item-${index}`,
+      name: `Loaded ${index}`,
+      sellingPriceInr: 400 + index,
+      subcategory: groups[index % groups.length],
+      category: 'Apparel',
+      description: index === 0 ? 'Organized storage.' : '',
+      moq: index === 0 ? 2 : 1,
+      primaryImageUrl: index === 3 ? '' : `https://cdn.shopify.com/s/files/1/example/${index}.png`,
+      variants: Array.from({ length: index === 1 ? 5 : 1 }, (__, colorIndex) => ({
+        color: ['Blue', 'Red', 'Green', 'Black', 'White'][colorIndex],
+        size: 'M',
+        stock: index === 2 ? 0 : 4,
+        sellingPriceInr: 900,
+      })),
+    }));
+    const session = catalogCardSession({
+      items,
+      pagination: { page: 1, limit: 25, total: 19, totalPages: 1 },
+    });
+    expect(session.mode).toBe('grid');
+    expect(session.views).toHaveLength(19);
+    expect(session.views[0]).toMatchObject({
+      priceLabel: '₹400',
+      availabilityLabel: 'In stock',
+      information: 'Organized storage.',
+      moqLabel: 'Minimum order 2',
+    });
+    expect(JSON.stringify(session.views[0])).not.toContain('900');
+    expect(session.views[2].availabilityLabel).toBe('Out of stock');
+    expect(session.views[3].imageUrl).toBe('');
+    expect(catalogColorPreview(session.views[1].colors)).toEqual({
+      shown: ['Blue', 'Red', 'Green'],
+      more: 2,
+    });
+    const filters = catalogBrowseFilters(session.views);
+    expect(filters.field).toBe('subcategory');
+    expect(filters.options.map((option) => option.label)).toEqual(['All', 'Caps', 'Crew Neck', 'Hoodies', 'Jackets', 'Polo']);
+    expect(filters.options.find((option) => option.label === 'Polo').count).toBe(4);
+    expect(catalogPageNote(10, { total: 40 })).toContain('not all 40');
+    expect(catalogPageNote(19, session.pagination)).toBe('');
+    expect(catalogCardSession({ id: 'only-1', name: 'Only Bottle', sellingPriceInr: 500 }).mode).toBe('detail');
+    expect(catalogCardSession({ items: [] }).views).toEqual([]);
+    expect(CATALOG_GRID_PAGE).toBe(6);
+    const visible = session.views.slice(0, CATALOG_GRID_PAGE);
+    expect(visible).toHaveLength(6);
+    expect(session.views.slice(0, CATALOG_GRID_PAGE * 2)).toHaveLength(12);
+    expect(session.views.slice(0, CATALOG_GRID_PAGE * 4)).toHaveLength(19);
   });
 });
