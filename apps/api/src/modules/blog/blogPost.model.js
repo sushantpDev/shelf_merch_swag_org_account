@@ -13,6 +13,9 @@ const blogPostSchema = new mongoose.Schema(
     seoDescription: { type: String, default: '' },
     status: { type: String, enum: ['draft', 'published'], default: 'draft', index: true },
     publishedAt: { type: Date, default: null },
+    // Managed by the SEO growth pipeline; publish requires matching approval when set.
+    seoManaged: { type: Boolean, default: false },
+    seoApprovedHash: { type: String, default: '' },
   },
   { timestamps: true },
 );

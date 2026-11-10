@@ -1,0 +1,137 @@
+.seo-growth {
+  max-width: 1440px;
+}
+.seo-growth .seo-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+.seo-growth .seo-tabs button {
+  border: 1px solid #dce3df;
+  border-radius: 8px;
+  background: white;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+.seo-growth .seo-tabs button[aria-current="page"] {
+  background: #163d2e;
+  color: white;
+}
+.seo-growth .seo-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+.seo-growth .seo-stats p,
+.seo-growth .seo-card {
+  background: white;
+  border: 1px solid #dce3df;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 16px 0;
+}
+.seo-growth .seo-stats strong,
+.seo-growth small {
+  display: block;
+}
+.seo-growth .seo-stats strong {
+  font-size: 24px;
+}
+.seo-growth .seo-table-wrap {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.seo-growth table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 16px 0;
+  font-size: 14px;
+}
+.seo-growth td,
+.seo-growth th {
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid #e4e9e6;
+  padding: 12px;
+  overflow-wrap: anywhere;
+  min-width: 100px;
+}
+.seo-growth label {
+  display: grid;
+  gap: 6px;
+  margin: 12px 0;
+  font-size: 14px;
+}
+.seo-growth input:not([type="checkbox"]),
+.seo-growth textarea,
+.seo-growth select {
+  width: 100%;
+  max-width: 680px;
+  padding: 10px 12px;
+  border: 1px solid #cad6ce;
+  border-radius: 8px;
+  color: inherit;
+  background: white;
+}
+.seo-growth .seo-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.seo-growth fieldset {
+  border: 1px solid #dce3df;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+.seo-growth legend {
+  padding: 0 8px;
+  font-weight: 600;
+}
+.seo-growth pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  max-height: 400px;
+  overflow: auto;
+  background: #f4f7f5;
+  padding: 12px;
+}
+.seo-growth details {
+  margin: 14px 0;
+}
+.seo-growth summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.seo-growth .seo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+.seo-growth button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.seo-growth .seo-preview {
+  white-space: pre-wrap;
+  line-height: 1.8;
+}
+.seo-growth h2 {
+  font-size: 20px;
+  margin: 20px 0 12px;
+}
+.seo-growth h3 {
+  font-size: 17px;
+  margin: 16px 0 8px;
+}
+@media (max-width: 640px) {
+  .seo-growth .seo-card {
+    padding: 14px;
+  }
+  .seo-growth .seo-actions {
+    flex-direction: column;
+  }
+}

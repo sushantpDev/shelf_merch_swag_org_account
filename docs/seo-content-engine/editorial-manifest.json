@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "prepared_date": "2026-10-29",
+  "business": "ShelfMerch",
+  "origin": "https://shelfmerch.io",
+  "audience_geography": "global",
+  "language": "en",
+  "primary_goal": "qualified_demo_bookings",
+  "cms": "shelfmerch_native",
+  "arvow": "not_configured_optional_future",
+  "social_platforms": ["instagram", "facebook"],
+  "publication_policy": "approved_content_only",
+  "sources": [
+    { "id": "owner_workflow", "type": "owner_confirmation", "date": "2026-10-29", "scope": "Company admin, company budget, entity managers, allocations, stores, kits, points, employee redemption, platform order processing" },
+    { "id": "owner_channel_cms", "type": "owner_confirmation", "date": "2026-10-29", "scope": "Global audience; Instagram and Facebook; existing CMS; Arvow not set up" },
+    { "id": "native_cms", "type": "local_code", "path": "apps/api/src/modules/blog/blog.routes.js", "scope": "Draft fields and publication API; not deployed-state proof" }
+  ],
+  "articles": [
+    {
+      "id": "SM-01",
+      "file": "articles/01-company-swag-store.md",
+      "title": "Company Swag Store: How Enterprise Budgets and Employee Points Work",
+      "slug": "company-swag-store-budgets-employee-points",
+      "excerpt": "Understand the enterprise merch journey from company and entity budgets to employee points, store redemption, and order processing.",
+      "seoTitle": "Company Swag Store: Budgets & Points | ShelfMerch",
+      "seoDescription": "Plan a company swag store with clear admin roles, entity budgets, employee points, and order handling. Explore ShelfMerch's enterprise workflow.",
+      "primary_keyword": "company swag store",
+      "supporting_keywords": ["employee swag store", "points-based merch store", "enterprise company store"],
+      "intent": "commercial",
+      "authorName": "ShelfMerch",
+      "source_ids": ["owner_workflow"],
+      "editorial_status": "draft",
+      "review_requirements": ["owner_editorial_approval", "existing_content_and_slug_check", "production_links_and_rendering", "program_rules_confirmation_if_added"]
+    },
+    {
+      "id": "SM-02",
+      "file": "articles/02-corporate-gifting-budget.md",
+      "title": "Corporate Gifting Budget: A Practical Plan for Multiple Teams",
+      "slug": "corporate-gifting-budget-multiple-teams",
+      "excerpt": "Plan enterprise gifting across teams by distinguishing company budgets, entity allocations, employee points, and merchandise orders.",
+      "seoTitle": "Corporate Gifting Budget Guide | ShelfMerch",
+      "seoDescription": "Build a corporate gifting budget around clear ownership, entity allocations, kits, stores, and employee points. Prepare the right questions for your demo.",
+      "primary_keyword": "corporate gifting budget",
+      "supporting_keywords": ["department merch budget", "entity budget allocation", "employee gifting spend"],
+      "intent": "commercial",
+      "authorName": "ShelfMerch",
+      "source_ids": ["owner_workflow"],
+      "editorial_status": "draft",
+      "review_requirements": ["owner_editorial_approval", "existing_content_and_slug_check", "production_links_and_rendering", "commercial_terms_if_added"]
+    },
+    {
+      "id": "SM-03",
+      "file": "articles/03-employee-welcome-kits.md",
+      "title": "Employee Welcome Kits or a Swag Store? How to Choose",
+      "slug": "employee-welcome-kits-vs-swag-store",
+      "excerpt": "Compare a curated employee welcome kit with store-based merch choice, and prepare a practical brief for your enterprise onboarding program.",
+      "seoTitle": "Employee Welcome Kits vs Swag Stores | ShelfMerch",
+      "seoDescription": "Choose between employee welcome kits and a points-based swag store. Compare selection, budgets, responsibilities, and questions to bring to a demo.",
+      "primary_keyword": "employee welcome kits",
+      "supporting_keywords": ["new hire merch", "onboarding kits", "employee gift choice"],
+      "intent": "commercial",
+      "authorName": "ShelfMerch",
+      "source_ids": ["owner_workflow"],
+      "editorial_status": "draft",
+      "review_requirements": ["owner_editorial_approval", "existing_content_and_slug_check", "production_links_and_rendering", "product_and_fulfillment_details_if_added"]
+    }
+  ],
+  "release_holds": [
+    "No article editorial approval recorded",
+    "Live article and draft inventory unavailable for duplication checks",
+    "Production CTA and article rendering not verified",
+    "RSS endpoint and live feed not verified",
+    "Social accounts and Facebook Page not resolved",
+    "Final social images not produced or approved",
+    "No approved schedule recorded"
+  ]
+}

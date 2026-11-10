@@ -1,0 +1,5 @@
+# Zoho People onboarding hero
+
+Generated with the built-in imagegen tool. Saved to `apps/web/public/images/resources/zoho/zoho-onboarding-hero.webp` with transparency preserved. Real Zoho People and Shelf Merch logo assets are rendered separately above the illustration.
+
+Prompt: Original professional editorial line illustration for employee onboarding website hero. Landscape 3:2, genuinely transparent background. A friendly HR colleague at a simple desk with laptop welcoming a new employee holding an open premium cobalt welcome box with folded cream shirt and navy notebook. Monochrome white faces, solid black hair, crisp thin charcoal outlines, mostly white clothes with cobalt blue and emerald green details and tiny warm yellow accents. Sophisticated minimal SaaS illustration. All heads hands box and furniture fully visible with clear margins. No enclosing card, no app windows, no flowchart, no background panel or blob, no text or logos, no plants or animals. No pink tint, painterly shading or 3D render. Airy balanced composition for pale blue background.

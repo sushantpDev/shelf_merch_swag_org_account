@@ -1,0 +1,7 @@
+# Privacy page redesign
+
+The public `/privacy` route now uses `apps/web/src/features/marketing/PrivacyPage.tsx` and scoped `privacy-page.css`, with the shared public header and footer. The layout uses a pale blue hero, bold sans-serif and blue italic serif headings, lavender summary, four privacy principles, a sticky desktop section index, readable policy sections, inline cookie preferences and a privacy-request CTA. Mobile uses stacked sections and a normal-flow index. Card radius is 8px.
+
+The existing repository-authored `pages/privacy.html` remains the policy source. Its 15 article bodies, summaries, effective date and contact links are reused without editing policy claims. Cookie preference state and measurement behavior remain in the existing MeasurementConsentChoice component. The separate `/legal/privacy-policy` route and API static legal policy were not changed.
+
+Validation: web build passed. Local headless Edge checks at 1440, 1024, 768, 390 and 320px found no horizontal overflow. All 15 rendered article bodies matched the existing source. Section-index links and cookie-preference links reached their anchors. Exactly one preference panel with all three checkboxes and required essential cookies was present. No consent choices were saved and no external forms were submitted. Script: `previews/verify-privacy-redesign.mjs`; screenshots: `previews/privacy-1440.png` and `previews/privacy-390.png`.

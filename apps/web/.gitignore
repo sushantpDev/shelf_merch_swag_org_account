@@ -3,3 +3,7 @@ dist
 .tanstack/
 *.local
 *.log
+
+# Local review and agent builds. Not loaded by the app.
+.catalog-review-build/
+.codex-build/

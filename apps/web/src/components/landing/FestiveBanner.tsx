@@ -14,7 +14,7 @@ export function FestiveBanner() {
           <em>festival season?</em>
         </h2>
         <p>Plan once. Ship a thoughtful festive kit to every city on your list.</p>
-        <a className="button button-light" href="#contact">
+        <a className="button button-light" href="https://shelfmerch.store/pages/diwali-festival">
           See festive gifting <ArrowIcon />
         </a>
       </div>

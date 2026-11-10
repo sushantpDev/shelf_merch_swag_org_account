@@ -74,4 +74,4 @@ Manual smoke test:
 3. Approve scopes on Zoho; you should land on `/dashboard/integrations?zoho=connected` (redirects to `/app/integrations`).
 4. Confirm organisation name and **Connected** badge.
 5. Click **Sync Employees** and verify contacts appear with `source: hris`.
-6. **Disconnect** and confirm status returns to **Not connected** (orders unchanged).
+6. **Disconnect** revokes the Zoho refresh token (best effort), clears local tokens even if revoke fails, and returns **Not connected**. Imported contacts and orders stay.

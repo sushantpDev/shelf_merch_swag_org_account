@@ -93,6 +93,7 @@ export const PLATFORM_NAV: PlatformNavItem[] = [
   { area: "support", label: "Support", path: "/platform/support", section: "Service" },
   { area: "sales", label: "Sales", path: "/platform/sales", section: "Marketing" },
   { area: "blog", label: "Blog", path: "/platform/blog", section: "Marketing" },
+  { area: "blog", label: "SEO Growth", path: "/platform/seo", section: "Marketing" },
   { area: "finance", label: "Finance", path: "/platform/finance", section: "Money" },
   { area: "team", label: "Platform Users", path: "/platform/team", section: "Admin" },
   { area: "auditLogs", label: "Audit Logs", path: "/platform/audit", section: "Admin" },

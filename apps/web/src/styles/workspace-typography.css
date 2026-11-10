@@ -1,0 +1,27 @@
+/* The allocation flow's text scale, shared by workspace pages and their portals.
+   The shell condition also covers dialogs mounted directly under document.body. */
+:root:has(.tenant-shell) {
+  --workspace-font-heading: 18px;
+  --workspace-font-body: 16px;
+  --workspace-font-caption: 14px;
+  --text-xs: var(--workspace-font-caption);
+  --text-xs--line-height: 1.5;
+  --text-sm: var(--workspace-font-caption);
+  --text-sm--line-height: 1.5;
+  --text-base: var(--workspace-font-body);
+  --text-base--line-height: 1.5;
+  --text-lg: var(--workspace-font-heading);
+  --text-lg--line-height: 1.4;
+}
+
+.tenant-shell .btn,
+:root:has(.tenant-shell) .sm-modal .btn {
+  min-height: 44px;
+}
+
+.tenant-shell .btn,
+.tenant-shell .inp,
+.tenant-shell .lbl,
+:root:has(.tenant-shell) .sm-modal :is(.btn, .inp, .lbl) {
+  line-height: 1.5;
+}

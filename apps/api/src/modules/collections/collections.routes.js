@@ -1,3 +1,4 @@
+import { artworkUpload, validateArtworkUpload } from '../../middleware/artwork.middleware.js';
 import { Router } from 'express';
 import { z } from 'zod';
 import { uploader, DOCUMENT_TYPES } from '../../middleware/upload.middleware.js';
@@ -13,11 +14,10 @@ import { Shop } from '../shops/shop.model.js';
 import { uploadFile } from '../../services/storage.service.js';
 import { writeAudit } from '../../services/audit.service.js';
 import { NotFoundError, ApiError } from '../../utils/errors.js';
-import { collectionsForShopFilter } from './collectionQueries.js';
+import { collectionsForShopFilter, isCollectionLinkedToAnyShop, mergeProductRefsPreservingDesign } from './collectionQueries.js';
 import { publishCollectionToShop, unpublishCollectionFromShop, syncCollectionPublishTargets, unlinkCollectionFromAllShops } from '../shops/shopCatalogSync.js';
 import { Order } from '../orders/order.model.js';
 
-const upload = uploader({ allow: DOCUMENT_TYPES, maxSizeMb: 25, files: 50 });
 const router = Router();
 
 router.use(authenticate, resolveTenant, requireTenantContext);
@@ -165,11 +165,22 @@ router.patch(
       if (!collection.shopId) collection.shopId = shop._id;
     }
     if (req.body.name || req.body.productRefs) {
-      if (collection.status !== 'draft') {
+      // Drafts and ready-but-unpublished collections can still be refined in the
+      // swag editor (artwork save promotes status to ready before Publish).
+      // Once linked to a shop, content edits stay locked.
+      const linkedToShop = isCollectionLinkedToAnyShop(collection);
+      const canEditContents = collection.status === 'draft'
+        || (collection.status === 'ready' && !linkedToShop);
+      if (!canEditContents) {
         throw new ApiError(400, 'Only draft collections can be edited', 'COLLECTION_NOT_DRAFT');
       }
       if (req.body.name) collection.name = req.body.name;
-      if (req.body.productRefs) collection.productRefs = req.body.productRefs;
+      if (req.body.productRefs) {
+        collection.productRefs = mergeProductRefsPreservingDesign(
+          collection.productRefs,
+          req.body.productRefs,
+        );
+      }
     }
     if (req.body.status) collection.status = req.body.status;
     await collection.save();
@@ -314,10 +325,18 @@ router.post(
   '/:id/artwork',
   canWrite,
   validate({ params: z.object({ id: objectId }) }),
-  upload.single('artwork'),
+  artworkUpload.single('artwork'),
   asyncHandler(async (req, res) => {
+    validateArtworkUpload(req.file);
     const collection = await Collection.findOne({ _id: req.params.id, tenantId: req.tenantId });
     if (!collection) throw new NotFoundError('Collection not found');
+    if (isCollectionLinkedToAnyShop(collection)) {
+      throw new ApiError(
+        409,
+        'Published collections cannot change artwork here. Unpublish from shops first, or create a new design.',
+        'COLLECTION_PUBLISHED',
+      );
+    }
     const { url } = await uploadFile({ tenantId: req.tenantId, kind: 'artwork', file: req.file });
     collection.artworkUrl = url;
     collection.status = 'ready';
@@ -372,10 +391,19 @@ router.post(
   asyncHandler(async (req, res) => {
     const collection = await Collection.findOne({ _id: req.params.id, tenantId: req.tenantId });
     if (!collection) throw new NotFoundError('Collection not found');
+    if (isCollectionLinkedToAnyShop(collection)) {
+      throw new ApiError(
+        409,
+        'Published collections cannot change mockups here. Unpublish from shops first, or create a new design.',
+        'COLLECTION_PUBLISHED',
+      );
+    }
     const files = req.files?.mockups || [];
     const backFiles = req.files?.mockupsBack || [];
     const designFiles = req.files?.designOnly || [];
     const areaArtFiles = req.files?.areaArts || [];
+    // Validate all source artwork before persisting any files in this batch.
+    areaArtFiles.forEach(validateArtworkUpload);
     let meta;
     try {
       meta = mockupMetaItem.array().parse(JSON.parse(req.body.meta || '[]'));

@@ -1,1 +1,0 @@
-import{t as e}from"./useQuery-BzY26PQn.js";import{a as t}from"./auth-store-B0QhAuI3.js";import{x as n}from"./api-bridge-DwXou5xC.js";import{Et as r}from"./index-W20unnRt.js";var i=[`workspace`];function a(){return e({queryKey:i,queryFn:()=>n(),staleTime:3e4,enabled:t()})}function o(){let e=r();return()=>e.refetchQueries({queryKey:i})}export{o as n,a as r,i as t};

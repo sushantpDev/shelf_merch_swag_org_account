@@ -29,7 +29,7 @@ export function Testimonials() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family:var(--font-family-primary);
         }
         .testimonial-section-v2 .heading-wrapper {
           text-align: center;
@@ -39,14 +39,14 @@ export function Testimonials() {
           color: #72e2b8;
           font-size: 13px;
           letter-spacing: 0.15em;
-          font-weight: 700;
+          font-weight:var(--font-weight-bold);
           text-transform: uppercase;
         }
         .testimonial-section-v2 h2 {
           font-size: clamp(32px, 4vw, 46px);
           color: #ffffff;
           margin: 15px 0 0;
-          font-weight: 600;
+          font-weight:var(--font-weight-semibold);
           letter-spacing: -0.02em;
         }
         .testimonial-section-v2 .grid-v2 {
@@ -68,8 +68,8 @@ export function Testimonials() {
           color: #b7d5ff;
           font-size: 80px;
           line-height: 0.7;
-          font-weight: 900;
-          font-family: Georgia, serif;
+          font-weight:var(--font-weight-bold);
+          font-family:var(--font-family-primary);
           margin-bottom: 15px;
         }
         .testimonial-section-v2 p {
@@ -95,7 +95,7 @@ export function Testimonials() {
           color: #777;
           letter-spacing: 0.08em;
           text-transform: uppercase;
-          font-weight: 700;
+          font-weight:var(--font-weight-bold);
         }
         @media (max-width: 900px) {
           .testimonial-section-v2 .grid-v2 {

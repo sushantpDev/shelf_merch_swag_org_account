@@ -46,14 +46,14 @@ export function DepartmentModal({ open, onOpenChange, dept, onSave }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm-modal">
+      <DialogContent className="sm-modal allocation-dept-modal">
         <div className="modal-pad">
           <DialogHeader>
             <div className="eyebrow">Cost center</div>
-            <DialogTitle style={{ fontSize: 22, fontFamily: "var(--disp)" }}>
+            <DialogTitle style={{ fontSize: 22, fontFamily: "var(--font-family-primary)" }}>
               {editing ? "Edit department" : "Add department"}
             </DialogTitle>
-            <DialogDescription className="muted" style={{ fontSize: 13, margin: "4px 0 18px" }}>
+            <DialogDescription className="muted" style={{ fontSize: 14, margin: "4px 0 18px" }}>
               Create a cost center that will consume merchandise budget.
             </DialogDescription>
           </DialogHeader>

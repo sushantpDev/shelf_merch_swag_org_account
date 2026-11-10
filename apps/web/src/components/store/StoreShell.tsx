@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import "./store-catalog.css";
 import { type StoreShop } from "../StoreBanner";
 import { resolveColorHex } from "@/lib/colorMap";
 import { curatedColorSwatches, productVariantSwatches } from "@/lib/variantColors";
@@ -8,7 +9,7 @@ import { DesignedProductThumb,
   storeProductAsUi,
 } from "@/features/swag/DesignedProductThumb";
 import { getMockupTintHex, defaultWhiteColorIndex } from "@/features/swag/colors";
-import { listProductViews, type ProductViewKey } from "@/features/swag/mockup-bake";
+import { listPrintAreas, listProductViews, type ProductViewKey } from "@/features/swag/mockup-bake";
 import { ShelfMerchLogo } from "@/components/brand/ShelfMerchLogo";
 import {
   appliedLabel,
@@ -141,8 +142,18 @@ function ArtworkMockup({
   className?: string;
   style?: CSSProperties;
 }) {
-  const ui = storeProductAsUi(product);
-  if (!ui.imgUrl && !ui.mockupUrl && !ui.mockupBackUrl && !product.artworkUrl) {
+  const raw = storeProductAsUi(product);
+  const canPrint = listPrintAreas(raw).length > 0;
+  const ui = canPrint
+    ? raw
+    : {
+        ...raw,
+        mockupUrl: undefined,
+        mockupBackUrl: undefined,
+        placement: undefined,
+        areaPlacements: undefined,
+      };
+  if (!ui.imgUrl && !ui.mockupUrl && !ui.mockupBackUrl && !(canPrint && product.artworkUrl)) {
     return (
       <div className={className} style={{ display: "grid", placeItems: "center", height: "100%", ...style }}>
         <span className="mut3" style={{ fontSize: 12 }}>No image</span>
@@ -152,7 +163,7 @@ function ArtworkMockup({
   return (
     <DesignedProductThumb
       product={ui}
-      artworkUrl={product.artworkUrl}
+      artworkUrl={canPrint ? product.artworkUrl : undefined}
       tintHex={tintHex}
       view={view}
       onViewChange={onViewChange}
@@ -1608,7 +1619,7 @@ export default function StoreShell({
 
   /* ─── RENDER ─── */
   return (
-    <div className="sf-root">
+    <div className="sf-root sf-catalog-theme" data-store-page={page}>
       {/* Preview mode strip */}
       {mode === "preview" && (
         <div className="sf-preview-strip">
@@ -1617,7 +1628,7 @@ export default function StoreShell({
         </div>
       )}
 
-      {/* ═══ TOP NAV (two-row Stadium style) ═══ */}
+      {/* Shared store navigation */}
       <div className={`sf-topbar sf-topbar--two-row${scrolled ? " scrolled" : ""}`}>
         <div className="sf-topbar-row sf-topbar-row--main">
           <div className="sf-topbar-inner sf-topbar-inner--stadium">
@@ -1636,6 +1647,20 @@ export default function StoreShell({
                 <ShelfMerchLogo height={22} className="sf-powered-by-logo" />
               </div>
             </div>
+
+            <nav className="sf-store-nav" aria-label="Store navigation">
+              <button type="button" aria-current={page === "home" ? "page" : undefined} onClick={() => setPage("home")}>
+                Home
+              </button>
+              <button type="button" aria-current={page === "products" || page === "product" ? "page" : undefined} onClick={() => browseRewards()}>
+                All products
+              </button>
+              {isShopper && onFetchOrders ? (
+                <button type="button" aria-current={page === "orders" || page === "order-detail" ? "page" : undefined} onClick={() => setPage("orders")}>
+                  My orders
+                </button>
+              ) : null}
+            </nav>
 
             <div className="sf-topbar-search">
               <input
@@ -1805,8 +1830,6 @@ export default function StoreShell({
                 priceLabel={fmtCardPrice}
                 onAddToBag={addProductFromHome}
                 showSwatches
-                showWishlist
-                showBadges
                 addLabel="Add to cart"
                 gridClassName="sf-product-grid--home"
               />
@@ -1821,8 +1844,6 @@ export default function StoreShell({
                 priceLabel={fmtCardPrice}
                 onAddToBag={addProductFromHome}
                 showSwatches
-                showWishlist
-                showBadges
                 addLabel="Add to cart"
                 gridClassName="sf-product-grid--home"
               />
@@ -2845,7 +2866,7 @@ export default function StoreShell({
                       }}
                     >
                       <span>
-                        <span style={{ display: "block", fontWeight: 600 }}>{t.subject}</span>
+                        <span style={{ display: "block", fontWeight: "var(--font-weight-semibold)" }}>{t.subject}</span>
                         <span className="mut3" style={{ fontSize: 12 }}>
                           {SUPPORT_TYPE_LABELS[t.type] ?? t.type} ·{" "}
                           {formatOrderDate(t.createdAt)} · {visibleMessages.length}{" "}
@@ -2856,7 +2877,7 @@ export default function StoreShell({
                         className="sf-order-status-pill"
                         style={{
                           fontSize: 12,
-                          fontWeight: 600,
+                          fontWeight: "var(--font-weight-semibold)",
                           whiteSpace: "nowrap",
                           padding: "4px 10px",
                           borderRadius: 999,
@@ -2911,7 +2932,7 @@ export default function StoreShell({
                               marginTop: 10,
                             }}
                           >
-                            <div style={{ fontWeight: 600, fontSize: 13 }}>
+                            <div style={{ fontWeight: "var(--font-weight-semibold)", fontSize: 13 }}>
                               Did we solve your issue?
                             </div>
                             <p className="mut3" style={{ fontSize: 12, margin: "4px 0 8px" }}>
@@ -3093,6 +3114,7 @@ function ProductsPageWithFilters({
   const [priceInitialized, setPriceInitialized] = useState(false);
   const [sortBy, setSortBy] = useState<PlpSort>("featured");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
   const [openFilters, setOpenFilters] = useState({ size: false, color: false, range: true });
 
@@ -3285,13 +3307,9 @@ function ProductsPageWithFilters({
     <div className="sf-plp-layout">
       <section className="sf-plp-hero">
         <div className="sf-plp-hero-copy">
-          <span className="sf-plp-hero-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.47a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.47a2 2 0 00-1.34-2.23z" />
-            </svg>
-          </span>
           <div>
-            <h1 className="sf-plp-hero-title">Products</h1>
+            <div className="sf-catalog-eyebrow">The collection</div>
+            <h1 className="sf-plp-hero-title">{filterCategory || "All products"}</h1>
             <p className="sf-plp-hero-desc">
               Browse the full shop. Filter by category, size, color, and{" "}
               {currencyMode === "inr" ? "credits" : "points"}.
@@ -3301,11 +3319,21 @@ function ProductsPageWithFilters({
       </section>
 
       <div className="sf-plp-body">
-        <aside className="sf-plp-sidebar" aria-label="Product filters">
-          <div className="sf-plp-sidebar-card">
+        <aside className={`sf-plp-sidebar${mobileFiltersOpen ? " is-open" : ""}`} aria-label="Product filters">
+          <button
+            type="button"
+            className="sf-mobile-filter-toggle"
+            aria-expanded={mobileFiltersOpen}
+            aria-controls="sf-product-filters"
+            onClick={() => setMobileFiltersOpen((open) => !open)}
+          >
+            <span>Filter products{hasActiveFilters ? " · Filters applied" : ""}</span>
+            <span aria-hidden="true">{mobileFiltersOpen ? "−" : "+"}</span>
+          </button>
+          <div id="sf-product-filters" className="sf-plp-sidebar-card">
             <div className="sf-plp-filter-block">
               <div className="sf-plp-filter-head-row">
-                <div className="sf-plp-filter-title">Categories</div>
+                <div className="sf-plp-filter-title">Product types</div>
                 {hasActiveFilters ? (
                   <button type="button" className="sf-plp-clear" onClick={clearFilters}>
                     Clear filters
@@ -3776,7 +3804,10 @@ function StadiumProductCard({
               {extraColors > 0 ? <span className="sf-pcard-sw-more">+{extraColors}</span> : null}
             </div>
           ) : null}
-          <div className="sf-pcard-price">{price}</div>
+          <div className="sf-pcard-price-row">
+            <div className="sf-pcard-price"><span className="sf-pcard-price-label">From</span> {price}</div>
+            <span className="sf-pcard-min">Min 1</span>
+          </div>
         </button>
         {onAddToBag ? (
           <button

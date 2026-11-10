@@ -63,7 +63,7 @@ router.post(
   '/:id/launch',
   canOperate,
   entityScope,
-  idempotency({ required: true }),
+  idempotency({ required: true, recover: true }),
   validate({ params: campaignIdParams, body: launchCampaignSchema }),
   asyncHandler(controller.launch),
 );

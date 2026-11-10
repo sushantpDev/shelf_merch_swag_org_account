@@ -21,7 +21,7 @@ export function SettingEditModalView({
           rows={6}
           value={text}
           onChange={(e) => onText(e.target.value)}
-          style={{ fontFamily: "monospace", fontSize: 13 }}
+          style={{ fontFamily: "var(--font-family-code)", fontSize: 13 }}
         />
       </div>
       <button type="button" className="btn btn-brand btn-block" disabled={busy} onClick={onSubmit}>

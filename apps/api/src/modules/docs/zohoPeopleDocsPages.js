@@ -26,6 +26,21 @@ export function buildZohoPeopleDocsHomeHtml() {
     bodyHtml: `
       <h1>ShelfMerch for Zoho People</h1>
       <p class="docs-sub">Sync employees and streamline onboarding and corporate gifting.</p>
+      <section class="zoho-onboarding" aria-labelledby="zoho-start-title">
+        <span class="zag-eyebrow">START USING THE INTEGRATION</span>
+        <h2 id="zoho-start-title">Your people. <em>Connected to ShelfMerch.</em></h2>
+        <p>Coming from Zoho People Marketplace? Choose your starting point below. You will connect your Zoho People account from ShelfMerch; a Zoho Web Tab is not required.</p>
+        <div class="zoho-onboarding__paths">
+          <div><h3>New customer</h3><p>Create your company account and complete email verification.</p><a class="docs-cta" href="/signup">Create ShelfMerch Account</a></div>
+          <div><h3>Existing customer</h3><p>Sign in to your company workspace as a company administrator.</p><a class="docs-cta docs-cta--ghost" href="/login">Log In to ShelfMerch</a></div>
+        </div>
+        <h3>After you sign in</h3>
+        <ol class="zoho-onboarding__steps">
+          <li><strong>Open Integrations → Zoho People → Connect.</strong> Use your company administrator account. If you cannot access Integrations, ask your company administrator for help.</li>
+          <li><strong>Authorize with Zoho OAuth.</strong> Sign in to Zoho, review the employee and organisation read permissions, and approve access. Return to ShelfMerch and confirm the Connected status.</li>
+          <li><strong>Click Sync now.</strong> This manually imports or updates employee records. Review the sync result, and click Sync now again whenever you want to refresh them. Employees are not synced automatically.</li>
+        </ol>
+      </section>
       <p>
         <strong>ShelfMerch for Zoho People</strong> allows authorised company administrators to import
         and update employee records from Zoho People. Synced employees can be managed as recipients for
@@ -36,7 +51,7 @@ export function buildZohoPeopleDocsHomeHtml() {
       <div class="docs-cards">
         <a class="docs-card" href="/docs/zoho-people/user-guide"><strong>User Guide</strong><span>Sign in, connect, sync, and disconnect step by step.</span></a>
         <a class="docs-card" href="/docs/zoho-people/admin-guide"><strong>Administrator Guide</strong><span>Permissions, security, mapping, and tenant isolation.</span></a>
-        <a class="docs-card" href="/docs/zoho-people/user-guide#connecting"><strong>Installation and Connection</strong><span>Connect Zoho People through OAuth from the Web Tab.</span></a>
+        <a class="docs-card" href="/docs/zoho-people/user-guide#connecting"><strong>Installation and Connection</strong><span>Connect Zoho People through OAuth from ShelfMerch Integrations.</span></a>
         <a class="docs-card" href="/docs/zoho-people/user-guide#syncing"><strong>Employee Synchronisation</strong><span>Import and update employees into ShelfMerch contacts.</span></a>
         <a class="docs-card" href="/docs/zoho-people/user-guide#errors"><strong>Troubleshooting</strong><span>Common errors and practical fixes.</span></a>
         <a class="docs-card" href="/legal/privacy-policy"><strong>Privacy and Data Handling</strong><span>How employee and integration data is processed.</span></a>
@@ -88,9 +103,7 @@ export function buildZohoPeopleUserGuideHtml() {
 
       <h2 id="introduction">1. Introduction</h2>
       <p>
-        This guide is for company administrators who use the ShelfMerch Web Tab inside Zoho People
-        (or ShelfMerch directly) to connect Zoho People and import employees. Synced contacts can be used
-        as recipients for onboarding kits, rewards, and corporate gifts.
+        This guide is for company administrators who connect Zoho People from ShelfMerch Integrations and manually import employees. A Zoho Web Tab is not required. Synced contacts can be used as recipients for onboarding kits, rewards, and corporate gifts.
       </p>
 
       <h2 id="requirements">2. Requirements</h2>
@@ -103,16 +116,14 @@ export function buildZohoPeopleUserGuideHtml() {
 
       <h2 id="signing-in">3. Signing in to ShelfMerch</h2>
       <p>
-        When you open ShelfMerch from Zoho People and you are not signed in, ShelfMerch opens a secure
-        popup for ShelfMerch sign-in. Complete sign-in in the popup, then return to the Web Tab. If the
-        popup is blocked, allow popups for ShelfMerch and try again.
+        Open ShelfMerch and sign in at /login. New customers can create a company account at /signup and complete email verification first. After signing in, navigate to Integrations → Zoho People → Connect. Use a company administrator account.
       </p>
 
       <h2 id="connecting">4. Connecting Zoho People</h2>
       <ol>
-        <li>Open ShelfMerch from the Zoho People Web Tab.</li>
+        <li>Open ShelfMerch Integrations and select Zoho People.</li>
         <li>Sign in to ShelfMerch if prompted.</li>
-        <li>Click <strong>Connect Zoho People</strong>.</li>
+        <li>Click <strong>Connect</strong>.</li>
         <li>Review the requested Zoho permissions (employee forms read and organisation read).</li>
         <li>Select the approval checkbox in Zoho’s consent screen.</li>
         <li>Click <strong>Accept</strong>.</li>
@@ -120,10 +131,11 @@ export function buildZohoPeopleUserGuideHtml() {
       </ol>
 
       <h2 id="syncing">5. Syncing employees</h2>
+      <p>Employee sync is manual. Connecting authorizes access; it does not start automatic synchronization. Click Sync now whenever you want to import or refresh employee records.</p>
       <ol>
-        <li>Open the ShelfMerch Web Tab.</li>
+        <li>Open Integrations → Zoho People in ShelfMerch.</li>
         <li>Confirm the status shows <strong>Connected</strong>.</li>
-        <li>Click <strong>Sync Employees</strong>.</li>
+        <li>Click <strong>Sync now</strong>.</li>
         <li>Wait for the success message summarising fetched, created, updated, skipped, and failed counts.</li>
         <li>Open ShelfMerch Contacts to view imported employees.</li>
       </ol>
@@ -209,9 +221,7 @@ export function buildZohoPeopleAdminGuideHtml() {
 
       <h2 id="installation">2. Installation</h2>
       <p>
-        Install ShelfMerch for Zoho People through Zoho Marketplace or your organisation’s approved
-        extension installation process. After installation, open the ShelfMerch Web Tab in Zoho People
-        to sign in and connect.
+        On Zoho People Marketplace, choose Visit website to open the ShelfMerch integration documentation. Create a ShelfMerch company account or log in to an existing account, then navigate to Integrations → Zoho People → Connect. This API-built integration does not require a Zoho Web Tab.
       </p>
 
       <h2 id="permissions">3. Required permissions</h2>
@@ -235,9 +245,9 @@ export function buildZohoPeopleAdminGuideHtml() {
       <h2 id="connecting-org">5. Connecting an organisation</h2>
       <ol>
         <li>Sign in to ShelfMerch as a company administrator.</li>
-        <li>Open Connect Zoho People from the Web Tab or integrations experience.</li>
+        <li>Open Integrations → Zoho People → Connect in ShelfMerch.</li>
         <li>Complete Zoho OAuth consent for the scopes above.</li>
-        <li>Confirm Connected status, organisation name or ID, and that Sync Employees is available.</li>
+        <li>Confirm Connected status, organisation name or ID, and that Sync now is available.</li>
       </ol>
 
       <h2 id="mapping">6. Employee mapping</h2>
@@ -266,7 +276,7 @@ export function buildZohoPeopleAdminGuideHtml() {
       </ul>
 
       <h2 id="running-sync">7. Running synchronization</h2>
-      <p>Manual sync returns a summary such as:</p>
+      <p>Click Sync now after connecting to import or update employees manually. Employees are not synced automatically. Run Sync now again when you need a refresh. Each manual sync returns a summary such as:</p>
       <ul>
         <li><strong>totalFetched</strong> — employee records retrieved from Zoho</li>
         <li><strong>created</strong> — new ShelfMerch contacts created</li>

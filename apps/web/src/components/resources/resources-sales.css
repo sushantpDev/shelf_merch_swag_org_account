@@ -1,0 +1,455 @@
+.shelf-resources.resources-sales {
+  --sales-ink: #171717;
+  --sales-accent: var(--sales-ink);
+  --sales-body-size: 19px;
+  --sales-leading: 1.65;
+  background: #fff;
+  color: var(--sales-ink);
+  font-family: var(--font-family-public-sans);
+}
+.resources-sales .sales-main {
+  padding-top: 69.7px;
+}
+.resources-sales .sales-wrap {
+  width: min(1280px, 90%);
+  margin-inline: auto;
+}
+.resources-sales .sales-main p,
+.resources-sales .sales-main li {
+  font-size: var(--sales-body-size);
+  line-height: var(--sales-leading);
+  font-weight: 400;
+  letter-spacing: normal;
+}
+.resources-sales .sales-main p {
+  margin: 0 0 24px;
+}
+.resources-sales .sales-main em {
+  font-family: var(--font-family-public-serif);
+  font-style: italic;
+}
+.resources-sales .sales-main h2 {
+  font-size: clamp(32px, 3.4vw, 48px);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  margin: 0 0 22px;
+}
+.resources-sales .sales-main h2 em {
+  display: block;
+  color: var(--sales-accent);
+  font-weight: 700;
+}
+.resources-sales .sales-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.7;
+  color: var(--sales-accent);
+  margin-bottom: 20px;
+}
+.resources-sales .sales-hero {
+  position: relative;
+  isolation: isolate;
+  background: #fff;
+  overflow: hidden;
+}
+.resources-sales .sales-hero__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: #f9dce5;
+  pointer-events: none;
+  z-index: -1;
+}
+.resources-sales .sales-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  align-items: center;
+  min-height: 600px;
+  padding-block: 46px;
+}
+.resources-sales .sales-hero h1 {
+  font-size: clamp(48px, 5.6vw, 80px);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+  margin: 0 0 28px;
+}
+.resources-sales .sales-hero h1 em {
+  display: block;
+  color: var(--sales-accent);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.resources-sales .sales-hero__copy > p {
+  max-width: 550px;
+}
+.resources-sales .sales-hero__image {
+  display: block;
+  width: 110%;
+  max-width: none;
+  height: auto;
+  max-height: 530px;
+  object-fit: contain;
+  margin-left: -3%;
+}
+.resources-sales .sales-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.resources-sales .sales-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 54px;
+  padding: 16px 24px;
+  border: 1px solid #171b25;
+  border-radius: 99px;
+  color: #fff;
+  background: #171b25;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 700;
+  text-decoration: none;
+}
+.resources-sales .sales-button--outline {
+  color: var(--sales-ink);
+  background: transparent;
+  border-color: #d6bec8;
+}
+.resources-sales .sales-proof {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 24px;
+  color: var(--sales-ink);
+}
+.resources-sales .sales-proof svg {
+  flex-shrink: 0;
+}
+.resources-sales .sales-journey {
+  border-bottom: 1px solid #ece6e9;
+}
+.resources-sales .sales-journey > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-block: 22px;
+}
+.resources-sales .sales-journey a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 18px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.resources-sales .sales-journey a + a {
+  border-left: 1px solid #e8dfe4;
+}
+.resources-sales .sales-journey a svg:first-child {
+  color: var(--sales-accent);
+  flex-shrink: 0;
+}
+.resources-sales .sales-section {
+  padding-block: 64px;
+}
+.resources-sales .sales-section-heading {
+  text-align: center;
+  max-width: 850px;
+  margin: 0 auto 30px;
+}
+.resources-sales .sales-section-heading p {
+  max-width: 650px;
+  margin-inline: auto;
+}
+.resources-sales #sales-benefits {
+  scroll-margin-top: 70px;
+}
+.resources-sales .sales-benefit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: center;
+  padding-block: 54px;
+  border-bottom: 1px solid #eae5e8;
+  scroll-margin-top: 88px;
+}
+.resources-sales .sales-benefit:last-child {
+  border: 0;
+  padding-bottom: 0;
+}
+.resources-sales .sales-benefit--reverse > div {
+  order: 2;
+}
+.resources-sales .sales-benefit h3,
+.resources-sales .sales-tool-panel h3 {
+  font-size: clamp(28px, 2.65vw, 38px);
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  margin: 0 0 22px;
+}
+.resources-sales .sales-benefit ul,
+.resources-sales .sales-tool-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.resources-sales .sales-benefit li,
+.resources-sales .sales-tool-panel li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 12px;
+}
+.resources-sales .sales-benefit li svg,
+.resources-sales .sales-tool-panel li svg {
+  margin-top: 6px;
+  flex-shrink: 0;
+  color: var(--sales-accent);
+}
+.resources-sales .sales-benefit > img,
+.resources-sales .sales-tool-panel > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 390px;
+  object-fit: contain;
+}
+.resources-sales .sales-workflow {
+  background: #fcf1f4;
+  padding-block: 60px;
+}
+.resources-sales .sales-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 36px;
+}
+.resources-sales .sales-steps article {
+  border-top: 1px solid #dfc5cf;
+  padding-top: 18px;
+}
+.resources-sales .sales-steps article > span {
+  font-size: 13px;
+  color: var(--sales-accent);
+}
+.resources-sales .sales-steps h3 {
+  font-size: 21px;
+  line-height: 1.25;
+  margin: 22px 0 14px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.resources-sales .sales-guardrails {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-top: 1px solid #ead4dd;
+  margin-top: 28px;
+  padding-top: 24px;
+}
+.resources-sales .sales-guardrails span {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+}
+.resources-sales .sales-guardrails svg {
+  color: var(--sales-accent);
+}
+.resources-sales .sales-toolkit {
+  width: min(1120px, 90%);
+}
+.resources-sales .sales-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid #ded8dc;
+  margin-top: 36px;
+}
+.resources-sales .sales-tabs button {
+  position: relative;
+  padding: 24px 12px;
+  background: transparent;
+  border: 0;
+  color: var(--sales-ink);
+  font-size: 16px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.resources-sales .sales-tabs button[aria-selected="true"] {
+  color: var(--sales-ink);
+}
+.resources-sales .sales-tabs button[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -1px;
+  height: 2px;
+  background: var(--sales-ink);
+}
+.resources-sales .sales-tool-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+  min-height: 460px;
+  padding: 40px 20px 0;
+}
+.resources-sales .sales-inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--sales-accent);
+  margin-top: 26px;
+  font-size: 15px;
+  font-weight: 700;
+  text-underline-offset: 5px;
+}
+.resources-sales .sales-cta {
+  position: relative;
+  background: #f8dce5;
+  text-align: center;
+  padding-block: 64px;
+}
+.resources-sales .sales-cta p {
+  max-width: 650px;
+  margin: 0 auto 28px;
+}
+.resources-sales .sales-cta .sales-actions {
+  justify-content: center;
+}
+.resources-sales .sales-related {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding-block: 30px 42px;
+}
+.resources-sales .sales-related > div {
+  display: flex;
+  gap: 28px;
+}
+.resources-sales .sales-related a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  text-decoration: none;
+}
+.resources-sales .sales-main a:focus-visible,
+.resources-sales .sales-main button:focus-visible,
+.resources-sales .sales-tool-panel:focus-visible {
+  outline: 3px solid var(--sales-accent);
+  outline-offset: 5px;
+}
+.shelf-resources.resources-sales .resources-site-header .header-cta {
+  color: #fff;
+  background: #171717;
+}
+@media (max-width: 1100px) {
+  .resources-sales .sales-hero__grid,
+  .resources-sales .sales-benefit,
+  .resources-sales .sales-tool-panel {
+    gap: 36px;
+  }
+  .resources-sales .sales-journey a {
+    gap: 10px;
+    padding-inline: 10px;
+    font-size: 14px;
+  }
+}
+@media (max-width: 760px) {
+  .shelf-resources.resources-sales {
+    --sales-body-size: 18px;
+  }
+  .resources-sales .sales-hero__grid {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding-block: 26px 30px;
+    gap: 24px;
+  }
+  .resources-sales .sales-hero__backdrop {
+    top: auto;
+    bottom: 0;
+    height: 46%;
+    width: 180%;
+    left: -65%;
+    max-width: none;
+  }
+  .resources-sales .sales-hero h1 {
+    font-size: clamp(44px, 8.8vw, 64px);
+  }
+  .resources-sales .sales-hero__image {
+    width: 100%;
+    margin: 0;
+  }
+  .resources-sales .sales-journey > div {
+    padding-block: 12px;
+  }
+  .resources-sales .sales-journey a {
+    flex-direction: column;
+    text-align: center;
+    font-size: 11px;
+    padding: 8px;
+    gap: 8px;
+  }
+  .resources-sales .sales-journey a svg:last-child {
+    display: none;
+  }
+  .resources-sales .sales-section {
+    padding-block: 44px;
+  }
+  .resources-sales .sales-main h2 {
+    font-size: clamp(28px, 6vw, 34px);
+  }
+  .resources-sales .sales-benefit,
+  .resources-sales .sales-tool-panel {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-block: 34px;
+  }
+  .resources-sales .sales-benefit--reverse > div {
+    order: 0;
+  }
+  .resources-sales .sales-benefit h3,
+  .resources-sales .sales-tool-panel h3 {
+    font-size: 28px;
+  }
+  .resources-sales .sales-workflow {
+    padding-block: 44px;
+  }
+  .resources-sales .sales-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .resources-sales .sales-steps h3 {
+    font-size: 20px;
+  }
+  .resources-sales .sales-tabs button {
+    padding: 18px 5px;
+    font-size: 12px;
+  }
+  .resources-sales .sales-tool-panel {
+    min-height: 0;
+    padding: 30px 0 0;
+  }
+  .resources-sales .sales-cta {
+    padding-block: 44px;
+  }
+  .resources-sales .sales-related,
+  .resources-sales .sales-related > div {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+}

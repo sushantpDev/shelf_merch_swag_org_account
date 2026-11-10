@@ -1,0 +1,141 @@
+.docs-shell.zoho-admin-guide {
+  --ink: #171b25;
+  --ink-2: #505b6c;
+  --ink-3: #637087;
+  --line: #e0e5ef;
+  --brand: #3155ff;
+  --brand-d: #2441cf;
+  --brand-50: #edf1ff;
+  background: #fff;
+  font-family: var(--font-family-public-sans), Arial, sans-serif;
+}
+.zoho-admin-guide .docs-top { padding-block: 20px; }
+.zoho-admin-guide .docs-top-inner { max-width: 1320px; }
+.zoho-admin-guide .docs-top-nav { font-size: 14px; gap: 24px; }
+.zoho-admin-guide .docs-layout {
+  max-width: 1320px;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 40px;
+  padding-top: 28px;
+}
+.zoho-admin-guide .docs-layout > div { min-width: 0; }
+.zoho-admin-guide .docs-side {
+  top: 105px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+  padding: 12px 20px 20px 0;
+}
+.zoho-admin-guide .docs-side h2 { font-size: 12px; margin-bottom: 18px; }
+.zoho-admin-guide .docs-side a { padding: 12px; font-size: 14px; margin-bottom: 4px; }
+.zoho-admin-guide .docs-main {
+  border: 0;
+  border-radius: 0;
+  padding: 0 0 24px;
+  font-size: 17px;
+  line-height: 1.75;
+}
+.zoho-admin-guide .docs-crumbs { font-size: 13px; margin-bottom: 22px; }
+.zoho-admin-guide .zag-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+  padding: clamp(24px, 4vw, 44px);
+  background: #e8f1ff;
+  border-radius: 8px;
+  margin-bottom: 28px;
+}
+.zoho-admin-guide .zag-hero-copy,
+.zoho-admin-guide .zag-hero-visual { min-width: 0; }
+.zoho-user-guide .zag-hero { background: #f0ebff; }
+@media (min-width: 761px) {
+  .zoho-user-guide .zag-hero-visual { order: -1; }
+}
+.zoho-admin-guide .zag-partner-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.zoho-admin-guide .zag-partner-logos > img {
+  display: block;
+  width: 42%;
+  max-width: 138px;
+  height: 46px;
+  object-fit: contain;
+}
+.zoho-admin-guide .zag-partner-logos > span { font-size: 24px; flex-shrink: 0; }
+.zoho-admin-guide .zag-partner-logos > :last-child { max-width: 46%; }
+.zoho-admin-guide .zag-welcome-art { display: block; width: 100%; height: auto; object-fit: contain; }
+.zoho-admin-guide .zag-hero h1 { font-size: clamp(32px, 3.4vw, 48px); overflow-wrap: normal; }
+.zoho-admin-guide .zag-hero h1 em { display: block; }
+.zoho-admin-guide .zag-eyebrow,
+.zoho-admin-guide .zag-hero-note { display: flex; align-items: center; gap: 9px; }
+.zoho-admin-guide .zag-eyebrow { font-size: 11px; letter-spacing: .1em; font-weight: 700; color: #3155ff; }
+.zoho-admin-guide .zag-hero h1 {
+  font-family: var(--font-family-public-sans), Arial, sans-serif;
+  font-size: clamp(34px, 4vw, 56px);
+  line-height: 1.12;
+  letter-spacing: -.04em;
+  font-weight: 700;
+  margin: 20px 0;
+}
+.zoho-admin-guide .zag-hero h1 em { font-family: var(--font-family-public-serif), Georgia, serif; color: #3155ff; }
+.zoho-admin-guide .zag-hero .docs-sub { font-size: 18px; max-width: 620px; margin-bottom: 24px; }
+.zoho-admin-guide .zag-hero-note { font-size: 13px; font-weight: 700; color: #344a70; }
+.zoho-admin-guide .zag-contents {
+  padding: 20px 24px;
+  background: #f7f7fc;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.zoho-admin-guide .zag-contents summary { cursor: pointer; font-weight: 700; font-size: 16px; }
+.zoho-admin-guide .zag-contents summary > span { float: right; color: var(--ink-3); font-size: 12px; font-weight: 400; }
+.zoho-admin-guide .zag-contents nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 20px; margin-top: 18px; }
+.zoho-admin-guide .zag-contents a { display: flex; align-items: baseline; gap: 10px; padding: 5px 0; font-size: 14px; color: var(--ink); text-decoration: none; }
+.zoho-admin-guide .zag-contents a > span { color: #3155ff; font-size: 12px; }
+.zoho-admin-guide .zag-contents a:hover { color: #3155ff; text-decoration: underline; }
+.zoho-admin-guide .docs-heading {
+  font-family: var(--font-family-public-sans), Arial, sans-serif;
+  font-size: clamp(23px, 2.2vw, 28px);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -.025em;
+  margin: 44px 0 18px;
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 110px;
+}
+.zoho-admin-guide .docs-copy-link { margin-left: auto; flex-shrink: 0; padding: 4px 10px; font-size: 11px; }
+.zoho-admin-guide .docs-main li { margin-bottom: 10px; }
+.zoho-admin-guide .docs-table-wrap { border: 1px solid var(--line); border-radius: 8px; overflow-x: auto; margin-block: 22px; }
+.zoho-admin-guide .docs-table-wrap table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.zoho-admin-guide .docs-table-wrap th { background: #edf1ff; color: #283e7f; padding: 15px 18px; }
+.zoho-admin-guide .docs-table-wrap td { padding: 13px 18px; overflow-wrap: anywhere; }
+.zoho-admin-guide .docs-table-wrap tr:nth-child(even) td { background: #f8faff; }
+.zoho-admin-guide .docs-table-wrap td:last-child { font-family: ui-monospace, monospace; font-size: 13px; color: #2441cf; }
+.zoho-admin-guide .docs-callout { padding: 20px 24px; background: #fff4e8; border: 0; border-left: 3px solid #f4724d; border-radius: 0 8px 8px 0; color: #503824; }
+.zoho-admin-guide a:focus-visible,
+.zoho-admin-guide button:focus-visible,
+.zoho-admin-guide summary:focus-visible { outline: 3px solid #3155ff; outline-offset: 4px; }
+@media (max-width: 900px) {
+  .zoho-admin-guide .docs-layout { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 20px 20px 40px; }
+  .zoho-admin-guide .docs-top { position: relative; padding: 16px 20px; }
+  .zoho-admin-guide .docs-top-inner { flex-wrap: wrap; }
+  .zoho-admin-guide .docs-top-nav { gap: 18px; font-size: 13px; }
+  .zoho-admin-guide .docs-heading { scroll-margin-top: 24px; }
+}
+@media (max-width: 760px) {
+  .zoho-admin-guide .zag-hero { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .zoho-admin-guide .zag-hero-visual { max-width: 380px; width: 100%; margin-inline: auto; }
+}
+@media (max-width: 520px) {
+  .zoho-admin-guide .docs-layout { padding-inline: 16px; }
+  .zoho-admin-guide .zag-contents { padding: 18px; }
+  .zoho-admin-guide .zag-contents nav { grid-template-columns: minmax(0, 1fr); }
+  .zoho-admin-guide .docs-main { font-size: 16px; }
+  .zoho-admin-guide .zag-hero .docs-sub { font-size: 16px; }
+  .zoho-admin-guide .docs-copy-link { margin-left: 0; }
+}

@@ -512,6 +512,14 @@ describe('finance (§3.8)', () => {
     expect(approve.body.wallet.balance).toBe(50000);
     expect(approve.body.transaction.type).toBe('fund_in');
 
+    const notifications = await request(app).get('/api/v1/notifications').set(auth(adminToken));
+    expect(notifications.status).toBe(200);
+    expect(notifications.body.items).toContainEqual(expect.objectContaining({
+      type: 'wallet_funded',
+      title: 'Budget funded',
+      body: '₹50,000 has been added to PO Wallet.',
+    }));
+
     // second approve on the same wallet: no longer pending
     const again = await request(app)
       .post(`/api/v1/platform/finance/funding-approvals/${poWallet._id}/approve`)

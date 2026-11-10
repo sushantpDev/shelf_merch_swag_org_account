@@ -17,7 +17,11 @@ import type { IntegrationsVm } from "../controllers/useIntegrationsController";
 import type { MergeConnectionPublic } from "@/services/merge-api";
 import type { HrisSyncView } from "../hrisSyncUi";
 import { IntegrationOverview } from "../components/IntegrationOverview";
-import { SYNC_NOW_HELPER, directoryConnectionStatus } from "../integrationOverviewCopy";
+import {
+  SYNC_NOW_HELPER,
+  ZOHO_MANUAL_SYNC_HELPER,
+  directoryConnectionStatus,
+} from "../integrationOverviewCopy";
 import { getHrisMarketplaceProfile } from "../hrisMarketplaceCopy";
 import {
   AlertDialog,
@@ -143,6 +147,8 @@ function SyncCard({
   statusLabel,
   lastSynced,
   automaticSync,
+  syncModeLabel = "Automatic sync",
+  syncHelper = SYNC_NOW_HELPER,
   summary,
   statusMessage,
   statusKind,
@@ -155,6 +161,8 @@ function SyncCard({
   statusLabel: string;
   lastSynced: string;
   automaticSync: string;
+  syncModeLabel?: string;
+  syncHelper?: string;
   summary?: string;
   statusMessage?: string | null;
   statusKind?: "connected" | "syncing" | "disconnected" | "attention";
@@ -184,7 +192,7 @@ function SyncCard({
           <span className="sm-mkt-hris-stat__value">{lastSynced}</span>
         </div>
         <div className="sm-mkt-hris-stat">
-          <span className="sm-mkt-hris-stat__label">Automatic sync</span>
+          <span className="sm-mkt-hris-stat__label">{syncModeLabel}</span>
           <span className="sm-mkt-hris-stat__value">{automaticSync}</span>
         </div>
       </div>
@@ -192,7 +200,7 @@ function SyncCard({
       {actions ? (
         <div className="sm-mkt-hris-actions">
           <div className="sm-mkt-hris-actions__row">{actions}</div>
-          {showSyncHelper ? <p className="sm-mkt-hris-sync-help">{SYNC_NOW_HELPER}</p> : null}
+          {showSyncHelper ? <p className="sm-mkt-hris-sync-help">{syncHelper}</p> : null}
         </div>
       ) : null}
     </section>
@@ -241,6 +249,7 @@ function HrisConfigurePanel({
             : "Error";
     const tone =
       zoho.status === "connected" ? "success" : zoho.status === "error" ? "danger" : "warning";
+    const needsReconnect = zoho.status !== "connected";
     return (
       <div className="sm-mkt-hris">
         {zoho.status === "connected" ? <PeopleLinks tileName={tile.name} providerId={tile.id} /> : null}
@@ -249,31 +258,32 @@ function HrisConfigurePanel({
           statusTone={tone}
           statusLabel={statusLabel}
           lastSynced={formatDate(zoho.integration?.lastSyncedAt)}
-          automaticSync={zoho.status === "connected" ? "Enabled" : "Paused"}
-          summary={
-            tile.id === "google-workspace"
-              ? `Directory data from ${tile.name} stays current for gifting.`
-              : undefined
-          }
+          syncModeLabel="Employee sync"
+          automaticSync={zoho.status === "connected" ? "Manual" : "Paused"}
+          summary="Run Sync now to import or update Zoho People employees. Sync does not run on a schedule."
           {...(() => {
-            const status = directoryConnectionStatus({
-              needsAttention: zoho.status !== "connected",
-              syncing: zoho.syncing,
-              disconnected: false,
-              connected: zoho.status === "connected",
-            });
+            const status = directoryConnectionStatus(
+              {
+                needsAttention: zoho.status !== "connected",
+                syncing: zoho.syncing,
+                disconnected: false,
+                connected: zoho.status === "connected",
+              },
+              "manual",
+            );
             return {
               statusMessage: status?.message,
               statusKind: status?.kind,
             };
           })()}
           showSyncHelper={zoho.status === "connected"}
+          syncHelper={ZOHO_MANUAL_SYNC_HELPER}
           notice={
             zoho.status !== "connected" ? (
               <Callout>
                 {zoho.status === "expired"
-                  ? "Zoho People needs to be reconnected before syncing can continue."
-                  : "Zoho People needs attention before syncing can continue."}
+                  ? "Zoho People authorization expired. Reconnect before syncing again."
+                  : "Zoho People needs attention. Reconnect before syncing again."}
               </Callout>
             ) : null
           }
@@ -283,7 +293,7 @@ function HrisConfigurePanel({
                 <button
                   type="button"
                   className="bonus-integ-btn bonus-integ-btn--secondary"
-                  disabled={zoho.syncing || zoho.status === "expired" || zoho.disconnecting}
+                  disabled={zoho.syncing || needsReconnect || zoho.disconnecting}
                   onClick={zoho.onSync}
                 >
                   {zoho.syncing ? (
@@ -298,7 +308,7 @@ function HrisConfigurePanel({
                     </>
                   )}
                 </button>
-                {zoho.status === "expired" ? (
+                {needsReconnect ? (
                   <button
                     type="button"
                     className="bonus-integ-btn bonus-integ-btn--secondary"
@@ -310,7 +320,7 @@ function HrisConfigurePanel({
                 ) : null}
                 <DisconnectButton
                   title="Disconnect Zoho People?"
-                  description="Shelf Merch will stop syncing employees from Zoho People. Existing contacts are kept. You can reconnect later."
+                  description="Shelf Merch will revoke the Zoho authorization for this workspace and stop syncing. Existing contacts are kept. You can reconnect later."
                   disabled={zoho.disconnecting}
                   label={zoho.disconnecting ? "Disconnecting…" : "Disconnect"}
                   onConfirm={zoho.onDisconnect}
@@ -751,9 +761,11 @@ export function HrisMarketplaceDetailView({
           <div className="sm-mkt-body sm-mkt-appinfo">
             <h3 className="sm-mkt-related__title">App information</h3>
             <p>
-              ShelfMerch connects to {tile.name} and keeps supported{" "}
-              {tile.id === "google-workspace" ? "directory details" : "employee details"} up to date
-              automatically. Sync now is optional, and you can disconnect anytime.
+              {tile.id === "zoho-people"
+                ? "ShelfMerch connects to Zoho People with OAuth. An administrator runs Sync now to import employees. Zoho People does not sync automatically. You can disconnect anytime; imported contacts stay in this workspace."
+                : `ShelfMerch connects to ${tile.name} and keeps supported ${
+                    tile.id === "google-workspace" ? "directory details" : "employee details"
+                  } up to date automatically. Sync now is optional, and you can disconnect anytime.`}
             </p>
             <dl>
               <div>

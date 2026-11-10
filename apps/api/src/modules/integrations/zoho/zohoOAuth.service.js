@@ -142,6 +142,7 @@ export async function completeZohoConnection({
         zohoLocation: location,
         status,
         connectedAt,
+        remoteAuthorization: '',
         lastError: status === 'error' ? orgFailure : '',
       },
     },

@@ -1,11 +1,14 @@
 import { Link } from "react-router";
 import { ShelfMerchLogo } from "@/components/brand/ShelfMerchLogo";
+import { MeasurementConsentChoice } from "@/features/privacy/MeasurementConsentChoice";
 import "./legal.css";
+import { LegalArticle } from "./LegalArticle";
+import { ShieldCheck } from "lucide-react";
 
 /** Public Privacy Policy — also served as static HTML at GET /legal/privacy-policy. */
 export function PrivacyPolicyPage() {
   return (
-    <div className="legal-shell">
+    <div className="legal-shell legal-shell--privacy">
       <header className="legal-header">
         <div className="legal-header-inner">
           <Link to="/" className="legal-logo-link" aria-label="ShelfMerch home">
@@ -20,9 +23,12 @@ export function PrivacyPolicyPage() {
       </header>
 
       <main className="legal-main">
-        <article className="legal-article">
-          <h1>Privacy Policy</h1>
-          <p className="legal-updated">Last updated: 30 July 2026</p>
+        <header className="legal-hero">
+          <span className="legal-eyebrow"><ShieldCheck size={20} aria-hidden="true" /> YOUR DATA, EXPLAINED CLEARLY</span>
+          <h1>Privacy <em>Policy</em></h1>
+          <p className="legal-updated">Last updated: 26 October 2026</p>
+        </header>
+        <LegalArticle>
 
           <p className="legal-intro">
             This Privacy Policy describes how <strong>Chitlu Innovations Private Limited</strong> (“
@@ -208,7 +214,12 @@ export function PrivacyPolicyPage() {
           <h2 id="disconnecting-zoho-people">9. Disconnecting Zoho People</h2>
           <p>A company administrator can disconnect Zoho People from ShelfMerch. Disconnecting:</p>
           <ul>
-            <li>Clears stored Zoho OAuth tokens for that tenant</li>
+            <li>
+              Asks Zoho to revoke the refresh token. The access token is cleared immediately. The
+              encrypted refresh token is deleted when Zoho confirms revocation or reports that token
+              invalid. If Zoho cannot confirm revocation, the ciphertext stays unused and marked
+              unresolved so it can be revoked later without storing the token in plaintext
+            </li>
             <li>Stops further Zoho People syncing for that connection</li>
             <li>
               Does not automatically delete previously imported employee contacts or related ShelfMerch
@@ -294,12 +305,32 @@ export function PrivacyPolicyPage() {
             </li>
           </ul>
 
+          <h2 id="cookies">Cookies and similar technology</h2>
+          <p>
+            Essential cookies support session continuity, security, preferences, and authentication. Those
+            cookies are not optional. Google Analytics 4 and the Meta pixel are loaded through the existing
+            Google Tag Manager container only after you allow the matching category. Until you choose, and
+            if you reject optional measurement, that container is not requested.
+          </p>
+          <p>
+            The OpenAI measurement pixel is a separate optional tag. It records a saved demo request or a
+            finished registration with an event id. The event Shelf Merch creates does not include your
+            name, email, phone number, or verification code. If Shelf Merch enables the pixel, OpenAI
+            automatic advanced matching hashes recognizable form details in your browser. OpenAI does not
+            provide a supported way to turn that hashing off. The pixel stays unloaded until you allow
+            advertising measurement and Shelf Merch has explicitly accepted that behavior. OpenAI may then
+            store __oppref for about 30 days and __obref for about 365 days. Withdrawing advertising
+            consent stops later OpenAI measurement.
+          </p>
+
+          <MeasurementConsentChoice />
+
           <p className="legal-note">
             This page is a product privacy notice tailored to the current ShelfMerch implementation.
             Statements marked for legal review, and the policy as a whole, should be reviewed by
             qualified counsel before reliance in regulated procurement or contractual disclosures.
           </p>
-        </article>
+        </LegalArticle>
       </main>
 
       <footer className="legal-footer">

@@ -408,7 +408,7 @@ export function PrintAreaEditor({
     <div className="row" style={{ gap: 20, alignItems: "flex-start", flexWrap: "wrap" }}>
       <div style={{ flex: "1 1 360px", minWidth: 320 }}>
         <p className="muted" style={{ fontSize: 12, margin: "0 0 8px" }}>
-          <strong style={{ color: "var(--ink)", fontWeight: 600 }}>Mockup image size (inches)</strong>{" "}
+          <strong style={{ color: "var(--ink)", fontWeight: "var(--font-weight-semibold)" }}>Mockup image size (inches)</strong>{" "}
           is the real-world size of the <em>flat garment mockup</em> (default{" "}
           {DEFAULT_PHYSICAL.width}×{DEFAULT_PHYSICAL.height}″), not the print plate. Print areas are
           mapped as a fraction of that width.
@@ -564,7 +564,7 @@ export function PrintAreaEditor({
                           right: 0,
                           bottom: 0,
                           fontSize: 9,
-                          fontWeight: 700,
+                          fontWeight: "var(--font-weight-bold)",
                           textAlign: "center",
                           background: "rgba(0,0,0,.55)",
                           color: "#fff",

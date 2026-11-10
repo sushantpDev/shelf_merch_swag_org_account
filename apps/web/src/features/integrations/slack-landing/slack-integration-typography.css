@@ -1,0 +1,96 @@
+/* Marketing typography only; preserve the existing page and preview layouts. */
+.slack-landing main {
+  font-family: var(--font-family-public-sans);
+}
+
+.slack-landing main :is(h1, h2, h3) {
+  font-family: var(--font-family-public-sans);
+  font-weight: 700;
+}
+
+.slack-landing .slk-hero__copy h1 {
+  font-size: clamp(42px, 4.6vw, 72px);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.slack-landing :is(.slk-feature__copy, .slk-section-head, .slk-faq-wrap, .slk-final) h2 {
+  font-size: clamp(32px, 3.4vw, 48px);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.slack-landing main :is(h1, h2) em {
+  font-family: var(--font-family-public-serif);
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: #3155ff;
+}
+
+.slack-landing :is(.slk-hero, .slk-final) :is(h1, h2) em {
+  color: #ffd84a;
+}
+
+.slack-landing :is(.slk-lead, .slk-feature__copy > p:not(.slk-kicker), .slk-section-head p, .slk-step p, .slk-role p, .slk-security__item p, .slk-faq__item p, .slk-stats__grid span) {
+  font-size: 19px;
+  line-height: 1.65;
+  font-weight: 400;
+  letter-spacing: normal;
+}
+
+.slack-landing :is(.slk-kicker, .slk-feature__copy .slk-kicker) {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+}
+
+.slack-landing :is(.slk-step, .slk-role) h3 {
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.slack-landing .slk-security__item h3 {
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+
+.slack-landing .slk-faq__item summary {
+  font-size: 19px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.slack-landing :is(.slk-btn, .slk-text-link, .slk-feature__copy .slk-text-link) {
+  font-family: var(--font-family-public-sans);
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: normal;
+  font-weight: 700;
+  text-transform: none;
+}
+
+.slack-landing .slk-stats__grid strong {
+  font-size: clamp(36px, 3.4vw, 48px);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+@media (max-width: 640px) {
+  .slack-landing .slk-hero__copy h1 {
+    font-size: clamp(36px, 8.5vw, 48px);
+  }
+
+  .slack-landing :is(.slk-lead, .slk-feature__copy > p:not(.slk-kicker), .slk-section-head p, .slk-step p, .slk-role p, .slk-security__item p, .slk-faq__item p, .slk-stats__grid span) {
+    font-size: 18px;
+  }
+
+  .slack-landing :is(.slk-kicker, .slk-feature__copy .slk-kicker) {
+    font-size: 14px;
+  }
+}

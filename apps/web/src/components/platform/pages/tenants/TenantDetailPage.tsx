@@ -227,7 +227,7 @@ function OverviewTab({ overview, tenant }: { overview: OverviewData; tenant: Ten
           />
         ) : null}
         <div>
-          <div style={{ fontWeight: 600, fontSize: 18 }}>{tenant.name}</div>
+          <div style={{ fontWeight: "var(--font-weight-semibold)", fontSize: 18 }}>{tenant.name}</div>
           <div className="muted">@{tenant.slug}</div>
         </div>
       </div>
@@ -422,7 +422,7 @@ function WalletTab({ overview }: { overview: OverviewData }) {
   return (
     <div className="card" style={{ padding: 20 }}>
       <div className="lbl">Budget balance</div>
-      <div style={{ fontSize: 22, fontWeight: 600, marginBottom: 8 }}>
+      <div style={{ fontSize: 22, fontWeight: "var(--font-weight-semibold)", marginBottom: 8 }}>
         {inr(overview.walletBudgetBalanceInr ?? overview.walletBalanceInr)}
       </div>
       <div className="muted" style={{ fontSize: 13, marginBottom: 16 }}>

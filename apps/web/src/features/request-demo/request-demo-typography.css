@@ -1,0 +1,144 @@
+/* Page-scoped typography; the shared demo form retains its embedded styling. */
+.request-demo {
+  --demo-text-xs: 13px;
+  --demo-text-sm: 16px;
+  --demo-text-md: 19px;
+  --demo-text-lg: 19px;
+  --demo-text-xl: 28px;
+  font-size: 19px;
+  line-height: 1.65;
+}
+
+.request-demo :is(h1, h2, h3, h4, input, select, button) {
+  font-family: var(--font-family-public-sans);
+}
+
+.request-demo :is(h1, h2, h3, h4) {
+  font-weight: 700;
+}
+
+.request-demo .request-demo__intro h1 {
+  width: auto;
+  font-size: clamp(48px, 4.6vw, 80px);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.request-demo .request-demo__intro h1 :is(span, em) {
+  display: block;
+  white-space: normal;
+}
+
+.request-demo :is(h1, h2) em {
+  color: #3155ff;
+  font-family: var(--font-family-public-serif);
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.035em;
+}
+
+.request-demo .request-demo__lead {
+  max-width: 620px;
+  font-size: 19px;
+  line-height: 1.65;
+  letter-spacing: normal;
+}
+
+.request-demo :is(.request-demo__section, .request-demo__plans, .request-demo__testimonial, .request-demo__steps, .request-demo__faq, .request-demo__footer-cta) h2 {
+  font-size: clamp(32px, 3.4vw, 48px);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.request-demo .request-demo__plans h2 em {
+  color: #c9b8ff;
+}
+
+.request-demo :is(.request-demo__compare, .request-demo__feature-card, .request-demo__plan, .request-demo__steps) h3 {
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.request-demo .request-demo__plan h4 {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.request-demo .request-demo__kicker {
+  color: #171717;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.7;
+  letter-spacing: 0.1em;
+}
+
+.request-demo :is(.request-demo__feature-card p, .request-demo__plan > span, .request-demo__plan li, .request-demo__compare li, .request-demo__faq p) {
+  font-size: 19px;
+  line-height: 1.65;
+  letter-spacing: normal;
+}
+
+.request-demo .request-demo__faq summary {
+  font-size: 19px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.request-demo .request-demo__faq h2 {
+  text-align: center;
+}
+
+.request-demo .request-demo__form-heading h2 {
+  font-size: clamp(26px, 2.1vw, 32px);
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+}
+
+.request-demo .request-demo__form-heading p {
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.request-demo :is(.request-demo__field input, .request-demo__field select, .request-demo__select-button, .request-demo__select-option) {
+  font-family: var(--font-family-public-sans);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.request-demo .request-demo__field label {
+  font-weight: 600;
+}
+
+.request-demo :is(.request-demo__submit, .request-demo__whatsapp-button, .request-demo__steps-cta) {
+  font-family: var(--font-family-public-sans);
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.request-demo .request-demo__consent {
+  line-height: 1.55;
+}
+
+@media (max-width: 640px) {
+  .request-demo {
+    --demo-text-md: 18px;
+    --demo-text-lg: 18px;
+    --demo-text-xl: 24px;
+    font-size: 18px;
+  }
+
+  .request-demo .request-demo__intro h1 {
+    font-size: clamp(34px, 8vw, 48px);
+  }
+
+  .request-demo :is(.request-demo__lead, .request-demo__feature-card p, .request-demo__plan > span, .request-demo__plan li, .request-demo__compare li, .request-demo__faq p, .request-demo__faq summary) {
+    font-size: 18px;
+  }
+
+  .request-demo :is(.request-demo__compare, .request-demo__feature-card, .request-demo__plan, .request-demo__steps) h3 {
+    font-size: 24px;
+  }
+}

@@ -6,7 +6,7 @@ import Image from "@tiptap/extension-image";
 import { getStoredUser } from "@/services/api-bridge";
 import { canAccessArea } from "@/services/platform-access";
 import {
-  createBlogPost, getBlogPost, listBlogPosts, publishBlogPost, unpublishBlogPost,
+  createBlogPost, deleteBlogDraft, getBlogPost, listBlogPosts, publishBlogPost, unpublishBlogPost,
   updateBlogPost, uploadBlogImage, type BlogDocument, type BlogPost, type BlogPostInput,
 } from "@/services/blog-api";
 import { PlatformError, PlatformLoading, PlatformPageHeader } from "./platform-ui";
@@ -24,6 +24,9 @@ export function BlogListPage() {
   const [data, setData] = useState<Awaited<ReturnType<typeof listBlogPosts>> | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
+  const [reload, setReload] = useState(0);
+  const [notice, setNotice] = useState("");
   useEffect(() => {
     let alive = true;
     setLoading(true); setError("");
@@ -31,11 +34,23 @@ export function BlogListPage() {
       .catch((err) => { if (alive) setError(message(err)); })
       .finally(() => { if (alive) setLoading(false); });
     return () => { alive = false; };
-  }, [page]);
+  }, [page, reload]);
+  async function removeDraft(post: Omit<BlogPost, "content">) {
+    if (deleting || !window.confirm(`Delete draft "${post.title}"? This cannot be undone.`)) return;
+    setDeleting(true); setError(""); setNotice("");
+    try {
+      await deleteBlogDraft(post._id);
+      setNotice("Draft deleted.");
+      if (data?.items.length === 1 && page > 1) setPage((current) => current - 1);
+      else setReload((current) => current + 1);
+    } catch (err) { setError(message(err)); }
+    finally { setDeleting(false); }
+  }
   return <div className="blog-admin">
     <PlatformPageHeader title="Blog" subtitle="Write and publish articles for the ShelfMerch website."
       actions={canWrite ? <Link className="btn btn-brand btn-sm" to="/platform/blog/new">+ New article</Link> : null} />
     {loading && <PlatformLoading />}{error && <PlatformError message={error} />}
+    {notice && <p className="blog-admin-notice" role="status">{notice}</p>}
     {!loading && data && <><div className="blog-admin-list">
       {data.items.length === 0 ? <p className="blog-admin-empty">No articles yet. Create a draft to get started.</p> :
         data.items.map((post) => <article className="blog-admin-list-row" key={post._id}>
@@ -43,11 +58,12 @@ export function BlogListPage() {
             <h2><Link to={`/platform/blog/${post._id}`}>{post.title}</Link></h2>
             <p>/blog/{post.slug} · Updated {new Date(post.updatedAt).toLocaleDateString()}</p></div>
           <div className="blog-admin-row-actions"><Link className="btn btn-ghost btn-sm" to={`/platform/blog/${post._id}`}>{canWrite ? "Edit" : "View"}</Link>
+            {canWrite && post.status === "draft" && <button type="button" className="btn btn-ghost btn-sm btn-danger-ghost" disabled={deleting} onClick={() => void removeDraft(post)}>Delete draft</button>}
             {post.status === "published" && <a className="btn btn-ghost btn-sm" href={`/blog/${post.slug}`} target="_blank" rel="noreferrer">Open article</a>}</div>
         </article>)}
-    </div><div className="blog-admin-pager"><button className="btn btn-ghost btn-sm" disabled={page <= 1} onClick={() => setPage(page - 1)}>Previous</button>
+    </div><div className="blog-admin-pager"><button className="btn btn-ghost btn-sm" disabled={deleting || page <= 1} onClick={() => setPage(page - 1)}>Previous</button>
       <span>Page {page} · {data.total} articles</span>
-      <button className="btn btn-ghost btn-sm" disabled={page * data.limit >= data.total} onClick={() => setPage(page + 1)}>Next</button></div></>}
+      <button className="btn btn-ghost btn-sm" disabled={deleting || page * data.limit >= data.total} onClick={() => setPage(page + 1)}>Next</button></div></>}
   </div>;
 }
 
@@ -111,6 +127,15 @@ export function BlogEditorPage() {
     catch (err) { setError(message(err)); }
     finally { setBusy(false); }
   }
+  async function removeDraft() {
+    if (!post || busy || uploading || !window.confirm(`Delete draft "${post.title}"? This cannot be undone.`)) return;
+    setBusy(true); setError(""); setNotice("");
+    try {
+      await deleteBlogDraft(post._id);
+      navigate("/platform/blog", { replace: true });
+    } catch (err) { setError(message(err)); }
+    finally { setBusy(false); }
+  }
   async function upload(file: File, placement: "cover" | "inline") {
     if (!editor || busy) return;
     const alt = window.prompt("Describe this image for readers and search engines:");
@@ -145,7 +170,8 @@ export function BlogEditorPage() {
       <button type="button" className="btn btn-ghost btn-sm" onClick={() => setPreview(!preview)}>{preview ? "Back to editing" : "Preview"}</button>
       {canWrite && <><button type="button" className="btn btn-ghost btn-sm" disabled={busy || uploading} onClick={() => void save()}>{busy ? "Saving…" : post?.status === "published" ? "Save changes" : "Save draft"}</button>
         <button type="button" className="btn btn-brand btn-sm" disabled={busy || uploading} onClick={() => void save(true)}>{post?.status === "published" ? "Save and publish" : "Publish"}</button>
-        {post?.status === "published" && <button type="button" className="btn btn-ghost btn-sm" disabled={busy} onClick={() => void unpublish()}>Unpublish</button>}</>}
+        {post?.status === "published" && <button type="button" className="btn btn-ghost btn-sm" disabled={busy} onClick={() => void unpublish()}>Unpublish</button>}
+        {post?.status === "draft" && <button type="button" className="btn btn-ghost btn-sm btn-danger-ghost" disabled={busy || uploading} onClick={() => void removeDraft()}>Delete draft</button>}</>}
       {post?.status === "published" && <a className="btn btn-ghost btn-sm" href={`/blog/${post.slug}`} target="_blank" rel="noreferrer">View live article →</a>}
     </div><div className={`blog-admin-layout${preview ? " blog-admin-layout-preview" : ""}`}>
       <section className="blog-admin-main">

@@ -12,12 +12,14 @@ export function Donut({
   centerLabel,
   size = 130,
   centerFontSize = 22,
+  centerLabelFontSize = 10,
 }: {
   segments: Segment[];
   centerValue: number | string;
   centerLabel: string;
   size?: number;
   centerFontSize?: number;
+  centerLabelFontSize?: number;
 }) {
   const allocTot = segments.reduce((s, d) => s + (d.allocated || 0), 0) || 1;
   let acc = 0;
@@ -43,11 +45,11 @@ export function Donut({
       <div className="donut-center">
         <div
           className="num"
-          style={{ fontFamily: "var(--disp)", fontWeight: 800, fontSize: centerFontSize }}
+          style={{ fontFamily: "var(--font-family-primary)", fontWeight: "var(--font-weight-bold)", fontSize: centerFontSize }}
         >
           {centerValue}
         </div>
-        <div className="mut3" style={{ fontSize: 10 }}>
+        <div className="mut3" style={{ fontSize: centerLabelFontSize }}>
           {centerLabel}
         </div>
       </div>

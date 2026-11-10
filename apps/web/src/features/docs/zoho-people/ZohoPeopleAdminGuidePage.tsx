@@ -1,6 +1,24 @@
 import { Link } from "react-router";
 import { DocsHeading, DocsShell } from "../DocsShell";
 import { useDocsMeta } from "../useDocsMeta";
+import { BookOpen, ShieldCheck } from "lucide-react";
+import { ShelfMerchLogo } from "@/components/brand/ShelfMerchLogo";
+import zohoPeopleLogo from "../../../../assets/integrations/zoho-people.png";
+import "./zoho-admin-guide.css";
+
+const guideSections = [
+  ["responsibilities", "Administrator responsibilities"],
+  ["installation", "Installation"],
+  ["permissions", "Required permissions"],
+  ["oauth-security", "OAuth and security"],
+  ["connecting-org", "Connecting an organisation"],
+  ["mapping", "Employee mapping"],
+  ["running-sync", "Running synchronization"],
+  ["tenant-isolation", "Tenant isolation"],
+  ["retention", "Data retention and deletion"],
+  ["admin-troubleshooting", "Troubleshooting"],
+  ["support-checklist", "Support checklist"],
+] as const;
 
 export function ZohoPeopleAdminGuidePage() {
   useDocsMeta({
@@ -15,6 +33,7 @@ export function ZohoPeopleAdminGuidePage() {
 
   return (
     <DocsShell
+      className="zoho-admin-guide"
       activePath="/docs/zoho-people/admin-guide"
       breadcrumbs={[
         { label: "Home", to: "/" },
@@ -22,10 +41,34 @@ export function ZohoPeopleAdminGuidePage() {
         { label: "Administrator Guide" },
       ]}
     >
-      <h1>ShelfMerch for Zoho People — Administrator Guide</h1>
+      <header className="zag-hero">
+      <div className="zag-hero-copy">
+      <span className="zag-eyebrow"><BookOpen size={18} aria-hidden="true" /> ZOHO PEOPLE DOCUMENTATION</span>
+      <h1>Administrator <em>guide.</em></h1>
       <p className="docs-sub">
         Security, permissions, mapping, and operational guidance for company administrators.
       </p>
+      <span className="zag-hero-note"><ShieldCheck size={18} aria-hidden="true" /> ShelfMerch for Zoho People</span>
+      </div>
+      <div className="zag-hero-visual">
+        <div className="zag-partner-logos">
+          <img src={zohoPeopleLogo} alt="Zoho People" />
+          <span aria-hidden="true">+</span>
+          <ShelfMerchLogo height={26} theme="dark" />
+        </div>
+        <img className="zag-welcome-art" src="/images/resources/zoho/zoho-admin-guide-hero-v1.png"
+            alt="An administrator reviewing security settings and employee data controls"
+          width="1536" height="1024" />
+      </div>
+      </header>
+      <details className="zag-contents" open>
+        <summary>On this page <span>11 sections</span></summary>
+        <nav aria-label="Administrator guide sections">
+          {guideSections.map(([id, label], index) => (
+            <a href={`#${id}`} key={id}><span>{String(index + 1).padStart(2, "0")}</span>{label}</a>
+          ))}
+        </nav>
+      </details>
 
       <DocsHeading id="responsibilities">1. Administrator responsibilities</DocsHeading>
       <p>
@@ -38,9 +81,7 @@ export function ZohoPeopleAdminGuidePage() {
 
       <DocsHeading id="installation">2. Installation</DocsHeading>
       <p>
-        Install ShelfMerch for Zoho People through Zoho Marketplace or your organisation’s approved
-        extension installation process. After installation, open the ShelfMerch Web Tab in Zoho People to
-        sign in and connect.
+        On Zoho People Marketplace, choose Visit website to open the ShelfMerch integration documentation. Create a ShelfMerch company account or log in to an existing account, then navigate to Integrations → Zoho People → Connect. This API-built integration does not require a Zoho Web Tab.
       </p>
 
       <DocsHeading id="permissions">3. Required permissions</DocsHeading>
@@ -70,10 +111,10 @@ export function ZohoPeopleAdminGuidePage() {
       <DocsHeading id="connecting-org">5. Connecting an organisation</DocsHeading>
       <ol>
         <li>Sign in to ShelfMerch as a company administrator.</li>
-        <li>Open Connect Zoho People from the Web Tab or integrations experience.</li>
+        <li>Open Integrations → Zoho People → Connect in ShelfMerch.</li>
         <li>Complete Zoho OAuth consent for the scopes above.</li>
         <li>
-          Confirm Connected status, organisation name or ID, and that Sync Employees is available.
+          Confirm Connected status, organisation name or ID, and that Sync now is available.
         </li>
       </ol>
 
@@ -147,7 +188,7 @@ export function ZohoPeopleAdminGuidePage() {
       </ul>
 
       <DocsHeading id="running-sync">7. Running synchronization</DocsHeading>
-      <p>Manual sync returns a summary such as:</p>
+      <p>Click Sync now after connecting to import or update employees manually. Employees are not synced automatically. Run Sync now again when you need a refresh. Each manual sync returns a summary such as:</p>
       <ul>
         <li>
           <strong>totalFetched</strong> — employee records retrieved from Zoho
@@ -177,7 +218,13 @@ export function ZohoPeopleAdminGuidePage() {
 
       <DocsHeading id="retention">9. Data retention and deletion</DocsHeading>
       <ul>
-        <li>Disconnecting stops future synchronisation and clears Zoho tokens for that tenant.</li>
+        <li>
+          Disconnecting requests Zoho token revocation and stops synchronisation immediately. The
+          access token is deleted. The refresh token is deleted only after Zoho confirms revocation
+          or reports it invalid. If Zoho does not confirm, the token stays encrypted, unused, and
+          marked unresolved so revocation can be retried. Other ShelfMerch integrations and
+          workspaces are not changed.
+        </li>
         <li>
           Imported records may remain until deleted per your instructions and ShelfMerch retention
           practices.

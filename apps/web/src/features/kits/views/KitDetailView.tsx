@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router";
 import { ArrowLeft, Box, CheckCircle2, Pencil, Send } from "lucide-react";
 import { LoadingState } from "@/components/LoadingState";
 import { PageHeader } from "@/components/tenant/PageHeader";
-import { DesignedProductThumb } from "@/features/swag/DesignedProductThumb";
+// import { DesignedProductThumb } from "@/features/swag/DesignedProductThumb";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
 import type { KitDetailVm } from "../controllers/useKitDetailController";
 
@@ -105,8 +105,8 @@ export function KitDetailView(vm: KitDetailVm) {
               <div className="eyebrow" style={{ marginBottom: 5 }}>
                 Kit artwork
               </div>
-              <div style={{ fontWeight: 750, fontSize: 17 }}>Branded across all items</div>
-              <div className="muted" style={{ fontSize: 13, marginTop: 3 }}>
+              <div style={{ fontWeight: "var(--font-weight-bold)", fontSize: "var(--workspace-font-heading, 17px)" }}>Branded across all items</div>
+              <div className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)", marginTop: 3 }}>
                 Artwork and products are saved in this reusable kit.
               </div>
             </div>
@@ -116,10 +116,10 @@ export function KitDetailView(vm: KitDetailVm) {
             <div className="row" style={{ gap: 10 }}>
               <Box size={18} color="var(--brand)" />
               <div>
-                <div className="mut3" style={{ fontSize: 11, fontWeight: 700 }}>
+                <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11px)", fontWeight: "var(--font-weight-bold)" }}>
                   Items
                 </div>
-                <div className="num" style={{ fontWeight: 800 }}>
+                <div className="num" style={{ fontWeight: "var(--font-weight-bold)" }}>
                   {itemCount}
                 </div>
               </div>
@@ -130,10 +130,10 @@ export function KitDetailView(vm: KitDetailVm) {
             <div className="row" style={{ gap: 10 }}>
               <CheckCircle2 size={18} color="var(--brand)" />
               <div>
-                <div className="mut3" style={{ fontSize: 11, fontWeight: 700 }}>
+                <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11px)", fontWeight: "var(--font-weight-bold)" }}>
                   Status
                 </div>
-                <div style={{ fontWeight: 800 }}>{kit.status === "live" ? "Live" : "Draft"}</div>
+                <div style={{ fontWeight: "var(--font-weight-bold)" }}>{kit.status === "live" ? "Live" : "Draft"}</div>
               </div>
             </div>
           </div>
@@ -148,7 +148,7 @@ export function KitDetailView(vm: KitDetailVm) {
               <div className="eyebrow">Included products</div>
               <h2 style={{ fontSize: 20, marginTop: 5 }}>Products in this kit</h2>
             </div>
-            <span className="muted" style={{ fontSize: 13 }}>
+            <span className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)" }}>
               {products.length} item{products.length === 1 ? "" : "s"}
             </span>
           </div>
@@ -167,12 +167,12 @@ export function KitDetailView(vm: KitDetailVm) {
                   : undefined);
                 return (
                   <div key={`${p.name}-${i}`} className="pcard" style={{ cursor: "default" }}>
-                    {!isCuratedKit && p.img && kit.artworkUrl ? (
+                    {/* {!isCuratedKit && p.img && kit.artworkUrl ? (
                       <DesignedProductThumb
                         product={p.img}
                         artworkUrl={p.img.mockupUrl ? undefined : kit.artworkUrl}
                       />
-                    ) : (
+                    ) : ( */}
                       <div className="img">
                         {src ? (
                           <img
@@ -189,7 +189,7 @@ export function KitDetailView(vm: KitDetailVm) {
                           />
                         )}
                       </div>
-                    )}
+                    {/* )} */}
                     <div className="meta">
                       {p.brand && <div className="brand">{p.brand}</div>}
                       <div className="nm">{p.name}</div>
@@ -239,7 +239,7 @@ export function KitDetailView(vm: KitDetailVm) {
               </p>
             )}
 
-            <p className="muted" style={{ margin: 0, fontSize: 13, lineHeight: 1.5 }}>
+            <p className="muted" style={{ margin: 0, fontSize: "var(--workspace-font-caption, 13px)", lineHeight: 1.5 }}>
               Uploaded logo will be printed in the placeholders as shown in the img.
             </p>
           </section>

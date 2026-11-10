@@ -138,8 +138,8 @@ export function ShopCard({ shop, fallbackUser }: { shop: UiShop; fallbackUser: s
                 padding: 0,
                 cursor: "pointer",
                 color: "var(--brand-d)",
-                fontSize: 13,
-                fontWeight: 600,
+                fontSize: "var(--workspace-font-body, 13px)",
+                fontWeight: "var(--font-weight-semibold)",
               }}
             >
               <Copy size={14} aria-hidden />

@@ -10,6 +10,7 @@ const idempotencyKeySchema = new mongoose.Schema(
     path: String,
     statusCode: { type: Number, default: null },
     response: { type: Object, default: null },
+    leaseExpiresAt: { type: Date, default: null },
     createdAt: { type: Date, default: Date.now, expires: 86400 },
   },
   { versionKey: false },

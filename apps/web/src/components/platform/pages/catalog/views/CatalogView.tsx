@@ -110,7 +110,7 @@ export function CatalogView({
               style={{ flex: "1 1 180px", maxWidth: 280, height: 40 }}
             />
             <label className="row" style={{ gap: 8, alignItems: "center", margin: 0 }}>
-              <span className="muted" style={{ fontSize: 12, fontWeight: 700 }}>
+              <span className="muted" style={{ fontSize: 12, fontWeight: "var(--font-weight-bold)" }}>
                 Sort
               </span>
               <select

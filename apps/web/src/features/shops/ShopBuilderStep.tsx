@@ -1,5 +1,8 @@
-import { type Dispatch, useState } from "react";
+import { type Dispatch, useMemo, useState } from "react";
 import { SquarePen } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { useWorkspace } from "@/hooks/useWorkspace";
+import { refreshCatalogProducts } from "@/services/api-bridge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { FullscreenOverlay } from "@/components/tenant/FullscreenOverlay";
 import {
@@ -11,6 +14,7 @@ import {
 } from "./banner";
 import { BannerCustomUpload } from "./BannerCustomUpload";
 import { ShopHomePreview } from "./ShopHomePreview";
+import { activeListingKeysForShop, publishedShopListings } from "./shopListings";
 import type { ShopDraft, ShopDraftAction } from "./shopDraft";
 
 type BannerDraft = {
@@ -43,6 +47,54 @@ export function ShopBuilderStep({
   /** Top-bar confirm label (create uses Save & publish; draft publish uses Publish). */
   publishLabel?: string;
 }) {
+  const { data: workspace } = useWorkspace();
+  const workspaceCatalog = workspace?.catalogProducts ?? [];
+  const { data: catalogResult, isLoading: catalogLoading } = useQuery({
+    queryKey: ["catalog", "all"],
+    queryFn: () => refreshCatalogProducts(),
+    staleTime: 30_000,
+    placeholderData: workspace
+      ? { items: workspaceCatalog, total: workspace.catalogTotal ?? workspaceCatalog.length }
+      : undefined,
+  });
+  const catalogProducts = catalogResult?.items ?? workspaceCatalog;
+
+  const featuredProducts = useMemo(() => {
+    // 1. If an existing shop exists in the workspace matching this draft and has published collections:
+    const matchingShop = workspace?.shops?.find(
+      (s) => s.name.trim().toLowerCase() === draft.name.trim().toLowerCase(),
+    );
+    if (matchingShop && workspace?.collections?.length) {
+      const all = publishedShopListings(workspace.collections, catalogProducts);
+      const listingKeySet = new Set(all.map((l) => l.key));
+      const activeKeys = new Set(activeListingKeysForShop(matchingShop, listingKeySet));
+      const activeListings = all.filter((l) => activeKeys.has(l.key));
+
+      if (activeListings.length > 0) {
+        const featuredKeys = new Set(matchingShop.featuredListingKeys || []);
+        const featured = activeListings.filter((l) => featuredKeys.has(l.key));
+        const picks = featured.length > 0 ? featured : activeListings;
+        return picks.slice(0, 5).map((l) => l.product);
+      }
+    }
+
+    // 2. Otherwise pick from catalog products matching draft categories (or top catalog items)
+    if (!catalogProducts || catalogProducts.length === 0) return [];
+
+    const cats = draft.categories || [];
+    if (cats.length > 0) {
+      const catSet = new Set(cats.map((c) => c.toLowerCase()));
+      const matching = catalogProducts.filter((p) =>
+        (p.category && catSet.has(p.category.toLowerCase())) ||
+        (p.categoryLabels && p.categoryLabels.some((l) => catSet.has(l.toLowerCase())))
+      );
+      if (matching.length > 0) {
+        return matching.slice(0, 5);
+      }
+    }
+    return catalogProducts.slice(0, 5);
+  }, [catalogProducts, draft.categories, draft.name, workspace?.shops, workspace?.collections]);
+
   const [bannerOpen, setBannerOpen] = useState(false);
   const [pendingBanner, setPendingBanner] = useState<BannerDraft>(() => bannerDraftFrom(draft));
   const source: BannerSource = {
@@ -79,7 +131,7 @@ export function ShopBuilderStep({
           Exit
         </button>
         <span
-          style={{ fontFamily: "var(--disp)", fontWeight: 800, fontSize: 18, fontStyle: "italic" }}
+          style={{ fontFamily: "var(--font-family-primary)", fontWeight: "var(--font-weight-bold)", fontSize: 18, fontStyle: "italic" }}
         >
           Shelf Merch
         </span>
@@ -98,6 +150,8 @@ export function ShopBuilderStep({
           shopName={draft.name}
           logoUrl={draft.logoUrl || undefined}
           currency={draft.currency}
+          products={featuredProducts}
+          isLoading={catalogLoading && (!catalogProducts || catalogProducts.length === 0)}
           banner={
             <div
               className={`shop-builder-banner${hasImage || isEmptyBanner ? " has-preset" : ""}${isEmptyBanner ? " is-empty" : ""}`}
@@ -153,7 +207,7 @@ export function ShopBuilderStep({
             <DialogHeader>
               <DialogTitle>Edit banner</DialogTitle>
             </DialogHeader>
-            <p className="muted" style={{ fontSize: 13, margin: "6px 0 12px" }}>
+            <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)", margin: "6px 0 12px" }}>
               Choose a library banner, solid pattern, or upload your own image.
             </p>
 

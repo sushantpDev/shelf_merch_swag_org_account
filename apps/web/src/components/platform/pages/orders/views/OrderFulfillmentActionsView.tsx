@@ -20,7 +20,7 @@ export function OrderFulfillmentActionsView(vm: OrderFulfillmentActionsVm) {
           {vm.okNote.includes("Production task created") && (
             <>
               {" "}
-              <Link to="/platform/production" style={{ color: "inherit", fontWeight: 600 }}>
+              <Link to="/platform/production" style={{ color: "inherit", fontWeight: "var(--font-weight-semibold)" }}>
                 Open Production
               </Link>
             </>

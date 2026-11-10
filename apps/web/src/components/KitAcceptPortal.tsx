@@ -122,7 +122,7 @@ function KitItemCard({
           {item.brand}
         </div>
       )}
-      <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 10 }}>{item.name}</div>
+      <div style={{ fontWeight: "var(--font-weight-semibold)", fontSize: 14, marginBottom: 10 }}>{item.name}</div>
 
       {!curatedPlain && item.requiresColor && colorSwatches.length > 0 && (
         <div className="field" style={{ marginBottom: 10 }}>
@@ -325,7 +325,7 @@ export default function KitAcceptPortal({
               <img src={kitArt} alt="" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }} />
             </div>
             <div>
-              <div className="mut3" style={{ fontSize: 10, letterSpacing: ".08em", textTransform: "uppercase", fontWeight: 700 }}>
+              <div className="mut3" style={{ fontSize: 10, letterSpacing: ".08em", textTransform: "uppercase", fontWeight: "var(--font-weight-bold)" }}>
                 Kit artwork
               </div>
               <div className="muted" style={{ fontSize: 13, marginTop: 2 }}>Branded across all items</div>
@@ -399,7 +399,7 @@ export default function KitAcceptPortal({
                         style={{ maxWidth: "90%", maxHeight: "90%", objectFit: "contain" }}
                       />
                     </div>
-                    <div style={{ fontSize: 12, fontWeight: 700 }}>{variant.label}</div>
+                    <div style={{ fontSize: 12, fontWeight: "var(--font-weight-bold)" }}>{variant.label}</div>
                   </button>
                 );
               })}

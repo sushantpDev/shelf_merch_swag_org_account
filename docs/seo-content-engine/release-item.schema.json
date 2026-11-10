@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ShelfMerch approved internal social release",
+  "description": "Internal outbox item, not a Blotato request. Runtime approval-hash, ownership, live source/media, and future-time checks are also required.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "articleId", "canonicalUrl", "sourceVersion", "variantId", "platform", "accountId", "caption", "mediaUrls", "mediaSha256", "altText", "scheduledTime", "verified", "approval"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "articleId": { "type": "string", "minLength": 1 },
+    "canonicalUrl": { "type": "string", "format": "uri", "pattern": "^https://shelfmerch\\.io/blog/[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "sourceVersion": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "variantId": { "type": "string", "minLength": 1 },
+    "platform": { "enum": ["instagram", "facebook"] },
+    "accountId": { "type": "string", "minLength": 1 },
+    "pageId": { "type": "string", "minLength": 1 },
+    "caption": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "mediaUrls": { "type": "array", "minItems": 1, "maxItems": 1, "items": { "type": "string", "format": "uri", "pattern": "^https://" } },
+    "mediaSha256": { "type": "array", "minItems": 1, "maxItems": 1, "items": { "type": "string", "pattern": "^[a-f0-9]{64}$" } },
+    "altText": { "type": "string", "minLength": 1, "maxLength": 1000 },
+    "scheduledTime": { "type": "string", "format": "date-time", "pattern": "(?:Z|[+-][0-9]{2}:[0-9]{2})$" },
+    "verified": {
+      "type": "object", "additionalProperties": false,
+      "required": ["sourcePublished", "facts", "canonical", "media", "rights", "destination"],
+      "properties": {
+        "sourcePublished": { "const": true },
+        "facts": { "const": true },
+        "canonical": { "const": true },
+        "media": { "const": true },
+        "rights": { "const": true },
+        "destination": { "const": true }
+      }
+    },
+    "approval": {
+      "type": "object", "additionalProperties": false,
+      "required": ["reviewer", "approvedAt", "materialSha256"],
+      "properties": {
+        "reviewer": { "type": "string", "minLength": 1 },
+        "approvedAt": { "type": "string", "format": "date-time" },
+        "materialSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "platform": { "const": "facebook" } }, "required": ["platform"] },
+      "then": { "required": ["pageId"] },
+      "else": { "not": { "required": ["pageId"] } }
+    }
+  ]
+}

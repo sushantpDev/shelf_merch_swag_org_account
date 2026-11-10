@@ -81,7 +81,7 @@ export function PaymentPanel({
     >
       <div className="rd" />
       <div style={{ flex: 1, textAlign: "left" }}>
-        <div style={{ fontWeight: 600, fontSize: 13.5 }}>{title}</div>
+        <div style={{ fontWeight: "var(--font-weight-semibold)", fontSize: 13.5 }}>{title}</div>
         <div className="mut3" style={{ fontSize: 11.5 }}>
           {sub}
         </div>
@@ -114,7 +114,7 @@ export function PaymentPanel({
           >
             <div className="rd" />
             <div style={{ flex: 1, minWidth: 0, textAlign: "left" }}>
-              <div style={{ fontWeight: 700, fontSize: 13.5 }}>Select from wallet</div>
+              <div style={{ fontWeight: "var(--font-weight-bold)", fontSize: 13.5 }}>Select from wallet</div>
               <div className="mut3" style={{ fontSize: 11.5 }}>
                 {walletPayEnabled ? "Choose the wallet to use for this send" : walletDisabledHint}
               </div>

@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 import { createBrowserRouter, redirect, type RouteObject } from "react-router";
 import { NotFound, RootLayout, RouteError } from "./RootLayout";
 import { getStoredUser, isAuthenticated, isPlatformUser } from "@/services/api-bridge";
+import { safeOauthReturnPath } from "@/features/oauth/safeOauthReturn";
 import { requireTenantArea } from "@/services/tenant-route-guards";
 import { getWorkspaceSlug, setWorkspaceSlug } from "@/lib/workspaceSlug";
 
@@ -11,8 +12,12 @@ function page(loader: () => Promise<Record<string, unknown>>, name = "default") 
 }
 
 /** Signed-in users never see landing/login — bounce them into their app. */
-function redirectIfAuthed() {
+function redirectIfAuthed(args?: { request?: Request }) {
+  const back = args?.request
+    ? safeOauthReturnPath(new URL(args.request.url).searchParams.get("return"))
+    : null;
   if (!isAuthenticated()) return null;
+  if (back) return redirect(back);
   if (isPlatformUser(getStoredUser())) return redirect("/platform/dashboard");
   const slug = getWorkspaceSlug();
   return redirect(slug ? `/${slug}` : "/dashboard");
@@ -161,6 +166,10 @@ const tenantChildren: RouteObject[] = [
     children: [
       { index: true, lazy: page(() => import("@/features/catalog/CatalogPage"), "CatalogPage") },
       {
+        path: "browse",
+        lazy: page(() => import("@/features/catalog/CatalogBrowsePage"), "CatalogBrowsePage"),
+      },
+      {
         path: ":id",
         lazy: page(() => import("@/features/catalog/CatalogProductPage"), "CatalogProductPage"),
       },
@@ -186,7 +195,10 @@ const platformChildren: RouteObject[] = [
       },
       {
         path: "categories",
-        lazy: page(() => import("@/components/platform/pages/catalog-categories"), "CatalogCategoriesPage"),
+        lazy: page(
+          () => import("@/components/platform/pages/catalog-categories"),
+          "CatalogCategoriesPage",
+        ),
       },
       {
         path: ":id",
@@ -198,12 +210,18 @@ const platformChildren: RouteObject[] = [
     path: "kits",
     children: [
       { index: true, lazy: page(platformPages, "KitsPage") },
-      { path: "new", lazy: page(() => import("@/components/platform/pages/kit-wizard"), "KitWizard") },
+      {
+        path: "new",
+        lazy: page(() => import("@/components/platform/pages/kit-wizard"), "KitWizard"),
+      },
       {
         path: "import",
         lazy: page(() => import("@/components/platform/pages/shopify-import"), "ShopifyImport"),
       },
-      { path: ":id", lazy: page(() => import("@/components/platform/pages/kit-wizard"), "KitWizard") },
+      {
+        path: ":id",
+        lazy: page(() => import("@/components/platform/pages/kit-wizard"), "KitWizard"),
+      },
     ],
   },
   {
@@ -213,20 +231,36 @@ const platformChildren: RouteObject[] = [
       { path: ":id", lazy: page(platformPages, "OrderFulfillmentPage") },
     ],
   },
-  { path: "tenants", children: [
-    { index: true, lazy: page(platformPages, "TenantsPage") },
-    { path: ":tenantId", lazy: page(platformPages, "TenantDetailPage") },
-  ]},
+  {
+    path: "tenants",
+    children: [
+      { index: true, lazy: page(platformPages, "TenantsPage") },
+      { path: ":tenantId", lazy: page(platformPages, "TenantDetailPage") },
+    ],
+  },
   { path: "finance", lazy: page(platformPages, "FinancePage") },
   { path: "inventory", lazy: page(platformPages, "InventoryPage") },
   { path: "production", lazy: page(platformPages, "ProductionPage") },
   { path: "shipments", lazy: page(platformPages, "ShipmentsPage") },
   { path: "sales", lazy: page(platformPages, "SalesPage") },
-  { path: "blog", children: [
-    { index: true, lazy: page(() => import("@/components/platform/BlogPages"), "BlogListPage") },
-    { path: "new", lazy: page(() => import("@/components/platform/BlogPages"), "BlogEditorPage") },
-    { path: ":id", lazy: page(() => import("@/components/platform/BlogPages"), "BlogEditorPage") },
-  ] },
+  {
+    path: "blog",
+    children: [
+      { index: true, lazy: page(() => import("@/components/platform/BlogPages"), "BlogListPage") },
+      {
+        path: "new",
+        lazy: page(() => import("@/components/platform/BlogPages"), "BlogEditorPage"),
+      },
+      {
+        path: ":id",
+        lazy: page(() => import("@/components/platform/BlogPages"), "BlogEditorPage"),
+      },
+    ],
+  },
+  {
+    path: "seo",
+    lazy: page(() => import("@/components/platform/SeoGrowthPage")),
+  },
   { path: "support", lazy: page(platformPages, "SupportPage") },
   { path: "team", lazy: page(platformPages, "TeamPage") },
   { path: "audit", lazy: page(platformPages, "AuditPage") },
@@ -243,17 +277,31 @@ export const appRouter = createBrowserRouter([
         loader: redirectIfAuthed,
         lazy: page(() => import("@/components/LandingPage")),
       },
-      { path: "about", lazy: page(() => import("@/features/marketing/MarketingHtmlPage"), "AboutPage") },
+      { path: "about", lazy: page(() => import("@/features/marketing/AboutPage"), "AboutPage") },
       { path: "about/index.html", loader: () => redirect("/about") },
-      { path: "careers", lazy: page(() => import("@/features/marketing/MarketingHtmlPage"), "CareersPage") },
+      {
+        path: "careers",
+        lazy: page(() => import("@/features/marketing/CareersPage"), "CareersPage"),
+      },
       { path: "careers/index.html", loader: () => redirect("/careers") },
-      { path: "privacy", lazy: page(() => import("@/features/marketing/MarketingHtmlPage"), "PrivacyPage") },
+      {
+        path: "privacy",
+        lazy: page(() => import("@/features/marketing/PrivacyPage"), "PrivacyPage"),
+      },
       { path: "privacy/index.html", loader: () => redirect("/privacy") },
-      { path: "terms", lazy: page(() => import("@/features/marketing/MarketingHtmlPage"), "TermsPage") },
-      { path: "terms/index.html", loader: () => redirect("/terms") },
+      {
+        path: "terms-condition",
+        loader: () => redirect("/legal/terms-of-service"),
+      },
+      { path: "terms", loader: () => redirect("/legal/terms-of-service") },
+      { path: "terms/index.html", loader: () => redirect("/legal/terms-of-service") },
       {
         path: "resources",
         lazy: page(() => import("@/components/resources/ResourcesHub")),
+      },
+      {
+        path: "resources/hr",
+        loader: ({ request }) => redirect(`/resources/human-resources${new URL(request.url).search}`),
       },
       {
         path: "resources/:team",
@@ -270,10 +318,20 @@ export const appRouter = createBrowserRouter([
         path: "apps/catalog",
         lazy: page(() => import("@/features/catalog/PublicCatalogPage"), "PublicCatalogLayout"),
         children: [
-          { index: true, lazy: page(() => import("@/features/catalog/CatalogPage"), "CatalogPage") },
+          {
+            index: true,
+            lazy: page(() => import("@/features/catalog/CatalogPage"), "CatalogPage"),
+          },
+          {
+            path: "browse",
+            lazy: page(() => import("@/features/catalog/CatalogBrowsePage"), "CatalogBrowsePage"),
+          },
           {
             path: "category/:category",
-            lazy: page(() => import("@/features/catalog/CatalogCategoryPage"), "CatalogCategoryPage"),
+            lazy: page(
+              () => import("@/features/catalog/CatalogCategoryPage"),
+              "CatalogCategoryPage",
+            ),
           },
           {
             path: ":id",
@@ -287,10 +345,20 @@ export const appRouter = createBrowserRouter([
         path: "app/catalog",
         lazy: page(() => import("@/features/catalog/PublicCatalogPage"), "PublicCatalogLayout"),
         children: [
-          { index: true, lazy: page(() => import("@/features/catalog/CatalogPage"), "CatalogPage") },
+          {
+            index: true,
+            lazy: page(() => import("@/features/catalog/CatalogPage"), "CatalogPage"),
+          },
+          {
+            path: "browse",
+            lazy: page(() => import("@/features/catalog/CatalogBrowsePage"), "CatalogBrowsePage"),
+          },
           {
             path: "category/:category",
-            lazy: page(() => import("@/features/catalog/CatalogCategoryPage"), "CatalogCategoryPage"),
+            lazy: page(
+              () => import("@/features/catalog/CatalogCategoryPage"),
+              "CatalogCategoryPage",
+            ),
           },
           {
             path: ":id",
@@ -299,6 +367,10 @@ export const appRouter = createBrowserRouter([
         ],
       },
       { path: "catalog", loader: () => redirect("/apps/catalog") },
+      {
+        path: "oauth/consent",
+        lazy: page(() => import("@/features/oauth/OauthConsentPage"), "OauthConsentPage"),
+      },
       {
         path: "login",
         loader: redirectIfAuthed,
@@ -338,6 +410,10 @@ export const appRouter = createBrowserRouter([
         lazy: page(() => import("@/features/legal/TermsOfServicePage"), "TermsOfServicePage"),
       },
       {
+        path: "legal/slack-terms-of-service",
+        lazy: page(() => import("@/features/legal/SlackTermsOfServicePage"), "SlackTermsOfServicePage"),
+      },
+      {
         path: "docs/zoho-people",
         lazy: page(
           () => import("@/features/docs/zoho-people/ZohoPeopleDocsHomePage"),
@@ -367,7 +443,10 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: "auth/google",
-        lazy: page(() => import("@/features/auth/GoogleAuthCallbackPage"), "GoogleAuthCallbackPage"),
+        lazy: page(
+          () => import("@/features/auth/GoogleAuthCallbackPage"),
+          "GoogleAuthCallbackPage",
+        ),
       },
       {
         path: "accept-invite",
@@ -408,12 +487,36 @@ export const appRouter = createBrowserRouter([
         loader: ({ params }) => {
           // Don't match known public/static top-level routes
           const reserved = [
-            "login", "signup", "forgot-password", "reset-password",
-            "about", "careers", "privacy", "terms", "resources",
-            "request-demo", "contact-us", "contact", "contacts",
-            "catalog", "apps", "shop", "redeem", "accept-invite",
-            "platform", "app", "dashboard", "support", "legal",
-            "docs", "case-studies", "auth", "integrations", "zoho", "s",
+            "login",
+            "signup",
+            "forgot-password",
+            "reset-password",
+            "about",
+            "careers",
+            "privacy",
+            "terms",
+            "terms-condition",
+            "resources",
+            "request-demo",
+            "contact-us",
+            "contact",
+            "contacts",
+            "catalog",
+            "apps",
+            "shop",
+            "redeem",
+            "accept-invite",
+            "platform",
+            "app",
+            "dashboard",
+            "support",
+            "legal",
+            "docs",
+            "case-studies",
+            "auth",
+            "integrations",
+            "zoho",
+            "s",
           ];
           if (reserved.includes(params.slug || "")) {
             // Let it fall through to the wildcard 404
@@ -447,24 +550,21 @@ export const appRouter = createBrowserRouter([
       {
         path: "zoho/people/embed-auth",
         lazy: page(
-          () =>
-            import("@/features/integrations/zoho-people-connected-app/ZohoPeopleEmbedAuthPage"),
+          () => import("@/features/integrations/zoho-people-connected-app/ZohoPeopleEmbedAuthPage"),
           "ZohoPeopleEmbedAuthPage",
         ),
       },
       {
         path: "zoho/people/oauth-done",
         lazy: page(
-          () =>
-            import("@/features/integrations/zoho-people-connected-app/ZohoPeopleEmbedAuthPage"),
+          () => import("@/features/integrations/zoho-people-connected-app/ZohoPeopleEmbedAuthPage"),
           "ZohoPeopleOAuthDonePage",
         ),
       },
       {
         path: "zoho/people/oauth-bridge",
         lazy: page(
-          () =>
-            import("@/features/integrations/zoho-people-connected-app/ZohoPeopleEmbedAuthPage"),
+          () => import("@/features/integrations/zoho-people-connected-app/ZohoPeopleEmbedAuthPage"),
           "ZohoPeopleOAuthBridgePage",
         ),
       },
@@ -473,7 +573,10 @@ export const appRouter = createBrowserRouter([
         children: [
           {
             index: true,
-            lazy: page(() => import("@/features/marketing/MarketingHtmlPage"), "PlatformMarketingPage"),
+            lazy: page(
+              () => import("@/features/marketing/PlatformMarketingPage"),
+              "PlatformMarketingPage",
+            ),
           },
           {
             lazy: page(() => import("@/components/platform/PlatformLayout")),

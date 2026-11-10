@@ -111,6 +111,7 @@ function providerLabel(slug: string) {
     "ukg-pro": "UKG Pro",
     hibob: "HiBob",
     "google-workspace": "Google Workspace",
+    "zoho-people": "Zoho People",
   };
   return map[slug] || slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
@@ -121,6 +122,15 @@ function tidyName(value: string) {
 
 /** HRIS people directory — MergeHrisEmployee list; also mirrored into Workspace Contacts on sync. */
 export function HrisEmployeesView(vm: HrisEmployeesVm) {
+  const directoryIsCurrent =
+    vm.directory.state === "connected" ||
+    vm.directory.state === "syncing" ||
+    vm.directory.state === "error";
+  const hasConnection =
+    directoryIsCurrent ||
+    vm.connections.some(
+      (connection) => connection.status === "connected" || connection.status === "needs_attention",
+    );
   const filtered = vm.employees.length;
   const [providerOpen, setProviderOpen] = useState(false);
   const totalLabel = filtered === 1 ? "item" : "items";
@@ -163,7 +173,7 @@ export function HrisEmployeesView(vm: HrisEmployeesVm) {
           <button
             type="button"
             className="hris-dir-stats-help"
-            title="These records come from Merge directory sync and are also mirrored into Workspace Contacts. They do not create ShelfMerch logins."
+            title="These records come from connected directory sync, including Zoho People and Merge, and are also mirrored into Workspace Contacts. They do not create ShelfMerch logins."
             aria-label="About Employee directory"
           >
             <HelpCircle size={15} />

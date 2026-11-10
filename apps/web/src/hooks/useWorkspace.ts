@@ -19,9 +19,9 @@ export function useWorkspace() {
     queryKey: WORKSPACE_QUERY_KEY,
     queryFn: async () => {
       const snapshot = await hydrateWorkspace();
-      // Derive and cache the workspace slug from the account name
-      if (snapshot.account) {
-        const slug = slugify(snapshot.account);
+      // Prefer the canonical tenant slug returned by the API.
+      if (snapshot.slug || snapshot.account) {
+        const slug = snapshot.slug || slugify(snapshot.account);
         if (slug) setWorkspaceSlug(slug);
       }
       return snapshot;
@@ -40,7 +40,8 @@ export function useInvalidateWorkspace() {
 /** Convenience: returns the current workspace slug (reads from localStorage). */
 export function useWorkspaceSlug(): string {
   const { data } = useWorkspace();
-  // Re-derive from live data if available, fall back to cached
+  if (data?.slug) return data.slug;
+  // Re-derive from live data if available, fall back to cached.
   if (data?.account) return slugify(data.account);
   return getWorkspaceSlug();
 }

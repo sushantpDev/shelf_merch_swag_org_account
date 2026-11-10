@@ -128,7 +128,7 @@ export function ResetPasswordPage() {
 
   if (phase === "validating") {
     return (
-      <AuthLayout variant="compact" title="Verifying reset link">
+      <AuthLayout variant="welcome" showDivider={false} title="Verifying reset link">
         <div className="auth-loading-panel" role="status" aria-live="polite">
           <Loader2 className="auth-spin" size={28} aria-hidden="true" />
           <p>Checking your reset link…</p>
@@ -140,7 +140,8 @@ export function ResetPasswordPage() {
   if (phase === "invalid") {
     return (
       <AuthLayout
-        variant="compact"
+        variant="welcome"
+        showDivider={false}
         title="Reset Link Expired"
         subtitle="This reset link is no longer valid."
         footerLink={{ hint: "", label: "Back to Login", to: "/login" }}
@@ -168,15 +169,22 @@ export function ResetPasswordPage() {
 
   if (phase === "success") {
     return (
-      <AuthLayout variant="compact" title="Password updated">
+      <AuthLayout variant="welcome" showDivider={false} title="Password updated">
         <div className="auth-success-panel" role="status">
-          <CheckCircle2 className="auth-success-icon auth-success-icon--pop" size={52} strokeWidth={1.75} />
+          <CheckCircle2
+            className="auth-success-icon auth-success-icon--pop"
+            size={52}
+            strokeWidth={1.75}
+          />
           <p className="auth-success-headline">Password updated successfully</p>
           <p className="auth-success-copy">Your password has been reset.</p>
           <p className="auth-success-redirect" aria-live="polite">
             {shopId ? "Redirecting to store…" : "Redirecting to Login…"}
           </p>
-          <Link to={shopId ? shopStorefrontPath(shopId) : "/login"} className="auth-simple-switch-link">
+          <Link
+            to={shopId ? shopStorefrontPath(shopId) : "/login"}
+            className="auth-simple-switch-link"
+          >
             Continue now
           </Link>
         </div>
@@ -186,7 +194,8 @@ export function ResetPasswordPage() {
 
   return (
     <AuthLayout
-      variant="compact"
+      variant="welcome"
+      showDivider={false}
       title="Create a new password"
       subtitle="Choose a strong password for your Shelf Merch account."
       footerLink={{ hint: "", label: "Back to Login", to: "/login" }}

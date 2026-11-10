@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Outlet, useLocation, useNavigation, useSearchParams } from "react-router";
+import { Outlet, useLocation, useNavigate, useNavigation, useParams, useSearchParams } from "react-router";
 import { CollapsibleSidebar } from "@/components/tenant/CollapsibleSidebar";
 import { UserMenu } from "@/components/tenant/UserMenu";
 import { WalletBalanceMenu } from "@/components/tenant/WalletBalanceMenu";
@@ -50,7 +50,9 @@ export default function TenantLayout() {
   const { data: workspace } = useWorkspace();
   const { canWrite } = useTenantAccess();
   const location = useLocation();
+  const navigate = useNavigate();
   const navigation = useNavigation();
+  const params = useParams();
   const [searchParams] = useSearchParams();
   const walletParam =
     location.pathname.endsWith("/wallets")
@@ -63,6 +65,16 @@ export default function TenantLayout() {
       window.location.href = "/login";
     }
   }, []);
+
+  useEffect(() => {
+    const requestedSlug = params.slug;
+    const canonicalSlug = workspace?.slug;
+    if (!requestedSlug || !canonicalSlug || requestedSlug === canonicalSlug) return;
+
+    const [, , ...rest] = location.pathname.split("/");
+    const subPath = rest.length ? `/${rest.join("/")}` : "";
+    navigate(`/${canonicalSlug}${subPath}${location.search}`, { replace: true });
+  }, [location.pathname, location.search, navigate, params.slug, workspace?.slug]);
 
   if (!isAuthenticated()) {
     return null;
@@ -89,7 +101,7 @@ export default function TenantLayout() {
     ? Boolean(workspace && entityManagerDepartments(workspace).length > 0)
     : (workspace?.wallets?.length ?? 0) > 0;
   const canRequestTopup = canWrite("wallets") && !isEntityManager && hasBudget;
-  const budgetTitle = isEntityManager ? "My budget" : "Organization budget";
+  const budgetTitle = isEntityManager ? "My budget" : "Available budget";
   const balanceCaption = isEntityManager ? "Available for you" : "Available balance";
 
   return (

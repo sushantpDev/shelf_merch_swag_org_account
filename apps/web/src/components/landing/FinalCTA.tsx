@@ -21,9 +21,6 @@ export function FinalCTA() {
           <span className="desktop-only">Start with Shelf Merch</span>
           <span className="mobile-only">Get started</span> <ArrowIcon />
         </Link>
-        <div className="final-cta__visual mobile-only" aria-hidden="true">
-          <img src="/images/landing/hero.png" alt="" loading="lazy" />
-        </div>
       </div>
     </section>
   );

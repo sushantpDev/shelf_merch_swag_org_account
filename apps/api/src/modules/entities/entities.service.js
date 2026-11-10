@@ -103,6 +103,33 @@ export async function managedEntityNamesForUser({ tenantId, user }) {
   return entities.map((e) => String(e.name || '').trim()).filter(Boolean);
 }
 
+async function managedEntityIdsRead({ tenantId, user }) {
+  const dbUser = await User.findOne({ _id: user.userId, tenantId }).select('email').lean();
+  const email = dbUser?.email?.toLowerCase();
+  const or = [{ managerUserId: user.userId }];
+  if (email) or.push({ managerEmail: email });
+  const managed = await Entity.find({ tenantId, $or: or }).select('_id').lean();
+  return managed.map((entity) => String(entity._id));
+}
+
+/**
+ * Department names for a read-only directory view.
+ * Matches managedEntityNamesForUser without backfilling manager links or role assignments.
+ */
+export async function managedEntityNamesForUserRead({ tenantId, user }) {
+  const isEntityManager = user?.role === 'entity_manager' || user?.scopeType === 'entity';
+  if (!isEntityManager) return null;
+
+  const managedIds = user?.userId ? await managedEntityIdsRead({ tenantId, user }) : [];
+  const merged = [...new Set([...(user.assignedEntityIds ?? []).map(String), ...managedIds])].filter(Boolean);
+  if (!merged.length) return [];
+
+  const entities = await Entity.find({ tenantId, _id: { $in: merged } })
+    .select('name')
+    .lean();
+  return entities.map((entity) => String(entity.name || '').trim()).filter(Boolean);
+}
+
 export async function listEntities({ tenantId, user, walletId }) {
   const filter = { tenantId, ...(walletId ? { walletId } : {}) };
   const visibleIds = await entityIdsVisibleToManager({ tenantId, user });
@@ -290,5 +317,11 @@ export async function listEntityTransactions({ tenantId, entityId, user, query }
     WalletTransaction.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
     WalletTransaction.countDocuments(filter),
   ]);
-  return paginatedResponse(items, total, { page, limit });
+  const manager = user?.role === 'entity_manager' || user?.scopeType === 'entity';
+  // balanceAfter is the organization wallet cash snapshot. The department
+  // history screen recomputes remaining budget, so entity managers do not receive it.
+  const visible = manager
+    ? items.map(({ balanceAfter: _balanceAfter, ...row }) => row)
+    : items;
+  return paginatedResponse(visible, total, { page, limit });
 }

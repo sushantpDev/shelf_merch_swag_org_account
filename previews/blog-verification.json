@@ -1,0 +1,116 @@
+[
+  {
+    "width": 1920,
+    "scrollWidth": 1920,
+    "h1": 1,
+    "images": true,
+    "headings": [
+      "48px",
+      "48px",
+      "48px",
+      "48px",
+      "48px"
+    ],
+    "brokenAnchors": 0,
+    "body": {
+      "size": "19px",
+      "font": "Arial, Helvetica, sans-serif",
+      "leading": "31.35px"
+    }
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "h1": 1,
+    "images": true,
+    "headings": [
+      "48px",
+      "48px",
+      "48px",
+      "48px",
+      "48px"
+    ],
+    "brokenAnchors": 0,
+    "body": {
+      "size": "19px",
+      "font": "Arial, Helvetica, sans-serif",
+      "leading": "31.35px"
+    }
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "h1": 1,
+    "images": true,
+    "headings": [
+      "34.816px",
+      "34.816px",
+      "34.816px",
+      "34.816px",
+      "34.816px"
+    ],
+    "brokenAnchors": 0,
+    "body": {
+      "size": "19px",
+      "font": "Arial, Helvetica, sans-serif",
+      "leading": "31.35px"
+    }
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "h1": 1,
+    "images": true,
+    "headings": [
+      "32px",
+      "32px",
+      "32px",
+      "32px",
+      "32px"
+    ],
+    "brokenAnchors": 0,
+    "body": {
+      "size": "19px",
+      "font": "Arial, Helvetica, sans-serif",
+      "leading": "31.35px"
+    }
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "h1": 1,
+    "images": true,
+    "headings": [
+      "28px",
+      "28px",
+      "28px",
+      "28px",
+      "28px"
+    ],
+    "brokenAnchors": 0,
+    "body": {
+      "size": "18px",
+      "font": "Arial, Helvetica, sans-serif",
+      "leading": "29.7px"
+    }
+  },
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "h1": 1,
+    "images": true,
+    "headings": [
+      "28px",
+      "28px",
+      "28px",
+      "28px",
+      "28px"
+    ],
+    "brokenAnchors": 0,
+    "body": {
+      "size": "18px",
+      "font": "Arial, Helvetica, sans-serif",
+      "leading": "29.7px"
+    }
+  }
+]

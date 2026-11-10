@@ -21,7 +21,7 @@ const columns: {
     render: (r) => (
       <Link
         to={`/platform/orders/${String(r._id)}`}
-        style={{ color: "var(--brand)", fontWeight: 600, textDecoration: "none" }}
+        style={{ color: "var(--brand)", fontWeight: "var(--font-weight-semibold)", textDecoration: "none" }}
       >
         {String(r.orderNumber ?? "N/A")}
       </Link>

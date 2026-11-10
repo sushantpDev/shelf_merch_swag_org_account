@@ -109,12 +109,12 @@ export const ORG_SUGG = [
 ] as const;
 
 export const ORG_FALLBACK = [
-  "#3D5FD9", // var(--blue-500)
-  "#2B4E8F", // var(--navy-500)
-  "#4B6B94", // blue-gray
-  "#F4741F", // var(--orange-500)
-  "#7B93E8", // var(--blue-400)
-  "#1E3A6E", // var(--navy-700)
+  "#35B5E5", // sky blue
+  "#DF4545", // red
+  "#FFC329", // yellow
+  "#30B87A", // green
+  "#7657D6", // purple
+  "#1677FF", // electric blue
 ] as const;
 
 /** Distinct chart color per department index (wallets dashboard donut / legend). */

@@ -132,9 +132,22 @@ describe('Zoho People connect / callback / disconnect', () => {
       connectedAt: new Date(),
     });
 
+    const fetchMock = vi.fn(async (url, init) => {
+      expect(String(url)).toBe('https://accounts.zoho.in/oauth/v2/revoke/token');
+      expect(String(url)).not.toContain('refresh-plain');
+      expect(String(init.headers.Authorization || init.headers.authorization)).toMatch(/^Basic /);
+      expect(String(init.body)).toContain('token_type=refresh_token');
+      expect(String(init.body)).toContain('refresh-plain');
+      return new Response(JSON.stringify({ status: 'success' }), { status: 200 });
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
     const res = await request(app)
       .delete('/api/integrations/zoho/disconnect')
       .set('Authorization', `Bearer ${adminToken}`);
+
+    expect(fetchMock).toHaveBeenCalled();
+    vi.unstubAllGlobals();
 
     expect(res.status).toBe(200);
     expect(res.body.status).toBe('not_connected');

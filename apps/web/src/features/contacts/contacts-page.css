@@ -2,7 +2,7 @@
 
 .contacts-page {
   color: var(--ink);
-  font-family: var(--sans);
+  font-family: var(--font-family-primary);
   margin-top: -8px;
   padding-bottom: 0;
   background: transparent;
@@ -42,11 +42,22 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  max-width: 36rem;
+  max-width: 44rem;
+}
+.contacts-empty__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+@media (max-width: 480px) {
+  .contacts-empty__actions { flex-direction: column; width: 100%; max-width: 280px; }
+  .contacts-empty__actions > button { width: 100%; justify-content: center; }
 }
 
 .contacts-empty__art {
-  width: min(168px, 46vw);
+  width: min(var(--empty-state-art-size), 46vw);
   height: auto;
   margin: 0 0 4px;
   object-fit: contain;
@@ -55,121 +66,25 @@
 
 .contacts-empty__hero h3 {
   margin: 0;
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: clamp(24px, 3vw, 30px);
-  font-weight: 850;
+  font-weight: var(--font-weight-bold);
   letter-spacing: -0.03em;
   color: var(--ink);
 }
 
 .contacts-empty__hero p {
   margin: 0;
-  max-width: 40ch;
+  max-width: 100%;
   color: var(--ink-2);
-  font-size: 15px;
+  font-size: var(--workspace-font-body, 15px);
   line-height: 1.5;
-}
-
-.contacts-empty__options {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  width: min(920px, 100%);
-  text-align: left;
-}
-
-.contacts-empty__option {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  min-height: 100%;
-  padding: 18px 16px 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--r, 14px);
-  background: var(--bg-card, #fff);
-  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
-  cursor: pointer;
-  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
-  font: inherit;
-  color: inherit;
-  text-align: left;
-}
-
-.contacts-empty__option:hover {
-  transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--brand) 28%, var(--line));
-  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
-}
-
-.contacts-empty__option:focus-visible {
-  outline: 2px solid var(--brand);
-  outline-offset: 2px;
-}
-
-.contacts-empty__option-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
-  margin-bottom: 2px;
-}
-
-.contacts-empty__option-icon--blue {
-  background: var(--brand-50);
-  color: var(--brand-d);
-}
-
-.contacts-empty__option-icon--coral {
-  background: #ffe8df;
-  color: #c2410c;
-}
-
-.contacts-empty__option-icon--green {
-  background: #e7f8ef;
-  color: #15803d;
-}
-
-.contacts-empty__option strong {
-  color: var(--ink);
-  font-size: 15px;
-  font-weight: 800;
-}
-
-.contacts-empty__option p {
-  margin: 0;
-  flex: 1;
-  color: var(--ink-2);
-  font-size: 13px;
-  line-height: 1.45;
-}
-
-.contacts-empty__option-cta {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 6px;
-  padding: 8px 12px;
-  border-radius: 10px;
-  background: var(--ink);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.contacts-empty__option:hover .contacts-empty__option-cta {
-  background: #252525;
 }
 
 @media (max-width: 900px) {
   .contacts-empty {
     padding: 32px 18px 24px;
     gap: 22px;
-  }
-
-  .contacts-empty__options {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -185,9 +100,9 @@
 
 .ct-hero h1 {
   margin: 0;
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: 28px;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   letter-spacing: -0.03em;
   line-height: 1.15;
   color: #111827;
@@ -202,15 +117,15 @@
 
 .ct-hero__ghost,
 .ct-hero__cta {
-  font-family: var(--sans);
+  font-family: var(--font-family-primary);
   height: 36px;
   padding: 0 14px;
-  border-radius: 8px;
+  border-radius: 999px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--workspace-font-body, 13px);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: 0;
   text-transform: none;
   cursor: pointer;
@@ -291,13 +206,13 @@
 }
 
 .ct-search input {
-  font-family: var(--sans);
+  font-family: var(--font-family-primary);
   flex: 1;
   min-width: 0;
   border: none;
   outline: none;
   background: transparent;
-  font-size: 13px;
+  font-size: var(--workspace-font-body, 13px);
   color: #111827;
 }
 
@@ -315,15 +230,15 @@
 }
 
 .ct-filter-btn {
-  font-family: var(--sans);
+  font-family: var(--font-family-primary);
   height: 36px;
   padding: 0 12px;
   border: 1px solid #e5e7eb;
   border-radius: 999px;
   background: #fff;
   color: #374151;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--workspace-font-body, 13px);
+  font-weight: var(--font-weight-medium);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -349,8 +264,8 @@
   border-radius: 999px;
   background: #4f46e5;
   color: #fff;
-  font-size: 11px;
-  font-weight: 700;
+  font-size: var(--workspace-font-caption, 11px);
+  font-weight: var(--font-weight-bold);
   line-height: 1;
 }
 
@@ -370,7 +285,7 @@
 }
 
 .ct-filter-menu button {
-  font-family: var(--sans);
+  font-family: var(--font-family-primary);
   display: block;
   width: 100%;
   text-align: left;
@@ -378,8 +293,8 @@
   border: none;
   border-radius: 6px;
   background: transparent;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--workspace-font-body, 13px);
+  font-weight: var(--font-weight-medium);
   color: #374151;
   cursor: pointer;
 }
@@ -393,8 +308,8 @@
 .ct-total {
   margin: 0;
   padding: 14px 16px;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--workspace-font-body, 13px);
+  font-weight: var(--font-weight-medium);
   color: #6b7280;
   background: #fff;
   border: 0;
@@ -425,7 +340,7 @@
 }
 
 .ct-table {
-  font-family: var(--sans);
+  font-family: var(--font-family-primary);
   width: 100%;
   table-layout: fixed;
   border-collapse: separate;
@@ -449,10 +364,10 @@
 }
 
 .ct-table thead th {
-  font-family: var(--sans);
+  font-family: var(--font-family-primary);
   padding: 10px 16px;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--workspace-font-caption, 13px);
+  font-weight: var(--font-weight-medium);
   letter-spacing: 0;
   text-transform: none;
   color: #6b7280;
@@ -511,9 +426,9 @@
 }
 
 .ct-table tbody td {
-  font-family: var(--sans);
+  font-family: var(--font-family-primary);
   padding: 12px 16px;
-  font-size: 13.5px;
+  font-size: var(--workspace-font-body, 13.5px);
   vertical-align: middle;
   background: #fff;
   border: 0;
@@ -552,8 +467,8 @@
   display: grid;
   place-items: center;
   flex: none;
-  font-size: 11px;
-  font-weight: 700;
+  font-size: var(--workspace-font-caption, 11px);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.02em;
 }
 
@@ -566,9 +481,9 @@
 
 .ct-name {
   display: block;
-  font-family: var(--disp);
-  font-size: 13.5px;
-  font-weight: 700;
+  font-family: var(--font-family-primary);
+  font-size: var(--workspace-font-body, 13.5px);
+  font-weight: var(--font-weight-bold);
   letter-spacing: -0.01em;
   color: #4f46e5;
   white-space: nowrap;
@@ -578,8 +493,8 @@
 
 .ct-sub {
   display: block;
-  font-size: 12.5px;
-  font-weight: 400;
+  font-size: var(--workspace-font-body, 12.5px);
+  font-weight: var(--font-weight-regular);
   color: #9ca3af;
   white-space: nowrap;
   overflow: hidden;
@@ -605,13 +520,13 @@
 
 .ct-worker-type {
   color: #374151;
-  font-size: 13.5px;
+  font-size: var(--workspace-font-body, 13.5px);
   white-space: nowrap;
 }
 
 .ct-date {
   color: #374151;
-  font-size: 13.5px;
+  font-size: var(--workspace-font-body, 13.5px);
   white-space: nowrap;
 }
 
@@ -619,8 +534,8 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-size: 13.5px;
-  font-weight: 500;
+  font-size: var(--workspace-font-body, 13.5px);
+  font-weight: var(--font-weight-medium);
   color: #374151;
   white-space: nowrap;
 }
@@ -656,8 +571,8 @@
   border-radius: 8px;
   background: transparent;
   color: #374151;
-  font-size: 13.5px;
-  font-weight: 500;
+  font-size: var(--workspace-font-body, 13.5px);
+  font-weight: var(--font-weight-medium);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -697,8 +612,8 @@
   gap: 16px;
   padding: 8px 10px;
   border-radius: 6px;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--workspace-font-body, 13px);
+  font-weight: var(--font-weight-medium);
   color: #374151;
 }
 
@@ -723,7 +638,7 @@
 
 .ct-muted {
   color: #6b7280;
-  font-size: 13.5px;
+  font-size: var(--workspace-font-caption, 13.5px);
   max-width: 180px;
   white-space: nowrap;
   overflow: hidden;
@@ -762,9 +677,9 @@
 
 .ct-empty h3 {
   margin: 8px 0 0;
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: 18px;
-  font-weight: 750;
+  font-weight: var(--font-weight-bold);
   color: #111827;
 }
 
@@ -772,7 +687,7 @@
   margin: 8px auto 0;
   max-width: 42ch;
   color: #6b7280;
-  font-size: 14px;
+  font-size: var(--workspace-font-body, 14px);
 }
 
 .ct-del {
@@ -797,7 +712,7 @@
 
 .ct-del__title {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   line-height: 1.3;
   color: #111827;
   text-align: center;
@@ -805,7 +720,7 @@
 
 .ct-del__copy {
   margin-top: 10px;
-  font-size: 14px;
+  font-size: var(--workspace-font-body, 14px);
   line-height: 1.5;
   color: #6b7280;
   text-align: center;
@@ -820,7 +735,7 @@
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   text-align: left;
-  font-size: 13.5px;
+  font-size: var(--workspace-font-body, 13.5px);
   color: #374151;
   cursor: pointer;
 }
@@ -843,8 +758,8 @@
   height: 44px;
   margin: 0;
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--workspace-font-body, 14px);
+  font-weight: var(--font-weight-semibold);
   border: 1px solid #e5e7eb;
   background: #f3f4f6;
   color: #111827;
@@ -860,8 +775,8 @@
   margin: 0;
   border: none;
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--workspace-font-body, 14px);
+  font-weight: var(--font-weight-semibold);
   background: #e11d48;
   color: #fff;
   box-shadow: none;

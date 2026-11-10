@@ -7,11 +7,10 @@ import {
   HelpCircle,
   MoreHorizontal,
   Plus,
+  Plug,
   Search,
   SlidersHorizontal,
   Upload,
-  UserPlus,
-  Plug,
 } from "lucide-react";
 import { COUNTRY_OPTIONS } from "@/data/countries";
 import { LoadingState } from "@/components/LoadingState";
@@ -39,7 +38,7 @@ import {
   type SortKey,
   type WorkerStatusFilter,
 } from "../controllers/useContactsController";
-import contactsAddArt from "../../../../assets/contacts-add.png";
+import contactsAddArt from "../../../../assets/contacts-hris-rounded.png";
 import "../contacts-page.css";
 
 function contactsAddedDescription(count: number) {
@@ -381,48 +380,22 @@ export function ContactsView(vm: ContactsVm) {
                 className="contacts-empty__art"
               />
               <h3>Add your contacts</h3>
-              <p>Add recipients to send points or kits to your team.</p>
+              <p>
+                Add recipients to send points or kits to your team.
+                <br />
+                Sync automatically using your HR software or add them manually.
+              </p>
             </div>
-            {vm.canManageContacts ? (
-              <div className="contacts-empty__options">
-                <button
-                  type="button"
-                  className="contacts-empty__option"
-                  onClick={() => vm.onAddOpen("manual")}
-                >
-                  <span className="contacts-empty__option-icon contacts-empty__option-icon--blue" aria-hidden="true">
-                    <UserPlus size={18} strokeWidth={2.2} />
-                  </span>
-                  <strong>Add manually</strong>
-                  <p>Add individual contacts one by one.</p>
-                  <span className="contacts-empty__option-cta">Add manually</span>
+            {vm.canManageContacts && (
+              <div className="contacts-empty__actions">
+                <button type="button" className="ct-hero__cta" onClick={() => vm.onAddOpen("manual")}>
+                  <Plus size={16} aria-hidden="true" /> Add people manually
                 </button>
-                <button
-                  type="button"
-                  className="contacts-empty__option"
-                  onClick={() => vm.onAddOpen("csv")}
-                >
-                  <span className="contacts-empty__option-icon contacts-empty__option-icon--coral" aria-hidden="true">
-                    <Upload size={18} strokeWidth={2.2} />
-                  </span>
-                  <strong>Import contacts</strong>
-                  <p>Upload an Excel or CSV file with your contacts.</p>
-                  <span className="contacts-empty__option-cta">Upload file</span>
-                </button>
-                <button
-                  type="button"
-                  className="contacts-empty__option"
-                  onClick={vm.onConnectIntegration}
-                >
-                  <span className="contacts-empty__option-icon contacts-empty__option-icon--green" aria-hidden="true">
-                    <Plug size={18} strokeWidth={2.2} />
-                  </span>
-                  <strong>Connect an integration</strong>
-                  <p>Sync contacts from your HR or employee management system.</p>
-                  <span className="contacts-empty__option-cta">Connect integration</span>
+                <button type="button" className="ct-hero__ghost" onClick={vm.onConnectIntegration}>
+                  <Plug size={16} aria-hidden="true" /> Connect HRIS
                 </button>
               </div>
-            ) : null}
+            )}
           </div>
         ) : (
           <section className="ct-panel">

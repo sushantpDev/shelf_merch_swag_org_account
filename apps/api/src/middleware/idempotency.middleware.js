@@ -6,7 +6,7 @@ import { beginIdempotency, completeIdempotency, releaseIdempotency } from '../se
  * re-executing. Keys are scoped per tenant+user. A concurrent duplicate
  * request (key reserved but response not yet stored) gets a 409.
  */
-export function idempotency({ required = false } = {}) {
+export function idempotency({ required = false, recover = false } = {}) {
   return async (req, res, next) => {
     const key = req.headers['idempotency-key'];
     if (!key) {
@@ -22,6 +22,7 @@ export function idempotency({ required = false } = {}) {
       const result = await beginIdempotency(scope, {
         method: req.method,
         path: req.originalUrl,
+        recover,
       });
 
       if (result.action === 'replay') {

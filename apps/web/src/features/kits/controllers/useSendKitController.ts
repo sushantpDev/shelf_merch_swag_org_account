@@ -1,3 +1,4 @@
+import { validateArtworkFile } from "@/lib/artworkValidation";
 import { useMemo, useReducer, useState, useEffect, useRef, type Dispatch } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router";
@@ -112,8 +113,17 @@ const GROUP_BY_CATEGORY: Record<string, string> = {
 
 const DRINKWARE_NAME = /\bbottle\b|\bmug\b|\btumbler\b|\bflask\b|\bdrinkware\b/i;
 
-function distinctVariantValues(variants: any[] | undefined, key: string): string[] {
-  return [...new Set((variants || []).map((v) => v[key]).filter(Boolean))] as string[];
+function distinctVariantValues(
+  variants: UiProduct["variants"],
+  key: "size" | "color",
+): string[] {
+  return [
+    ...new Set(
+      (variants ?? [])
+        .map((variant) => variant[key])
+        .filter((value): value is string => Boolean(value?.trim())),
+    ),
+  ];
 }
 
 function effectiveProductGroup(product: UiProduct, ref: any = {}) {
@@ -787,9 +797,10 @@ export function useSendKitController(): SendKitVm {
             for (const prod of pickedProds) {
               const ref = kit?.productRefs?.find((r) => r.catalogProductId === prod.id) ?? {};
               const opts = resolveKitItemOptions(prod, ref);
+              if (!opts.requiresSize && !opts.requiresColor) continue;
               const sel = variants[prod.id || ""] || {};
-              if (opts.requiresSize && opts.sizes.length > 0 && !sel.size) missingList.push(`${name}'s size for ${prod.nm}`);
-              if (opts.requiresColor && opts.colors.length > 0 && !sel.color) missingList.push(`${name}'s color for ${prod.nm}`);
+              if (opts.requiresSize && !sel.size?.trim()) missingList.push(`${name}'s size for ${prod.nm}`);
+              if (opts.requiresColor && !sel.color?.trim()) missingList.push(`${name}'s color for ${prod.nm}`);
             }
           }
         }
@@ -982,8 +993,10 @@ export function useSendKitController(): SendKitVm {
 
   async function onCuratedLogoFile(file: File | null) {
     if (!kit || !file) return;
-    if (!file.type.startsWith("image/")) {
-      toast.error("Upload a PNG, JPG, or SVG file");
+    try {
+      await validateArtworkFile(file);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not read artwork");
       return;
     }
     if (logoObjectUrlRef.current) URL.revokeObjectURL(logoObjectUrlRef.current);

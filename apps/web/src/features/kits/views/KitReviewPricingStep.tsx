@@ -25,10 +25,10 @@ function SummaryRow({ label, value, emphasis }: { label: string; value: string; 
         fontSize: emphasis ? 16 : 14,
       }}
     >
-      <span style={{ fontWeight: emphasis ? 800 : 600, color: emphasis ? "var(--ink)" : "var(--ink-2)" }}>
+      <span style={{ fontWeight: emphasis ? "var(--font-weight-bold)" : "var(--font-weight-semibold)", color: emphasis ? "var(--ink)" : "var(--ink-2)" }}>
         {label}
       </span>
-      <b className="num" style={{ fontWeight: emphasis ? 800 : 700, fontSize: emphasis ? 18 : 14 }}>
+      <b className="num" style={{ fontWeight: emphasis ? "var(--font-weight-bold)" : "var(--font-weight-bold)", fontSize: emphasis ? 18 : 14 }}>
         {value}
       </b>
     </div>
@@ -67,7 +67,7 @@ export function KitReviewPricingStep({
       </header>
 
       <div className="card" style={{ padding: 22, marginBottom: 16 }}>
-        <h3 style={{ fontSize: 15, fontWeight: 800, margin: "0 0 14px" }}>Selected Products</h3>
+        <h3 style={{ fontSize: "var(--workspace-font-heading, 15px)", fontWeight: "var(--font-weight-bold)", margin: "0 0 14px" }}>Selected Products</h3>
         {products.length === 0 ? (
           <p className="muted" style={{ margin: 0 }}>No products selected.</p>
         ) : (
@@ -109,12 +109,12 @@ export function KitReviewPricingStep({
                     />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontWeight: 700, fontSize: 14, color: "var(--ink)" }}>{p.nm}</div>
+                    <div style={{ fontWeight: "var(--font-weight-bold)", fontSize: "var(--workspace-font-body, 14px)", color: "var(--ink)" }}>{p.nm}</div>
                     {p.brand ? (
-                      <div className="muted" style={{ fontSize: 12 }}>{p.brand}</div>
+                      <div className="muted" style={{ fontSize: "var(--workspace-font-caption, 12px)" }}>{p.brand}</div>
                     ) : null}
                   </div>
-                  <b className="num" style={{ fontSize: 14, fontWeight: 800 }}>
+                  <b className="num" style={{ fontSize: "var(--workspace-font-body, 14px)", fontWeight: "var(--font-weight-bold)" }}>
                     {formatInr(netPrice)}
                   </b>
                 </li>
@@ -132,7 +132,7 @@ export function KitReviewPricingStep({
           <div className="divider" style={{ margin: "12px 0" }} />
           <SummaryRow label="Total" value={`${formatInr(pricing.costPerKit)} / kit`} emphasis />
         </div>
-        <p className="muted" style={{ margin: "8px 0 0", fontSize: 12 }}>
+        <p className="muted" style={{ margin: "8px 0 0", fontSize: "var(--workspace-font-caption, 12px)" }}>
           Product prices exclude GST by category. Packaging is added at send time.
         </p>
       </div>

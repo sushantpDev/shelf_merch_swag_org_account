@@ -4,7 +4,7 @@ import { LoadingState } from "@/components/LoadingState";
 import { PageHeader } from "@/components/tenant/PageHeader";
 import { ShopCard } from "../ShopCard";
 import type { ShopsVm } from "../controllers/useShopsController";
-import shopsEmptyArt from "../../../../assets/shops-empty.png";
+import shopsEmptyArt from "../../../../assets/shops-empty.svg";
 
 /** Shops list: empty state or a grid of shop cards. */
 export function ShopsView(vm: ShopsVm) {

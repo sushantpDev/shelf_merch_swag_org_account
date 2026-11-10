@@ -10,6 +10,30 @@ import {
 } from "@/services/merge-api";
 import { resolveHrisDirectoryBanner } from "./hrisDirectoryBanner";
 
+const ACTIVE_DIRECTORY_STATUSES = new Set(["connected", "needs_attention"]);
+
+/** Merge connections plus direct providers such as Zoho People, counted once each. */
+export function countConnectedDirectoryProviders(
+  connections: Array<{ status?: string | null; provider?: string | null }>,
+  employees: Array<{ connectionStatus?: string | null; provider?: string | null }>,
+) {
+  const providers = new Set<string>();
+  for (const connection of connections) {
+    if (ACTIVE_DIRECTORY_STATUSES.has(String(connection.status || "").toLowerCase()) && connection.provider) {
+      providers.add(connection.provider);
+    }
+  }
+  for (const employee of employees) {
+    if (
+      ACTIVE_DIRECTORY_STATUSES.has(String(employee.connectionStatus || "").toLowerCase()) &&
+      employee.provider
+    ) {
+      providers.add(employee.provider);
+    }
+  }
+  return providers.size;
+}
+
 export const MERGE_EMPLOYEES_QUERY_KEY = ["integrations", "merge", "employees"] as const;
 export const MERGE_CONNECTIONS_QUERY_KEY = ["integrations", "merge", "connections"] as const;
 
@@ -81,11 +105,8 @@ export function useHrisEmployeesController(): HrisEmployeesVm {
   );
 
   const connectedProviderCount = useMemo(
-    () =>
-      (connectionsQuery.data ?? []).filter(
-        (c) => c.status === "connected" || c.status === "needs_attention",
-      ).length,
-    [connectionsQuery.data],
+    () => countConnectedDirectoryProviders(connectionsQuery.data ?? [], allEmployees),
+    [connectionsQuery.data, allEmployees],
   );
 
   const employees = useMemo(() => {

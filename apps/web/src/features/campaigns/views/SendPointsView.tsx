@@ -169,7 +169,7 @@ export function SendPointsView({
                 {unit} let recipients redeem items from your shop.
               </p>
               {shop ? (
-                <p className="muted" style={{ fontSize: 12, marginTop: 6 }}>
+                <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 12px)", marginTop: 6 }}>
                   Sending from <b>{shop.name}</b>
                 </p>
               ) : null}
@@ -250,11 +250,11 @@ export function SendPointsView({
             </div>
           </div>
           {pprRaw && pprError ? (
-            <p style={{ fontSize: 12, marginTop: 8, color: "var(--danger)", fontWeight: 600 }}>
+            <p style={{ fontSize: "var(--workspace-font-caption, 12px)", marginTop: 8, color: "var(--danger)", fontWeight: "var(--font-weight-semibold)" }}>
               {pprError}
             </p>
           ) : (
-            <p className="mut3" style={{ fontSize: 12, marginTop: 8 }}>
+            <p className="mut3" style={{ fontSize: "var(--workspace-font-caption, 12px)", marginTop: 8 }}>
               Minimum ₹250 per recipient. Whole numbers only. Shipping included.
             </p>
           )}
@@ -268,8 +268,8 @@ export function SendPointsView({
               border: "1px solid var(--line)",
             }}
           >
-            <h3 style={{ fontSize: 16, marginBottom: 6 }}>Shop {unit}</h3>
-            <p className="muted" style={{ fontSize: 13.5, lineHeight: 1.55, margin: 0 }}>
+            <h3 style={{ fontSize: "var(--workspace-font-heading, 16px)", marginBottom: 6 }}>Shop {unit}</h3>
+            <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 13.5px)", lineHeight: 1.55, margin: 0 }}>
               {shop ? (
                 <>
                   These {unitLower} belong to <b>{shop.name}</b>. They will be allocated to the recipients selected in the next step. They can only be redeemed in this shop and cannot be transferred or used in any other shop.
@@ -397,8 +397,8 @@ export function SendPointsView({
                       padding: "10px 0 0",
                     }}
                   >
-                    <b style={{ fontSize: 15 }}>Remaining balance</b>
-                    <b className="num" style={{ fontSize: 18, fontFamily: "var(--disp)" }}>
+                    <b style={{ fontSize: "var(--workspace-font-body, 15px)" }}>Remaining balance</b>
+                    <b className="num" style={{ fontSize: 18, fontFamily: "var(--font-family-primary)" }}>
                       {formatWalletAmount(remainingBalance, walletCur)}
                     </b>
                   </div>
@@ -409,7 +409,7 @@ export function SendPointsView({
                   style={{ justifyContent: "space-between", alignItems: "center" }}
                 >
                   <b style={{ fontSize: 18 }}>You pay</b>
-                  <b className="num" style={{ fontSize: 22, fontFamily: "var(--disp)" }}>
+                  <b className="num" style={{ fontSize: 22, fontFamily: "var(--font-family-primary)" }}>
                     {inr(totals.sub)}
                   </b>
                 </div>
@@ -442,10 +442,10 @@ export function SendPointsView({
 function SumRow({ k, v }: { k: string; v: string }) {
   return (
     <div className="row" style={{ justifyContent: "space-between", padding: "7px 0" }}>
-      <span className="muted" style={{ fontSize: 13 }}>
+      <span className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)" }}>
         {k}
       </span>
-      <span className="num" style={{ fontWeight: 600, fontSize: 13 }}>
+      <span className="num" style={{ fontWeight: "var(--font-weight-semibold)", fontSize: "var(--workspace-font-body, 13px)" }}>
         {v}
       </span>
     </div>

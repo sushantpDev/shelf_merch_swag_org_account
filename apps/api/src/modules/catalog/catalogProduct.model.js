@@ -152,6 +152,7 @@ const catalogProductSchema = new mongoose.Schema(
 );
 
 catalogProductSchema.index({ status: 1, category: 1 });
+catalogProductSchema.index({ status: 1, basePriceInr: 1 });
 catalogProductSchema.index({ categoryIds: 1 });
 catalogProductSchema.index({ categoryLabels: 1 });
 catalogProductSchema.index({ 'source.provider': 1, 'source.externalId': 1 });

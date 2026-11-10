@@ -5,15 +5,8 @@ import { toast } from "sonner";
 import { refreshCatalogProducts } from "@/services/api-bridge";
 import { useWorkspace } from "@/hooks/useWorkspace";
 import { draftFromCollection } from "../draftFromCollection";
-import {
-  bakeMockupLayers,
-  collectAreaPlacements,
-  collectBakeLayers,
-  exportDesignOnly,
-  listPrintAreas,
-  primaryAreaKey,
-  type MockupUploadItem,
-} from "../mockup-bake";
+import { bakeCollectionDesignMockups } from "../bakeCollectionDesign";
+import { collectionEditableInWizard } from "../collectionEditability";
 import {
   buildPreviousUploads,
   resolveDefaultArtwork,
@@ -28,6 +21,7 @@ import {
   type SwagAction,
   type SwagDraft,
 } from "../swagDraft";
+import { DESIGN_SAVED_PUBLISH_FAILED_MESSAGE } from "../designSaveMessages";
 import { acquirePublishLock, releasePublishLock } from "./publishLock";
 
 export type SwagWizardVm = {
@@ -49,6 +43,7 @@ export type SwagWizardVm = {
   onSubmitName: () => void;
   onToggleShop: (shopId: string) => void;
   onPublish: () => void;
+  onSaveDesign: () => void;
   onPublishReadyPrimary: () => void;
   onPublishReadyLater: () => void;
 };
@@ -90,8 +85,8 @@ export function useSwagWizardController(): SwagWizardVm {
 
   useEffect(() => {
     if (!editCollection || !catalog.length || hydratedEditId.current === editCollection.id) return;
-    if (editCollection.status !== "draft") {
-      toast.error("Only draft collections can be edited");
+    if (!collectionEditableInWizard(editCollection)) {
+      toast.error("Only unpublished collections can be edited");
       navigate("/app/swag");
       return;
     }
@@ -169,89 +164,32 @@ export function useSwagWizardController(): SwagWizardVm {
     });
   }
 
-  async function onPublish() {
+  async function persistDesign(options: { publish: boolean }) {
     if (!acquirePublishLock(publishingRef)) return;
-    if (!pickedShops.size) {
+    if (options.publish && !pickedShops.size) {
       releasePublishLock(publishingRef);
       toast.error("Select at least one shop");
+      return;
+    }
+    if (!draft.picked.length) {
+      releasePublishLock(publishingRef);
+      toast.error("Select at least one product");
+      return;
+    }
+    if (!draft.name.trim()) {
+      releasePublishLock(publishingRef);
+      toast.error("Enter a collection name");
       return;
     }
 
     setWorkingLabel("Generating product designs…");
     setWorking(true);
     try {
-      const fallbackArt = draft.art?.preview || "";
-      const baked = await Promise.all(
-        draft.picked.map(async (i, idx) => {
-          const cp = catalog[i];
-          const layers = collectBakeLayers(cp, draft.placements, draft.areaArts || {}, idx, fallbackArt);
-          if (!layers.length) return null;
-          const areaKey = primaryAreaKey(cp);
-          const primaryLayer = layers.find((l) => l.areaKey === areaKey) || layers[0];
-          const areaPlacements = collectAreaPlacements(
-            cp,
-            draft.placements,
-            idx,
-            draft.areaArts || {},
-          );
-          const [frontDataUrl, backDataUrl, design] = await Promise.all([
-            bakeMockupLayers(cp, layers, 1000, false, "front"),
-            bakeMockupLayers(cp, layers, 1000, false, "back"),
-            exportDesignOnly(cp, primaryLayer.artUrl, primaryLayer.placement, primaryLayer.areaKey),
-          ]);
-          const dataUrl = frontDataUrl || backDataUrl;
-          if (!dataUrl) return null;
-          return {
-            dataUrl,
-            backDataUrl: frontDataUrl && backDataUrl ? backDataUrl : undefined,
-            design,
-            placement: primaryLayer.placement,
-            placements: areaPlacements,
-          };
-        }),
-      );
-      const mockups: MockupUploadItem[] = draft.picked
-        .map((i, idx): MockupUploadItem | null => {
-          const cp = catalog[i];
-          const row = baked[idx];
-          if (!cp?.id || !row?.dataUrl) return null;
-          return {
-            catalogProductId: cp.id,
-            dataUrl: row.dataUrl,
-            ...(row.backDataUrl ? { backDataUrl: row.backDataUrl } : {}),
-            placement: row.placement,
-            placements: row.placements?.length ? row.placements : undefined,
-            ...(row.design.dataUrl
-              ? {
-                  designOnlyDataUrl: row.design.dataUrl,
-                  printSpec: {
-                    widthIn: row.design.widthIn,
-                    heightIn: row.design.heightIn,
-                    dpi: row.design.dpi,
-                    widthPx: row.design.widthPx,
-                    heightPx: row.design.heightPx,
-                  },
-                }
-              : {}),
-          };
-        })
-        .filter((m): m is MockupUploadItem => m !== null);
-
-      // Products with no catalog print areas are intentionally skipped (no fake
-      // placeholders). Only require a bake for products that can be branded.
-      const brandableCount = draft.picked.reduce((n, i) => {
-        return n + (listPrintAreas(catalog[i]).length > 0 ? 1 : 0);
-      }, 0);
-      if (brandableCount > 0 && mockups.length < brandableCount) {
-        throw new Error(
-          mockups.length
-            ? "Failed to generate designs for all products. Try again"
-            : "Failed to generate designs. Try again",
-        );
-      }
-
-      const shopIds = [...pickedShops].filter((id) => shops.some((s) => s.id === id));
-      if (!shopIds.length) {
+      const mockups = await bakeCollectionDesignMockups({ draft, catalog });
+      const shopIds = options.publish
+        ? [...pickedShops].filter((id) => shops.some((s) => s.id === id))
+        : [];
+      if (options.publish && !shopIds.length) {
         throw new Error("Select at least one shop");
       }
 
@@ -269,29 +207,54 @@ export function useSwagWizardController(): SwagWizardVm {
         mockups.length > 1 ? "Saving product designs…" : "Saving product design…",
       );
 
-      const col = editCollectionId
-        ? await updateCollection.mutateAsync({ collectionId: editCollectionId, ...payload })
-        : await createCollection.mutateAsync({ ...payload, shopIds });
-
-      if (editCollectionId) {
-        setWorkingLabel("Publishing to shop…");
-        await syncPublish.mutateAsync({
-          collectionId: col.id,
-          shopIds,
-        });
+      const existingId = editCollectionId || hydratedEditId.current || undefined;
+      let col;
+      if (existingId) {
+        col = await updateCollection.mutateAsync({ collectionId: existingId, ...payload });
+      } else {
+        // Omit shopIds so createCollectionApi persists artwork/mockups without publishing.
+        col = await createCollection.mutateAsync({ ...payload });
+        hydratedEditId.current = col.id;
+        const params = new URLSearchParams(searchParams);
+        params.set("edit", col.id);
+        navigate(`/app/swag/new?${params.toString()}`, { replace: true });
       }
 
-      const publishedCount = shopIds.length;
-      toast.success(
-        publishedCount === 1 ? "Published to 1 shop 🎉" : `Published to ${publishedCount} shops 🎉`,
-      );
-      setPublishReadyOpen(true);
+      if (options.publish) {
+        setWorkingLabel("Publishing to shop…");
+        try {
+          await syncPublish.mutateAsync({
+            collectionId: col.id,
+            shopIds,
+          });
+        } catch (publishErr) {
+          toast.error(DESIGN_SAVED_PUBLISH_FAILED_MESSAGE);
+          return;
+        }
+        const publishedCount = shopIds.length;
+        toast.success(
+          publishedCount === 1
+            ? "Published to 1 shop 🎉"
+            : `Published to ${publishedCount} shops 🎉`,
+        );
+        setPublishReadyOpen(true);
+      } else {
+        toast.success("Design saved. You can publish from MCP or choose Publish when ready.");
+      }
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Failed to generate and publish");
+      toast.error(err instanceof Error ? err.message : "Failed to save design");
     } finally {
       releasePublishLock(publishingRef);
       setWorking(false);
     }
+  }
+
+  async function onPublish() {
+    await persistDesign({ publish: true });
+  }
+
+  async function onSaveDesign() {
+    await persistDesign({ publish: false });
   }
 
   function onPublishReadyPrimary() {
@@ -326,6 +289,7 @@ export function useSwagWizardController(): SwagWizardVm {
     onSubmitName,
     onToggleShop,
     onPublish,
+    onSaveDesign,
     onPublishReadyPrimary,
     onPublishReadyLater,
   };

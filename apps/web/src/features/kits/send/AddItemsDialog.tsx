@@ -21,7 +21,7 @@ export function AddItemsDialog({
       <DialogContent className="sm-modal" style={{ maxWidth: 900 }}>
         <div className="modal-pad">
           <DialogTitle style={{ fontSize: 18 }}>Add products</DialogTitle>
-          <p className="muted" style={{ fontSize: 13, marginTop: 4 }}>
+          <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)", marginTop: 4 }}>
             Tap products to add or remove them from this send.
           </p>
           <div

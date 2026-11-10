@@ -61,13 +61,29 @@ describe('SPA document SEO', () => {
     expect(resolveSpaSeo(catalog, '/s/acme').mode).toBe('preserve');
     expect(resolveSpaSeo(catalog, '/shop/abc').mode).toBe('preserve');
     expect(resolveSpaSeo(catalog, '/app/orders').mode).toBe('private');
-    expect(resolveSpaSeo(catalog, '/not-a-real-page').mode).toBe('unknown');
+    expect(resolveSpaSeo(catalog, '/wipro').mode).toBe('private');
+    expect(resolveSpaSeo(catalog, '/wipro/shops').mode).toBe('private');
+    expect(resolveSpaSeo(catalog, '/not/a-real-page').mode).toBe('unknown');
   });
 
   it('points duplicate legal routes at the server-rendered canonical', () => {
     const privacy = resolveSpaSeo(catalog, '/privacy');
     expect(privacy.robots).toBe('noindex, follow');
     expect(privacy.canonical).toBe('https://shelfmerch.io/legal/privacy-policy');
+    expect(resolveSpaSeo(catalog, '/terms-condition').canonical).toBe('https://shelfmerch.io/legal/terms-of-service');
+    expect(resolveSpaSeo(catalog, '/legal/terms-of-service').mode).toBe('public');
+    expect(resolveSpaSeo(catalog, '/legal/terms-of-service').canonical).toBe('https://shelfmerch.io/legal/terms-of-service');
+    const slack = resolveSpaSeo(catalog, '/legal/slack-terms-of-service');
+    expect(slack.mode).toBe('public');
+    expect(slack.canonical).toBe('https://shelfmerch.io/legal/slack-terms-of-service');
+    expect(slack.robots).toBe('noindex, follow');
+    expect(documentKind('/legal/slack-terms-of-service')).toBe('shell');
+    expect(documentKind('/terms-condition')).toBe('shell');
+    expect(documentKind('/terms-condition/shops')).toBe('not-found');
+    for (const alias of ['/terms', '/terms-condition', '/terms/index.html']) {
+      expect(publicRedirectTarget(alias)).toBe('/legal/terms-of-service');
+      expect(publicRedirectTarget(`${alias}/`)).toBe('/legal/terms-of-service');
+    }
   });
 
   it('escapes metadata inserted into the shell', () => {
@@ -88,13 +104,21 @@ describe('SPA document SEO', () => {
   it('keeps app deep links on the shell and 404s unknown public urls', () => {
     expect(documentKind('/app/orders/42')).toBe('shell');
     expect(documentKind('/platform/dashboard')).toBe('shell');
+    expect(documentKind('/oauth/consent')).toBe('shell');
+    expect(documentKind('/reset-password?token=reset-token')).toBe('shell');
+    expect(resolveSpaSeo(catalog, '/reset-password?token=reset-token').mode).toBe('private');
+    expect(renderSpaDocument(shell, '/reset-password?token=reset-token')).toContain('<div id="root"></div>');
     expect(documentKind('/shop/acme')).toBe('shell');
     expect(documentKind('/about')).toBe('shell');
     expect(documentKind('/docs/zoho-people')).toBe('shell');
     expect(documentKind('/case-studies/zoho-people')).toBe('shell');
     expect(documentKind('/apps/catalog/category/apparel')).toBe('shell');
+    expect(documentKind('/wipro')).toBe('workspace');
+    expect(documentKind('/wipro/shops')).toBe('workspace');
+    expect(documentKind('/wipro/campaigns/send-points')).toBe('workspace');
+    expect(documentKind('/wipro/not-a-workspace-route')).toBe('not-found');
     expect(documentKind('/legal/privacy-policy')).toBe('not-found');
-    expect(documentKind('/no-such-marketing-page')).toBe('not-found');
+    expect(documentKind('/no/such-marketing-page')).toBe('not-found');
     expect(publicRedirectTarget('/about/')).toBe('/about');
     expect(publicRedirectTarget('/platform/')).toBe('/platform');
     expect(publicRedirectTarget('/platform/dashboard/')).toBeNull();

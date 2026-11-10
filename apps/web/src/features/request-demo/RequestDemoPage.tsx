@@ -1,38 +1,11 @@
+import { useLayoutEffect } from "react";
 import { ArrowRight, Check, Star } from "lucide-react";
 import { Link } from "react-router";
 import { ShelfMerchLogo } from "@/components/brand/ShelfMerchLogo";
 import { RequestDemoForm } from "./RequestDemoForm";
 import "./request-demo.css";
-
-const withoutShelfMerch = [
-  "Swag requests scattered across chats and spreadsheets",
-  "Manual vendor follow-ups for every city and department",
-  "No clear view of budgets, approvals or delivery status",
-];
-
-const withShelfMerch = [
-  "One workspace for stores, kits, rewards and bulk orders",
-  "Budgets, approvals and fulfilment tracked in one flow",
-  "Pan-India production and delivery handled by one team",
-];
-
-const workflowCards = [
-  {
-    title: "Company stores",
-    copy: "Launch branded stores for teams, offices and events with curated product collections.",
-    image: "/images/landing/company-stores.png?v=3",
-  },
-  {
-    title: "Kits and rewards",
-    copy: "Build onboarding kits, milestone gifts and recognition drops without vendor chaos.",
-    image: "/images/landing/kits-and-rewards.png?v=3",
-  },
-  {
-    title: "Reports and approvals",
-    copy: "Give finance and people teams visibility into budgets, spend and delivery status.",
-    image: "/images/landing/reports-and-approvals.png?v=4",
-  },
-];
+import "./request-demo-typography.css";
+import "./request-demo-spacing.css";
 
 const solutions = [
   {
@@ -99,6 +72,10 @@ const faqs = [
 ];
 
 export function RequestDemoPage() {
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, []);
+
   return (
     <main className="request-demo">
       <section className="request-demo__hero">
@@ -112,10 +89,8 @@ export function RequestDemoPage() {
           <section className="request-demo__intro" aria-labelledby="request-demo-title">
             <h1 id="request-demo-title">
               <span>Manage every</span>
-              <br />
               <span>swag moment with</span>
-              <br />
-              <span>one merch platform</span>
+              <em>one merch platform</em>
             </h1>
 
             <p className="request-demo__lead">
@@ -130,73 +105,9 @@ export function RequestDemoPage() {
         </div>
       </section>
 
-      <section className="request-demo__section request-demo__section--center">
-        <p className="request-demo__kicker">One platform. Every team moment.</p>
-        <h2>Unified merch. No vendor switching.</h2>
-        <p>
-          Prospect gifting, employee rewards, onboarding and festival kits can all move through one
-          clean planning and fulfilment flow.
-        </p>
-      </section>
-
-      <section className="request-demo__compare">
-        <article className="request-demo__compare-card request-demo__compare-card--messy">
-          <h3>Without Shelf Merch</h3>
-          <div className="request-demo__compare-visual" aria-hidden="true">
-            <span className="request-demo__node request-demo__node--a" />
-            <span className="request-demo__node request-demo__node--b" />
-            <span className="request-demo__node request-demo__node--c" />
-            <span className="request-demo__node request-demo__node--d" />
-            <span className="request-demo__warning request-demo__warning--a">!</span>
-            <span className="request-demo__warning request-demo__warning--b">!</span>
-            <span className="request-demo__warning request-demo__warning--c">!</span>
-          </div>
-          <ul>
-            {withoutShelfMerch.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-        <article className="request-demo__compare-card request-demo__compare-card--clean">
-          <h3>With Shelf Merch</h3>
-          <div className="request-demo__compare-visual" aria-hidden="true">
-            <div className="request-demo__profile-card">
-              <span className="request-demo__avatar" />
-              <div>
-                <strong>Merch plan</strong>
-                <small>Ready to ship</small>
-              </div>
-              <em>+6</em>
-            </div>
-            <div className="request-demo__success-strip">Approved workflow</div>
-          </div>
-          <ul>
-            {withShelfMerch.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-      </section>
-
-      <section className="request-demo__section">
-        <h2>Built for the way modern teams gift</h2>
-        <div className="request-demo__cards">
-          {workflowCards.map((card) => (
-            <article className="request-demo__feature-card" key={card.title}>
-              <div className="request-demo__card-image-wrap">
-                <img src={card.image} alt={card.title} className="request-demo__card-image" />
-              </div>
-              <h3>{card.title}</h3>
-              <p>{card.copy}</p>
-              <Link to="/request-demo">Book demo</Link>
-            </article>
-          ))}
-        </div>
-      </section>
-
       <section className="request-demo__plans">
         <div className="request-demo__plans-inner">
-          <h2>Plan, manage and equip your teams with one solution</h2>
+          <h2>Plan, manage and equip your teams <em>with one solution</em></h2>
           <div className="request-demo__plan-grid">
             {solutions.map((item) => (
               <article className="request-demo__plan" key={item.name}>
@@ -224,7 +135,7 @@ export function RequestDemoPage() {
         </div>
         <div>
           <p className="request-demo__kicker">Customer story</p>
-          <h2>Excellent corporate merch support</h2>
+          <h2>Excellent corporate merch <em>support</em></h2>
           <p>
             Shelf Merch helped us consolidate gifting, improve turnaround times and give finance a
             clearer view of every order.
@@ -238,7 +149,7 @@ export function RequestDemoPage() {
       </section>
 
       <section className="request-demo__section">
-        <h2>Fast support that keeps your merch moving</h2>
+        <h2>Fast support that keeps <em>your merch moving</em></h2>
         <div className="request-demo__stats">
           {stats.map(([value, label]) => (
             <article key={value}>
@@ -253,7 +164,7 @@ export function RequestDemoPage() {
       </section>
 
       <section className="request-demo__steps">
-        <h2>Get started with Shelf Merch in three easy steps</h2>
+        <h2>Get started with Shelf Merch <em>in three easy steps</em></h2>
         <div className="request-demo__steps-grid">
           <div className="request-demo__steps-layout">
             <ol>
@@ -294,7 +205,7 @@ export function RequestDemoPage() {
       </section>
 
       <section className="request-demo__footer-cta" aria-label="Book a Shelf Merch demo">
-        <h2>Ready to build your merch platform?</h2>
+        <h2>Ready to build <em>your merch platform?</em></h2>
         <Link to="/request-demo">
           Book a demo <ArrowRight size={18} aria-hidden="true" />
         </Link>

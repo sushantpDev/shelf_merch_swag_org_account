@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "status": "draft_awaiting_editorial_and_visual_review",
+  "source_kind": "local_article_drafts_not_rss",
+  "audience_geography": "global",
+  "voice": "Practical, direct, enterprise-focused; provisional pending brand review",
+  "variant_policy": "Select one variant per article per platform for the initial release; do not publish every alternative automatically",
+  "visual_briefs": [
+    {
+      "id": "V-01",
+      "article_id": "SM-01",
+      "concept": "Three-step enterprise merch workflow card",
+      "headline": "From company budget to employee choice",
+      "labels": ["Allocate entity budgets", "Distribute employee points", "Redeem merchandise in the store"],
+      "footer": "Explore the workflow with ShelfMerch",
+      "real_asset": "apps/web/public/images/logo/shelfmerch-wordmark.png",
+      "asset_provenance": "Existing first-party repository wordmark; visually inspected in this run",
+      "layout": "Use the supplied black wordmark on a white field. Set the headline above three clearly numbered text panels. These are conceptual workflow labels, not a dashboard reproduction.",
+      "working_canvas": { "width": 1080, "height": 1350, "units": "px", "note": "Proposed design canvas for both feed channels; export and preview against destination requirements before approval" },
+      "safe_area_guidance": "Keep essential text and logo at least 80 px from the artboard edge as an editorial design margin. Check small-screen legibility and feed cropping.",
+      "alt_text_draft": "ShelfMerch workflow: allocate entity budgets, distribute employee points, and let employees redeem merchandise in the store.",
+      "product_photography": "paused_until_actual_product_assets_are_inspected_and_cleared",
+      "status": "concept_only_no_final_graphic"
+    },
+    {
+      "id": "V-02",
+      "article_id": "SM-02",
+      "concept": "Budget planning checklist card",
+      "headline": "What does your merch budget need to cover?",
+      "labels": ["Define the program", "Name each budget owner", "Separate allocations, points and orders"],
+      "footer": "Start with a clear program brief",
+      "real_asset": "apps/web/public/images/logo/shelfmerch-wordmark.png",
+      "asset_provenance": "Existing first-party repository wordmark; visually inspected in this run",
+      "layout": "Use the supplied wordmark, black text, white background, and three short checklist rows. No invented balances, dashboard screenshots, customer names, or savings figures.",
+      "working_canvas": { "width": 1080, "height": 1350, "units": "px", "note": "Proposed design canvas; verify the final exported file before release" },
+      "safe_area_guidance": "Use an 80 px design margin, generous line spacing, and a mobile legibility check.",
+      "alt_text_draft": "Corporate gifting budget checklist: define the program, name each budget owner, and distinguish budget allocations, employee points, and orders.",
+      "product_photography": "paused_until_actual_product_assets_are_inspected_and_cleared",
+      "status": "concept_only_no_final_graphic"
+    },
+    {
+      "id": "V-03",
+      "article_id": "SM-03",
+      "concept": "Welcome kit and employee store decision card",
+      "headline": "Curated kit or employee choice?",
+      "labels": ["Kit: your team curates the selection", "Store: employees choose from available merch", "Decide around the welcome experience"],
+      "footer": "See both workflows in a ShelfMerch demo",
+      "real_asset": "apps/web/public/images/logo/shelfmerch-wordmark.png",
+      "asset_provenance": "Existing first-party repository wordmark; visually inspected in this run",
+      "layout": "Use two stacked comparison panels under the supplied wordmark. Describe the selection models in text. Do not generate a kit, merchandise mockup, employee testimonial, or product photo.",
+      "working_canvas": { "width": 1080, "height": 1350, "units": "px", "note": "Proposed design canvas; verify final platform rendering before approval" },
+      "safe_area_guidance": "Use an 80 px design margin, avoid tiny comparison text, and inspect cropping on both platforms.",
+      "alt_text_draft": "Employee welcome program comparison: a kit starts with a curated selection; a store lets employees choose available merchandise.",
+      "product_photography": "paused_until_actual_product_assets_are_inspected_and_cleared",
+      "status": "concept_only_no_final_graphic"
+    }
+  ],
+  "posts": [
+    {
+      "id": "SM-01-IG-A", "article_id": "SM-01", "platform": "instagram", "variant": "A", "visual_id": "V-01",
+      "caption": "Planning a company swag store? Start with the people and the budget.\n\nWho owns the company program?\nWho manages each entity's allocation?\nHow will employees receive points and choose merch?\n\nShelfMerch connects company and entity budgets, employee points, store redemption, and order processing in its enterprise workflow.\n\nWhich part would your team want to walk through first?\nExplore a demo at shelfmerch.io.\n\n#CompanySwag #EmployeeMerch #CorporateGifting",
+      "status": "draft", "source": "articles/01-company-swag-store.md"
+    },
+    {
+      "id": "SM-01-IG-B", "article_id": "SM-01", "platform": "instagram", "variant": "B", "visual_id": "V-01",
+      "caption": "Employee merch choice starts before anyone opens the store.\n\nFirst, define the program.\nThen, allocate budgets to entity managers.\nNext, distribute employee points.\nEmployees can visit the store and redeem points for available merchandise.\n\nShelfMerch receives and processes the orders.\n\nSave this sequence for your next company store planning session.\nFor an enterprise walkthrough, visit shelfmerch.io.\n\n#EmployeeSwag #CompanyStore #MerchPlanning",
+      "status": "draft", "source": "articles/01-company-swag-store.md"
+    },
+    {
+      "id": "SM-01-FB-A", "article_id": "SM-01", "platform": "facebook", "variant": "A", "visual_id": "V-01",
+      "caption": "A company swag store needs a clear path from budget to employee choice.\n\nIn ShelfMerch's enterprise workflow, the company receives a budget, entity managers receive allocations, and employees receive points to redeem for available merch. ShelfMerch receives and processes the resulting orders.\n\nBefore launch, agree who owns each step and what employees need to know.\n\nWhat would your team want to see demonstrated first? Explore a ShelfMerch demo at https://shelfmerch.io.",
+      "status": "draft", "source": "articles/01-company-swag-store.md"
+    },
+    {
+      "id": "SM-01-FB-B", "article_id": "SM-01", "platform": "facebook", "variant": "B", "visual_id": "V-01",
+      "caption": "Before launching an employee swag store, answer four questions:\n\n• Who owns the company program?\n• Who manages each entity's budget?\n• How will employees receive and redeem points?\n• What happens after an order is placed?\n\nShelfMerch's enterprise workflow covers company and entity budgets, catalog-backed stores, employee points, and order processing.\n\nBring your organizational structure to a demo: https://shelfmerch.io.",
+      "status": "draft", "source": "articles/01-company-swag-store.md"
+    },
+    {
+      "id": "SM-02-IG-A", "article_id": "SM-02", "platform": "instagram", "variant": "A", "visual_id": "V-02",
+      "caption": "Allocated budget. Employee points. Merchandise orders.\n\nThree connected stages to keep distinct when planning corporate gifting.\n\nStart by defining the program and naming each budget owner. Then agree how entity allocations and employee points will work for your team.\n\nWhat is the first budget question your finance or HR team would ask?\nDiscuss your setup in a ShelfMerch demo at shelfmerch.io.\n\n#CorporateGifting #MerchBudget #PeopleOperations",
+      "status": "draft", "source": "articles/02-corporate-gifting-budget.md"
+    },
+    {
+      "id": "SM-02-IG-B", "article_id": "SM-02", "platform": "instagram", "variant": "B", "visual_id": "V-02",
+      "caption": "Planning merch across multiple teams? Give each allocation a purpose and an owner.\n\nYour starting checklist:\n• Define the recipient group.\n• Name the entity manager.\n• Discuss stores or curated kits.\n• Confirm the applicable point rules.\n\nShelfMerch supports company and entity budgets as part of its enterprise merch workflow.\n\nSave this for your next program planning meeting. Demo details at shelfmerch.io.\n\n#CorporateMerch #BudgetPlanning #EmployeeGifting",
+      "status": "draft", "source": "articles/02-corporate-gifting-budget.md"
+    },
+    {
+      "id": "SM-02-FB-A", "article_id": "SM-02", "platform": "facebook", "variant": "A", "visual_id": "V-02",
+      "caption": "A practical corporate gifting budget explains who the program serves and who owns each allocation.\n\nFor a company store program, distinguish the company budget, entity allocations, employee points, and merchandise orders. Each describes a different stage of the workflow.\n\nShelfMerch lets enterprise teams work with company and entity budgets, stores, kits, and employee points.\n\nWhich part of the budget discussion needs the most clarity in your organization? Bring it to a demo at https://shelfmerch.io.",
+      "status": "draft", "source": "articles/02-corporate-gifting-budget.md"
+    },
+    {
+      "id": "SM-02-FB-B", "article_id": "SM-02", "platform": "facebook", "variant": "B", "visual_id": "V-02",
+      "caption": "Before assigning a merch budget across teams, write a short program brief.\n\nInclude the audience, program purpose, responsible manager, proposed store or kit approach, and questions about points and service terms.\n\nThat gives the budget conversation a concrete starting point. In ShelfMerch's enterprise workflow, managers receive allocated budgets and can distribute employee points for store redemption.\n\nExplore the workflow with your team's requirements: https://shelfmerch.io.",
+      "status": "draft", "source": "articles/02-corporate-gifting-budget.md"
+    },
+    {
+      "id": "SM-03-IG-A", "article_id": "SM-03", "platform": "instagram", "variant": "A", "visual_id": "V-03",
+      "caption": "Welcome kit or employee swag store? Start with the experience you want to create.\n\nA kit begins with a curated selection.\nA store gives employees a place to choose from available merch.\n\nShelfMerch supports sending kits and creating stores within its enterprise workflow.\n\nWhich approach would you want to explore for your next new hire program?\nSee both workflows in a demo at shelfmerch.io.\n\n#EmployeeWelcomeKits #NewHireExperience #CompanySwag",
+      "status": "draft", "source": "articles/03-employee-welcome-kits.md"
+    },
+    {
+      "id": "SM-03-IG-B", "article_id": "SM-03", "platform": "instagram", "variant": "B", "visual_id": "V-03",
+      "caption": "Before choosing welcome merch, agree on the selection model.\n\nWill your team curate a kit?\nWill employees choose through a store?\nWho will own the budget and program communication?\n\nBring those answers to the product discussion, then confirm current catalog options and service details.\n\nSave these questions for your onboarding planning session. Explore ShelfMerch at shelfmerch.io.\n\n#NewHireKits #EmployeeMerch #OnboardingPlanning",
+      "status": "draft", "source": "articles/03-employee-welcome-kits.md"
+    },
+    {
+      "id": "SM-03-FB-A", "article_id": "SM-03", "platform": "facebook", "variant": "A", "visual_id": "V-03",
+      "caption": "Employee welcome kits and swag stores begin with different selection models.\n\nWith a kit, your team curates the selection. With a store, employees choose from the available merchandise.\n\nShelfMerch supports both approaches in its enterprise workflow. The planning conversation should cover the recipient experience, budget ownership, current product options, and order processing.\n\nWhich approach fits the welcome experience your team wants to create? Explore both in a demo: https://shelfmerch.io.",
+      "status": "draft", "source": "articles/03-employee-welcome-kits.md"
+    },
+    {
+      "id": "SM-03-FB-B", "article_id": "SM-03", "platform": "facebook", "variant": "B", "visual_id": "V-03",
+      "caption": "Planning a new hire merch program? Prepare the brief before selecting products.\n\nDefine the recipient group, program owner, budget questions, and whether you want a curated kit or store-based employee choice. Confirm availability and service details before announcing the program.\n\nShelfMerch can walk your team through sending kits and creating a points-based employee store.\n\nStart with a demo at https://shelfmerch.io.",
+      "status": "draft", "source": "articles/03-employee-welcome-kits.md"
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slack Toggle Preview</title>
+    <style>
+      :root {
+        --page: #f4f7fb;
+        --card: #ffffff;
+        --line: #e5e7eb;
+        --ink: #111827;
+        --muted: #667085;
+        --blue: #b9d4ff;
+        --blue-strong: #8bbaff;
+        --off: #d9dee8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 32px;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--ink);
+        background: var(--page);
+      }
+
+      .panel {
+        width: min(760px, 100%);
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--card);
+      }
+
+      .panel h2 {
+        margin: 0 0 4px;
+        font-size: 15px;
+        line-height: 1.25;
+        font-weight: 800;
+      }
+
+      .panel p {
+        margin: 0 0 16px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .group-title {
+        margin: 18px 0 8px;
+        color: #475467;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .row {
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 9px 0;
+        border-bottom: 1px solid #edf0f5;
+      }
+
+      .icon {
+        width: 28px;
+        height: 28px;
+        display: grid;
+        place-items: center;
+        flex: none;
+        border-radius: 7px;
+        background: #f2f4f7;
+        color: #667085;
+        font-size: 13px;
+      }
+
+      .copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .label {
+        display: block;
+        font-size: 12.5px;
+        font-weight: 800;
+      }
+
+      .desc {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .toggle {
+        --toggle-w: 50px;
+        --toggle-h: 22px;
+        --toggle-pad: 2px;
+        --toggle-knob: 18px;
+        position: relative;
+        width: var(--toggle-w);
+        height: var(--toggle-h);
+        flex: none;
+        padding: 0;
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .toggle:disabled {
+        cursor: not-allowed;
+      }
+
+      .toggle__track {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: var(--off);
+        box-shadow: inset 0 1px 2px rgba(16, 24, 40, 0.14);
+        transition: background 160ms ease, box-shadow 160ms ease;
+      }
+
+      .toggle[aria-checked="true"] .toggle__track {
+        background: var(--blue);
+        box-shadow: inset 0 1px 2px rgba(37, 99, 235, 0.16);
+      }
+
+      .toggle__text {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 8px;
+        font-weight: 900;
+        letter-spacing: 0.04em;
+        color: #ffffff;
+        transition: opacity 140ms ease;
+        pointer-events: none;
+      }
+
+      .toggle__text--on {
+        left: 8px;
+        opacity: 0;
+      }
+
+      .toggle__text--off {
+        right: 7px;
+        color: #ffffff;
+        opacity: 1;
+      }
+
+      .toggle[aria-checked="true"] .toggle__text--on {
+        opacity: 1;
+      }
+
+      .toggle[aria-checked="true"] .toggle__text--off {
+        opacity: 0;
+      }
+
+      .toggle__knob {
+        position: absolute;
+        top: 50%;
+        left: var(--toggle-pad);
+        width: var(--toggle-knob);
+        height: var(--toggle-knob);
+        margin-top: calc(var(--toggle-knob) / -2);
+        border-radius: 999px;
+        background: #ffffff;
+        box-shadow: 0 1px 3px rgba(16, 24, 40, 0.18);
+        transition: left 160ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 160ms ease;
+      }
+
+      .toggle[aria-checked="true"] .toggle__knob {
+        left: calc(100% - var(--toggle-pad) - var(--toggle-knob));
+      }
+
+      .toggle[data-pending="true"] .toggle__knob {
+        transform: scale(0.86);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="panel">
+      <h2>Notifications</h2>
+      <p>Preview: thinner toggle, only the clicked toggle shows feedback.</p>
+
+      <div class="group-title">Finance</div>
+      <div class="row">
+        <span class="icon">₹</span>
+        <span class="copy"><span class="label">Wallet funded</span><span class="desc">Get notified when funds are added</span></span>
+        <button class="toggle" type="button" role="switch" aria-checked="true">
+          <span class="toggle__track"></span><span class="toggle__text toggle__text--on">ON</span><span class="toggle__text toggle__text--off">OFF</span><span class="toggle__knob"></span>
+        </button>
+      </div>
+      <div class="row">
+        <span class="icon">▣</span>
+        <span class="copy"><span class="label">Budget assigned</span><span class="desc">Alerts when budgets are allocated</span></span>
+        <button class="toggle" type="button" role="switch" aria-checked="true">
+          <span class="toggle__track"></span><span class="toggle__text toggle__text--on">ON</span><span class="toggle__text toggle__text--off">OFF</span><span class="toggle__knob"></span>
+        </button>
+      </div>
+      <div class="row">
+        <span class="icon">!</span>
+        <span class="copy"><span class="label">Low budget alerts</span><span class="desc">Warnings when budget runs low</span></span>
+        <button class="toggle" type="button" role="switch" aria-checked="false">
+          <span class="toggle__track"></span><span class="toggle__text toggle__text--on">ON</span><span class="toggle__text toggle__text--off">OFF</span><span class="toggle__knob"></span>
+        </button>
+      </div>
+    </section>
+
+    <script>
+      document.querySelectorAll(".toggle").forEach((toggle) => {
+        toggle.addEventListener("click", () => {
+          const next = toggle.getAttribute("aria-checked") !== "true";
+          toggle.setAttribute("aria-checked", String(next));
+          toggle.dataset.pending = "true";
+          setTimeout(() => {
+            toggle.dataset.pending = "false";
+          }, 420);
+        });
+      });
+    </script>
+  </body>
+</html>

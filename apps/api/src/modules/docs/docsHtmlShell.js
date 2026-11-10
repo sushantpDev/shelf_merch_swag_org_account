@@ -1,3 +1,8 @@
+import { readFileSync } from 'node:fs';
+import { presentZohoDocs } from './zohoDocsPresentation.js';
+const zohoOnboardingStyles = readFileSync(new URL('../../static/zoho-onboarding.css', import.meta.url), 'utf8');
+const zohoPresentationStyles = readFileSync(new URL('../../static/zoho-docs-presentation.css', import.meta.url), 'utf8');
+
 /** Shared CSS for ShelfMerch public documentation HTML pages. */
 export const DOCS_SHARED_STYLES = `
 :root {
@@ -178,13 +183,13 @@ export function docsHtmlShell({
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" />
-  <style>${DOCS_SHARED_STYLES}</style>
+  <style>${DOCS_SHARED_STYLES}${zohoPresentationStyles}${activePath === '/docs/zoho-people' ? zohoOnboardingStyles : ''}</style>
 </head>
 <body>
-  <div class="docs-shell">
+  <div class="docs-shell zoho-admin-guide${activePath === '/docs/zoho-people' ? ' zoho-docs-overview' : activePath.endsWith('/user-guide') ? ' zoho-user-guide' : activePath.startsWith('/case-studies/') ? ' zoho-workflow-guide' : ''}">
     <header class="docs-top">
       <div class="docs-top-inner">
-        <a class="docs-logo" href="/">ShelfMerch</a>
+        <a class="docs-logo" href="/" aria-label="Shelf Merch home"><img src="/images/logo/shelfmerch-wordmark.png" alt="Shelf Merch" height="32" style="display:block;max-width:100%;width:auto" /></a>
         <nav class="docs-top-nav" aria-label="Site">
           <a href="/docs/zoho-people">Docs</a>
           <a href="/legal/privacy-policy">Privacy</a>
@@ -207,7 +212,7 @@ export function docsHtmlShell({
         </div>
         <main class="docs-main">
           <nav class="docs-crumbs" aria-label="Breadcrumb">${breadcrumbsHtml}</nav>
-          ${bodyHtml}
+          ${presentZohoDocs(bodyHtml, activePath)}
         </main>
       </div>
     </div>

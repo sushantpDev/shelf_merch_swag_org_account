@@ -26,8 +26,8 @@ export function BrandedSwagTab({
     <div className="shop-swag-content">
       <div className="row" style={{ justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
         <div>
-          <h3 style={{ fontSize: 17, marginBottom: 4 }}>Published collections</h3>
-          <p className="muted" style={{ fontSize: 13 }}>
+          <h3 style={{ fontSize: "var(--workspace-font-heading, 17px)", marginBottom: 4 }}>Published collections</h3>
+          <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)" }}>
             Collections published to <b>{shop.name}</b>. Manage visibility per product in Shop Catalog.
           </p>
         </div>

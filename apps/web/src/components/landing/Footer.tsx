@@ -120,7 +120,7 @@ const FOOTER_SECTIONS: FooterSection[] = [
     links: (
       <>
         <a href="/blog">Blog</a>
-        <Link to="/resources/hr">HR</Link>
+        <Link to="/resources/human-resources">Human Resource</Link>
         <Link to="/resources/sales">Sales &amp; Marketing</Link>
         <Link to="/resources/events">Events</Link>
       </>
@@ -155,8 +155,17 @@ const FOOTER_SECTIONS: FooterSection[] = [
     title: "Legal",
     links: (
       <>
-        <a href="/terms">Terms &amp; Conditions</a>
+        <a href="/legal/terms-of-service">Terms &amp; Conditions</a>
         <a href="/privacy">Privacy Policy</a>
+        <a
+          href="/privacy#cookie-preferences"
+          onClick={(event) => {
+            event.preventDefault();
+            window.dispatchEvent(new Event("shelfmerch:open-consent"));
+          }}
+        >
+          Cookie preferences
+        </a>
         <span>Refund Policy</span>
         <span>Shipping Policy</span>
         <span>Cookie Policy</span>

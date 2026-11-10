@@ -1,52 +1,44 @@
-import { type ReactNode } from "react";
+import { useMemo, type ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { useWorkspace } from "@/hooks/useWorkspace";
+import { refreshCatalogProducts } from "@/services/api-bridge";
+import { resolveMediaUrl } from "@/lib/mediaUrl";
 import { formatStoreCardPrice, type ShopCurrencyMode } from "@/lib/storeCurrency";
 import { ShelfMerchLogo } from "@/components/brand/ShelfMerchLogo";
+import type { UiProduct } from "@/services/mappers";
 
-type SampleProduct = {
+export type FeaturedPreviewProduct = {
   id: string;
   name: string;
-  brand: string;
+  brand?: string;
   basePriceInr: number;
   imageUrl: string;
-  category: string;
+  category?: string;
 };
 
-/** Sample catalog used only in the create-shop home preview. */
-const SAMPLE_PRODUCTS: SampleProduct[] = [
-  {
-    id: "jersey",
-    name: "Performance Jersey",
-    brand: "Shelf Merch",
-    basePriceInr: 1499,
-    imageUrl: "/images/shops/products/jersey.jpg",
-    category: "Merch",
-  },
-  {
-    id: "jacket",
-    name: "Softshell Jacket",
-    brand: "Shelf Merch",
-    basePriceInr: 2499,
-    imageUrl: "/images/shops/products/jacket.jpg",
-    category: "Merch",
-  },
-  {
-    id: "hat",
-    name: "Structured Cap",
-    brand: "Shelf Merch",
-    basePriceInr: 699,
-    imageUrl: "/images/shops/products/hat.jpg",
-    category: "Merch",
-  },
-  {
-    id: "hoodie",
-    name: "Classic Pullover Hoodie",
-    brand: "Shelf Merch",
-    basePriceInr: 1899,
-    imageUrl: "/images/shops/products/hoodie.jpg",
-    category: "Merch",
+export function toFeaturedPreviewProduct(
+  p: UiProduct | FeaturedPreviewProduct,
+): FeaturedPreviewProduct {
+  if ("nm" in p) {
+    const imageUrl =
+      resolveMediaUrl(p.mockupUrl) ||
+      resolveMediaUrl(p.photoUrl) ||
+      resolveMediaUrl(p.imgUrl) ||
+      resolveMediaUrl(p.imageUrls?.[0]) ||
+      resolveMediaUrl(p.baseImageUrl) ||
+      "";
+    return {
+      id: p.id || p.g || String(Math.random()),
+      name: p.nm,
+      brand: p.brand || "",
+      basePriceInr: p.basePriceInr ?? 0,
+      imageUrl,
+      category: p.category || "",
+    };
   }
-];
+  return p;
+}
 
 /**
  * Non-interactive storefront home preview for the create-shop builder.
@@ -57,12 +49,36 @@ export function ShopHomePreview({
   logoUrl,
   currency,
   banner,
+  products: productsProp,
+  isLoading: isLoadingProp,
 }: {
   shopName: string;
   logoUrl?: string;
   currency: string;
   banner: ReactNode;
+  products?: Array<UiProduct | FeaturedPreviewProduct>;
+  isLoading?: boolean;
 }) {
+  const { data: workspace } = useWorkspace();
+  const workspaceCatalog = workspace?.catalogProducts ?? [];
+  const { data: catalogResult, isLoading: catalogLoading } = useQuery({
+    queryKey: ["catalog", "all"],
+    queryFn: () => refreshCatalogProducts(),
+    staleTime: 30_000,
+    enabled: productsProp === undefined && (!workspaceCatalog || workspaceCatalog.length === 0),
+    placeholderData: workspace
+      ? { items: workspaceCatalog, total: workspace.catalogTotal ?? workspaceCatalog.length }
+      : undefined,
+  });
+
+  const rawProducts = productsProp ?? (catalogResult?.items ?? workspaceCatalog).slice(0, 5);
+  const isLoading = isLoadingProp ?? (catalogLoading && rawProducts.length === 0);
+
+  const previewItems = useMemo(
+    () => rawProducts.map(toFeaturedPreviewProduct),
+    [rawProducts],
+  );
+
   const mode: ShopCurrencyMode = currency === "INR" ? "inr" : "points";
   const name = shopName.trim() || "Your shop name";
   const priceLabel = (inr: number) => formatStoreCardPrice(inr, mode);
@@ -103,9 +119,31 @@ export function ShopHomePreview({
           </span>
         </div>
         <div className="sf-product-grid sf-product-grid--stadium">
-          {SAMPLE_PRODUCTS.map((p) => (
-            <PreviewProductCard key={p.id} product={p} shopName={name} price={priceLabel(p.basePriceInr)} />
-          ))}
+          {isLoading ? (
+            Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className="sf-pcard sf-pcard--stadium" aria-hidden="true">
+                <div className="sf-pcard-media">
+                  <div
+                    className="sf-pcard-img sf-pcard-img--stadium sm-skeleton-img"
+                    style={{ minHeight: 180 }}
+                  />
+                </div>
+                <div className="sf-pcard-meta sf-pcard-meta--stadium" style={{ padding: "8px 0" }}>
+                  <div className="sm-skeleton-line" style={{ margin: "4px 0", width: "40%" }} />
+                  <div className="sm-skeleton-line" style={{ margin: "4px 0", width: "80%" }} />
+                  <div className="sm-skeleton-line short" style={{ margin: "4px 0" }} />
+                </div>
+              </div>
+            ))
+          ) : previewItems.length > 0 ? (
+            previewItems.map((p) => (
+              <PreviewProductCard key={p.id} product={p} shopName={name} price={priceLabel(p.basePriceInr)} />
+            ))
+          ) : (
+            <p className="muted" style={{ padding: "16px 0", gridColumn: "1 / -1" }}>
+              No featured products available.
+            </p>
+          )}
         </div>
       </div>
 
@@ -125,7 +163,7 @@ function PreviewProductCard({
   shopName,
   price,
 }: {
-  product: SampleProduct;
+  product: FeaturedPreviewProduct;
   shopName: string;
   price: string;
 }) {
@@ -133,7 +171,15 @@ function PreviewProductCard({
     <article className="sf-pcard sf-pcard--stadium">
       <div className="sf-pcard-media">
         <div className="sf-pcard-img sf-pcard-img--stadium">
-          <img src={product.imageUrl} alt="" loading="lazy" decoding="async" />
+          {product.imageUrl ? (
+            <img src={product.imageUrl} alt={product.name} loading="lazy" decoding="async" />
+          ) : (
+            <div
+              className="sm-skeleton-img"
+              aria-hidden="true"
+              style={{ width: "100%", height: "100%" }}
+            />
+          )}
         </div>
       </div>
       <div className="sf-pcard-meta sf-pcard-meta--stadium">

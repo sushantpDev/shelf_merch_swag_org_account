@@ -38,9 +38,9 @@
   margin: 0;
   max-width: 13ch;
   color: #05070d;
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: clamp(38px, 3.65vw, 56px);
-  font-weight: 850;
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0;
   line-height: 1.05;
 }
@@ -67,8 +67,8 @@
   min-height: 50px;
   padding: 0 24px;
   border-radius: 999px;
-  font-size: 15px;
-  font-weight: 850;
+  font-size: var(--workspace-font-body, 15px);
+  font-weight: var(--font-weight-bold);
   line-height: 1;
   text-decoration: none;
   cursor: pointer;
@@ -121,8 +121,8 @@
   display: inline-flex;
   margin-bottom: 8px;
   color: var(--brand, #3152ff);
-  font-size: 11px;
-  font-weight: 800;
+  font-size: var(--workspace-font-caption, 11px);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -130,7 +130,7 @@
 .kits-hero__copy h1,
 .kits-hero h1 {
   margin: 0;
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: var(--page-title-size);
   font-weight: var(--page-title-weight);
   letter-spacing: var(--page-title-tracking);
@@ -140,7 +140,7 @@
 
 .kits-hero__sub {
   margin: 10px 0 0;
-  font-size: 15px;
+  font-size: var(--workspace-font-body, 15px);
   line-height: 1.5;
   color: var(--ink-2);
   max-width: 54ch;
@@ -166,8 +166,8 @@
   border: 1px solid var(--ink);
   background: var(--ink);
   color: #fff;
-  font-size: 14px;
-  font-weight: 750;
+  font-size: var(--workspace-font-body, 14px);
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
   cursor: pointer;
   box-shadow: 0 10px 20px rgba(15, 18, 25, 0.12);
@@ -233,8 +233,8 @@
 }
 
 .kits-kpi__label {
-  font-size: 11px;
-  font-weight: 800;
+  font-size: var(--workspace-font-caption, 11px);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -249,9 +249,9 @@
 }
 
 .kits-kpi__value {
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: 30px;
-  font-weight: 850;
+  font-weight: var(--font-weight-bold);
   letter-spacing: -0.04em;
   color: var(--ink);
   line-height: 0.95;
@@ -260,7 +260,7 @@
 .kits-kpi__hint {
   margin-top: 8px;
   color: var(--ink-2);
-  font-size: 13px;
+  font-size: var(--workspace-font-caption, 13px);
   line-height: 1.3;
 }
 
@@ -303,8 +303,8 @@
   border-radius: 10px;
   background: transparent;
   color: var(--ink-2);
-  font-size: 13px;
-  font-weight: 750;
+  font-size: var(--workspace-font-body, 13px);
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
@@ -326,8 +326,8 @@
   border-radius: 999px;
   background: rgba(15, 18, 25, 0.06);
   color: var(--ink-2);
-  font-size: 11px;
-  font-weight: 850;
+  font-size: var(--workspace-font-caption, 11px);
+  font-weight: var(--font-weight-bold);
   font-variant-numeric: tabular-nums;
 }
 
@@ -387,8 +387,8 @@
   border-radius: 10px;
   color: var(--ink-2);
   background: transparent;
-  font-size: 13px;
-  font-weight: 750;
+  font-size: var(--workspace-font-body, 13px);
+  font-weight: var(--font-weight-bold);
   white-space: nowrap;
   cursor: pointer;
 }
@@ -403,8 +403,8 @@
   border-radius: 999px;
   background: rgba(15, 18, 25, 0.06);
   color: var(--ink-2);
-  font-size: 11px;
-  font-weight: 850;
+  font-size: var(--workspace-font-caption, 11px);
+  font-weight: var(--font-weight-bold);
 }
 
 .kits-tab--active {
@@ -452,7 +452,7 @@
   border-radius: 8px;
   color: var(--ink);
   background: var(--bg-card);
-  font-size: 13.5px;
+  font-size: var(--workspace-font-body, 13.5px);
   outline: none;
 }
 
@@ -470,8 +470,8 @@
   border-radius: 8px;
   background: var(--bg-card);
   color: var(--ink);
-  font-size: 13px;
-  font-weight: 800;
+  font-size: var(--workspace-font-body, 13px);
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
 }
 
@@ -514,8 +514,8 @@
 
 .kits-filter-menu__label {
   padding: 8px 12px 4px;
-  font-size: 10px;
-  font-weight: 800;
+  font-size: var(--workspace-font-caption, 10px);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -529,8 +529,8 @@
   border: none;
   border-radius: 8px;
   background: transparent;
-  font-size: 13px;
-  font-weight: 650;
+  font-size: var(--workspace-font-body, 13px);
+  font-weight: var(--font-weight-semibold);
   color: var(--ink-2);
   cursor: pointer;
 }
@@ -582,8 +582,8 @@
   gap: 8px;
   min-width: 0;
   color: var(--ink);
-  font-size: 15px;
-  font-weight: 900;
+  font-size: var(--workspace-font-heading, 15px);
+  font-weight: var(--font-weight-bold);
   line-height: 1.25;
 }
 
@@ -600,8 +600,8 @@
   border-radius: 999px;
   background: #fff7ed;
   color: var(--orange-500);
-  font-size: 11px;
-  font-weight: 900;
+  font-size: var(--workspace-font-caption, 11px);
+  font-weight: var(--font-weight-bold);
   flex: none;
 }
 
@@ -609,7 +609,7 @@
   max-width: 330px;
   margin: 5px 0 6px;
   color: var(--gray-500);
-  font-size: 13px;
+  font-size: var(--workspace-font-body, 13px);
   line-height: 1.35;
 }
 
@@ -621,8 +621,8 @@
   border-radius: 999px;
   background: var(--gray-50);
   color: var(--ink-3);
-  font-size: 11px;
-  font-weight: 800;
+  font-size: var(--workspace-font-caption, 11px);
+  font-weight: var(--font-weight-bold);
 }
 
 .kits-metric-cell,
@@ -637,8 +637,8 @@
 .kits-metric-cell span,
 .kits-sent-cell span {
   color: var(--gray-500);
-  font-size: 10.5px;
-  font-weight: 900;
+  font-size: var(--workspace-font-caption, 10.5px);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -646,19 +646,19 @@
 .kits-metric-cell strong,
 .kits-sent-cell strong {
   color: var(--ink);
-  font-size: 14px;
-  font-weight: 850;
+  font-size: var(--workspace-font-body, 14px);
+  font-weight: var(--font-weight-bold);
   line-height: 1.2;
 }
 
 .kits-metric-cell > strong:not(.kits-status) {
   font-size: 18px;
-  font-weight: 900;
+  font-weight: var(--font-weight-bold);
 }
 
 .kits-sent-cell em {
   color: var(--gray-500);
-  font-size: 12px;
+  font-size: var(--workspace-font-caption, 12px);
   font-style: normal;
 }
 
@@ -669,8 +669,8 @@
   height: 26px;
   padding: 0 11px;
   border-radius: 999px;
-  font-size: 12px;
-  font-weight: 900;
+  font-size: var(--workspace-font-caption, 12px);
+  font-weight: var(--font-weight-bold);
 }
 
 .kits-status i {
@@ -719,7 +719,7 @@
   min-width: 56px;
   height: 38px;
   padding: 0 16px;
-  font-size: 13px;
+  font-size: var(--workspace-font-body, 13px);
 }
 
 .kits-send-btn {
@@ -749,7 +749,7 @@
   gap: clamp(40px, 14vw, 220px);
   min-height: 64px;
   color: var(--gray-500);
-  font-size: 13px;
+  font-size: var(--workspace-font-body, 13px);
 }
 
 .kits-view-all {
@@ -757,7 +757,7 @@
   align-items: center;
   gap: 9px;
   color: var(--brand);
-  font-weight: 900;
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
   background: none;
   border: none;
@@ -798,9 +798,9 @@
 .kits-side-card__head h2 {
   margin: 0;
   color: var(--ink);
-  font-family: var(--sans);
-  font-size: 17px;
-  font-weight: 900;
+  font-family: var(--font-family-primary);
+  font-size: var(--workspace-font-heading, 17px);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0;
 }
 
@@ -810,8 +810,8 @@
   align-items: center;
   gap: 5px;
   color: var(--brand);
-  font-size: 12px;
-  font-weight: 900;
+  font-size: var(--workspace-font-caption, 12px);
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
 }
 
@@ -856,15 +856,15 @@
   display: block;
   margin-top: 2px;
   color: var(--ink);
-  font-size: 13.5px;
-  font-weight: 750;
+  font-size: var(--workspace-font-body, 13.5px);
+  font-weight: var(--font-weight-bold);
   line-height: 1.35;
 }
 
 .kits-activity__item p {
   margin: 2px 0 0;
   color: var(--ink-3);
-  font-size: 12.5px;
+  font-size: var(--workspace-font-body, 12.5px);
   line-height: 1.35;
 }
 
@@ -897,14 +897,14 @@
   display: block;
   color: var(--ink);
   font-size: 20px;
-  font-weight: 900;
+  font-weight: var(--font-weight-bold);
   line-height: 1.1;
 }
 
 .kits-insights__grid p {
   margin: 4px 0 8px;
   color: var(--ink-3);
-  font-size: 12px;
+  font-size: var(--workspace-font-caption, 12px);
   line-height: 1.2;
 }
 
@@ -913,9 +913,9 @@
   display: inline-block;
   padding-left: 16px;
   color: var(--brand);
-  font-size: 12px;
+  font-size: var(--workspace-font-caption, 12px);
   font-style: normal;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
 }
 
 .kits-insights__grid em::before {

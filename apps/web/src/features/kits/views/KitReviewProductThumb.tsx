@@ -4,6 +4,7 @@ import { ProductThumb } from "@/features/shops/ProductThumb";
 import {
   defaultPlacement,
   designImgUrl,
+  listPrintAreas,
   type Placement,
 } from "@/features/swag/mockup-bake";
 import type { UiProduct } from "@/services/mappers";
@@ -72,6 +73,10 @@ export function KitReviewProductThumb({
   printAreaKey: string;
   placement?: Placement;
 }) {
+  if (!listPrintAreas(product).length) {
+    return <ProductThumb product={{ ...product, mockupUrl: undefined }} />;
+  }
+
   const mask = resolveMediaUrl(designImgUrl(product, printAreaKey));
   const art = artworkUrl ? resolveMediaUrl(artworkUrl) || artworkUrl : "";
 

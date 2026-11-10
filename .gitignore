@@ -5,6 +5,8 @@ node_modules/
 .env
 .env.*
 !.env.example
+mcp-oidc-jwks.json
+mcp-oidc-jwks.public.json
 
 # Build output
 dist/
@@ -27,3 +29,7 @@ coverage/
 
 # Local file-storage uploads (runtime/test artifacts)
 apps/api/uploads/
+
+# Local catalog verification builds
+.catalog-review-build/
+.codex-build/

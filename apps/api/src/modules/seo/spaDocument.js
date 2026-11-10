@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { applyPrivateShell, applySpaSeo, resolveSpaSeo } from './resolvePublicSeo.js';
+import { applyPrivateShell, applySpaSeo, resolveSpaSeo, isWorkspaceAppPath } from './resolvePublicSeo.js';
 
 const catalogUrl = new URL('../../../../web/src/seo/publicPages.json', import.meta.url);
 
@@ -42,7 +42,9 @@ const PUBLIC_REDIRECTS = {
   '/about/index.html': '/about',
   '/careers/index.html': '/careers',
   '/privacy/index.html': '/privacy',
-  '/terms/index.html': '/terms',
+  '/terms': '/legal/terms-of-service',
+  '/terms-condition': '/legal/terms-of-service',
+  '/terms/index.html': '/legal/terms-of-service',
 };
 
 /** 301 target for aliases and trailing slashes on public marketing pages. */
@@ -59,10 +61,11 @@ export function publicRedirectTarget(pathname) {
   return null;
 }
 
-/** shell = React document. not-found = unknown public URL. catalog-product = product handler. */
+/** shell = React document. workspace = tenant SPA candidate. not-found = unknown public URL. catalog-product = product handler. */
 export function documentKind(pathname) {
   const path = String(pathname || '/').split('?')[0];
   if (/^\/apps\/catalog\/[a-f0-9]{24}\/?$/i.test(path)) return 'catalog-product';
+  if (isWorkspaceAppPath(path)) return 'workspace';
   if (seoForPath(path).mode === 'unknown') return 'not-found';
   return 'shell';
 }

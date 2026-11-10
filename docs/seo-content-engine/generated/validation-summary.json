@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "scope": "offline_validation_only",
+  "articles": [
+    {
+      "id": "SM-01",
+      "words": 1287,
+      "source_sha256": "fcb251edee4f3a11d9e5d83195104e417d54dfaa9c2ce28decc85e3f399f78bf",
+      "payload_sha256": "6d127d961ba620d16eaff8a2aca9c6f574d51858ab9f93cb3faa9b9965fa60fa",
+      "body_h2_count": 8,
+      "body_h3_count": 4,
+      "native_content_validation": "passed",
+      "editorial_approval": "pending",
+      "production_links": "unverified"
+    },
+    {
+      "id": "SM-02",
+      "words": 1208,
+      "source_sha256": "3965208448cd73f90d95633e645d73ad142c9db402a7734e50151a782b25fb02",
+      "payload_sha256": "a99c6dc944cf89b379aee080ab8de86153eb8d2b3f4aee7bf802127b6b4f668c",
+      "body_h2_count": 7,
+      "body_h3_count": 5,
+      "native_content_validation": "passed",
+      "editorial_approval": "pending",
+      "production_links": "unverified"
+    },
+    {
+      "id": "SM-03",
+      "words": 1194,
+      "source_sha256": "0e1682f3f4ef0b5c90c194d104efb87ce7fa6a294b0d2d9f6ee32904e2ff3a60",
+      "payload_sha256": "626a56d1e13a4934a7b903104eb67e22fdba3cdc34c2cbf9d4db80584e31e1fd",
+      "body_h2_count": 7,
+      "body_h3_count": 8,
+      "native_content_validation": "passed",
+      "editorial_approval": "pending",
+      "production_links": "unverified"
+    }
+  ],
+  "social_draft_count": 12,
+  "release_item_count": 0
+}

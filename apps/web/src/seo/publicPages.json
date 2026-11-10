@@ -12,6 +12,7 @@
     "/redeem",
     "/zoho",
     "/auth",
+    "/oauth",
     "/dashboard"
   ],
   "pages": [
@@ -41,7 +42,7 @@
       "description": "How HR, sales, and events teams use Shelf Merch for onboarding, client gifting, and event merchandise."
     },
     {
-      "path": "/resources/hr",
+      "path": "/resources/human-resources",
       "title": "Shelf Merch for Human Resources",
       "description": "Bring onboarding, milestones, recognition and employee gifting into one HR-friendly platform—without adding another operational burden."
     },
@@ -123,11 +124,24 @@
       "canonicalPath": "/legal/privacy-policy"
     },
     {
-      "path": "/terms",
+      "path": "/terms-condition",
       "title": "Terms & Conditions | Shelf Merch",
       "description": "Terms and conditions for Shelf Merch websites, company stores, and merchandise fulfilment services.",
       "robots": "noindex, follow",
       "canonicalPath": "/legal/terms-of-service"
+    },
+    {
+      "path": "/legal/terms-of-service",
+      "title": "Terms of Service | ShelfMerch",
+      "description": "Terms of Service for ShelfMerch by Chitlu Innovations Private Limited.",
+      "canonicalPath": "/legal/terms-of-service"
+    },
+    {
+      "path": "/legal/slack-terms-of-service",
+      "title": "Slack Integration Terms of Service | ShelfMerch",
+      "description": "Terms of Service for the ShelfMerch Slack integration: workspace authorization, permissions, notifications, privacy and disconnection.",
+      "robots": "noindex, follow",
+      "canonicalPath": "/legal/slack-terms-of-service"
     },
     {
       "path": "/docs/zoho-people",

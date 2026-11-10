@@ -294,8 +294,12 @@ export async function syncEmployees(req, res) {
 }
 
 export async function disconnect(req, res) {
-  await disconnectZoho(req.tenantId);
-  return res.json({ ok: true, status: ZOHO_PUBLIC_STATUSES.not_connected });
+  const doc = await disconnectZoho(req.tenantId);
+  return res.json({
+    ok: true,
+    status: ZOHO_PUBLIC_STATUSES.not_connected,
+    remoteAuthorization: doc?.remoteAuthorization || 'revoked',
+  });
 }
 
 /** Authenticate using Bearer header, Zoho bridge cookie, or embedded-session cookie. */

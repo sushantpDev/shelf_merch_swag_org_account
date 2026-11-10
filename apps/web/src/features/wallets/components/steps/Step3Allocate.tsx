@@ -41,15 +41,6 @@ export function Step3Allocate({ state, dispatch }: StepProps) {
 
   return (
     <>
-      <div style={{ marginBottom: 14 }}>
-        <h3 style={{ fontSize: 18 }}>Allocate budget across departments</h3>
-        <p className="muted" style={{ fontSize: 13, marginTop: 2 }}>
-          {isEdit
-            ? `You have ${inr(unallocatedStart)} unallocated. Enter the extra amount to add to each department.`
-            : "Distribute the wallet across selected cost centers. Remaining = total wallet − sum of amounts below."}
-        </p>
-      </div>
-
       <div className="grid" style={{ gridTemplateColumns: "repeat(3,1fr)", marginBottom: 18 }}>
         <div className="card stat">
           <div className="k">{isEdit ? "Unallocated wallet" : "Total budget"}</div>
@@ -126,8 +117,8 @@ export function Step3Allocate({ state, dispatch }: StepProps) {
             <div className="alloc-panel-title">Department allocations</div>
             <div className="alloc-panel-sub">
               {isEdit
-                ? "Current budget is shown below each name. The field is the additional amount to send now."
-                : "Set an amount for each selected department"}
+                ? "Enter the additional budget for each department."
+                : "Enter a budget for each department."}
             </div>
           </div>
           <button
@@ -144,7 +135,7 @@ export function Step3Allocate({ state, dispatch }: StepProps) {
         </div>
 
         {depts.length === 0 ? (
-          <p className="muted" style={{ padding: "16px 20px", fontSize: 13.5 }}>
+          <p className="muted" style={{ padding: "16px 20px", fontSize: 14 }}>
             No departments selected. Go back and select at least one department.
           </p>
         ) : (
@@ -161,7 +152,7 @@ export function Step3Allocate({ state, dispatch }: StepProps) {
                     <span className="alloc-row-name">
                       {d.name}
                       {isEdit && (d.seedAllocated ?? 0) > 0 ? (
-                        <span className="mut3" style={{ display: "block", fontSize: 11 }}>
+                        <span className="mut3" style={{ display: "block", fontSize: 14, lineHeight: 1.5 }}>
                           Current budget {inr(d.seedAllocated ?? 0)}
                         </span>
                       ) : null}

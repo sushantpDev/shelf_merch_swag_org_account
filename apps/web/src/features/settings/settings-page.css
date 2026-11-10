@@ -27,8 +27,8 @@
 .settings-rail .item {
   border-radius: 10px;
   padding: 11px 14px;
-  font-size: 13.5px;
-  font-weight: 600;
+  font-size: var(--workspace-font-body, 13.5px);
+  font-weight: var(--font-weight-semibold);
 }
 
 .settings-rail .item.on {
@@ -59,9 +59,9 @@
 
 .settings-panel__title {
   margin: 0;
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: 22px;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   letter-spacing: -0.03em;
   line-height: 1.15;
   color: var(--ink);
@@ -69,7 +69,7 @@
 
 .settings-panel__sub {
   margin: 6px 0 0;
-  font-size: 13.5px;
+  font-size: var(--workspace-font-body, 13.5px);
   line-height: 1.45;
   color: var(--ink-2);
   max-width: 56ch;
@@ -88,8 +88,8 @@
 .settings-section__label {
   display: block;
   margin: 0 0 8px;
-  font-size: 11px;
-  font-weight: 800;
+  font-size: var(--workspace-font-caption, 11px);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -97,7 +97,7 @@
 
 .settings-section__hint {
   margin: 0 0 14px;
-  font-size: 13.5px;
+  font-size: var(--workspace-font-caption, 13.5px);
   line-height: 1.5;
   color: var(--ink-2);
   max-width: 54ch;
@@ -149,8 +149,8 @@
   border: 1px solid var(--line);
   background: #fff;
   color: var(--ink);
-  font-size: 13.5px;
-  font-weight: 600;
+  font-size: var(--workspace-font-body, 13.5px);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
 }
 
@@ -180,8 +180,8 @@
   flex: none;
   background: color-mix(in srgb, var(--brand, #3152ff) 14%, #fff);
   color: var(--brand, #3152ff);
-  font-size: 13px;
-  font-weight: 800;
+  font-size: var(--workspace-font-body, 13px);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.02em;
 }
 
@@ -193,14 +193,14 @@
 }
 
 .settings-owner__name {
-  font-size: 14.5px;
-  font-weight: 700;
+  font-size: var(--workspace-font-body, 14.5px);
+  font-weight: var(--font-weight-bold);
   color: var(--ink);
   line-height: 1.2;
 }
 
 .settings-owner__email {
-  font-size: 13px;
+  font-size: var(--workspace-font-body, 13px);
   color: var(--ink-2);
   line-height: 1.3;
   overflow: hidden;
@@ -216,8 +216,8 @@
   background: none;
   padding: 0;
   color: var(--brand, #3152ff);
-  font-size: 13.5px;
-  font-weight: 600;
+  font-size: var(--workspace-font-body, 13.5px);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
 }
 
@@ -233,8 +233,8 @@
   border-radius: 10px;
   background: var(--surface-2, #f6f7f8);
   border: 1px solid var(--line);
-  font-size: 14.5px;
-  font-weight: 750;
+  font-size: var(--workspace-font-body, 14.5px);
+  font-weight: var(--font-weight-bold);
   color: var(--ink);
 }
 
@@ -262,8 +262,8 @@
   background: var(--surface-2, #f6f7f8);
   border-right: 1px solid var(--line);
   color: var(--ink-3);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--workspace-font-body, 13px);
+  font-weight: var(--font-weight-semibold);
   white-space: nowrap;
 }
 
@@ -291,12 +291,12 @@
   height: 44px;
   padding: 0 18px;
   border-radius: 12px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .settings-sso__intro {
   margin: 0 0 20px;
-  font-size: 14.5px;
+  font-size: var(--workspace-font-body, 14.5px);
   line-height: 1.55;
   color: var(--ink-2);
   max-width: 62ch;
@@ -319,7 +319,7 @@
   border: 1px solid rgba(15, 18, 25, 0.08);
   border-radius: 14px;
   background: #fafbfc;
-  font-size: 14px;
+  font-size: var(--workspace-font-body, 14px);
   line-height: 1.55;
   color: var(--ink);
 }
@@ -336,8 +336,8 @@
   place-items: center;
   background: color-mix(in srgb, var(--brand, #3152ff) 12%, #fff);
   color: var(--brand, #3152ff);
-  font-size: 12.5px;
-  font-weight: 800;
+  font-size: var(--workspace-font-body, 12.5px);
+  font-weight: var(--font-weight-bold);
 }
 
 .settings-sso__step a,
@@ -357,7 +357,7 @@
 
 .settings-sso__note {
   margin: 18px 0 0;
-  font-size: 13.5px;
+  font-size: var(--workspace-font-caption, 13.5px);
   color: var(--ink-2);
 }
 

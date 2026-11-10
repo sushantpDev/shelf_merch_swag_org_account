@@ -1,0 +1,460 @@
+.shelf-resources.resources-platform {
+  --pm-ink: #171717;
+  --pm-body: 19px;
+  background: #fff;
+  color: var(--pm-ink);
+  font-family: var(--font-family-public-sans);
+}
+.resources-platform .pm-main {
+  padding-top: 69.7px;
+}
+.resources-platform .pm-wrap {
+  width: min(1280px, 90%);
+  margin-inline: auto;
+}
+.resources-platform .pm-main p,
+.resources-platform .pm-main li {
+  font-size: var(--pm-body);
+  line-height: 1.65;
+  font-weight: 400;
+  letter-spacing: normal;
+}
+.resources-platform .pm-main p {
+  margin: 0 0 24px;
+}
+.resources-platform .pm-main em {
+  font-family: var(--font-family-public-serif);
+  font-style: italic;
+}
+.resources-platform .pm-main h2 {
+  font-size: clamp(32px, 3.4vw, 48px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  margin: 0 0 24px;
+}
+.resources-platform .pm-main h2 em {
+  display: block;
+  font-weight: 700;
+}
+.resources-platform .pm-main h3 {
+  font-size: clamp(28px, 2.65vw, 38px);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  margin: 0 0 22px;
+}
+.resources-platform .pm-label {
+  display: block;
+  font-family: var(--font-family-public-sans);
+  font-size: 12px;
+  line-height: 1.7;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+}
+.resources-platform .pm-hero {
+  background: #e8f0fc;
+  overflow: hidden;
+}
+.resources-platform .pm-hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  align-items: center;
+  gap: 36px;
+  padding-block: 36px;
+}
+.resources-platform .pm-hero h1 {
+  font-size: clamp(48px, 5.5vw, 80px);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  margin: 0 0 28px;
+}
+.resources-platform .pm-hero h1 em {
+  display: block;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.resources-platform .pm-hero p {
+  max-width: 570px;
+}
+.resources-platform .pm-hero img {
+  display: block;
+  width: 110%;
+  max-width: none;
+  height: 500px;
+  margin-left: -4%;
+  object-fit: contain;
+}
+.resources-platform .pm-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+.resources-platform .pm-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 17px 25px;
+  min-height: 56px;
+  border-radius: 99px;
+  background: #171717;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 700;
+  text-decoration: none;
+}
+.resources-platform .pm-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 700;
+  text-decoration: none;
+}
+.resources-platform .pm-hero-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 26px;
+}
+.resources-platform .pm-program-nav {
+  border-bottom: 1px solid #e0e5ef;
+  scroll-margin-top: 70px;
+}
+.resources-platform .pm-program-nav > div {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding-block: 22px;
+}
+.resources-platform .pm-program-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 10px;
+  text-decoration: none;
+}
+.resources-platform .pm-program-nav a + a {
+  border-left: 1px solid #e0e5ef;
+}
+.resources-platform .pm-program-nav svg {
+  flex-shrink: 0;
+}
+.resources-platform .pm-section {
+  padding-block: 64px;
+  scroll-margin-top: 70px;
+}
+.resources-platform .pm-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 90px;
+  border-bottom: 1px solid #e0e5ef;
+}
+.resources-platform .pm-overview h2,
+.resources-platform .pm-overview p {
+  margin-bottom: 0;
+}
+.resources-platform .pm-heading {
+  max-width: 850px;
+  margin: 0 auto 36px;
+  text-align: center;
+}
+.resources-platform .pm-heading p {
+  max-width: 720px;
+  margin-inline: auto;
+}
+.resources-platform .pm-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid #d3dae7;
+}
+.resources-platform .pm-tabs button {
+  position: relative;
+  padding: 22px 12px;
+  background: transparent;
+  border: 0;
+  font-family: var(--font-family-public-sans);
+  color: #171717;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.resources-platform .pm-tabs button[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 3px;
+  background: #3155ff;
+}
+.resources-platform .pm-feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 70px;
+}
+.resources-platform .pm-recognition-panel {
+  padding-top: 42px;
+  min-height: 440px;
+}
+.resources-platform .pm-feature img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 390px;
+  object-fit: contain;
+}
+.resources-platform .pm-main ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+.resources-platform .pm-main ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 12px;
+}
+.resources-platform .pm-main ul li svg {
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.resources-platform .pm-swag {
+  background: #f4f3fa;
+  scroll-margin-top: 70px;
+}
+.resources-platform .pm-swag-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+.resources-platform .pm-swag-image {
+  border-radius: 18px;
+  margin-bottom: 28px;
+  padding: 22px;
+}
+.resources-platform .pm-swag-image-blue {
+  background: #e4e8fa;
+}
+.resources-platform .pm-swag-image-peach {
+  background: #f8e6dd;
+}
+.resources-platform .pm-swag-image img {
+  display: block;
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+}
+.resources-platform .pm-gifting {
+  background: #f7eee7;
+  scroll-margin-top: 70px;
+}
+.resources-platform .pm-gifting-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  margin: 42px 0 30px;
+}
+.resources-platform .pm-gifting-grid article {
+  border-top: 1px solid #ddcec2;
+  padding-top: 26px;
+}
+.resources-platform .pm-gifting-grid ul {
+  margin-bottom: 0;
+}
+.resources-platform .pm-process {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 30px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.resources-platform .pm-process li {
+  border-top: 1px solid #d4dce8;
+  padding-top: 18px;
+}
+.resources-platform .pm-process li > span {
+  font-size: 13px;
+}
+.resources-platform .pm-process h3 {
+  font-size: 23px;
+  line-height: 1.25;
+  margin: 26px 0 16px;
+}
+.resources-platform .pm-process p {
+  margin: 0;
+}
+.resources-platform .pm-controls {
+  background: #edf3ed;
+}
+.resources-platform .pm-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 30px;
+  margin-bottom: 32px;
+}
+.resources-platform .pm-controls-grid article {
+  border-top: 1px solid #cbd8cd;
+  padding-top: 24px;
+}
+.resources-platform .pm-controls-grid h3 {
+  font-size: 24px;
+  line-height: 1.25;
+  margin: 22px 0 16px;
+}
+.resources-platform .pm-controls-grid p {
+  margin: 0;
+}
+.resources-platform .pm-teams {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 90px;
+}
+.resources-platform .pm-team-links {
+  border-top: 1px solid #d4dce8;
+}
+.resources-platform .pm-team-links a {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 24px 0;
+  border-bottom: 1px solid #d4dce8;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 700;
+}
+.resources-platform .pm-team-links a > svg:last-child {
+  margin-left: auto;
+}
+.resources-platform .pm-cta {
+  background: #e8f0fc;
+  text-align: center;
+  padding-block: 64px;
+}
+.resources-platform .pm-cta p {
+  max-width: 650px;
+  margin: 0 auto 30px;
+}
+.resources-platform .pm-cta .pm-actions {
+  justify-content: center;
+}
+.resources-platform .pm-main a:focus-visible,
+.resources-platform .pm-main button:focus-visible,
+.resources-platform .pm-recognition-panel:focus-visible {
+  outline: 3px solid #3155ff;
+  outline-offset: 5px;
+}
+.shelf-resources.resources-platform .resources-site-header .header-cta {
+  color: #fff;
+  background: #171717;
+}
+@media (max-width: 1100px) {
+  .resources-platform .pm-feature,
+  .resources-platform .pm-overview,
+  .resources-platform .pm-teams,
+  .resources-platform .pm-gifting-grid {
+    gap: 36px;
+  }
+  .resources-platform .pm-controls-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .resources-platform .pm-program-nav a {
+    font-size: 14px;
+    gap: 8px;
+  }
+}
+@media (max-width: 760px) {
+  .shelf-resources.resources-platform {
+    --pm-body: 18px;
+  }
+  .resources-platform .pm-hero-grid {
+    grid-template-columns: 1fr;
+    padding-block: 28px;
+    gap: 24px;
+  }
+  .resources-platform .pm-hero h1 {
+    font-size: clamp(44px, 8.8vw, 64px);
+  }
+  .resources-platform .pm-hero img {
+    width: 100%;
+    height: auto;
+    max-height: 390px;
+    margin: 0;
+  }
+  .resources-platform .pm-program-nav > div {
+    padding-block: 12px;
+  }
+  .resources-platform .pm-program-nav a {
+    flex-direction: column;
+    font-size: 11px;
+    text-align: center;
+    padding: 8px 4px;
+  }
+  .resources-platform .pm-section,
+  .resources-platform .pm-cta {
+    padding-block: 44px;
+  }
+  .resources-platform .pm-main h2 {
+    font-size: clamp(28px, 6vw, 34px);
+  }
+  .resources-platform .pm-main h3 {
+    font-size: 28px;
+  }
+  .resources-platform .pm-overview,
+  .resources-platform .pm-feature,
+  .resources-platform .pm-teams {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .resources-platform .pm-tabs button {
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 18px 8px;
+  }
+  .resources-platform .pm-recognition-panel {
+    min-height: 0;
+    padding-top: 28px;
+  }
+  .resources-platform .pm-swag-grid,
+  .resources-platform .pm-gifting-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .resources-platform .pm-swag-image {
+    padding: 18px;
+  }
+  .resources-platform .pm-swag-image img {
+    height: 230px;
+  }
+  .resources-platform .pm-process {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px;
+  }
+  .resources-platform .pm-process h3 {
+    font-size: 22px;
+  }
+  .resources-platform .pm-controls-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .resources-platform .pm-controls-grid h3 {
+    font-size: 24px;
+  }
+  .resources-platform .pm-team-links a {
+    font-size: 19px;
+  }
+}

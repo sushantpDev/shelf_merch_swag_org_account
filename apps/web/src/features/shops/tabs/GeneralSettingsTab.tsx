@@ -83,8 +83,8 @@ export function GeneralSettingsTab({ shop }: { shop: UiShop }) {
                 padding: "11px 14px",
                 borderRadius: 10,
                 marginBottom: 6,
-                fontSize: 12,
-                fontWeight: active ? 700 : 600,
+                fontSize: "var(--workspace-font-caption, 12px)",
+                fontWeight: active ? "var(--font-weight-bold)" : "var(--font-weight-semibold)",
                 letterSpacing: ".06em",
                 textTransform: "uppercase",
                 color: active ? "var(--ink)" : "var(--ink-3)",
@@ -110,7 +110,7 @@ export function GeneralSettingsTab({ shop }: { shop: UiShop }) {
           <input className="inp" value={shop.currency} readOnly disabled />
         </div>
 
-        <div className="muted" style={{ fontSize: 12, margin: "2px 0 22px", lineHeight: 1.55 }}>
+        <div className="muted" style={{ fontSize: "var(--workspace-font-caption, 12px)", margin: "2px 0 22px", lineHeight: 1.55 }}>
           {currencyDescription} Store currency is locked and cannot be changed after creation.
         </div>
 
@@ -123,7 +123,7 @@ export function GeneralSettingsTab({ shop }: { shop: UiShop }) {
             onChange={(e) => setCompanyEmailDomain(e.target.value.replace(/^@/, ""))}
           />
         </div>
-        <div className="muted" style={{ fontSize: 12, margin: "2px 0 22px", lineHeight: 1.55 }}>
+        <div className="muted" style={{ fontSize: "var(--workspace-font-caption, 12px)", margin: "2px 0 22px", lineHeight: 1.55 }}>
           Public storefront signups must use an email at this domain. Platform allowlisted emails
           can always create accounts on any store. Leave blank to disable public signup until set.
         </div>

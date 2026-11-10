@@ -1,3 +1,8 @@
+import {
+  ARTWORK_ACCEPT,
+  ARTWORK_REQUIREMENTS,
+  readArtworkFile,
+} from "@/lib/artworkValidation";
 import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import { Check, Eye, Image as ImageIcon, Trash2, Upload, X } from "lucide-react";
 import { toast } from "sonner";
@@ -51,9 +56,6 @@ import {
 } from "@/features/swag/wizard/artworkStepModel";
 import { kitDefaultSeedKeysForProducts, kitPreferredPrintAreaKey } from "../kitPrintArea";
 import type { KitArtFile } from "../wizard/kitDraft";
-
-const ART_ACCEPT = /\.(svg|png|jpe?g|ai)$/i;
-const ART_MAX = 5 * 1024 * 1024;
 
 type ArtTab = "upload" | "previous";
 type PrintQuality = "good" | "poor";
@@ -141,20 +143,14 @@ export function KitBrandingStep({
     setStaging(null);
   }
 
-  function onPick(file: File) {
-    if (!ART_ACCEPT.test(file.name)) {
-      toast.error("Use SVG, PNG, JPG, or AI");
-      return;
+  async function onPick(file: File) {
+    try {
+      const artwork = await readArtworkFile(file);
+      setStaging(artwork);
+      setTab("upload");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not read artwork");
     }
-    if (file.size > ART_MAX) {
-      toast.error("Maximum file size is 5 MB");
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () =>
-      setStaging({ name: file.name, preview: String(reader.result), file });
-    reader.readAsDataURL(file);
-    setTab("upload");
   }
 
   function onDrop(e: DragEvent) {
@@ -296,7 +292,7 @@ export function KitBrandingStep({
                     <Upload size={18} strokeWidth={2} />
                   </span>
                   <span className="sw-art-upload-title">Drag and drop, or browse</span>
-                  <span className="sw-art-upload-sub">SVG, PNG, JPG · 300 DPI recommended</span>
+                  <span className="sw-art-upload-sub">{ARTWORK_REQUIREMENTS}</span>
                 </button>
               )}
             </div>
@@ -327,7 +323,7 @@ export function KitBrandingStep({
           <input
             ref={fileRef}
             type="file"
-            accept=".svg,.png,.jpg,.jpeg,.ai,image/svg+xml,image/png,image/jpeg"
+            accept={ARTWORK_ACCEPT}
             style={{ display: "none" }}
             onChange={(e) => {
               const f = e.target.files?.[0];
@@ -337,7 +333,7 @@ export function KitBrandingStep({
           />
 
           <p className="sw-art-quality-tip">
-            Use a transparent logo and artwork at 300 DPI or higher for the best print quality.
+            {ARTWORK_REQUIREMENTS} Use a transparent background for logos.
           </p>
 
           <button
@@ -662,20 +658,12 @@ function KitProductBrandingModal({
     toast.success(`Artwork added to ${areaLabelForKey(product, key)}`);
   }
 
-  function onModalPick(file: File) {
-    if (!ART_ACCEPT.test(file.name)) {
-      toast.error("Use SVG, PNG, JPG, or AI");
-      return;
+  async function onModalPick(file: File) {
+    try {
+      assignArtToActive(await readArtworkFile(file));
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not read artwork");
     }
-    if (file.size > ART_MAX) {
-      toast.error("Maximum file size is 5 MB");
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      assignArtToActive({ name: file.name, preview: String(reader.result), file });
-    };
-    reader.readAsDataURL(file);
   }
 
   return (
@@ -855,7 +843,7 @@ function KitProductBrandingModal({
                         displayOnly
                         onRemove={removeActiveArt}
                       />
-                      <p className="mut3" style={{ fontSize: 12, marginTop: 8 }}>
+                      <p className="mut3" style={{ fontSize: "var(--workspace-font-caption, 12px)", marginTop: 8 }}>
                         Drag the logo on the mockup to reposition. Remove to clear this placeholder
                         only.
                       </p>
@@ -887,6 +875,7 @@ function KitProductBrandingModal({
                       >
                         <Upload size={18} />
                         <span>Upload artwork for {activeLabel || "placeholder"}</span>
+                        <span className="sw-art-upload-sub">{ARTWORK_REQUIREMENTS}</span>
                       </button>
                     </>
                   )}
@@ -916,7 +905,7 @@ function KitProductBrandingModal({
                   <input
                     ref={modalFileRef}
                     type="file"
-                    accept=".svg,.png,.jpg,.jpeg,.ai,image/svg+xml,image/png,image/jpeg"
+                    accept={ARTWORK_ACCEPT}
                     style={{ display: "none" }}
                     onChange={(e) => {
                       const f = e.target.files?.[0];
@@ -992,7 +981,7 @@ function KitProductBrandingModal({
               ) : (
                 <div className="sw-art-panel sw-art-panel--side">
                   <h2 className="sw-art-panel-title">Preview</h2>
-                  <p className="mut3" style={{ fontSize: 13 }}>
+                  <p className="mut3" style={{ fontSize: "var(--workspace-font-caption, 13px)" }}>
                     Clean product view with logos applied. Return to edit to adjust placement or
                     placeholders.
                   </p>

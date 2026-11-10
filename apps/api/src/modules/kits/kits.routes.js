@@ -1,3 +1,4 @@
+import { artworkUpload, validateArtworkUpload } from '../../middleware/artwork.middleware.js';
 import { Router } from 'express';
 import { z } from 'zod';
 import { uploader, DOCUMENT_TYPES } from '../../middleware/upload.middleware.js';
@@ -273,11 +274,11 @@ router.post(
   '/:id/artwork',
   canUploadKitArtwork,
   validate({ params: z.object({ id: objectId }) }),
-  upload.single('artwork'),
+  artworkUpload.single('artwork'),
   asyncHandler(async (req, res) => {
+    validateArtworkUpload(req.file);
     const kit = await Kit.findOne({ _id: req.params.id, tenantId: req.tenantId });
     if (!kit) throw new NotFoundError('Kit not found');
-    if (!req.file) throw new ApiError(400, 'No artwork file uploaded', 'FILE_REQUIRED');
     const { url } = await uploadFile({ tenantId: req.tenantId, kind: 'artwork', file: req.file });
     kit.artworkUrl = url;
     // Mark curated clones so send-flow can require a real tenant logo (not platform hero).

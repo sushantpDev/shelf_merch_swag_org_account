@@ -29,21 +29,21 @@
   color: var(--ink-2);
   display: grid;
   place-items: center;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   font-size: 18px;
   flex: none;
 }
 
 .home-hero__name {
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: 22px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--ink);
   line-height: 1.2;
 }
 
 .home-hero__meta {
-  font-size: 13px;
+  font-size: var(--workspace-font-caption, 13px);
   color: var(--ink-2);
   margin-top: 4px;
 }
@@ -111,17 +111,17 @@
 }
 
 .home-stat__label {
-  font-size: 10px;
-  font-weight: 700;
+  font-size: var(--workspace-font-caption, 10px);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-3);
 }
 
 .home-stat__value {
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--ink);
 }
 
@@ -152,9 +152,9 @@
 }
 
 .home-card__title {
-  font-family: var(--disp);
-  font-size: 17px;
-  font-weight: 700;
+  font-family: var(--font-family-primary);
+  font-size: var(--workspace-font-heading, 17px);
+  font-weight: var(--font-weight-bold);
   color: var(--ink);
   margin-bottom: 14px;
   flex: none;
@@ -175,8 +175,8 @@
   padding: 11px 10px;
   border-radius: var(--r-sm);
   color: var(--ink);
-  font-weight: 600;
-  font-size: 13.5px;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--workspace-font-body, 13.5px);
   text-decoration: none;
   transition: background 0.14s ease;
 }
@@ -229,13 +229,13 @@
 }
 
 .home-video__title {
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .home-video__meta {
-  font-size: 12px;
+  font-size: var(--workspace-font-caption, 12px);
   opacity: 0.88;
 }
 
@@ -269,14 +269,14 @@
 }
 
 .home-mini-card__label {
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   font-size: 14px;
   color: var(--ink);
 }
 
 .home-mini-card__cta {
-  font-size: 11px;
-  font-weight: 700;
+  font-size: var(--workspace-font-caption, 11px);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--brand-d);
@@ -297,8 +297,8 @@
 }
 
 .home-wallet-tile__label {
-  font-size: 10px;
-  font-weight: 700;
+  font-size: var(--workspace-font-caption, 10px);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -306,14 +306,14 @@
 }
 
 .home-wallet-tile__balance {
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: 22px;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   color: var(--ink);
 }
 
 .home-wallet-tile__sub {
-  font-size: 12px;
+  font-size: var(--workspace-font-caption, 12px);
   color: var(--ink-2);
   margin-top: 4px;
 }
@@ -357,15 +357,15 @@
 
 .home-pinned-shop__name {
   margin: 0;
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: 18px;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   line-height: 1.2;
   color: var(--ink);
 }
 
 .home-empty-note {
-  font-size: 13px;
+  font-size: var(--workspace-font-caption, 13px);
   color: var(--ink-2);
   line-height: 1.5;
   flex: 1;
@@ -390,15 +390,15 @@
 }
 
 .home-onboarding__header h2 {
-  font-family: var(--disp);
+  font-family: var(--font-family-primary);
   font-size: 18px;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   color: var(--ink);
 }
 
 .home-onboarding__header span {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: var(--workspace-font-caption, 12px);
+  font-weight: var(--font-weight-bold);
   color: var(--ink-3);
   white-space: nowrap;
 }
@@ -416,8 +416,8 @@
   align-items: center;
   gap: 10px;
   padding: 0 12px;
-  font-weight: 700;
-  font-size: 13px;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--workspace-font-body, 13px);
   line-height: 1.2;
 }
 
@@ -445,7 +445,7 @@
   place-items: center;
   background: var(--brand-l);
   color: #fff;
-  font-size: 11px;
+  font-size: var(--workspace-font-caption, 11px);
   flex: none;
 }
 
@@ -476,8 +476,8 @@
 }
 
 .home-onboarding-card__copy h3 {
-  font-size: 15px;
-  font-weight: 800;
+  font-size: var(--workspace-font-heading, 15px);
+  font-weight: var(--font-weight-bold);
   margin: 0 0 2px;
   color: #fff;
 }
@@ -485,7 +485,7 @@
 .home-onboarding-card__copy p {
   margin: 0;
   color: rgba(255, 255, 255, 0.76);
-  font-size: 13px;
+  font-size: var(--workspace-font-body, 13px);
   line-height: 1.35;
 }
 

@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { useForm, type FieldErrors, type Resolver, type UseFormRegister } from "react-hook-form";
+import {
+  useForm,
+  type Control,
+  type FieldErrors,
+  type Resolver,
+  type UseFormRegister,
+} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useAddContact, useUpdateContact } from "../model";
@@ -37,6 +43,7 @@ export type ContactFormVm = {
   roleDisplay: string;
   busy: boolean;
   register: UseFormRegister<ContactFormValues>;
+  control: Control<ContactFormValues>;
   errors: FieldErrors<ContactFormValues>;
   onOpenChange: (open: boolean) => void;
   onTab: (tab: "manual" | "csv") => void;
@@ -63,6 +70,7 @@ export function useContactFormController({
 
   const {
     register,
+    control,
     handleSubmit,
     reset,
     watch,
@@ -85,12 +93,11 @@ export function useContactFormController({
   }, [open, mode, contact, initialTab, reset]);
 
   async function submit(values: ContactFormValues) {
-    const lockedRole =
-      !canManageContactRoles
-        ? mode === "edit" && contact
-          ? contactToForm(contact).role
-          : ("Member" as ContactFormValues["role"])
-        : values.role;
+    const lockedRole = !canManageContactRoles
+      ? mode === "edit" && contact
+        ? contactToForm(contact).role
+        : ("Member" as ContactFormValues["role"])
+      : values.role;
     const payload = { ...values, role: lockedRole };
 
     try {
@@ -119,6 +126,7 @@ export function useContactFormController({
     roleDisplay: watchedRole || (mode === "edit" && contact ? contact.role : "Member"),
     busy: addContact.isPending || updateContact.isPending,
     register,
+    control,
     errors,
     onOpenChange,
     onTab: setTab,

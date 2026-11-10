@@ -36,6 +36,7 @@ import { Step2Departments } from "./steps/Step2Departments";
 import { Step3Allocate } from "./steps/Step3Allocate";
 import { Step4Managers } from "./steps/Step4Managers";
 import { Step5Review } from "./steps/Step5Review";
+import { managersValid } from "../managerValidation";
 
 type AllocationSuccessManager = {
   name: string;
@@ -66,6 +67,7 @@ export function OrgWizard({
   onFinished: () => void;
 }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [showManagerErrors, setShowManagerErrors] = useState(false);
   const [contactErrors, setContactErrors] = useState<WalletContactFieldErrors>({});
   const submitInFlight = useRef(false);
   const [submitting, setSubmitting] = useState(false);
@@ -185,6 +187,19 @@ export function OrgWizard({
     }
   }
 
+  function validateManagersStep(): boolean {
+    setShowManagerErrors(true);
+    if (managersValid(state.departments)) return true;
+    dispatch({ type: "goto", step: 4 });
+    toast.error("Check the highlighted manager details");
+    return false;
+  }
+
+  function goToStep(step: number) {
+    if (step > 4 && !validateManagersStep()) return;
+    dispatch({ type: "goto", step });
+  }
+
   function handleNext() {
     if (isWalletFlow) {
       if (!validateWalletStep()) return;
@@ -204,6 +219,7 @@ export function OrgWizard({
       toast.error("Reduce your allocations");
       return;
     }
+    if (n >= 4 && !validateManagersStep()) return;
     if (n === ALLOC_STEP_MAX) {
       if (walletAlloc <= 0) {
         toast.error("Allocate a department budget");
@@ -216,6 +232,10 @@ export function OrgWizard({
   }
 
   async function handleFinish() {
+    if (!isWalletFlow && !validateManagersStep()) {
+      setConfirmOpen(false);
+      return;
+    }
     if (submitInFlight.current) return;
     submitInFlight.current = true;
     setSubmitting(true);
@@ -278,8 +298,8 @@ export function OrgWizard({
   const stepNumbers = [2, 3, 4, 5];
 
   return (
-    <>
-      <div className="page-h">
+    <div className={!isWalletFlow ? "allocation-wizard" : undefined}>
+      <div className={isWalletFlow ? "page-h budget-setup-header" : "page-h"}>
         <div>
           <button
             type="button"
@@ -299,14 +319,19 @@ export function OrgWizard({
             <ArrowLeft size={15} /> Back to budget dashboard
           </button>
           <h1>{isWalletFlow ? "Setup budget" : "Allocate budget"}</h1>
-          <div className="sub">
-            {isWalletFlow
-              ? isPayOnline
-                ? `${account} · pay online to fund your organization budget.`
-                : `${account} · submit a Purchase Order or Agreement to fund your organization budget.`
-              : `${account} · split your organization budget across departments and assign managers.`}
-          </div>
+          {isWalletFlow && (
+            <div className="sub budget-setup-subtitle">
+              {isPayOnline
+                ? "Pay online to fund your organization budget."
+                : "Submit a Purchase Order or Agreement to fund your organization budget."}
+            </div>
+          )}
         </div>
+        {isWalletFlow && (
+          <div className="budget-setup-info">
+            <p>Create your organization&apos;s merchandise budget. Submit a Purchase Order or Agreement for ShelfMerch approval. This is your single budget for all campaigns and orders.</p>
+          </div>
+        )}
       </div>
 
       {!isWalletFlow && (
@@ -319,7 +344,7 @@ export function OrgWizard({
                 <button
                   type="button"
                   className="sbtn"
-                  onClick={() => dispatch({ type: "goto", step: s })}
+                  onClick={() => goToStep(s)}
                 >
                   <div className="snum">{s < n ? "✓" : i + 1}</div>
                   <div className="smeta">
@@ -344,7 +369,7 @@ export function OrgWizard({
       )}
       {!isWalletFlow && n === 2 && <Step2Departments state={state} dispatch={dispatch} />}
       {!isWalletFlow && n === 3 && <Step3Allocate state={state} dispatch={dispatch} />}
-      {!isWalletFlow && n === 4 && <Step4Managers state={state} dispatch={dispatch} />}
+      {!isWalletFlow && n === 4 && <Step4Managers state={state} dispatch={dispatch} showErrors={showManagerErrors} />}
       {!isWalletFlow && n === 5 && (
         <Step5Review state={state} dispatch={dispatch} account={account} />
       )}
@@ -389,17 +414,17 @@ export function OrgWizard({
       </div>
 
       <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
-        <DialogContent className="sm-modal" style={{ maxWidth: 440 }}>
+        <DialogContent className="sm-modal budget-confirm-dialog">
           <div className="modal-pad">
-            <DialogHeader>
-              <DialogTitle style={{ fontSize: 20, fontFamily: "var(--disp)" }}>
+            <DialogHeader className="budget-confirm-dialog__header">
+              <DialogTitle>
                 {isWalletFlow ? "Submit budget for review?" : "Finish allocation?"}
               </DialogTitle>
-              <DialogDescription className="muted" style={{ fontSize: 14, margin: "8px 0 0" }}>
+              <DialogDescription className="budget-confirm-dialog__copy">
                 {isWalletFlow ? (
                   <>
-                    Submit <b>{state.wallet.name}</b> ({inr(state.wallet.amount)}) funding request
-                    and send your PO to ShelfMerch for approval.
+                    Submit <b>{state.wallet.name}</b> ({inr(state.wallet.amount)})
+                    {" "}to ShelfMerch for approval.
                   </>
                 ) : (
                   <>
@@ -409,7 +434,7 @@ export function OrgWizard({
                 )}
               </DialogDescription>
             </DialogHeader>
-            <div className="row" style={{ gap: 10, marginTop: 24 }}>
+            <div className="budget-confirm-dialog__actions">
               <button
                 type="button"
                 className="btn btn-ghost"
@@ -480,6 +505,6 @@ export function OrgWizard({
           </div>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 }

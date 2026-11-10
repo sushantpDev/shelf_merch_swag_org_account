@@ -180,7 +180,7 @@ export function OrderFulfillmentView({
 
               <div className="h1" style={{ fontSize: 16, marginBottom: 16 }}>
                 Production line items{" "}
-                <span className="muted" style={{ fontWeight: 400 }}>
+                <span className="muted" style={{ fontWeight: "var(--font-weight-regular)" }}>
                   ({items.length})
                 </span>
               </div>
@@ -242,7 +242,7 @@ export function OrderFulfillmentView({
                         flexWrap: "wrap",
                       }}
                     >
-                      <div style={{ fontWeight: 700, fontSize: 15, marginRight: 4 }}>
+                      <div style={{ fontWeight: "var(--font-weight-bold)", fontSize: 15, marginRight: 4 }}>
                         {item.name ?? product?.name ?? "Product"}
                       </div>
                       <Chip mono>{item.sku || "N/A"}</Chip>

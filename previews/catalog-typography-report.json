@@ -1,0 +1,422 @@
+[
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "headings": [
+      {
+        "id": "sm-cat-style-title",
+        "text": "Choose your style. Make it yours.",
+        "size": "48px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "53.76px",
+        "left": 72,
+        "right": 779.546875,
+        "overflow": false
+      },
+      {
+        "id": "sm-cat-teams-title",
+        "text": "Built for teams everywhere",
+        "size": "48px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "53.76px",
+        "left": 72,
+        "right": 520.1875,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-story-title",
+        "text": "Give branded merchthat people actually love.",
+        "size": "48px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "53.76px",
+        "left": 200,
+        "right": 727.15625,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-experts-title",
+        "text": "Experts in corporate gifting",
+        "size": "48px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "53.76px",
+        "left": 130,
+        "right": 1310,
+        "overflow": false
+      },
+      {
+        "id": "sm-featured-products-title",
+        "text": "Discover our products, made for your brand.",
+        "size": "48px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "53.76px",
+        "left": 48,
+        "right": 1392,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-worldwide-title",
+        "text": "Thoughtful gifting, delivered worldwide",
+        "size": "48px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "53.76px",
+        "left": 130,
+        "right": 890,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-impact-title",
+        "text": "Merch made for meaningful moments",
+        "size": "48px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "53.76px",
+        "left": 74,
+        "right": 1366,
+        "overflow": false
+      }
+    ],
+    "heroSize": "78px"
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "headings": [
+      {
+        "id": "sm-cat-style-title",
+        "text": "Choose your style. Make it yours.",
+        "size": "34.816px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "38.9939px",
+        "left": 51.1875,
+        "right": 564.296875,
+        "overflow": false
+      },
+      {
+        "id": "sm-cat-teams-title",
+        "text": "Built for teams everywhere",
+        "size": "34.816px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "38.9939px",
+        "left": 51.1875,
+        "right": 972.8125,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-story-title",
+        "text": "Give branded merchthat people actually love.",
+        "size": "34.816px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "38.9939px",
+        "left": 102,
+        "right": 484.296875,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-experts-title",
+        "text": "Experts in corporate gifting",
+        "size": "34.816px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "38.9939px",
+        "left": 48,
+        "right": 976,
+        "overflow": false
+      },
+      {
+        "id": "sm-featured-products-title",
+        "text": "Discover our products, made for your brand.",
+        "size": "34.816px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "38.9939px",
+        "left": 48,
+        "right": 976,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-worldwide-title",
+        "text": "Thoughtful gifting, delivered worldwide",
+        "size": "34.816px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "38.9939px",
+        "left": 48,
+        "right": 623.359375,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-impact-title",
+        "text": "Merch made for meaningful moments",
+        "size": "34.816px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "38.9939px",
+        "left": 74,
+        "right": 950,
+        "overflow": false
+      }
+    ],
+    "heroSize": "60px"
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "headings": [
+      {
+        "id": "sm-cat-style-title",
+        "text": "Choose your style. Make it yours.",
+        "size": "32px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "35.84px",
+        "left": 38.390625,
+        "right": 510.09375,
+        "overflow": false
+      },
+      {
+        "id": "sm-cat-teams-title",
+        "text": "Built for teams everywhere",
+        "size": "32px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "35.84px",
+        "left": 38.390625,
+        "right": 729.609375,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-story-title",
+        "text": "Give branded merchthat people actually love.",
+        "size": "32px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "35.84px",
+        "left": 102,
+        "right": 453.4375,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-experts-title",
+        "text": "Experts in corporate gifting",
+        "size": "32px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "35.84px",
+        "left": 48,
+        "right": 720,
+        "overflow": false
+      },
+      {
+        "id": "sm-featured-products-title",
+        "text": "Discover our products, made for your brand.",
+        "size": "32px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "35.84px",
+        "left": 48,
+        "right": 720,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-worldwide-title",
+        "text": "Thoughtful gifting, delivered worldwide",
+        "size": "32px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "35.84px",
+        "left": 48,
+        "right": 464.625,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-impact-title",
+        "text": "Merch made for meaningful moments",
+        "size": "32px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "35.84px",
+        "left": 74,
+        "right": 694,
+        "overflow": false
+      }
+    ],
+    "heroSize": "60px"
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "headings": [
+      {
+        "id": "sm-cat-style-title",
+        "text": "Choose your style. Make it yours.",
+        "size": "28px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "31.36px",
+        "left": 20,
+        "right": 370,
+        "overflow": false
+      },
+      {
+        "id": "sm-cat-teams-title",
+        "text": "Built for teams everywhere",
+        "size": "28px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "31.36px",
+        "left": 20,
+        "right": 370,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-story-title",
+        "text": "Give branded merchthat people actually love.",
+        "size": "28px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "31.36px",
+        "left": 38,
+        "right": 291.125,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-experts-title",
+        "text": "Experts in corporate gifting",
+        "size": "28px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "31.36px",
+        "left": 14,
+        "right": 376,
+        "overflow": false
+      },
+      {
+        "id": "sm-featured-products-title",
+        "text": "Discover our products, made for your brand.",
+        "size": "28px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "31.36px",
+        "left": 14,
+        "right": 376,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-worldwide-title",
+        "text": "Thoughtful gifting, delivered worldwide",
+        "size": "28px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "31.36px",
+        "left": 14,
+        "right": 376,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-impact-title",
+        "text": "Merch made for meaningful moments",
+        "size": "28px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "31.36px",
+        "left": 32,
+        "right": 358,
+        "overflow": false
+      }
+    ],
+    "heroSize": "38px"
+  },
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "headings": [
+      {
+        "id": "sm-cat-style-title",
+        "text": "Choose your style. Make it yours.",
+        "size": "28px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "31.36px",
+        "left": 20,
+        "right": 300,
+        "overflow": false
+      },
+      {
+        "id": "sm-cat-teams-title",
+        "text": "Built for teams everywhere",
+        "size": "28px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "31.36px",
+        "left": 20,
+        "right": 300,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-story-title",
+        "text": "Give branded merchthat people actually love.",
+        "size": "28px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "31.36px",
+        "left": 38,
+        "right": 282,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-experts-title",
+        "text": "Experts in corporate gifting",
+        "size": "28px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "31.36px",
+        "left": 14,
+        "right": 306,
+        "overflow": false
+      },
+      {
+        "id": "sm-featured-products-title",
+        "text": "Discover our products, made for your brand.",
+        "size": "28px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "31.36px",
+        "left": 14,
+        "right": 306,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-worldwide-title",
+        "text": "Thoughtful gifting, delivered worldwide",
+        "size": "28px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "31.36px",
+        "left": 14,
+        "right": 306,
+        "overflow": false
+      },
+      {
+        "id": "sm-ref-impact-title",
+        "text": "Merch made for meaningful moments",
+        "size": "28px",
+        "font": "Arial, Helvetica, sans-serif",
+        "weight": "700",
+        "lineHeight": "31.36px",
+        "left": 32,
+        "right": 288,
+        "overflow": false
+      }
+    ],
+    "heroSize": "38px"
+  }
+]

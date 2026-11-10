@@ -34,6 +34,7 @@ export type WorkspaceOwner = { id: string; name: string; email: string };
 
 export type WorkspaceSnapshot = {
   account: string;
+  slug?: string;
   logoUrl: string;
   userPatch: { name: string; initials: string; email: string; role: string };
   owner?: WorkspaceOwner;
@@ -424,7 +425,7 @@ export async function fetchWorkspaceSnapshot(sessionUser?: AuthUser | null): Pro
     entities,
     users,
   ] = await Promise.all([
-    apiFetch<{ name: string; logoUrl?: string; owner?: WorkspaceOwner }>("/tenants/me"),
+    apiFetch<{ name: string; slug?: string; logoUrl?: string; owner?: WorkspaceOwner }>("/tenants/me"),
     apiFetch<unknown[]>("/shops"),
     apiFetch<unknown[]>("/contacts"),
     apiFetch<unknown[]>("/kits"),
@@ -549,6 +550,7 @@ export async function fetchWorkspaceSnapshot(sessionUser?: AuthUser | null): Pro
   const auth = applyAuthUser(me, tenant.name);
   return {
     account: auth.account,
+    slug: tenant.slug || undefined,
     logoUrl: tenant.logoUrl || "",
     userPatch: { ...auth.user, role: me.role },
     owner: workspaceOwner,

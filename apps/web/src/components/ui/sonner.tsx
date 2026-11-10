@@ -20,6 +20,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       duration={5000}
       gap={12}
       offset={{ top: isAuthRoute ? 16 : 70, right: 24 }}
+      mobileOffset={{ top: isAuthRoute ? 16 : 70, right: 16, left: 16 }}
       className="sm-sonner"
       style={{ "--width": "260px" } as React.CSSProperties}
       icons={{

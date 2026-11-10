@@ -38,21 +38,24 @@ export function CampaignsEmptyStateView({
       {showActionCards ? (
         <div className="camp-empty__options">
           <article className="camp-empty__option">
-            <strong>Send Points</strong>
+            <span className="camp-empty__option-category">Flexible rewards</span>
+            <h4>Send Points</h4>
             <p>Give your team points they can use to shop from your store.</p>
             <button type="button" className="camp-empty__cta" onClick={onSendPoints}>
               Send Points
             </button>
           </article>
           <article className="camp-empty__option">
-            <strong>Send a Kit</strong>
+            <span className="camp-empty__option-category">Ready-made kits</span>
+            <h4>Send a Kit</h4>
             <p>Send an existing kit to your recipients.</p>
             <button type="button" className="camp-empty__cta" onClick={onSendKit}>
               Send Kit
             </button>
           </article>
           <article className="camp-empty__option">
-            <strong>Create a Kit</strong>
+            <span className="camp-empty__option-category">Personalized gifting</span>
+            <h4>Create a Kit</h4>
             <p>Create a curated kit from your available products.</p>
             <button
               type="button"

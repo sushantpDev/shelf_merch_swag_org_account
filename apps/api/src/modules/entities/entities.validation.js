@@ -26,10 +26,13 @@ export const updateEntitySchema = z
   .partial();
 
 export const assignManagerSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
-  role: z.string().optional().default(''), // display role e.g. "Marketing Manager"
-  mobile: z.string().optional().default(''),
+  name: z.string().trim().min(1).max(100),
+  email: z.string().trim().email().max(254),
+  role: z.string().trim().max(100).optional().default(''), // display role e.g. "Marketing Manager"
+  mobile: z.string().trim().refine(
+    (value) => !value || /^(?:\+?91)?\d{10}$/.test(value.replace(/[\s()-]/g, '')),
+    'Enter a valid 10-digit mobile number',
+  ).optional().default(''),
   sendInvite: z.boolean().optional().default(true),
 });
 

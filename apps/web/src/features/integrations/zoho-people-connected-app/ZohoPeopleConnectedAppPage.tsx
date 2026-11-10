@@ -151,7 +151,13 @@ function ZohoPeopleConnectedAppView({ vm }: { vm: ZohoPeopleConnectedAppVm }) {
                   type="button"
                   className="zoho-integ-btn zoho-integ-btn--primary"
                   onClick={vm.onSync}
-                  disabled={!vm.canManage || vm.syncing || vm.status === "expired" || vm.status === "needs_attention"}
+                  disabled={
+                    !vm.canManage ||
+                    vm.syncing ||
+                    vm.status === "expired" ||
+                    vm.status === "needs_attention" ||
+                    vm.status === "error"
+                  }
                   aria-busy={vm.syncing}
                 >
                   {vm.syncing ? (
@@ -164,7 +170,7 @@ function ZohoPeopleConnectedAppView({ vm }: { vm: ZohoPeopleConnectedAppVm }) {
                   )}
                 </button>
 
-                {(vm.status === "needs_attention" || vm.status === "expired") && (
+                {(vm.status === "needs_attention" || vm.status === "expired" || vm.status === "error") && (
                   <button
                     type="button"
                     className="zoho-integ-btn"
@@ -189,8 +195,8 @@ function ZohoPeopleConnectedAppView({ vm }: { vm: ZohoPeopleConnectedAppVm }) {
                     <AlertDialogHeader>
                       <AlertDialogTitle>Disconnect Zoho People?</AlertDialogTitle>
                       <AlertDialogDescription>
-                        ShelfMerch will stop syncing employees from Zoho People. Existing contacts
-                        and orders are kept. You can reconnect later.
+                        ShelfMerch will revoke Zoho authorization for this workspace and stop
+                        syncing. Existing contacts and orders are kept. You can reconnect later.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>

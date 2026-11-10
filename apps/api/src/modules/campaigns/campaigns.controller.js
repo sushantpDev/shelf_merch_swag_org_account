@@ -42,6 +42,7 @@ export async function importRecipients(req, res) {
     paymentMode: req.body.paymentMode,
     razorpayOrderId: req.body.razorpay_order_id,
     razorpayPaymentId: req.body.razorpay_payment_id,
+    idempotencyKey: req.get('Idempotency-Key') || undefined,
   });
   writeAudit({
     req,
@@ -65,6 +66,7 @@ export async function allocateCredits(req, res) {
     paymentMode: req.body.paymentMode,
     razorpayOrderId: req.body.razorpay_order_id,
     razorpayPaymentId: req.body.razorpay_payment_id,
+    idempotencyKey: req.get('Idempotency-Key') || undefined,
   });
   writeAudit({
     req,

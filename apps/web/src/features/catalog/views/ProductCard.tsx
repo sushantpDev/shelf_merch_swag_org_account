@@ -1,14 +1,14 @@
 import { Link } from "react-router";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
 import type { UiProduct } from "@/services/mappers";
-import { productSwatches } from "../types";
 import { CatalogPrice } from "./CatalogPrice";
+import "./product-card.css";
 
 function thumb(p: UiProduct): string | undefined {
   return resolveMediaUrl(p.mockupUrl) || resolveMediaUrl(p.photoUrl) || resolveMediaUrl(p.imgUrl);
 }
 
-/** Catalog/browse product card — faithful to the legacy `pcard()` markup. */
+/** Shared product card for catalog listings, featured rows and related items. */
 export function ProductCard({
   product,
   to,
@@ -19,9 +19,6 @@ export function ProductCard({
   state?: { fromCatalog?: string };
 }) {
   const src = thumb(product);
-  const swatches = productSwatches(product);
-  const preview = swatches.slice(0, 4);
-  const more = swatches.length - preview.length;
 
   const content = (
     <>
@@ -40,24 +37,12 @@ export function ProductCard({
             style={{ width: "100%", height: "100%" }}
           />
         )}
-        {swatches.length > 0 && (
-          <div className="swatches pcard-swatch-pill" aria-label={`${swatches.length} available colors`}>
-            {preview.map((c) => (
-              <span
-                key={c.name}
-                className="sw"
-                style={{ background: c.hex }}
-                title={c.name}
-              />
-            ))}
-            {more > 0 && <span className="pcard-more">+{more}</span>}
-          </div>
-        )}
       </div>
       <div className="meta">
+        <div className="catalog-product-card__brand">{product.brand || "\u00a0"}</div>
         <div className="nm">{product.nm}</div>
         <div className="pcard-bottom">
-          <CatalogPrice price={product.price} basePriceInr={product.basePriceInr} />
+          <div className="catalog-product-card__price"><span>AS LOW AS</span><CatalogPrice price={product.price} basePriceInr={product.basePriceInr} /></div>
           <div className="pcard-min">Min 1</div>
         </div>
       </div>
@@ -70,7 +55,7 @@ export function ProductCard({
       <Link
         to={href}
         state={state}
-        className="pcard"
+        className="pcard pcard--editorial catalog-product-card"
         aria-label={`View ${product.nm}`}
         style={{ textDecoration: "none", color: "inherit" }}
       >
@@ -79,5 +64,5 @@ export function ProductCard({
     );
   }
 
-  return <div className="pcard">{content}</div>;
+  return <div className="pcard pcard--editorial catalog-product-card">{content}</div>;
 }

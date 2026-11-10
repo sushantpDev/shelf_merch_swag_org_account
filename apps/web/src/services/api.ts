@@ -42,6 +42,12 @@ export class ApiError extends Error {
 type RequestOptions = RequestInit & {
   auth?: boolean;
   idempotencyKey?: string;
+  responseMeta?: boolean;
+};
+
+export type ResponseMeta<T> = {
+  status: number;
+  body: T;
 };
 
 type RefreshOutcome = "ok" | "expired" | "failed";
@@ -227,9 +233,14 @@ async function ensureRefreshed(): Promise<RefreshOutcome> {
 
 export async function apiFetch<T = unknown>(
   path: string,
+  options: RequestOptions & { responseMeta: true },
+): Promise<ResponseMeta<T>>;
+export async function apiFetch<T = unknown>(path: string, options?: RequestOptions): Promise<T>;
+export async function apiFetch<T = unknown>(
+  path: string,
   options: RequestOptions = {},
-): Promise<T> {
-  const { auth = true, idempotencyKey, headers: extraHeaders, ...init } = options;
+): Promise<T | ResponseMeta<T>> {
+  const { auth = true, idempotencyKey, responseMeta = false, headers: extraHeaders, ...init } = options;
   const headers = new Headers(extraHeaders);
 
   if (!headers.has("Content-Type") && init.body && !(init.body instanceof FormData)) {
@@ -276,13 +287,22 @@ export async function apiFetch<T = unknown>(
     }
     throw err;
   }
+  if (responseMeta) return { status: res.status, body: body as T };
   return body as T;
 }
 
 /** Public redemption routes - no auth header. */
 export async function publicFetch<T = unknown>(
   path: string,
+  init: Omit<RequestOptions, "auth"> & { responseMeta: true },
+): Promise<ResponseMeta<T>>;
+export async function publicFetch<T = unknown>(
+  path: string,
+  init?: Omit<RequestOptions, "auth">,
+): Promise<T>;
+export async function publicFetch<T = unknown>(
+  path: string,
   init: Omit<RequestOptions, "auth"> = {},
-): Promise<T> {
+): Promise<T | ResponseMeta<T>> {
   return apiFetch<T>(path, { ...init, auth: false });
 }

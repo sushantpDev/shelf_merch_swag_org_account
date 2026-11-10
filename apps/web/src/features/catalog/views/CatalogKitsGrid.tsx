@@ -87,8 +87,8 @@ export function CatalogKitsGrid(vm: CatalogKitsVm) {
               </div>
               <div
                 style={{
-                  fontWeight: 700,
-                  fontSize: 13.5,
+                  fontWeight: "var(--font-weight-bold)",
+                  fontSize: "var(--workspace-font-body, 13.5px)",
                   marginBottom: 2,
                   color: "var(--ink)",
                   textAlign: "center",
@@ -96,7 +96,7 @@ export function CatalogKitsGrid(vm: CatalogKitsVm) {
               >
                 {kit.name}
               </div>
-              <div className="muted" style={{ fontSize: 11.5, marginBottom: 10, textAlign: "center" }}>
+              <div className="muted" style={{ fontSize: "var(--workspace-font-caption, 11.5px)", marginBottom: 10, textAlign: "center" }}>
                 {kit.subtitle}
               </div>
               {kit.pricePerKitInr != null && kit.pricePerKitInr > 0 ? (

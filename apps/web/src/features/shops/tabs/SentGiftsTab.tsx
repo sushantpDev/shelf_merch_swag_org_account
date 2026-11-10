@@ -29,8 +29,8 @@ function statusPill(campaign: UiCampaign) {
           display: "inline-flex",
           alignItems: "center",
           gap: 10,
-          fontSize: 13.5,
-          fontWeight: 500,
+          fontSize: "var(--workspace-font-body, 13.5px)",
+          fontWeight: "var(--font-weight-medium)",
           color: "var(--ink)",
         }}
       >
@@ -70,8 +70,8 @@ function statusPill(campaign: UiCampaign) {
           display: "inline-flex",
           alignItems: "center",
           gap: 10,
-          fontSize: 13.5,
-          fontWeight: 500,
+          fontSize: "var(--workspace-font-body, 13.5px)",
+          fontWeight: "var(--font-weight-medium)",
           color: "var(--brand-d)",
         }}
       >
@@ -105,7 +105,7 @@ function statusPill(campaign: UiCampaign) {
     );
   }
   return (
-    <span style={{ fontSize: 13.5, fontWeight: 500, color: "var(--ink-2)" }}>
+    <span style={{ fontSize: "var(--workspace-font-body, 13.5px)", fontWeight: "var(--font-weight-medium)", color: "var(--ink-2)" }}>
       {campaign.status}
     </span>
   );
@@ -186,8 +186,8 @@ function CampaignRecipientsPanel({
       <div
         className="mut3"
         style={{
-          fontSize: 11,
-          fontWeight: 700,
+          fontSize: "var(--workspace-font-caption, 11px)",
+          fontWeight: "var(--font-weight-bold)",
           textTransform: "uppercase",
           letterSpacing: ".04em",
           marginBottom: 10,
@@ -196,15 +196,15 @@ function CampaignRecipientsPanel({
         Recipients
       </div>
       {isLoading ? (
-        <p className="muted" style={{ fontSize: 13, margin: 0 }}>
+        <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)", margin: 0 }}>
           Loading recipients…
         </p>
       ) : isError ? (
-        <p style={{ fontSize: 13, margin: 0, color: "var(--danger)" }}>
+        <p style={{ fontSize: "var(--workspace-font-body, 13px)", margin: 0, color: "var(--danger)" }}>
           Could not load recipients.
         </p>
       ) : recipients.length === 0 ? (
-        <p className="muted" style={{ fontSize: 13, margin: 0 }}>
+        <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)", margin: 0 }}>
           No recipients added yet.
         </p>
       ) : (
@@ -220,10 +220,10 @@ function CampaignRecipientsPanel({
           <tbody>
             {recipients.map((r: CampaignRecipientRow) => (
               <tr key={String(r._id ?? r.email)}>
-                <td style={{ fontWeight: 500 }}>{r.name || "N/A"}</td>
+                <td style={{ fontWeight: "var(--font-weight-medium)" }}>{r.name || "N/A"}</td>
                 <td className="muted">{r.email || "N/A"}</td>
                 <td className="num">{recipientAmount(r.creditAmount, shop)}</td>
-                <td className="muted" style={{ fontSize: 13 }}>
+                <td className="muted" style={{ fontSize: "var(--workspace-font-caption, 13px)" }}>
                   {recipientStatusLabel(r.redemptionStatus)}
                 </td>
               </tr>
@@ -241,10 +241,10 @@ function CampaignRecipientsPanel({
             cursor: deleting ? "wait" : "pointer",
             padding: 0,
             color: "var(--danger)",
-            fontWeight: 600,
+            fontWeight: "var(--font-weight-semibold)",
             letterSpacing: ".03em",
             textTransform: "uppercase",
-            fontSize: 12,
+            fontSize: "var(--workspace-font-caption, 12px)",
           }}
           disabled={deleting}
           onClick={onDelete}

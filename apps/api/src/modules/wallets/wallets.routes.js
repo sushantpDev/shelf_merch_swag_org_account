@@ -59,7 +59,7 @@ router.post(
   '/:id/allocate',
   canWrite,
   blockDuringImpersonation,
-  idempotency(),
+  idempotency({ recover: true }),
   validate({ params: walletIdParams, body: allocateSchema }),
   asyncHandler(controller.allocate),
 );

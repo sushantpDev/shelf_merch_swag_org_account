@@ -29,6 +29,17 @@ const zohoIntegrationSchema = new mongoose.Schema(
     connectedAt: { type: Date, default: null },
     lastSyncedAt: { type: Date, default: null },
     lastError: { type: String, default: '' },
+    /**
+     * Remote grant state after disconnect.
+     * revoked: Zoho confirmed revocation or the token was already invalid.
+     * unresolved: local sync is stopped, but Zoho did not confirm revocation.
+     * The refresh token stays encrypted for a later retry and is not used.
+     */
+    remoteAuthorization: {
+      type: String,
+      enum: ['', 'revoked', 'unresolved'],
+      default: '',
+    },
   },
   { timestamps: true },
 );
@@ -50,6 +61,7 @@ zohoIntegrationSchema.methods.toPublicJSON = function toPublicJSON() {
     connectedAt: this.connectedAt,
     lastSyncedAt: this.lastSyncedAt,
     connectedByUserId: this.connectedByUserId ? String(this.connectedByUserId) : null,
+    remoteAuthorization: this.remoteAuthorization || null,
     updatedAt: this.updatedAt,
   };
 };

@@ -703,7 +703,7 @@ export function MockupCanvas({
             left: 8,
             bottom: 8,
             zIndex: 2,
-            fontSize: 11,
+            fontSize: "var(--workspace-font-caption, 11px)",
             background: "rgba(180,83,9,.92)",
             color: "#fff",
             padding: "4px 8px",

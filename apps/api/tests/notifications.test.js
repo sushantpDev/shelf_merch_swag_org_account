@@ -5,6 +5,7 @@ import { connectTestDb, clearTestDb, disconnectTestDb } from './setup.js';
 import { makeTenant, makeUser, authHeader } from './helpers.js';
 import { createApp } from '../src/app.js';
 import { Notification } from '../src/modules/notifications/notification.model.js';
+import { notify } from '../src/modules/notifications/notifications.service.js';
 
 let app;
 let tenant;
@@ -47,6 +48,24 @@ beforeEach(async () => {
 });
 
 describe('notifications API', () => {
+  it('persists an in-app notification before notify resolves', async () => {
+    await notify({
+      tenantId: tenant._id,
+      userId: userA._id,
+      type: 'support_ticket_update',
+      title: 'Support replied',
+      body: 'We have an update for you.',
+      link: '/app/support',
+    });
+
+    const notification = await Notification.findOne({
+      userId: userA._id,
+      type: 'support_ticket_update',
+    }).lean();
+    expect(notification?.title).toBe('Support replied');
+    expect(notification?.link).toBe('/app/support');
+  });
+
   it('lists notifications for the authenticated user with pagination', async () => {
     const res = await request(app)
       .get('/api/v1/notifications')

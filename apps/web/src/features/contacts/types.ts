@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { COUNTRY_OPTIONS, isCountryCode } from "@/data/countries";
 import type { UiContact } from "@/services/mappers";
 
 export const ROLES = ["Owner", "Admin", "Sender", "Member", "Non-Member"] as const;
@@ -25,24 +26,14 @@ export function contactWorkerStatus(contact: {
   return { key: "active", label: "Active" };
 }
 
-export const COUNTRIES = [
-  { value: "IN", label: "India" },
-  { value: "AE", label: "UAE" },
-  { value: "US", label: "USA" },
-] as const;
+export const COUNTRIES = COUNTRY_OPTIONS;
 
 const PERSON_NAME_RE = /^[a-zA-Z\s'.-]+$/;
 const CITY_STATE_RE = /^[a-zA-Z\s.-]+$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export type ContactFieldKind =
-  | "personName"
-  | "email"
-  | "phone"
-  | "city"
-  | "state"
-  | "postal"
-  | "text";
+  "personName" | "email" | "phone" | "city" | "state" | "postal" | "text";
 
 /** Sanitize contact field input so only appropriate characters are kept. */
 export function sanitizeContactField(kind: ContactFieldKind, value: string): string {
@@ -114,7 +105,7 @@ export const contactSchema = z.object({
     .refine((v) => !v || /^\d{4,10}$/.test(v), {
       message: "PIN code should contain 4–10 digits",
     }),
-  country: z.enum(["IN", "AE", "US"]),
+  country: z.string().trim().toUpperCase().refine(isCountryCode, "Select a valid country"),
 });
 
 export type ContactFormValues = z.infer<typeof contactSchema>;
@@ -155,7 +146,7 @@ export function contactToForm(c: UiContact): ContactFormValues {
     city: c.city ?? "",
     state: c.state ?? "",
     pincode: (c.pincode ?? "").replace(/\D/g, "").slice(0, 10),
-    country: (["IN", "AE", "US"] as const).includes(c.country as "IN") ? (c.country as "IN") : "IN",
+    country: isCountryCode(c.country) ? c.country.toUpperCase() : "IN",
   };
 }
 

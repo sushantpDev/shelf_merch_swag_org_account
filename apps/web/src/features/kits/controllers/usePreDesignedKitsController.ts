@@ -18,8 +18,8 @@ export type PreDesignedKitsVm = {
   onPreview: (kit: PlatformKitTemplate) => void;
   onSend: (kit: PlatformKitTemplate) => void;
   onRequestSample: (kit: PlatformKitTemplate) => void;
-  sendPending: boolean;
-  samplePending: boolean;
+  sendPendingId: string | null;
+  samplePendingId: string | null;
 };
 
 function templateImage(kit: PlatformKitTemplate): string {
@@ -128,7 +128,9 @@ export function usePreDesignedKitsController(options?: {
     onPreview,
     onSend,
     onRequestSample,
-    sendPending: ensureCuratedKit.isPending,
-    samplePending: sampleOrder.pending,
+    sendPendingId: ensureCuratedKit.isPending
+      ? (ensureCuratedKit.variables?.platformKitId ?? null)
+      : null,
+    samplePendingId: sampleOrder.pendingKitId,
   };
 }

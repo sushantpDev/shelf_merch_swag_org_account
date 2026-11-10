@@ -30,5 +30,5 @@ export function writeAudit({
       originalUserId: req?.impersonation?.originalUserId ?? null,
     },
   };
-  AuditLog.create(doc).catch((err) => logger.error({ err, action }, 'Audit log write failed'));
+  return AuditLog.create(doc).catch((err) => logger.error({ err, action }, 'Audit log write failed'));
 }

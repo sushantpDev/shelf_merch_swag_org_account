@@ -97,6 +97,8 @@ async function invalidateAllSessions(userId) {
   await User.updateOne({ _id: userId }, { $inc: { sessionVersion: 1 } });
   if (await isSessionStoreReady()) await revokeAllUserSessions(userId);
   await RefreshToken.updateMany({ userId, revokedAt: null }, { revokedAt: new Date() });
+  const { revokeOauthGrantsForUser } = await import('../oauth/oauthRevoke.js');
+  await revokeOauthGrantsForUser(userId);
 }
 
 async function revokeStoredRefreshToken(tokenHash, userId = null) {

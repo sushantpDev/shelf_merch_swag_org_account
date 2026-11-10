@@ -16,9 +16,9 @@ import { getPagination, paginatedResponse } from '../../utils/pagination.js';
 /** Roles that staff the help desk (see platformAccess MATRIX support.write + super). */
 const SUPPORT_STAFF_ROLES = ['platform_super_admin', 'platform_ops_admin', 'platform_support_agent'];
 
-/** Fire-and-forget — a notification failure must never block or fail a support request. */
+/** Best-effort delivery: log notification errors without failing the support request. */
 function notifyAsync(payload) {
-  notify(payload).catch((err) =>
+  return notify(payload).catch((err) =>
     logger.warn({ err: err?.message }, 'support notification delivery failed'),
   );
 }
@@ -66,7 +66,7 @@ async function notifyRaiser(ticket, { title, body, withEmail = false }) {
       .select('email')
       .lean();
     if (!recipient?.email) return;
-    notifyAsync({
+    await notifyAsync({
       type: 'support_ticket_update',
       tenantId: ticket.tenantId,
       email: recipient.email,
@@ -81,7 +81,7 @@ async function notifyRaiser(ticket, { title, body, withEmail = false }) {
     const user = await User.findOne({ _id: ticket.raisedByUserId }).select('email').lean();
     email = user?.email ?? null;
   }
-  notifyAsync({
+  await notifyAsync({
     type: 'support_ticket_update',
     tenantId: ticket.tenantId,
     userId: ticket.raisedByUserId,

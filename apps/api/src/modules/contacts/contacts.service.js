@@ -1,6 +1,7 @@
 import { Contact } from './contact.model.js';
-import { managedEntityNamesForUser } from '../entities/entities.service.js';
+import { managedEntityNamesForUser, managedEntityNamesForUserRead } from '../entities/entities.service.js';
 import { ApiError, ConflictError, ForbiddenError, NotFoundError } from '../../utils/errors.js';
+import { getPagination, paginatedResponse } from '../../utils/pagination.js';
 import { deriveEffectiveEmploymentStatus } from '../integrations/merge/effectiveEmploymentStatus.js';
 import { MergeConnection } from '../integrations/merge/mergeConnection.model.js';
 import { MergeHrisEmployee } from '../integrations/merge/models/mergeHrisEmployee.model.js';
@@ -133,7 +134,7 @@ export function contactToPublicJSON(contact, now, liveEmployee = null) {
   };
 }
 
-/** Merge-linked and effectively inactive — hide from the normal Contacts list only. */
+/** Merge-linked and effectively inactive — hide from directory search and detail. */
 function isHiddenInactiveMergeHrisContact(row) {
   if (!row?.mergeEmployeeId || !row?.mergeConnectionId) return false;
   return row.effectiveEmploymentStatus === 'INACTIVE';
@@ -150,22 +151,62 @@ function toListedContacts(rows, employeesByKey, now) {
   return listed;
 }
 
-/** List contacts visible to the caller — tenant-wide for admins, dept-scoped for EMs. */
-export async function listContactsForUser({ tenantId, user, now }) {
-  const names = await managedEntityNamesForUser({ tenantId, user });
-  if (names === null) {
-    const rows = await Contact.find({ tenantId }).sort({ name: 1 });
-    const employeesByKey = await loadDirectoryEmployeesByIdentity({ tenantId, rows });
-    return toListedContacts(rows, employeesByKey, now);
-  }
-  if (!names.length) return [];
-
+async function listContactsWithNames({ tenantId, names, now }) {
+  if (names !== null && !names.length) return [];
   const rows = await Contact.find({
     tenantId,
-    ...departmentMatchFilter(names),
+    ...(names === null ? {} : departmentMatchFilter(names)),
   }).sort({ name: 1 });
   const employeesByKey = await loadDirectoryEmployeesByIdentity({ tenantId, rows });
   return toListedContacts(rows, employeesByKey, now);
+}
+
+/** List contacts visible to the caller — tenant-wide for admins, dept-scoped for EMs. */
+export async function listContactsForUser({ tenantId, user, now }) {
+  const names = await managedEntityNamesForUser({ tenantId, user });
+  return listContactsWithNames({ tenantId, names, now });
+}
+
+const CONTACT_READ_PAGE = { defaultLimit: 10, maxLimit: 25 };
+
+function publicEmployee(row, { includeEmail }) {
+  const item = {
+    id: String(row._id),
+    name: String(row.name ?? ''),
+    department: String(row.department ?? ''),
+    designation: String(row.designation ?? ''),
+    role: String(row.role ?? ''),
+    effectiveEmploymentStatus: String(row.effectiveEmploymentStatus ?? ''),
+  };
+  if (includeEmail) item.email = String(row.email ?? '');
+  return item;
+}
+
+/** Directory search for MCP. Uses the same visibility rules without manager backfill writes. */
+export async function searchContactsRead({ tenantId, user, query = {}, now = new Date() }) {
+  const names = await managedEntityNamesForUserRead({ tenantId, user });
+  const visible = await listContactsWithNames({ tenantId, names, now });
+  const nameQuery = String(query.query || '').trim().toLowerCase();
+  const department = normalizeDept(query.department);
+  const filtered = visible.filter((row) => {
+    if (nameQuery && !String(row.name || '').toLowerCase().includes(nameQuery)) return false;
+    if (department && normalizeDept(row.department) !== department) return false;
+    return true;
+  });
+  const { page, limit, skip } = getPagination(query, CONTACT_READ_PAGE);
+  return paginatedResponse(
+    filtered.slice(skip, skip + limit).map((row) => publicEmployee(row, { includeEmail: false })),
+    filtered.length,
+    { page, limit },
+  );
+}
+
+async function assertContactAccessRead({ tenantId, user, contact }) {
+  if (!isEntityManager(user)) return;
+  const names = await managedEntityNamesForUserRead({ tenantId, user });
+  if (!names?.length || !contactMatchesDepartments(contact, names)) {
+    throw new NotFoundError('Employee not found');
+  }
 }
 
 /**
@@ -229,6 +270,24 @@ export async function getContactOrThrow({ tenantId, contactId }) {
   return contact;
 }
 
+/** One employee for MCP. Missing and out-of-scope contacts are the same not-found result. */
+export async function getContactRead({ tenantId, user, contactId, now = new Date() }) {
+  let contact;
+  try {
+    contact = await getContactOrThrow({ tenantId, contactId });
+  } catch (err) {
+    if (err instanceof NotFoundError) throw new NotFoundError('Employee not found');
+    throw err;
+  }
+  await assertContactAccessRead({ tenantId, user, contact });
+  const employeesByKey = await loadDirectoryEmployeesByIdentity({ tenantId, rows: [contact] });
+  const ident = mergeIdentityOf(contact);
+  const liveEmployee = ident ? employeesByKey.get(ident.key) : null;
+  const json = contactToPublicJSON(contact, now, liveEmployee || null);
+  if (isHiddenInactiveMergeHrisContact(json)) throw new NotFoundError('Employee not found');
+  return publicEmployee(json, { includeEmail: true });
+}
+
 /**
  * Create a contact, or restore + update a soft-deleted row with the same email.
  * Soft-delete hides contacts from the UI but leaves the document; re-adding the
@@ -248,4 +307,23 @@ export async function createOrRestoreContact({ tenantId, payload, source = 'manu
     return existing;
   }
   return Contact.create({ tenantId, ...payload, email, source });
+}
+
+/** Apply a contact patch with the same department and role rules as the REST route. */
+export async function updateContact({ tenantId, user, contactId, body }) {
+  const contact = await getContactOrThrow({ tenantId, contactId });
+  await assertContactAccess({ tenantId, user, contact });
+  const payload = await prepareContactPayloadForUser({
+    tenantId,
+    user,
+    body: {
+      department: contact.department,
+      ...body,
+    },
+    existingContact: contact,
+  });
+  const before = contact.toObject();
+  Object.assign(contact, payload);
+  await contact.save();
+  return { contact, before };
 }

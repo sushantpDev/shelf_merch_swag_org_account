@@ -4,6 +4,7 @@ import type { UiProduct } from "@/services/mappers";
 import { productSwatches } from "../types";
 import { CatalogPrice } from "./CatalogPrice";
 import { ProductInfoTabs } from "./ProductInfoTabs";
+import { ProductImageMagnifier } from "./ProductImageMagnifier";
 
 type GalleryItem = { key: string; label: string; url: string };
 
@@ -174,13 +175,10 @@ export function ProductDetail({ product }: { product: UiProduct; index: number }
             }}
           >
             {active?.url ? (
-              <img
+              <ProductImageMagnifier
+                key={active.url}
                 src={active.url}
                 alt={`${product.nm} — ${active.label}`}
-                loading="eager"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                style={{ width: "100%", height: "100%", objectFit: "contain" }}
               />
             ) : (
               <span className="mut3">No image</span>

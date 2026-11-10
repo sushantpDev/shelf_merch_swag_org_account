@@ -22,6 +22,7 @@ import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import "@/components/landing-page.css";
 import "./slack-integration-landing.css";
+import "./slack-integration-typography.css";
 
 const CONNECT_HREF = "/app/integrations";
 const TEAM_IMG = "/images/integrations/slack-team-collaboration.png";
@@ -154,7 +155,7 @@ export function SlackIntegrationLandingPage() {
           <div className="slk-wrap slk-hero__grid">
             <div className="slk-hero__copy">
               <p className="slk-kicker">Slack integration for ShelfMerch</p>
-              <h1 id="slack-landing-title">Bring merch operations into Slack.</h1>
+              <h1 id="slack-landing-title">Bring merch operations <em>into Slack.</em></h1>
               <p className="slk-lead">
                 Push kit requests, order dispatches, delivery updates, and budget signals into the
                 channel where your team already makes decisions.
@@ -262,7 +263,7 @@ export function SlackIntegrationLandingPage() {
             </figure>
             <div className="slk-feature__copy">
               <p className="slk-kicker">Faster decision-making</p>
-              <h2 id="fast-heading">Move work forward without email follow-ups.</h2>
+              <h2 id="fast-heading">Move work forward <em>without email follow-ups.</em></h2>
               <p>
                 ShelfMerch posts clear operational updates in Slack, so teams can see what changed,
                 who needs to act, and what comes next without waiting for another status thread.
@@ -334,7 +335,7 @@ export function SlackIntegrationLandingPage() {
             </figure>
             <div className="slk-feature__copy">
               <p className="slk-kicker">Control and setup</p>
-              <h2 id="control-heading">Configure once, stay in sync.</h2>
+              <h2 id="control-heading">Configure once, <em>stay in sync.</em></h2>
               <p>
                 Choose the workspace, pick the channel, and decide which ShelfMerch events should
                 post to Slack. Once it is set, updates keep running automatically.
@@ -349,7 +350,7 @@ export function SlackIntegrationLandingPage() {
         <section className="slk-steps-section" id="how-it-works" aria-labelledby="how-heading">
           <div className="slk-steps-wrap">
             <div className="slk-section-head">
-              <h2 id="how-heading">How to get started</h2>
+              <h2 id="how-heading">How to <em>get started</em></h2>
               <p>It only takes a few clicks to connect Slack and begin receiving updates.</p>
             </div>
             <ol className="slk-steps">
@@ -375,7 +376,7 @@ export function SlackIntegrationLandingPage() {
         <section className="slk-roles" aria-labelledby="roles-heading">
           <div className="slk-wrap">
             <div className="slk-section-head slk-section-head--left">
-              <h2 id="roles-heading">Built for roles of all types</h2>
+              <h2 id="roles-heading">Built for roles <em>of all types</em></h2>
               <p>
                 No matter who owns merch, Slack gives every stakeholder a shared operational view.
               </p>
@@ -399,7 +400,7 @@ export function SlackIntegrationLandingPage() {
           <div className="slk-wrap slk-security__grid">
             <div className="slk-feature__copy">
               <p className="slk-kicker">Security</p>
-              <h2 id="security-heading">Built to connect securely.</h2>
+              <h2 id="security-heading">Built to connect <em>securely.</em></h2>
               <p>
                 ShelfMerch keeps Slack access narrow, admin-controlled, and focused on posting the
                 notifications your team enables.
@@ -444,7 +445,7 @@ export function SlackIntegrationLandingPage() {
         <section className="slk-final" aria-labelledby="final-cta-heading">
           <div className="slk-final__inner">
             <Search aria-hidden="true" size={26} />
-            <h2 id="final-cta-heading">Interested in ShelfMerch for Slack?</h2>
+            <h2 id="final-cta-heading">Interested in ShelfMerch <em>for Slack?</em></h2>
             <div className="slk-final__actions">
               <Link className="slk-btn slk-btn--light" to={CONNECT_HREF}>
                 Connect Slack

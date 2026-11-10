@@ -3,27 +3,27 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 import {
   ArrowRight,
-  Backpack,
   Box,
   CalendarDays,
+  ChartNoAxesCombined,
   ChevronLeft,
   ChevronRight,
-  Coffee,
   GlassWater,
   Globe2,
+  Gift,
   Headphones,
   Lightbulb,
   LockKeyhole,
   Megaphone,
-  NotebookPen,
   Play,
-  Settings,
+  Plus,
   ShieldCheck,
   Shirt,
   ShoppingBag,
   Sparkles,
   Store,
   Users,
+  Wallet,
   Landmark,
   type LucideIcon,
 } from "lucide-react";
@@ -35,17 +35,14 @@ import { useTenantAccess } from "@/hooks/useTenantAccess";
 import { getStoredUser } from "@/services/api-bridge";
 import { entityManagerBudgetRemaining } from "@/services/workspace-api";
 import { walletUnallocated } from "@/lib/walletFormat";
-import hoodieImg from "../../../assets/hoodie.png";
-import bottleImg from "../../../assets/bottle.png";
-import toteImg from "../../../assets/tote.png";
-import diaryImg from "../../../assets/diary.png";
-import capImg from "../../../assets/cap.png";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
-import { tenantPath, slugify as workspaceSlug } from "@/lib/workspaceSlug";
-import type { UiProduct } from "@/services/mappers";
+import { tenantPath } from "@/lib/workspaceSlug";
+import type { UiOrgDept, UiProduct } from "@/services/mappers";
 import { EntityManagerKitsSection } from "./EntityManagerKitsSection";
 import { NewUserWelcomeDialog } from "./NewUserWelcomeDialog";
 import "./dashboard.css";
+import "./dashboard-shortcuts.css";
+import { DashboardQuickActionCard } from "./DashboardQuickActionCard";
 
 /** Cleared on logout in auth-store so the popup returns on the next login. */
 const NEW_USER_WELCOME_DISMISS_KEY = "sm-new-user-welcome-dismissed";
@@ -101,9 +98,9 @@ function helpLinks() {
 }
 
 const WHY_CARDS = [
-  { label: "Gift Employees", body: "Celebrate, reward & motivate your team", icon: "/images/landing/why-gift-employees.png" },
-  { label: "Create Shops", body: "Build beautiful shops for teams & events", icon: "/images/landing/why-create-shops.png" },
-  { label: "Track & Manage", body: "Track orders, budgets and approvals", icon: "/images/landing/why-track-manage.png" },
+  { label: "Gift Employees", body: "Reward your team", icon: Gift },
+  { label: "Create Shops", body: "Shops for your team", icon: Store },
+  { label: "Track & Manage", body: "Manage orders & budgets", icon: ChartNoAxesCombined },
 ] as const;
 
 function shortcuts() {
@@ -113,43 +110,35 @@ function shortcuts() {
       body: "Bundle apparel, drinkware and stationery into ready-to-ship kits.",
       feature: "Curated combos. Zero hassle.",
       href: tenantPath("/kits"),
-      icon: "/images/landing/gifting.png",
-      tone: "coral",
+      icon: Gift,
+      tone: "blue",
     },
     {
       label: "Wallet",
       body: "Let teams spend an approved budget, fully tracked and controlled.",
       feature: "Real-time balance. Total visibility.",
       href: tenantPath("/wallets"),
-      icon: "/images/landing/wallet-db.png",
-      tone: "blue",
+      icon: Wallet,
+      tone: "purple",
     },
     {
       label: "Spot gifting",
       body: "Send a gift the moment it matters. No operational back-and-forth.",
       feature: "Quick, thoughtful & on-brand.",
       href: tenantPath("/campaigns"),
-      icon: "/images/landing/on-spot.png",
-      tone: "yellow",
+      icon: Sparkles,
+      tone: "blue",
     },
     {
       label: "Automated gifting",
       body: "Set the rule once. Birthdays and milestones run automatically.",
       feature: "Always on. Always personal.",
       href: tenantPath("/integrations"),
-      icon: "/images/landing/spot-gifting.png",
-      tone: "lilac",
+      icon: CalendarDays,
+      tone: "purple",
     },
   ];
 }
-
-const FALLBACK_SEND_ITEMS = [
-  { id: "hoodie", name: "Classic Fleece Hoodie", price: "From ₹899", image: hoodieImg, href: tenantPath("/catalog") },
-  { id: "bottle", name: "Insulated Water Bottle", price: "From ₹499", image: bottleImg, href: tenantPath("/catalog") },
-  { id: "tote", name: "Everyday Canvas Tote", price: "From ₹399", image: toteImg, href: tenantPath("/catalog") },
-  { id: "diary", name: "Softcover Notebook", price: "From ₹299", image: diaryImg, href: tenantPath("/catalog") },
-  { id: "cap", name: "Structured Cap", price: "From ₹349", image: capImg, href: tenantPath("/catalog") },
-] as const;
 
 function quickActions() {
   return [
@@ -163,36 +152,22 @@ function productThumb(p: UiProduct): string | undefined {
   return resolveMediaUrl(p.mockupUrl) || resolveMediaUrl(p.photoUrl) || resolveMediaUrl(p.imgUrl);
 }
 
-function productSearchText(p: UiProduct) {
-  return `${p.nm || ""} ${p.brand || ""} ${p.category || ""} ${p.subcategory || ""} ${p.g || ""}`.toLowerCase();
-}
-
 function pickCatalogPreviewProducts(products: UiProduct[]) {
-  const blocked = /foldable wireless|activedry polo|activewear crew|anti-theft laptop|bamboo bluetooth/i;
-  const available = products.filter((product) => productThumb(product) && !blocked.test(product.nm));
-  const used = new Set<string>();
+  const featured = [
+    { id: "6a69a28328d51c137c8e9530", name: "ActiveDry Polo" },
+    { id: "6a69a2a328d51c137c8e962e", name: "Desk Organizer with Clock & Date Blocks" },
+    { name: "Premium Business Blend Mug" },
+    { id: "6abb6a21d602f72fd2df9100", name: "Neck & Shoulder Massager" },
+    { name: "Customized Cap" },
+  ];
 
-  const pickOne = (match: RegExp) => {
-    const found = available.find((product) => {
-      const key = product.id || product.nm;
-      return key && !used.has(key) && match.test(productSearchText(product));
-    });
-    if (found) used.add(found.id || found.nm);
-    return found;
-  };
-
-  const curated = [
-    pickOne(/bottle|tumbler|mug|flask|drinkware/),
-    pickOne(/notebook|diary|journal|planner|pen|office|stationery/),
-    pickOne(/tote|duffle|sling|bag|backpack/),
-    pickOne(/cap|hat|keychain|key chain|accessor/),
-    pickOne(/hoodie|jacket|sweatshirt|apparel|shirt|tee/),
-  ].filter((product): product is UiProduct => Boolean(product));
-
-  const rest = available.filter((product) => !used.has(product.id || product.nm));
-  return [...curated, ...rest].slice(0, 10);
+  return featured
+    .map((item) => products.find((product) =>
+      (item.id && product.id === item.id) ||
+      product.nm.trim().toLowerCase() === item.name.toLowerCase(),
+    ))
+    .filter((product): product is UiProduct => Boolean(product));
 }
-
 function SectionHead({ title, action }: { title: string; action?: ReactNode }) {
   return (
     <div className="dash-section-head">
@@ -215,7 +190,7 @@ function VideoCard({ wide = false, centered = false }: { wide?: boolean; centere
     <>
       <section className="dash-video-card card">
         <div className="dash-video-card__head">
-          <h2>Getting Started</h2>
+          <h2>Watch a Quick Shelfmerch Overview</h2>
           <span aria-hidden="true">-</span>
         </div>
         <button
@@ -296,74 +271,23 @@ function HelpCenter({ onboarding = false }: { onboarding?: boolean }) {
   );
 }
 
-function WorkspaceSettingsCard({
-  preview = false,
-  art = false,
-  account = "Workspace",
-  ownerName = "Owner",
-}: {
-  preview?: boolean;
-  art?: boolean;
-  account?: string;
-  ownerName?: string;
-}) {
-  const slug = workspaceSlug(account);
-
-  if (preview || art) {
-    return (
-      <Link
-        to={tenantPath("/settings")}
-        className="dash-settings-card dash-settings-card--preview card"
-        aria-label="Customize workspace settings"
-      >
-        <span className="dash-settings-card__icon"><Settings size={18} aria-hidden="true" /></span>
-        <span className="dash-settings-card__copy">
-          <strong>Workspace settings</strong>
-          <span>Update company profile, owner and workspace URL.</span>
-        </span>
-        <span className="dash-settings-card__rows" aria-hidden="true">
-          <span><Store size={15} /> Workspace name <b>{account}</b></span>
-          <span><Users size={15} /> Owner <b>{ownerName}</b></span>
-          <span><Globe2 size={15} /> Workspace URL <b>/{slug}</b></span>
-        </span>
-        <span className="dash-settings-card__cta">Customize workspace <ArrowRight size={15} /></span>
-      </Link>
-    );
-  }
-
-  return (
-    <Link to={tenantPath("/settings")} className="dash-settings-card card">
-      <span className="dash-settings-card__icon"><Settings size={22} aria-hidden="true" /></span>
-      <span className="dash-settings-card__copy">
-        <strong>Workspace settings</strong>
-        <span>Manage members, approvals, budgets & more.</span>
-      </span>
-      <span className="dash-settings-card__art" aria-hidden="true"><i /><b /></span>
-      <span className="dash-settings-card__cta">Customize workspace <ArrowRight size={16} /></span>
-    </Link>
-  );
-}
-
 function ShortcutGrid() {
   return (
-    <section className="dash-shortcuts card">
+    <section className="dash-services">
       <SectionHead title="Everything you can do" />
-      <div className="dash-shortcut-grid">
-        {shortcuts().map((item) => (
+      <div className="dash-services__grid">
+        {shortcuts().map(({ icon: Icon, ...item }) => (
           <Link
             key={item.label}
             to={item.href}
-            className={`dash-shortcut dash-shortcut--${item.tone}`}
+            className={`dash-service dash-service--${item.tone}`}
           >
-            <span className="dash-shortcut__icon" aria-hidden="true">
-              <img src={item.icon} alt="" />
+            <span className="dash-service__banner" aria-hidden="true">
+              <span className="dash-service__icon"><Icon size={38} strokeWidth={2.2} /></span>
             </span>
-            <strong className="dash-shortcut__title">{item.label}</strong>
-            <span className="dash-shortcut__body">{item.body}</span>
-            <span className="dash-shortcut__foot">
-              <span className="dash-shortcut__go" aria-hidden="true">
-                <ArrowRight size={15} strokeWidth={2.2} />
-              </span>
+            <span className="dash-service__content">
+              <strong className="dash-service__title">{item.label}</strong>
+              <span className="dash-service__description">{item.body}</span>
             </span>
           </Link>
         ))}
@@ -428,7 +352,7 @@ function CatalogSendCard({ products }: { products: UiProduct[] }) {
     .filter((item): item is NonNullable<typeof item> => Boolean(item))
     .slice(0, 10);
 
-  const sendItems = items.length > 0 ? items : FALLBACK_SEND_ITEMS;
+  const sendItems = items;
 
   const scrollBy = (dir: -1 | 1) => {
     scrollerRef.current?.scrollBy({ left: dir * 220, behavior: "smooth" });
@@ -465,12 +389,8 @@ function CatalogSendCard({ products }: { products: UiProduct[] }) {
 
 function OnboardingDashboard({
   catalogProducts,
-  account,
-  ownerName,
 }: {
   catalogProducts: UiProduct[];
-  account: string;
-  ownerName: string;
 }) {
   return (
     <div className="dash-onboard">
@@ -499,10 +419,10 @@ function OnboardingDashboard({
         <section className="dash-why-panel card">
           <SectionHead title="Why Shelf Merch?" />
           <ul className="dash-why-list">
-            {WHY_CARDS.map((item) => (
+            {WHY_CARDS.map(({ icon: Icon, ...item }) => (
               <li key={item.label}>
                 <span className="dash-why-list__icon" aria-hidden="true">
-                  <img src={item.icon} alt="" />
+                  <Icon size={26} strokeWidth={1.5} />
                 </span>
                 <span>
                   <strong>{item.label}</strong>
@@ -519,7 +439,6 @@ function OnboardingDashboard({
 
         <div className="dash-onboard-side">
           <HelpCenter onboarding />
-          <WorkspaceSettingsCard art account={account} ownerName={ownerName} />
         </div>
       </section>
 
@@ -541,6 +460,7 @@ function MetricSummaryPanel({ items }: {
     href: string;
     cta: string;
     tone: "violet" | "blue" | "green" | "amber";
+    icon: LucideIcon;
   }[];
 }) {
   return (
@@ -552,6 +472,9 @@ function MetricSummaryPanel({ items }: {
       <div className="dash-metrics-panel__grid">
         {items.map((item) => (
           <article key={item.label} className={`dash-metric-summary dash-metric-summary--${item.tone}`}>
+            <span className="dash-metric-summary__icon" aria-hidden="true">
+              <item.icon size={22} strokeWidth={2.2} />
+            </span>
             <div className="dash-metric-summary__top">
               <span>{item.label}</span>
             </div>
@@ -570,216 +493,132 @@ function MetricSummaryPanel({ items }: {
   );
 }
 
-type SwagStripCategory = {
-  label: string;
-  icon: LucideIcon;
-  count: number;
-};
-
-function productHaystack(p: UiProduct) {
-  return `${p.category || ""} ${p.nm || ""} ${p.g || ""}`.toLowerCase();
-}
-
-function buildSwagStripCategories(products: UiProduct[]): SwagStripCategory[] {
-  const defs: { label: string; icon: LucideIcon; match: (p: UiProduct) => boolean }[] = [
-    {
-      label: "Hoodies",
-      icon: Shirt,
-      match: (p) =>
-        p.category === "Apparel" || /hoodie|sweatshirt|apparel|tee|shirt/.test(productHaystack(p)),
-    },
-    {
-      label: "Drinkware",
-      icon: GlassWater,
-      match: (p) =>
-        (p.category === "Drinkware" || /bottle|tumbler|flask|drinkware/.test(productHaystack(p))) &&
-        !/mug|cup/.test(productHaystack(p)),
-    },
-    {
-      label: "Office Supplies",
-      icon: NotebookPen,
-      match: (p) =>
-        p.category === "Office" || /note|pen|diary|journal|stationery|office/.test(productHaystack(p)),
-    },
-    {
-      label: "Bags",
-      icon: Backpack,
-      match: (p) => p.category === "Bags" || /bag|tote|backpack/.test(productHaystack(p)),
-    },
-    {
-      label: "Mugs",
-      icon: Coffee,
-      match: (p) => /mug|cup/.test(productHaystack(p)) || p.g === "mug",
-    },
-  ];
-
-  return defs.map((def) => ({
-    label: def.label,
-    icon: def.icon,
-    count: products.filter(def.match).length,
-  }));
-}
-
 function CampaignPromoCard() {
   return (
-    <section className="dash-campaign-card card" aria-labelledby="dash-campaign-title">
-      <div className="dash-campaign-card__copy">
-        <h3 id="dash-campaign-title">Campaigns</h3>
-        <p>Create and track sends.</p>
-        <ul className="dash-campaign-card__points">
-          <li>Points campaigns</li>
-          <li>Kits for teams</li>
-          <li>Delivery visibility</li>
-        </ul>
-        <Link to={tenantPath("/campaigns")} className="dash-campaign-card__cta">
-          View Campaigns
-          <ArrowRight size={13} strokeWidth={2.4} aria-hidden="true" />
-        </Link>
-      </div>
-      <div className="dash-campaign-card__art" aria-hidden="true">
-        <img src="/images/dashboard-campaigns-corner.png" alt="" />
-      </div>
-    </section>
+    <DashboardQuickActionCard
+      title="Campaigns"
+      description="Create and track sends"
+      icon={Megaphone}
+      image="/images/dashboard-campaigns-corner.png"
+      tone="campaigns"
+      items={[
+        { label: "Points campaigns", href: tenantPath("/campaigns"), icon: Sparkles },
+        { label: "Kits for teams", href: tenantPath("/kits"), icon: Box },
+        { label: "Delivery visibility", href: tenantPath("/orders"), icon: Globe2 },
+      ]}
+      browse={{ label: "View campaigns", href: tenantPath("/campaigns") }}
+      action={{ label: "New campaign", href: tenantPath("/campaigns") }}
+    />
   );
 }
-function SwagPromoCard({ products }: { products: UiProduct[] }) {
-  const stripRef = useRef<HTMLDivElement>(null);
-  const categories = buildSwagStripCategories(products);
 
-  function scrollCategories() {
-    stripRef.current?.scrollBy({ left: 168, behavior: "smooth" });
-  }
-
+function SwagPromoCard() {
   return (
-    <section className="dash-swag-card card" aria-labelledby="dash-swag-title">
-      <div className="dash-swag-card__main">
-        <div className="dash-swag-card__copy">
-          <h3 id="dash-swag-title">Swag</h3>
-          <p>Explore team merch.</p>
-          <ul className="dash-swag-card__points">
-            <li>Apparel and bags</li>
-            <li>Bottles and notebooks</li>
-            <li>Ready-to-send gifts</li>
-          </ul>
-          <Link to={tenantPath("/swag")} className="dash-swag-card__cta">
-            Browse Swag
-            <ArrowRight size={13} strokeWidth={2.4} aria-hidden="true" />
-          </Link>
-        </div>
-
-        <div className="dash-swag-card__showcase" aria-hidden="true">
-          <span className="dash-swag-card__glow" />
-          <span className="dash-swag-card__dots" />
-          <span className="dash-swag-card__leaf">
-            <svg viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M32 68C32 68 8 52 8 28C8 14 18 4 32 4C46 4 56 14 56 28C56 52 32 68 32 68Z"
-                fill="url(#swagLeafGrad)"
-                opacity="0.55"
-              />
-              <path d="M32 66V10" stroke="#e8a078" strokeWidth="1.6" strokeLinecap="round" opacity="0.7" />
-              <path
-                d="M32 24C24 28 18 34 14 42M32 36C38 40 44 46 48 54"
-                stroke="#f0b892"
-                strokeWidth="1.2"
-                strokeLinecap="round"
-                opacity="0.65"
-              />
-              <defs>
-                <linearGradient id="swagLeafGrad" x1="8" y1="4" x2="56" y2="68" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#ffd4b8" />
-                  <stop offset="1" stopColor="#f4a574" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </span>
-          <span className="dash-swag-card__podium" />
-          <img className="dash-swag-card__showcase-img" src="/images/dashboard-swag-corner.png" alt="" />
-        </div>
-      </div>
-
-      <div className="dash-swag-card__strip">
-        <div className="dash-swag-card__cats" ref={stripRef} role="list">
-          {categories.map((cat) => {
-            const Icon = cat.icon;
-            return (
-              <div key={cat.label} className="dash-swag-card__cat" role="listitem">
-                <span className="dash-swag-card__cat-icon" aria-hidden="true">
-                  <Icon size={16} strokeWidth={2} />
-                </span>
-                <span className="dash-swag-card__cat-copy">
-                  <strong>{cat.label}</strong>
-                  <small>
-                    {cat.count} {cat.count === 1 ? "Item" : "Items"}
-                  </small>
-                </span>
-              </div>
-            );
-          })}
-        </div>
-        <button
-          type="button"
-          className="dash-swag-card__scroll"
-          aria-label="Scroll categories"
-          onClick={scrollCategories}
-        >
-          <ChevronRight size={16} strokeWidth={2.4} aria-hidden="true" />
-        </button>
-      </div>
-    </section>
+    <DashboardQuickActionCard
+      title="Swag"
+      description="Explore team merch"
+      icon={Shirt}
+      image="/images/dashboard-swag-corner.png"
+      tone="swag"
+      items={[
+        { label: "Apparel and bags", href: tenantPath("/swag"), icon: Shirt },
+        { label: "Bottles and notebooks", href: tenantPath("/swag"), icon: GlassWater },
+        { label: "Ready-to-send gifts", href: tenantPath("/kits"), icon: Gift },
+      ]}
+      browse={{ label: "Browse swag", href: tenantPath("/swag") }}
+      action={{ label: "Build a kit", href: tenantPath("/kits/new") }}
+    />
   );
 }
 
 function BudgetSection({
-  account,
   mainBalance,
-  hasBudget,
-  isEntityManager,
+  departments,
 }: {
-  account: string;
   mainBalance: number;
-  hasBudget: boolean;
-  isEntityManager: boolean;
+  departments: UiOrgDept[];
 }) {
-  const title = isEntityManager ? "My budget" : "Organization budget";
-  const tileName = isEntityManager ? "My allocated budget" : `${account} budget`;
+  const colors = ["#35b5e5", "#df4545", "#ffc329", "#30b87a", "#7657d6"];
+  const allocatedDepartments = departments.filter((dept) => (dept.allocated ?? 0) > 0);
+  const departmentSegments = allocatedDepartments.map((dept, index) => ({
+    name: dept.name,
+    value: Math.max(0, dept.allocated ?? 0),
+    color: colors[index % colors.length],
+  }));
+  const allocatedToDepartments = departmentSegments.reduce((sum, item) => sum + item.value, 0);
+  const visibleDepartments = departmentSegments.slice(0, 3);
+  const distributionItems = visibleDepartments.length
+    ? visibleDepartments
+    : [
+        {
+          name: "No department allocations",
+          value: 0,
+          color: colors[0],
+        },
+      ];
+  const chartBase = allocatedToDepartments + Math.max(0, mainBalance);
+  const chartPercent = chartBase > 0
+    ? Math.max(0, Math.min(100, (allocatedToDepartments / chartBase) * 100))
+    : 0;
+  const chartPercentLabel = chartPercent > 0 && chartPercent < 0.1
+    ? "<0.1%"
+    : `${chartPercent < 10 ? Number(chartPercent.toFixed(1)) : Math.round(chartPercent)}%`;
+  let segmentStart = 0;
+  const allocatedStops = departmentSegments.map((item) => {
+    const segmentEnd = segmentStart + (chartBase > 0 ? (item.value / chartBase) * 100 : 0);
+    const stop = `${item.color} ${segmentStart}% ${segmentEnd}%`;
+    segmentStart = segmentEnd;
+    return stop;
+  });
+  const gaugeGradient = [
+    ...allocatedStops,
+    `#edf1f7 ${segmentStart}% 100%`,
+  ].join(", ");
+
   return (
     <section className="dash-card card dash-wallets-card">
       <SectionHead
-        title={title}
+        title="Budget distribution"
         action={
           <Link to={tenantPath("/wallets")} className="dash-inline-action">
             View budget <ArrowRight size={14} />
           </Link>
         }
       />
-      <div className="dash-wallet-preview-grid">
-        <Link
-          to={tenantPath("/wallets")}
-          className="dash-wallet-mini"
-          aria-label={`${tileName} ${formatInr(mainBalance)}`}
-        >
-          <span className="dash-wallet-mini__icon">
-            <Landmark size={18} aria-hidden="true" />
+      <div className="dash-budget-distribution">
+        <div className="dash-budget-distribution__chart" aria-hidden="true">
+          <span style={{ background: `conic-gradient(from -130deg, ${gaugeGradient})` }}>
+            <b>{chartPercentLabel}</b>
+            <small>Allocated</small>
           </span>
-          <span className="dash-wallet-mini__name">
-            {tileName} <ChevronRight size={14} aria-hidden="true" />
-          </span>
-          <strong>{formatInr(mainBalance)}</strong>
-          <small>Available to spend</small>
-          <i />
-        </Link>
-        {isEntityManager ? null : !hasBudget ? (
-          <Link to={tenantPath("/wallets")} state={{ startCreateWallet: true }} className="dash-wallet-create">
-            <span>+</span>
-            Setup budget
-          </Link>
-        ) : (
-          <Link to={`${tenantPath("/wallets")}?addFunds=1`} className="dash-wallet-create">
-            <span>+</span>
-            Request top-up
-          </Link>
-        )}
+        </div>
+        <div className="dash-budget-distribution__details">
+          <div className="dash-budget-distribution__summary">
+            <span>Department budgets</span>
+            <strong>{formatInr(allocatedToDepartments)}</strong>
+          </div>
+          <div className="dash-budget-distribution__list">
+            {distributionItems.map((item) => {
+              const percent = allocatedToDepartments > 0
+                ? Math.round((item.value / allocatedToDepartments) * 100)
+                : 0;
+              return (
+                <Link to={tenantPath("/wallets")} key={item.name} className="dash-budget-distribution__row">
+                  <span>
+                    <i style={{ background: item.color }} />
+                    {item.name}
+                  </span>
+                  <b>{percent}%</b>
+                </Link>
+              );
+            })}
+          </div>
+          {departmentSegments.length > 3 && (
+            <Link to={`${tenantPath("/wallets")}#budget-distribution`} className="dash-metric-summary__cta">
+              See More
+            </Link>
+          )}
+        </div>
       </div>
     </section>
   );
@@ -827,42 +666,33 @@ function PinnedShopCard({ pinnedShop, canCreateShop }: { pinnedShop: DashboardSh
 }
 
 function ExistingDashboard({
-  account,
-  memberCount,
+  peopleReachedCount,
   senderCount,
   activeShopCount,
   mainBalance,
-  hasBudget,
+  departments,
   pinnedShop,
   canCreateShop,
-  isEntityManager,
-  catalogProducts,
-  ownerName,
 }: {
-  account: string;
-  memberCount: number;
+  peopleReachedCount: number;
   senderCount: number;
   activeShopCount: number;
   mainBalance: number;
-  hasBudget: boolean;
+  departments: UiOrgDept[];
   pinnedShop: DashboardShop | null;
   canCreateShop: boolean;
-  isEntityManager: boolean;
-  catalogProducts: UiProduct[];
-  ownerName: string;
 }) {
   const overviewItems = [
-    { label: "Gifts sent", value: senderCount, subcopy: "Total gifts sent", tone: "violet" as const, href: tenantPath("/kits"), cta: "Go to kits" },
-    { label: "People reached", value: memberCount, subcopy: "Recipients reached", tone: "blue" as const, href: tenantPath("/orders"), cta: "Go to orders" },
-    { label: "Active shops", value: activeShopCount, subcopy: "Live shops", tone: "green" as const, href: tenantPath("/shops"), cta: "Go to shops" },
-    { label: "Available budget", value: formatInr(mainBalance), subcopy: "Available to spend", tone: "amber" as const, href: tenantPath("/wallets"), cta: "Go to budget" },
+    { label: "Gifts sent", value: senderCount, subcopy: "Total gifts sent", tone: "violet" as const, icon: Gift, href: tenantPath("/kits"), cta: "Go to kits" },
+    { label: "People reached", value: peopleReachedCount, subcopy: "Recipients reached", tone: "blue" as const, icon: Users, href: tenantPath("/orders"), cta: "Go to orders" },
+    { label: "Active shops", value: activeShopCount, subcopy: "Live shops", tone: "green" as const, icon: Store, href: tenantPath("/shops"), cta: "Go to shops" },
+    { label: "Available budget", value: formatInr(mainBalance), subcopy: "Available to spend", tone: "amber" as const, icon: Landmark, href: tenantPath("/wallets"), cta: "Go to budget" },
   ];
 
   return (
     <>
       <section className="dash-existing-top">
         <MetricSummaryPanel items={overviewItems} />
-        <WorkspaceSettingsCard preview account={account} ownerName={ownerName} />
       </section>
 
   
@@ -870,13 +700,11 @@ function ExistingDashboard({
       <section className="dash-existing-main">
         <div className="dash-existing-main__wallets">
           <BudgetSection
-            account={account}
             mainBalance={mainBalance}
-            hasBudget={hasBudget}
-            isEntityManager={isEntityManager}
+            departments={departments}
           />
         </div>
-        <div className="dash-existing-main__video"><div className="dash-promo-pair"><CampaignPromoCard /><SwagPromoCard products={catalogProducts} /></div></div>
+        <div className="dash-existing-main__video"><div className="dash-promo-pair"><CampaignPromoCard /><SwagPromoCard /></div></div>
       </section>
 
       <section className="dash-existing-grid dash-existing-grid--balanced">
@@ -915,10 +743,12 @@ export function DashboardPage() {
   const userName = workspace.userPatch.name || sessionUser?.name || "User";
   const initials = workspace.userPatch.initials || "U";
   const account = workspace.account || "Workspace";
-  const ownerName = workspace.owner?.name || userName;
   const roleLabel = formatRole(workspace.userPatch.role);
-  const contacts = workspace.contacts ?? [];
-  const memberCount = contacts.length;
+  const campaigns = workspace.campaigns ?? [];
+  const peopleReachedCount = campaigns.reduce(
+    (total, campaign) => total + (campaign.recipientCount || 0),
+    0,
+  );
   const senderCount = workspace.orders?.length ?? 0;
   const wallets = workspace.wallets ?? [];
   const orgWallet = workspace.org?.wallet;
@@ -935,7 +765,6 @@ export function DashboardPage() {
   const pinnedShop = workspace.shops.find((s) => s.live) ?? workspace.shops[0] ?? null;
   const activeShopCount = workspace.shops.filter((s) => s.live).length || workspace.shops.length;
   const showOnboarding = wallets.length === 0;
-  const isEntityManager = workspace.userPatch.role === "entity_manager";
   const previewWelcome = new URLSearchParams(location.search).get("previewWelcome") === "1";
   const showWelcome =
     welcomeOpen && (previewWelcome || (showOnboarding && !wasNewUserWelcomeDismissed()));
@@ -972,22 +801,16 @@ export function DashboardPage() {
       {showOnboarding ? (
         <OnboardingDashboard
           catalogProducts={workspace.catalogProducts ?? []}
-          account={account}
-          ownerName={ownerName}
         />
       ) : (
         <ExistingDashboard
-          account={account}
-          memberCount={memberCount}
+          peopleReachedCount={peopleReachedCount}
           activeShopCount={activeShopCount}
           senderCount={senderCount}
           mainBalance={mainBalance}
-          hasBudget={wallets.length > 0}
+          departments={workspace.org.departments ?? []}
           pinnedShop={pinnedShop}
           canCreateShop={canCreateShop}
-          isEntityManager={isEntityManager}
-          catalogProducts={workspace.catalogProducts ?? []}
-          ownerName={ownerName}
         />
       )}
     </div>

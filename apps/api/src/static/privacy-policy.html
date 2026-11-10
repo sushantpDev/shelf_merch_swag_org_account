@@ -17,115 +17,216 @@
     rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap"
   />
-  <style>
-    :root {
-      --ink: #111827;
-      --ink-2: #4b5563;
-      --ink-3: #6b7280;
-      --line: #e5e7eb;
-      --bg: #fafafa;
-      --card: #ffffff;
-      --brand: #2563eb;
-      --sans: "Hanken Grotesk", system-ui, sans-serif;
-      --disp: "Bricolage Grotesque", Georgia, serif;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: var(--sans);
-      background: var(--bg);
-      color: var(--ink);
-      font-size: 15px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: var(--brand); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .legal-shell { min-height: 100vh; display: flex; flex-direction: column; }
-    .legal-header {
-      border-bottom: 1px solid var(--line);
-      background: var(--card);
-      padding: 16px 20px;
-    }
-    .legal-header-inner {
-      max-width: 760px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-    .legal-logo {
-      font-family: var(--disp);
-      font-weight: 700;
-      font-size: 20px;
-      color: var(--ink);
-      letter-spacing: -0.02em;
-      text-decoration: none;
-    }
-    .legal-logo:hover { text-decoration: none; }
-    .legal-nav { display: flex; gap: 16px; flex-wrap: wrap; font-size: 14px; font-weight: 600; }
-    .legal-main { flex: 1; padding: 40px 20px 64px; }
-    .legal-article {
-      max-width: 760px;
-      margin: 0 auto;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 40px 36px;
-    }
-    @media (max-width: 640px) {
-      .legal-article { padding: 28px 20px; border-radius: 0; border-left: 0; border-right: 0; }
-      .legal-main { padding: 0 0 48px; }
-    }
-    h1 {
-      font-family: var(--disp);
-      font-size: clamp(1.75rem, 4vw, 2.25rem);
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-      margin: 0 0 8px;
-    }
-    .legal-updated {
-      margin: 0 0 28px;
-      color: var(--ink-3);
-      font-size: 14px;
-      font-weight: 500;
-    }
-    .legal-intro { color: var(--ink-2); margin: 0 0 28px; }
-    h2 {
-      font-family: var(--disp);
-      font-size: 1.25rem;
-      margin: 36px 0 12px;
-      letter-spacing: -0.01em;
-      scroll-margin-top: 24px;
-    }
-    h3 { font-size: 1rem; margin: 20px 0 8px; }
-    p, ul { margin: 0 0 14px; color: var(--ink-2); }
-    ul { padding-left: 1.25rem; }
-    li { margin-bottom: 6px; }
-    strong { color: var(--ink); font-weight: 600; }
-    .legal-note {
-      margin-top: 36px;
-      padding-top: 20px;
-      border-top: 1px solid var(--line);
-      font-size: 13px;
-      color: var(--ink-3);
-    }
-    .legal-footer {
-      border-top: 1px solid var(--line);
-      padding: 20px;
-      text-align: center;
-      font-size: 13px;
-      color: var(--ink-3);
-      background: var(--card);
-    }
-  </style>
+  <style>:root{--font-family-public-sans:Arial,Helvetica,sans-serif;--font-family-public-serif:Georgia,"Times New Roman",serif;--font-weight-semibold:600;--font-weight-medium:500;}body{margin:0}
+.legal-shell {
+  --ink: #171b25;
+  --ink-2: #505b6c;
+  --ink-3: #637087;
+  --line: #dfe5ee;
+  --brand: #3155ff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-family-public-sans), Arial, Helvetica, sans-serif;
+}
+.legal-shell, .legal-shell * { box-sizing: border-box; }
+.legal-logo-link img { display: block; max-width: 100%; width: auto; }
+.legal-shell a { text-underline-offset: 4px; }
+
+.legal-header {
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  padding: 16px 20px;
+}
+
+.legal-header-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.legal-logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.legal-nav {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+}
+
+.legal-nav a {
+  color: var(--brand);
+  text-decoration: none;
+}
+
+.legal-nav a:hover {
+  text-decoration: underline;
+}
+
+.legal-main {
+  flex: 1;
+  padding: 0 0 64px;
+}
+.legal-hero {
+  padding: 44px max(6%, calc((100vw - 1240px) / 2));
+  background: #e8f1ff;
+}
+.legal-shell--terms .legal-hero { background: #ffe4d4; text-align: center; }
+.legal-shell--terms .legal-reading-layout { grid-template-columns: minmax(0, 1fr); max-width: 1100px; gap: 32px; }
+.legal-shell--terms .legal-contents { position: static; max-height: none; padding: 22px 24px; border: 1px solid #eed9cc; border-radius: 8px; background: #fff7f2; }
+.legal-shell--terms .legal-contents nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.legal-shell--terms .legal-contents details:not([open]) summary { margin-bottom: 0; }
+.legal-shell--terms .legal-article { width: 100%; margin-inline: auto; }
+.legal-eyebrow { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; letter-spacing: .1em; }
+.legal-shell--terms .legal-eyebrow { justify-content: center; }
+.legal-hero h1 { font-family: var(--font-family-public-sans), Arial, sans-serif; font-size: clamp(42px, 5.5vw, 76px); line-height: 1.12; letter-spacing: -.045em; font-weight: 700; margin: 24px 0 18px; }
+.legal-hero h1 em { color: #3155ff; font-family: var(--font-family-public-serif), Georgia, serif; }
+.legal-hero .legal-updated { margin: 0; color: #505b6c; font-size: 14px; }
+.legal-reading-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 56px; max-width: 1240px; margin: 44px auto 0; padding-inline: 24px; }
+.legal-contents { position: sticky; top: 24px; align-self: start; max-height: calc(100svh - 48px); overflow-y: auto; scrollbar-width: thin; padding-right: 18px; border-right: 1px solid var(--line); }
+.legal-contents summary { font-size: 12px; letter-spacing: .08em; font-weight: 700; cursor: pointer; margin-bottom: 18px; }
+.legal-contents nav { display: grid; gap: 3px; }
+.legal-contents a { color: #505b6c; padding: 7px 8px; font-size: 13px; line-height: 1.5; text-decoration: none; border-radius: 6px; }
+.legal-contents a:hover { color: #3155ff; background: #edf1ff; }
+.legal-shell a:focus-visible,
+.legal-shell summary:focus-visible { outline: 3px solid #3155ff; outline-offset: 3px; }
+
+.legal-article {
+  min-width: 0;
+  max-width: 860px;
+  margin: 0;
+  background: #fff;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  font-size: 17px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.legal-article h1 {
+  font-family: var(--font-family-public-sans);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+
+.legal-updated {
+  margin: 0 0 28px;
+  color: var(--ink-3);
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+}
+
+.legal-intro {
+  color: var(--ink-2);
+  margin: 0 0 28px;
+}
+
+.legal-article h2 {
+  font-family: var(--font-family-public-sans);
+  font-size: clamp(23px, 2.2vw, 28px);
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 36px 0 18px;
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+  letter-spacing: -0.01em;
+  scroll-margin-top: 24px;
+  color: var(--ink);
+}
+
+.legal-article h3 {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 20px 0 8px;
+  color: var(--ink);
+}
+
+.legal-article p,
+.legal-article ul {
+  margin: 0 0 14px;
+  color: var(--ink-2);
+}
+
+.legal-article ul {
+  padding-left: 1.25rem;
+}
+
+.legal-article li {
+  margin-bottom: 6px;
+}
+
+.legal-article strong {
+  color: var(--ink);
+  font-weight: var(--font-weight-semibold);
+}
+
+.legal-article a {
+  color: var(--brand);
+}
+
+.legal-note {
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--ink-3);
+  background: #f6f4fc;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.legal-footer {
+  border-top: 1px solid var(--line);
+  padding: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-3);
+  background: #fff;
+}
+
+.legal-footer a {
+  color: var(--brand);
+}
+
+@media (max-width: 900px) {
+  .legal-reading-layout { grid-template-columns: minmax(0, 1fr); gap: 28px; margin-top: 28px; }
+  .legal-contents { position: static; max-height: none; border: 1px solid var(--line); border-radius: 8px; padding: 18px; }
+  .legal-contents nav, .legal-shell--terms .legal-contents nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .legal-header-inner { flex-wrap: wrap; }
+}
+@media (max-width: 640px) {
+  .legal-reading-layout { padding-inline: 20px; }
+  .legal-contents nav, .legal-shell--terms .legal-contents nav { grid-template-columns: minmax(0, 1fr); }
+  .legal-article {
+    padding: 0;
+    font-size: 16px;
+  }
+
+  .legal-main {
+    padding-bottom: 40px;
+  }
+}
+</style>
 </head>
 <body>
-  <div class="legal-shell">
+  <div class="legal-shell legal-shell--privacy">
     <header class="legal-header">
       <div class="legal-header-inner">
-        <a class="legal-logo" href="/">ShelfMerch</a>
+        <a class="legal-logo-link" href="/" aria-label="ShelfMerch home"><img src="/images/logo/shelfmerch-wordmark.png" alt="Shelf Merch" height="36" /></a>
         <nav class="legal-nav" aria-label="Legal">
           <a href="/legal/terms-of-service">Terms of Service</a>
           <a href="/login">Sign in</a>
@@ -135,9 +236,22 @@
     </header>
 
     <main class="legal-main">
-      <article class="legal-article">
-        <h1>Privacy Policy</h1>
-        <p class="legal-updated">Last updated: 30 July 2026</p>
+      <header class="legal-hero"><span class="legal-eyebrow">YOUR DATA, EXPLAINED CLEARLY</span><h1>Privacy <em>Policy</em></h1><p class="legal-updated">Last updated: 27 October 2026</p></header><div class="legal-reading-layout"><aside class="legal-contents"><details open><summary>IN THIS DOCUMENT</summary><nav aria-label="Document sections"><a href="#information-we-collect">1. Information We Collect</a>
+<a href="#how-we-use-information">2. How We Use Information</a>
+<a href="#zoho-people-integration">3. Zoho People Integration</a>
+<a href="#oauth-tokens">4. OAuth Tokens and Account Access</a>
+<a href="#how-we-share-information">5. How We Share Information</a>
+<a href="#service-providers">6. Service Providers</a>
+<a href="#data-storage-and-security">7. Data Storage and Security</a>
+<a href="#data-retention">8. Data Retention</a>
+<a href="#disconnecting-zoho-people">9. Disconnecting Zoho People</a>
+<a href="#data-deletion-requests">10. Data Deletion Requests</a>
+<a href="#international-data-transfers">11. International Data Transfers</a>
+<a href="#user-and-organisation-rights">12. User and Organisation Rights</a>
+<a href="#childrens-privacy">13. Children’s Privacy</a>
+<a href="#changes">14. Changes to This Privacy Policy</a>
+<a href="#contact-us">15. Contact Us</a>
+<a href="#cookies">Cookies and similar technology</a></nav></details></aside><article class="legal-article">
 
         <p class="legal-intro">
           This Privacy Policy describes how <strong>Chitlu Innovations Private Limited</strong>
@@ -359,12 +473,30 @@
           <li><strong>Website:</strong> <a href="https://shelfmerch.io">https://shelfmerch.io</a></li>
         </ul>
 
+        <h2 id="cookies">Cookies and similar technology</h2>
+        <p>
+          Essential cookies support session continuity, security, preferences, and authentication. Those
+          cookies are not optional. Google Analytics 4 and the Meta pixel are loaded through the existing
+          Google Tag Manager container only after you allow the matching category. Until you choose, and
+          if you reject optional measurement, that container is not requested.
+        </p>
+        <p>
+          The OpenAI measurement pixel is a separate optional tag. It records a saved demo request or a
+          finished registration with an event id. The event Shelf Merch creates does not include your
+          name, email address, phone number, or verification code. If Shelf Merch enables the pixel, OpenAI
+          automatic advanced matching hashes recognizable form details in your browser, such as a name,
+          email address, or phone number. OpenAI does not provide a supported way to turn that hashing off.
+          The pixel stays unloaded until you allow advertising measurement and Shelf Merch has explicitly
+          accepted that behavior. OpenAI may then store __oppref for about 30 days and __obref for about
+          365 days. Withdrawing advertising consent stops later OpenAI measurement.
+        </p>
+
         <p class="legal-note">
           This page is a product privacy notice tailored to the current ShelfMerch implementation.
           Statements marked for legal review, and the policy as a whole, should be reviewed by qualified
           counsel before reliance in regulated procurement or contractual disclosures.
         </p>
-      </article>
+      </article></div>
     </main>
 
     <footer class="legal-footer">

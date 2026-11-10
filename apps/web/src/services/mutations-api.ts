@@ -1,3 +1,4 @@
+import { validateArtworkFile } from "@/lib/artworkValidation";
 import { normalizeMongoId } from "@/lib/mongoId";
 import { chunkBySize } from "@/lib/uploadBatches";
 import { ApiError, apiFetch } from "./api";
@@ -393,6 +394,7 @@ export async function updateKitApi(payload: {
 }
 
 export async function uploadKitArtworkApi(kitId: string, file: File) {
+  await validateArtworkFile(file);
   const form = new FormData();
   form.append("artwork", file);
   const kit = await apiFetch<Record<string, unknown>>(`/kits/${kitId}/artwork`, {
@@ -496,40 +498,11 @@ function withUploadableArtworkName(file: File, preferredName?: string): File {
   return new File([file], filename, { type: mime });
 }
 
-/** Rasterize SVG (blocked by multer allowlist for XSS) to PNG so artwork can be stored.
- *  Raster formats (PNG/JPEG/WebP) are kept as uploaded — bytes and extension preserved. */
+/** Preserve original PNG bytes, including the physical resolution metadata. */
 async function ensureUploadableArtworkFile(file: File, preferredName?: string): Promise<File> {
-  const isSvg = file.type === "image/svg+xml" || /\.svg$/i.test(file.name);
-  if (!isSvg) return withUploadableArtworkName(file, preferredName);
-
-  const objectUrl = URL.createObjectURL(file);
-  try {
-    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
-      const el = new Image();
-      el.onload = () => resolve(el);
-      el.onerror = () => reject(new Error("Could not read SVG artwork"));
-      el.src = objectUrl;
-    });
-    const w = Math.max(1, img.naturalWidth || 1024);
-    const h = Math.max(1, img.naturalHeight || 1024);
-    const canvas = document.createElement("canvas");
-    canvas.width = w;
-    canvas.height = h;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) throw new Error("Could not convert SVG artwork");
-    ctx.drawImage(img, 0, 0, w, h);
-    const blob = await new Promise<Blob>((resolve, reject) => {
-      canvas.toBlob(
-        (b) => (b ? resolve(b) : reject(new Error("Could not convert SVG artwork"))),
-        "image/png",
-      );
-    });
-    const sourceName = preferredName || file.name;
-    const base = sourceName.replace(/\.svg$/i, "").replace(/\.[^.]+$/, "") || "artwork";
-    return new File([blob], `${base}.png`, { type: "image/png" });
-  } finally {
-    URL.revokeObjectURL(objectUrl);
-  }
+  const namedFile = withUploadableArtworkName(file, preferredName);
+  await validateArtworkFile(namedFile);
+  return namedFile;
 }
 
 async function artworkFileFromInput(art: ArtworkInput): Promise<File | null> {
@@ -573,6 +546,7 @@ export async function prepareArtworkUploadFile(art: ArtworkInput): Promise<File 
 }
 
 export async function uploadCollectionArtworkApi(collectionId: string, file: File) {
+  await validateArtworkFile(file);
   const form = new FormData();
   form.append("artwork", file);
   const col = await apiFetch<Record<string, unknown>>(`/collections/${collectionId}/artwork`, {
@@ -662,6 +636,7 @@ async function prepareCollectionMockups(items: MockupUploadItem[]): Promise<Prep
         const named = new File([aBlob], `area-art-${i}-${placementsMeta.length}.${ext}`, {
           type: aBlob.type || "image/png",
         });
+        await validateArtworkFile(named);
         row.areaArts.push(named);
         row.byteSize += named.size;
         placementsMeta.push({ ...rest, hasArtwork: true });
@@ -1316,6 +1291,7 @@ export type WalletTransactionRow = {
   type: string;
   amount: number;
   balanceAfter?: number;
+  availableAfter?: number;
   relatedEntityId?: string;
   description?: string;
   createdAt?: string;

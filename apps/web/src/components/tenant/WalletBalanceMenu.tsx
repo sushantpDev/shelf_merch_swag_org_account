@@ -37,7 +37,7 @@ export function WalletBalanceMenu({
   wallets,
   totalLabel,
   hasBudget = wallets.length > 0,
-  budgetTitle = "Organization budget",
+  budgetTitle = "Available budget",
   balanceCaption = "Available balance",
   canRequestTopup = false,
 }: Props) {
@@ -101,11 +101,11 @@ export function WalletBalanceMenu({
               {!hasBudget ? (
                 <div className="wallet-menu-empty">
                   <p className="mb-3 text-sm text-muted-foreground">
-                    {budgetTitle === "Organization budget"
+                    {budgetTitle === "Available budget"
                       ? "No organization budget yet."
                       : "No budget allocated yet."}
                   </p>
-                  {budgetTitle === "Organization budget" ? (
+                  {budgetTitle === "Available budget" ? (
                     <Button size="sm" asChild onClick={close}>
                       <Link to={tenantPath("/wallets")} state={{ startCreateWallet: true }}>
                         Setup budget
@@ -131,7 +131,7 @@ export function WalletBalanceMenu({
             </div>
             <div className="wallet-menu-foot">
               <Link to={tenantPath("/wallets")} className="wallet-menu-create" onClick={close}>
-                {hasBudget ? "View budget dashboard" : budgetTitle === "Organization budget" ? "Setup budget" : "View budget"}
+                {hasBudget ? "View budget dashboard" : budgetTitle === "Available budget" ? "Setup budget" : "View budget"}
               </Link>
             </div>
           </div>

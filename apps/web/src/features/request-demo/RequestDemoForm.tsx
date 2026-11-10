@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { Check, ChevronDown, Home, MessageCircle } from "lucide-react";
+import { Check, ChevronDown, MessageCircle } from "lucide-react";
 import { Link } from "react-router";
+import { publishShelfMerchLeadCreated } from "@/lib/leadConversion";
+import { trackOpenAiLeadCreated } from "@/lib/openaiPixel";
 import { ApiError, publicFetch } from "@/services/api";
 import {
   buildRequestDemoWhatsAppHref,
   buildRequestDemoWhatsAppMessage,
   getRequestDemoFirstName,
-  requestDemoNextSteps,
   requestDemoRequirements,
   type DemoLeadFormValues,
 } from "./model";
 import "./request-demo.css";
+import "./request-demo-success.css";
 
 type RequestDemoFormProps = {
   titleId?: string;
@@ -50,6 +52,8 @@ export function RequestDemoForm({
   idPrefix = "demo",
 }: RequestDemoFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
+  const successHeadingRef = useRef<HTMLHeadingElement>(null);
+  const submitInFlight = useRef(false);
   const [submitState, setSubmitState] = useState<"idle" | "submitting" | "success" | "error">(
     "idle",
   );
@@ -60,6 +64,12 @@ export function RequestDemoForm({
   const [isRequirementOpen, setIsRequirementOpen] = useState(false);
   const isSubmitting = submitState === "submitting";
   const isLandingVariant = variant === "landing";
+
+  useEffect(() => {
+    if (submitState === "success" && !isLandingVariant) {
+      successHeadingRef.current?.focus({ preventScroll: true });
+    }
+  }, [submitState, isLandingVariant]);
 
   useEffect(() => {
     if (submitState !== "success" || !isLandingVariant) return;
@@ -78,17 +88,19 @@ export function RequestDemoForm({
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (submitState === "submitting" || submitState === "success") return;
+    if (submitInFlight.current || submitState === "success") return;
 
     const currentForm = event.currentTarget;
     const values = readLeadFormValues(currentForm);
 
+    submitInFlight.current = true;
     setSubmitState("submitting");
     setMessage("");
 
     try {
-      await publicFetch("/demo-leads", {
+      const created = await publicFetch<{ id?: string; status?: string }>("/demo-leads", {
         method: "POST",
+        responseMeta: true,
         body: JSON.stringify({
           fullName: values.fullName,
           companyName: values.companyName,
@@ -98,6 +110,19 @@ export function RequestDemoForm({
         }),
       });
 
+      if (created.status === 201) {
+        try {
+          trackOpenAiLeadCreated(created.body?.id);
+        } catch {
+          /* A measurement failure must not discard a saved demo request. */
+        }
+        try {
+          publishShelfMerchLeadCreated({ httpStatus: created.status, leadId: created.body?.id });
+        } catch {
+          /* A tag failure must not discard a saved demo request. */
+        }
+      }
+
       currentForm.reset();
       setRequirement("");
       setIsRequirementOpen(false);
@@ -106,6 +131,7 @@ export function RequestDemoForm({
       setSubmitState("success");
       setMessage("");
     } catch (error) {
+      submitInFlight.current = false;
       setSubmitState("error");
       const isValidation =
         error instanceof ApiError && (error.status === 400 || error.code === "VALIDATION_ERROR");
@@ -122,6 +148,68 @@ export function RequestDemoForm({
     openWhatsApp(values);
   }
 
+  if (submitState === "success" && !isLandingVariant) {
+    return (
+      <div className="demo-receipt" role="status" aria-labelledby={titleId}>
+        <span className="demo-receipt__icon" aria-hidden="true">
+          <Check size={28} strokeWidth={2.5} />
+        </span>
+        <p className="demo-receipt__eyebrow">DEMO REQUEST RECEIVED</p>
+        <h2 id={titleId} ref={successHeadingRef} tabIndex={-1}>
+          Request received.
+        </h2>
+        <p className="demo-receipt__intro">
+          Thanks, <strong>{submittedFirstName}</strong>. Our team will get in touch to understand
+          your goals and arrange your personalised demo.
+        </p>
+
+        <div className="demo-receipt__next">
+          <h3>What happens next</h3>
+          <ol>
+            <li>
+              <span aria-hidden="true">01</span>
+              <div>
+                <strong>We review your brief</strong>
+                <p>Our team takes a look at your requirements.</p>
+              </div>
+            </li>
+            <li>
+              <span aria-hidden="true">02</span>
+              <div>
+                <strong>We connect with you</strong>
+                <p>A Shelf Merch specialist gets in touch.</p>
+              </div>
+            </li>
+            <li>
+              <span aria-hidden="true">03</span>
+              <div>
+                <strong>Your demo, tailored to your team</strong>
+                <p>Explore the products and workflows that fit your needs.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div className="demo-receipt__actions">
+          <Link className="demo-receipt__primary" to="/">
+            Back to homepage
+          </Link>
+          <a
+            className="demo-receipt__secondary"
+            href={buildRequestDemoWhatsAppHref(
+              buildRequestDemoWhatsAppMessage(submittedLead ?? undefined),
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <MessageCircle size={18} aria-hidden="true" />
+            <span>Have a question? Chat on WhatsApp</span>
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   if (submitState === "success") {
     return (
       <div className={`request-demo__success request-demo__success--${variant}`} role="status">
@@ -131,33 +219,10 @@ export function RequestDemoForm({
         <div className="request-demo__success-copy">
           <h2 id={titleId}>Request received!</h2>
           <p className="request-demo__success-subtitle">We&apos;ll be in touch soon.</p>
-          {isLandingVariant ? (
-            <p>
-              Thanks, <strong>{submittedFirstName}</strong>. A Shelf Merch specialist will contact
-              you shortly.
-            </p>
-          ) : (
-            <p>
-              Thanks, <strong>{submittedFirstName}</strong>. A Shelf Merch specialist will contact
-              you shortly to understand your requirements and schedule your personalised demo.
-            </p>
-          )}
-
-          {!isLandingVariant ? (
-            <div className="request-demo__next-steps">
-              <h3>What happens next?</h3>
-              <ul>
-                {requestDemoNextSteps.map((step) => (
-                  <li key={step}>
-                    <span aria-hidden="true">
-                      <Check size={14} strokeWidth={3} />
-                    </span>
-                    {step}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
+          <p>
+            Thanks, <strong>{submittedFirstName}</strong>. A Shelf Merch specialist will contact you
+            shortly.
+          </p>
 
           <p className="request-demo__success-confirm">
             <span aria-hidden="true">
@@ -166,33 +231,6 @@ export function RequestDemoForm({
             Your request has been submitted successfully.
           </p>
         </div>
-
-        {!isLandingVariant ? (
-          <div className="request-demo__success-actions">
-            <a
-              className="request-demo__success-action request-demo__success-action--primary"
-              href={buildRequestDemoWhatsAppHref(
-                buildRequestDemoWhatsAppMessage(submittedLead ?? undefined),
-              )}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Chat on WhatsApp
-              <span aria-hidden="true">
-                <MessageCircle size={18} />
-              </span>
-            </a>
-            <Link
-              className="request-demo__success-action request-demo__success-action--secondary"
-              to="/"
-            >
-              Return to Homepage
-              <span aria-hidden="true">
-                <Home size={18} />
-              </span>
-            </Link>
-          </div>
-        ) : null}
       </div>
     );
   }

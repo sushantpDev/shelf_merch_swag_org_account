@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /uploads/
+Disallow: /email-assets/
+
+# HTML pages stay crawlable so Google can read noindex on /app, /login,
+# /platform/*, and other private shells. Disallow does not hide a URL from
+# search if it was already indexed, and it blocks noindex from being seen.
+# /api, /uploads, and /email-assets are not those HTML shells.
+# Tenant data is protected by authentication, not by robots.txt.
+# /platform stays indexable. Shop URLs stay crawlable.
+
+Sitemap: https://shelfmerch.io/sitemap.xml

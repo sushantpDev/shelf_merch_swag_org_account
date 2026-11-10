@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Send points lifecycle preview</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #f7f9fe;
+        font-family: Inter, "Segoe UI", system-ui, sans-serif;
+        color: #10131a;
+      }
+
+      .state {
+        width: min(420px, 94vw);
+        min-height: 560px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0 18px 60px;
+      }
+
+      .scene {
+        position: relative;
+        width: min(260px, 70vw);
+        aspect-ratio: 1536 / 1229;
+        margin-bottom: 10px;
+        transition: transform .45s ease, opacity .3s ease;
+      }
+
+      .hero {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        filter: drop-shadow(0 18px 28px rgba(32, 41, 70, 0.08));
+        user-select: none;
+        pointer-events: none;
+      }
+
+      .point {
+        position: absolute;
+        left: 58%;
+        top: 26%;
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background:
+          radial-gradient(circle at 35% 30%, #fff4a8 0 18%, transparent 20%),
+          linear-gradient(145deg, #ffd84a, #f7a900);
+        box-shadow: 0 5px 12px rgba(245, 171, 0, 0.24);
+        opacity: 0;
+        animation: send-point 1.65s cubic-bezier(.22,.8,.25,1) infinite;
+      }
+
+      .point:nth-child(2) { animation-delay: .18s; width: 8px; height: 8px; }
+      .point:nth-child(3) { animation-delay: .36s; }
+      .point:nth-child(4) { animation-delay: .54s; width: 7px; height: 7px; }
+      .point:nth-child(5) { animation-delay: .72s; width: 9px; height: 9px; }
+
+      .success-mark {
+        position: relative;
+        width: 58px;
+        height: 58px;
+        margin: 0 0 12px;
+        border-radius: 999px;
+        display: none;
+        place-items: center;
+        background:
+          linear-gradient(180deg, #cbe0ff 0%, #b9d4ff 55%, #97bcfb 100%);
+        border: 1px solid rgba(135, 177, 246, 0.55);
+        box-shadow:
+          0 12px 28px rgba(122, 169, 246, 0.34),
+          inset 0 1px 0 rgba(255,255,255,.75),
+          inset 0 -2px 7px rgba(75, 124, 206, 0.14);
+      }
+
+      .success-mark::before {
+        content: "";
+        position: absolute;
+        inset: -8px;
+        border-radius: inherit;
+        border: 2px solid rgba(185, 212, 255, 0.42);
+        opacity: 0;
+        animation: success-ring 1.15s ease-out .12s both;
+      }
+
+      .success-mark svg {
+        width: 31px;
+        height: 31px;
+        filter: drop-shadow(0 2px 2px rgba(64, 103, 168, 0.16));
+      }
+
+      .title {
+        margin: 0;
+        min-height: 29px;
+        font-size: 23px;
+        line-height: 1.25;
+        font-weight: 850;
+        letter-spacing: -0.02em;
+        text-align: center;
+        color: #080b12;
+      }
+
+      .sub {
+        margin: 7px 0 0;
+        max-width: 310px;
+        font-size: 16px;
+        line-height: 1.45;
+        font-weight: 500;
+        color: #697794;
+        text-align: center;
+      }
+
+      .done .scene {
+        transform: translateY(4px) scale(.94);
+      }
+
+      .done .point {
+        display: none;
+      }
+
+      .done .success-mark {
+        display: grid;
+        animation: success-pop .42s cubic-bezier(.2,.85,.3,1.25) both;
+      }
+
+      @keyframes send-point {
+        0% {
+          opacity: 0;
+          transform: translate(0, 0) scale(.6);
+        }
+        18%,
+        70% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translate(88px, -30px) scale(1);
+        }
+      }
+
+      @keyframes success-pop {
+        0% {
+          opacity: 0;
+          transform: translateY(5px) scale(.74);
+        }
+        70% {
+          transform: translateY(0) scale(1.08);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes success-ring {
+        0% {
+          opacity: .9;
+          transform: scale(.76);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(1.2);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="state" id="state" role="status" aria-live="polite">
+      <div class="scene" aria-hidden="true">
+        <img class="hero" src="/images/send-points-cutout-3d.png" alt="" />
+        <span class="point"></span>
+        <span class="point"></span>
+        <span class="point"></span>
+        <span class="point"></span>
+        <span class="point"></span>
+      </div>
+      <div class="success-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M5.5 12.6l4.1 4.1 8.9-9.4" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <h1 class="title" id="title">Sending 250 points...</h1>
+      <p class="sub" id="sub">Hang tight! This may take a few seconds.</p>
+    </main>
+
+    <script>
+      const total = 1000;
+      const steps = [250, 300, 450, 600, 760, 880, 1000];
+      const state = document.getElementById("state");
+      const title = document.getElementById("title");
+      const sub = document.getElementById("sub");
+
+      let index = 0;
+
+      function setSending(value) {
+        title.textContent = `Sending ${value.toLocaleString("en-IN")} points...`;
+      }
+
+      function complete() {
+        state.classList.add("done");
+        title.textContent = `${total.toLocaleString("en-IN")} points sent!`;
+        sub.textContent = "Points have been Successfully sent";
+      }
+
+      setSending(steps[index]);
+
+      const timer = window.setInterval(() => {
+        index += 1;
+        const value = steps[index];
+        if (value >= total) {
+          window.clearInterval(timer);
+          setSending(total);
+          window.setTimeout(complete, 520);
+          return;
+        }
+        setSending(value);
+      }, 720);
+    </script>
+  </body>
+</html>

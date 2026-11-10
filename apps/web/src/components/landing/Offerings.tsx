@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { ArrowIcon } from "./icons";
+// import { ArrowIcon } from "./icons";
 import { getOrderedCatalogItems } from "./catalog-data";
 
 const CHIPS = [
@@ -61,7 +61,7 @@ function MobileExploreChips() {
 
 export function Offerings() {
   return (
-    <section className="section offerings" id="platform">
+    <section className="section offerings offerings--without-cards" id="platform">
       <div className="section-heading centered">
         <span className="kicker desktop-only">OUR OFFERINGS</span>
         <span className="kicker mobile-only">EXPLORE RANGE</span>
@@ -92,6 +92,7 @@ export function Offerings() {
         </div>
       </div>
       <MobileExploreChips />
+      {/* Temporarily hidden on desktop and mobile.
       <div className="platform-bento">
         <article className="bento-shop">
           <span className="mini-label">COMPANY SHOP</span>
@@ -192,6 +193,7 @@ export function Offerings() {
           </span>
         </article>
       </div>
+      */}
     </section>
   );
 }

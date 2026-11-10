@@ -153,14 +153,12 @@ describe('support feature end to end', () => {
     expect(full.body.tenantName).toBe('Acme');
     expect(full.body.raisedByName).toBe('AdminA');
 
-    await eventually(async () => {
-      const pings = await Notification.find({
-        userId: adminA.user._id,
-        type: 'support_ticket_update',
-      });
-      expect(pings.length).toBe(1);
-      expect(pings[0].title).toContain('Support replied');
+    const pings = await Notification.find({
+      userId: adminA.user._id,
+      type: 'support_ticket_update',
     });
+    expect(pings.length).toBe(1);
+    expect(pings[0].title).toContain('Support replied');
   });
 
   it('tenant reply reopens a waiting ticket and pings the support desk', async () => {

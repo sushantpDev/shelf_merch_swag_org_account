@@ -11,6 +11,7 @@ import * as walletsService from '../wallets/wallets.service.js';
 import { createInvoiceForPayment } from '../invoices/invoices.service.js';
 import { notify } from '../notifications/notifications.service.js';
 import { sendWalletApprovedEmail } from '../../services/email.service.js';
+import { resolveWorkspaceOwner } from '../tenants/tenants.service.js';
 import { ApiError, NotFoundError } from '../../utils/errors.js';
 import { getPagination, paginatedResponse } from '../../utils/pagination.js';
 import { scheduleSlackBusinessNotification, evaluateEntityLowBudgetAlert } from '../integrations/slack/slackNotify.service.js';
@@ -130,30 +131,38 @@ export async function approveFunding({ walletId, amount, performedBy }) {
   const tenant = await Tenant.findById(walletAfter.tenantId).select('name').lean();
   const walletLink = `/app/wallets?wallet=${walletAfter._id}`;
 
-  if (walletAfter.ownerUserId) {
+  const walletOwner = walletAfter.ownerUserId
+    ? await User.findOne({ _id: walletAfter.ownerUserId, tenantId: walletAfter.tenantId })
+        .select('name email')
+        .lean()
+    : null;
+  const notificationRecipient = walletOwner
+    ? { id: String(walletOwner._id), name: walletOwner.name, email: walletOwner.email }
+    : await resolveWorkspaceOwner(walletAfter.tenantId);
+
+  if (notificationRecipient) {
     await notify({
       type: 'wallet_funded',
       tenantId: walletAfter.tenantId,
-      userId: walletAfter.ownerUserId,
+      userId: notificationRecipient.id,
       title: 'Budget funded',
       body: `₹${creditAmount.toLocaleString('en-IN')} has been added to ${walletAfter.name}.`,
       link: walletLink,
     });
 
-    const owner = await User.findById(walletAfter.ownerUserId).select('name email').lean();
     // Match Budget UI: lifetime funded total (totalAmount), not spendable cash (balance).
     const fundedTotal = Number(walletAfter.totalAmount) || 0;
-    if (owner?.email) {
+    if (notificationRecipient.email) {
       sendWalletApprovedEmail({
-        to: owner.email,
-        recipientName: owner.name || '',
+        to: notificationRecipient.email,
+        recipientName: notificationRecipient.name || '',
         amount: creditAmount,
         newBalance: fundedTotal,
         walletName: walletAfter.name || '',
         organizationName: tenant?.name || 'your organization',
         link: walletLink,
       }).catch((err) => {
-        logger.warn({ err, walletId, to: owner.email }, 'Wallet approved email failed');
+        logger.warn({ err, walletId, to: notificationRecipient.email }, 'Wallet approved email failed');
       });
     }
   }

@@ -73,7 +73,7 @@ export function EntityManagerDashboard({
             <div className="v num" style={{ fontSize: 26 }}>
               {inr(alloc)}
             </div>
-            <div className="mut3" style={{ fontSize: 11, marginTop: 6, lineHeight: 1.4 }}>
+            <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11px)", marginTop: 6, lineHeight: 1.4 }}>
               Budget assigned to your department
             </div>
           </div>
@@ -83,7 +83,7 @@ export function EntityManagerDashboard({
             <div className="v num" style={{ fontSize: 26 }}>
               {inr(spent)}
             </div>
-            <div className="mut3" style={{ fontSize: 11, marginTop: 6, lineHeight: 1.4 }}>
+            <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11px)", marginTop: 6, lineHeight: 1.4 }}>
               Used on campaigns and orders
             </div>
           </div>
@@ -93,20 +93,20 @@ export function EntityManagerDashboard({
             <div className="v num" style={{ fontSize: 26, color: "var(--brand-d)" }}>
               {inr(rem)}
             </div>
-            <div className="mut3" style={{ fontSize: 11, marginTop: 6, lineHeight: 1.4 }}>
+            <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 11px)", marginTop: 6, lineHeight: 1.4 }}>
               Remaining department budget
             </div>
           </div>
         </div>
         {alloc > 0 && (
-          <div className="muted" style={{ fontSize: 12.5, padding: "10px 22px 14px" }}>
+          <div className="muted" style={{ fontSize: "var(--workspace-font-caption, 12.5px)", padding: "10px 22px 14px" }}>
             {inr(spent)} spent + {inr(rem)} available = {inr(alloc)} total allocated
           </div>
         )}
       </div>
 
       <div className="card" style={{ padding: "18px 22px", marginBottom: 18 }}>
-        <div className="mut3" style={{ fontSize: 12 }}>
+        <div className="mut3" style={{ fontSize: "var(--workspace-font-caption, 12px)" }}>
           You can create campaigns and send gifts from this budget. Organization-wide budget
           settings are managed by your admin.
         </div>

@@ -1,0 +1,1515 @@
+{
+  "checks": [
+    {
+      "page": "login",
+      "width": 1440,
+      "textNodes": 7,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 12
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "signup",
+      "width": 1440,
+      "textNodes": 16,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 19
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "dashboard",
+      "width": 1440,
+      "textNodes": 95,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 12
+        }
+      ],
+      "currencyFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 7
+        },
+        {
+          "familyName": "Segoe UI",
+          "postScriptName": "SegoeUI-Bold",
+          "isCustomFont": false,
+          "glyphCount": 1
+        }
+      ],
+      "codeFamily": null
+    },
+    {
+      "page": "allocation-step-1",
+      "width": 1440,
+      "textNodes": 46,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 15
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "allocation-step-2",
+      "width": 1440,
+      "textNodes": 49,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 15
+        }
+      ],
+      "currencyFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 6
+        },
+        {
+          "familyName": "Segoe UI",
+          "postScriptName": "SegoeUI-Bold",
+          "isCustomFont": false,
+          "glyphCount": 1
+        }
+      ],
+      "codeFamily": null
+    },
+    {
+      "page": "allocation-step-3",
+      "width": 1440,
+      "textNodes": 48,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 15
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "allocation-step-4",
+      "width": 1440,
+      "textNodes": 66,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 15
+        }
+      ],
+      "currencyFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 6
+        },
+        {
+          "familyName": "Segoe UI",
+          "postScriptName": "SegoeUI-Bold",
+          "isCustomFont": false,
+          "glyphCount": 1
+        }
+      ],
+      "codeFamily": null
+    },
+    {
+      "page": "catalog",
+      "width": 1440,
+      "textNodes": 34,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 33
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "kit-published",
+      "width": 1440,
+      "textNodes": 31,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 12
+        },
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Italic",
+          "isCustomFont": true,
+          "glyphCount": 10
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "funding-success",
+      "width": 1440,
+      "textNodes": 33,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 16
+        },
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Italic",
+          "isCustomFont": true,
+          "glyphCount": 10
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "modal-and-code",
+      "width": 1440,
+      "textNodes": 3,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 18
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+    },
+    {
+      "page": "marketing-shadow",
+      "width": 1440,
+      "textNodes": 108,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "login",
+      "width": 768,
+      "textNodes": 7,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 12
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "signup",
+      "width": 768,
+      "textNodes": 16,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 19
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "dashboard",
+      "width": 768,
+      "textNodes": 95,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 12
+        }
+      ],
+      "currencyFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 7
+        },
+        {
+          "familyName": "Segoe UI",
+          "postScriptName": "SegoeUI-Bold",
+          "isCustomFont": false,
+          "glyphCount": 1
+        }
+      ],
+      "codeFamily": null
+    },
+    {
+      "page": "allocation-step-1",
+      "width": 768,
+      "textNodes": 46,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 15
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "allocation-step-2",
+      "width": 768,
+      "textNodes": 49,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 15
+        }
+      ],
+      "currencyFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 6
+        },
+        {
+          "familyName": "Segoe UI",
+          "postScriptName": "SegoeUI-Bold",
+          "isCustomFont": false,
+          "glyphCount": 1
+        }
+      ],
+      "codeFamily": null
+    },
+    {
+      "page": "allocation-step-3",
+      "width": 768,
+      "textNodes": 48,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 15
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "allocation-step-4",
+      "width": 768,
+      "textNodes": 66,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 15
+        }
+      ],
+      "currencyFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 6
+        },
+        {
+          "familyName": "Segoe UI",
+          "postScriptName": "SegoeUI-Bold",
+          "isCustomFont": false,
+          "glyphCount": 1
+        }
+      ],
+      "codeFamily": null
+    },
+    {
+      "page": "catalog",
+      "width": 768,
+      "textNodes": 34,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 32
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "kit-published",
+      "width": 768,
+      "textNodes": 31,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 12
+        },
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Italic",
+          "isCustomFont": true,
+          "glyphCount": 10
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "funding-success",
+      "width": 768,
+      "textNodes": 33,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 16
+        },
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Italic",
+          "isCustomFont": true,
+          "glyphCount": 10
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "modal-and-code",
+      "width": 768,
+      "textNodes": 3,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 18
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+    },
+    {
+      "page": "marketing-shadow",
+      "width": 768,
+      "textNodes": 108,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "login",
+      "width": 390,
+      "textNodes": 7,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 12
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "signup",
+      "width": 390,
+      "textNodes": 16,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 19
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "dashboard",
+      "width": 390,
+      "textNodes": 83,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 12
+        }
+      ],
+      "currencyFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 7
+        },
+        {
+          "familyName": "Segoe UI",
+          "postScriptName": "SegoeUI-Bold",
+          "isCustomFont": false,
+          "glyphCount": 1
+        }
+      ],
+      "codeFamily": null
+    },
+    {
+      "page": "allocation-step-1",
+      "width": 390,
+      "textNodes": 34,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 15
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "allocation-step-2",
+      "width": 390,
+      "textNodes": 37,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 15
+        }
+      ],
+      "currencyFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 6
+        },
+        {
+          "familyName": "Segoe UI",
+          "postScriptName": "SegoeUI-Bold",
+          "isCustomFont": false,
+          "glyphCount": 1
+        }
+      ],
+      "codeFamily": null
+    },
+    {
+      "page": "allocation-step-3",
+      "width": 390,
+      "textNodes": 36,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 15
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "allocation-step-4",
+      "width": 390,
+      "textNodes": 54,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 15
+        }
+      ],
+      "currencyFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 6
+        },
+        {
+          "familyName": "Segoe UI",
+          "postScriptName": "SegoeUI-Bold",
+          "isCustomFont": false,
+          "glyphCount": 1
+        }
+      ],
+      "codeFamily": null
+    },
+    {
+      "page": "catalog",
+      "width": 390,
+      "textNodes": 22,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 32
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "kit-published",
+      "width": 390,
+      "textNodes": 19,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 12
+        },
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Italic",
+          "isCustomFont": true,
+          "glyphCount": 10
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "funding-success",
+      "width": 390,
+      "textNodes": 21,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 15
+        },
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Italic",
+          "isCustomFont": true,
+          "glyphCount": 10
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": null
+    },
+    {
+      "page": "modal-and-code",
+      "width": 390,
+      "textNodes": 3,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [
+        {
+          "familyName": "Hanken Grotesk",
+          "postScriptName": "Hanken-Grotesk-Bold",
+          "isCustomFont": true,
+          "glyphCount": 18
+        }
+      ],
+      "currencyFonts": [],
+      "codeFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+    },
+    {
+      "page": "marketing-shadow",
+      "width": 390,
+      "textNodes": 108,
+      "familyMismatches": [],
+      "unsupportedWeights": [],
+      "clipped": [],
+      "fontChecks": true,
+      "documentOverflow": false,
+      "overflowPixels": 0,
+      "fonts": [
+        {
+          "family": "Hanken Grotesk",
+          "style": "italic",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        },
+        {
+          "family": "Hanken Grotesk",
+          "style": "normal",
+          "weight": "400 700"
+        }
+      ],
+      "platformFonts": [],
+      "currencyFonts": [],
+      "codeFamily": null
+    }
+  ],
+  "fontRequests": {
+    "/fonts/hanken-grotesk/normal-latin.woff2": 1,
+    "/fonts/hanken-grotesk/italic-latin.woff2": 1,
+    "/fonts/hanken-grotesk/normal-latin-ext.woff2": 1
+  },
+  "familyErrors": 0,
+  "weightErrors": 0,
+  "visualReview": {
+    "existingAncestorClipping": [
+      {
+        "page": "dashboard",
+        "width": 1440,
+        "element": ".dash-budget-distribution__summary span",
+        "text": "Allocated to departments",
+        "reason": "Existing nowrap label inside clipped card; unchanged font family, weight, size, and layout.",
+        "action": "Recorded without changing the approved layout."
+      }
+    ],
+    "intentionalScroll": "The existing allocation stepper scrolls horizontally at narrow widths.",
+    "rupeeGlyph": "Upstream Hanken Grotesk lacks U+20B9. System glyph fallback is intentional; currency digits are Hanken."
+  }
+}

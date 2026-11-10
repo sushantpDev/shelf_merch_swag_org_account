@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useRef, type RefObject } from "react";
+import { useEffect, useMemo, useRef, type ReactNode, type RefObject } from "react";
 import { Footer } from "@/components/landing/Footer";
+import { MeasurementConsentChoice } from "@/features/privacy/MeasurementConsentChoice";
 import { Header } from "@/components/landing/Header";
 import "@/components/landing-page.css";
 import aboutHtml from "./pages/about.html?raw";
@@ -21,7 +22,7 @@ const PAGE_HTML: Record<MarketingPageKey, string> = {
 const MARKETING_PAGE_NORMALIZE_CSS = `
   :host {
     --marketing-header-offset: 70px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:var(--font-family-public-sans);
     letter-spacing: 0;
   }
 
@@ -30,7 +31,7 @@ const MARKETING_PAGE_NORMALIZE_CSS = `
   }
 
   body, main, section, article, div, p, a, button, input, textarea, select {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:var(--font-family-public-sans);
   }
 
   h1, h2, h3, h4, p, ul, ol, blockquote {
@@ -38,15 +39,15 @@ const MARKETING_PAGE_NORMALIZE_CSS = `
   }
 
   h1, h2, h3, h4 {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 780;
+    font-family:var(--font-family-public-sans);
+    font-weight:var(--font-weight-bold);
     letter-spacing: -0.02em;
   }
 
   h1 em, h2 em, h3 em, h4 em {
-    font-family: Georgia, "Times New Roman", Times, serif;
+    font-family:var(--font-family-public-serif);
     font-style: italic;
-    font-weight: 400;
+    font-weight:var(--font-weight-regular);
     letter-spacing: 0;
   }
 
@@ -617,15 +618,15 @@ const MARKETING_PAGE_NORMALIZE_CSS = `
     line-height: 1.08 !important;
     text-align: center !important;
     margin: 0 0 20px !important;
-    font-weight: 800 !important;
+    font-weight:var(--font-weight-bold) !important;
     color: #222 !important;
   }
 
   .stores h2 em {
     color: #e9599d !important;
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family:var(--font-family-public-sans);
     font-style: normal !important;
-    font-weight: 800 !important;
+    font-weight:var(--font-weight-bold) !important;
   }
 
   .stores-copy > p {
@@ -1129,7 +1130,7 @@ function localizeMarkup(markup: string) {
     .replaceAll("https://shelf-merch-homepage.konetibaba.chatgpt.site", "")
     .replaceAll('href="/platform"', 'href="/platform"')
     .replaceAll('href="/about"', 'href="/about"')
-    .replaceAll('href="/terms"', 'href="/terms"')
+    .replaceAll('href="/terms-condition"', 'href="/terms-condition"')
     .replaceAll('href="/privacy"', 'href="/privacy"')
     .replaceAll('href="/careers"', 'href="/careers"')
     .replaceAll('href=""', 'href="/"');
@@ -1211,7 +1212,7 @@ function ShadowPageBody({ page }: { page: MarketingPageKey }) {
     const host = hostRef.current;
     if (!host) return;
     const root = host.shadowRoot ?? host.attachShadow({ mode: "open" });
-    root.innerHTML = `<style>:host{display:block;background:#f7f3ea;color:#121212;font-family:Arial,Helvetica,sans-serif}${parsed.style}${MARKETING_PAGE_NORMALIZE_CSS}</style>${parsed.bodyMarkup}`;
+    root.innerHTML = `<style>:host{display:block;background:#f7f3ea;color:#121212;font-family:var(--font-family-public-sans)}${parsed.style}${MARKETING_PAGE_NORMALIZE_CSS}</style>${parsed.bodyMarkup}`;
   }, [parsed]);
 
   useShadowHashLinks(hostRef);
@@ -1220,7 +1221,13 @@ function ShadowPageBody({ page }: { page: MarketingPageKey }) {
   return <div ref={hostRef} />;
 }
 
-export function MarketingHtmlPage({ page }: { page: MarketingPageKey }) {
+export function MarketingHtmlPage({
+  page,
+  afterContent,
+}: {
+  page: MarketingPageKey;
+  afterContent?: ReactNode;
+}) {
   useEffect(() => {
     document.title = PAGE_TITLE[page];
   }, [page]);
@@ -1230,6 +1237,7 @@ export function MarketingHtmlPage({ page }: { page: MarketingPageKey }) {
       <Header />
       <main style={{ paddingTop: 70 }}>
         <ShadowPageBody page={page} />
+        {afterContent}
       </main>
       <Footer />
     </div>
@@ -1249,7 +1257,7 @@ export function PlatformMarketingPage() {
 }
 
 export function PrivacyPage() {
-  return <MarketingHtmlPage page="privacy" />;
+  return <MarketingHtmlPage page="privacy" afterContent={<MeasurementConsentChoice />} />;
 }
 
 export function TermsPage() {

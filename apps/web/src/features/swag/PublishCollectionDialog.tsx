@@ -73,9 +73,12 @@ export function PublishCollectionDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm-modal">
+      <DialogContent
+        className="sm-modal sm-publish-dialog"
+        style={{ borderRadius: 16, border: "none" }}
+      >
         <DialogTitle>Publish collection</DialogTitle>
-        <p className="muted" style={{ fontSize: 13.5, marginTop: 4, marginBottom: 16 }}>
+        <p className="muted" style={{ fontSize: "var(--workspace-font-caption, 13.5px)", marginTop: 4, marginBottom: 16 }}>
           Choose one or more shops where <b>{collection.name}</b> should be available.
         </p>
 

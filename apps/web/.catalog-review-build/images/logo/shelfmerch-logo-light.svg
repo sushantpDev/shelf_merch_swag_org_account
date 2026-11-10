@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188 40" fill="none" role="img" aria-label="Shelf Merch">
+  <path d="M16 7 4 13l12 6 12-6-12-6Z" fill="#3D5FD9"/>
+  <path d="M4 19l12 6 12-6" stroke="#2B4E8F" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M4 25l12 6 12-6" stroke="#F4741F" stroke-width="2.4" stroke-linejoin="round"/>
+  <text x="40" y="27" fill="#FFFFFF" font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="700" letter-spacing="-0.03em">Shelf Merch</text>
+</svg>

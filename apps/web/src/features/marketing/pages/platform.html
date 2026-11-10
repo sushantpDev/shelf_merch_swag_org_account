@@ -6,32 +6,32 @@
   <meta name="description" content="Shelf Merch platform for kudos, milestones, on-demand swag, bulk swag, company stores, prospect gifting and client gifting.">
   <title>Shelf Merch Platform | Every Branded Moment</title>
   <style>
-    :root{--ink:#121212;--cream:#f7f3ea;--blue:#3155ff;--coral:#ff6d55;--mint:#72e2b8;--yellow:#ffd84a;--lilac:#c9b8ff;--plum:#29163f;--line:rgba(18,18,18,.14)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,Helvetica,sans-serif}h1,h2,h3,p{margin-top:0}a{color:inherit}
+    :root{--ink:#121212;--cream:#f7f3ea;--blue:#3155ff;--coral:#ff6d55;--mint:#72e2b8;--yellow:#ffd84a;--lilac:#c9b8ff;--plum:#29163f;--line:rgba(18,18,18,.14)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--font-family-primary)}h1,h2,h3,p{margin-top:0}a{color:inherit}
     .header{height:82px;padding:0 4.5vw;display:flex;align-items:center;justify-content:space-between;position:absolute;inset:0 0 auto;z-index:20;color:#fff}
-    .brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;font-weight:900;font-size:13px;line-height:.88}
+    .brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;font-weight:var(--font-weight-bold);font-size:13px;line-height:.88}
     .brand-mark{width:37px;height:37px;border-radius:50%;display:grid;place-items:center;background:var(--coral);color:var(--ink);font-size:20px}
     .main-nav{display:flex;gap:32px}
     .main-nav a{font-size:13px;text-decoration:none;opacity:.84}
     .main-nav a:hover{opacity:1}
-    .header-cta,.button{border-radius:99px;text-decoration:none;font-size:14px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:15px;cursor:pointer;transition:transform 0.15s ease, opacity 0.15s ease}
+    .header-cta,.button{border-radius:99px;text-decoration:none;font-size:14px;font-weight:var(--font-weight-bold);display:inline-flex;align-items:center;justify-content:center;gap:15px;cursor:pointer;transition:transform 0.15s ease, opacity 0.15s ease}
     .header-cta:hover,.button:hover{opacity:0.95;transform:translateY(-1px)}
     .header-cta{height:44px;padding:0 20px;background:#fff;color:var(--ink)}
     .menu{display:none;border:0;background:none;color:#fff;font-size:25px;cursor:pointer}
     .hero{height:calc(100svh - 70px);min-height:calc(100svh - 70px);max-height:calc(100svh - 70px);background:var(--blue);color:#fff;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.15fr);overflow:hidden;align-items:center}
     .hero-copy{padding:clamp(28px,5vh,56px) 2vw clamp(28px,5vh,56px) 4.5vw;position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;min-height:0}
-    .kicker{font-size:11px;font-weight:850;letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;gap:9px}
+    .kicker{font-size:11px;font-weight:var(--font-weight-bold);letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;gap:9px}
     .kicker i{width:8px;height:8px;border-radius:50%;background:var(--coral)}
     .hero h1{font-size:clamp(58px,6.4vw,98px);line-height:.86;letter-spacing:-.075em;margin:22px 0 18px}
-    .hero h1 em,.headline em,.stores h2 em,.final h2 em{font-family:Georgia,serif;font-weight:400}
+    .hero h1 em,.headline em,.stores h2 em,.final h2 em{font-family:var(--font-family-primary);font-weight:var(--font-weight-regular)}
     .hero h1 em{color:var(--yellow)}
     .hero-copy>p{font-size:18px;line-height:1.6;max-width:580px;color:rgba(255,255,255,.82)}
     .actions{display:flex;align-items:center;gap:25px;margin-top:26px}
     .button{min-height:52px;padding:0 24px;background:var(--ink);color:#fff}
     .button.light{background:#fff;color:var(--ink)}
-    .text-link{font-size:13px;font-weight:700;text-decoration:none}
+    .text-link{font-size:13px;font-weight:var(--font-weight-bold);text-decoration:none}
     .team-note{display:flex;align-items:center;gap:14px;margin-top:clamp(22px,4vh,40px)}
     .avatars{display:flex}
-    .avatars span{width:38px;height:38px;margin-left:-7px;border:2px solid var(--blue);border-radius:50%;display:grid;place-items:center;background:var(--mint);color:var(--ink);font-size:9px;font-weight:900}
+    .avatars span{width:38px;height:38px;margin-left:-7px;border:2px solid var(--blue);border-radius:50%;display:grid;place-items:center;background:var(--mint);color:var(--ink);font-size:9px;font-weight:var(--font-weight-bold)}
     .avatars span:first-child{margin-left:0;background:var(--coral)}
     .avatars span:nth-child(3){background:var(--yellow)}
     .avatars span:nth-child(4){background:var(--lilac)}
@@ -45,9 +45,9 @@
     .cap-nav{background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;padding:18px 5vw;overflow-x:auto}
     .cap-nav a{min-height:0;padding:11px 16px;border:1px solid rgba(255,255,255,.1);border-radius:999px;background:rgba(255,255,255,.035);text-decoration:none;display:flex;align-items:center;gap:9px;white-space:nowrap;transition:background .15s ease,border-color .15s ease,color .15s ease}
     .cap-nav a:hover{background:#fff;color:var(--ink);border-color:#fff}
-    .cap-nav span{font-size:9px;color:var(--mint);font-weight:900;letter-spacing:.08em}
+    .cap-nav span{font-size:9px;color:var(--mint);font-weight:var(--font-weight-bold);letter-spacing:.08em}
     .cap-nav a:hover span{color:var(--blue)}
-    .cap-nav b{font-size:12px;line-height:1;font-weight:800}
+    .cap-nav b{font-size:12px;line-height:1;font-weight:var(--font-weight-bold)}
     .flatlay-showcase{background:#fff;padding:0}
     .flatlay-showcase img{width:100%;height:clamp(360px,46vw,760px);display:block;border-radius:0;object-fit:cover;box-shadow:none}
     .section{padding:115px 7vw}
@@ -64,10 +64,10 @@
     .flow-step:nth-child(4):before{background:var(--blue)}
     .flow-step .flow-no,.flow-arrow{display:none}
     .flow-step .flow-icon{position:absolute;left:50%;top:34px;transform:translateX(-50%);width:92px;height:92px;border:0;border-radius:50%;background:#fbf7ee;color:#1e1e1e;display:grid;place-items:center}
-    .flow-step h3{font-size:24px;line-height:1.32;letter-spacing:0;margin:20px 18px 12px;font-weight:500}
+    .flow-step h3{font-size:24px;line-height:1.32;letter-spacing:0;margin:20px 18px 12px;font-weight:var(--font-weight-medium)}
     .flow-step p{font-size:17px;line-height:1.45;max-width:210px;margin:0 auto;color:#666}
     .flow-details{display:none}
-    .flow-badge{display:inline-flex;align-items:center;justify-content:center;align-self:center;margin-top:14px;padding:5px 12px;border-radius:999px;background:#8052c8;color:#fff;font-size:15px;font-weight:700;line-height:1}
+    .flow-badge{display:inline-flex;align-items:center;justify-content:center;align-self:center;margin-top:14px;padding:5px 12px;border-radius:999px;background:#8052c8;color:#fff;font-size:15px;font-weight:var(--font-weight-bold);line-height:1}
     
     /* Kudos & Milestones Mockup Styles */
     .mock{position:absolute;left:40px;right:40px;bottom:-18px;background:#fff;border-radius:18px 18px 0 0;box-shadow:0 18px 35px rgba(0,0,0,.13);padding:22px}
@@ -76,7 +76,7 @@
     .kudos-post header p{margin:0;flex:1}
     .kudos-post header b,.kudos-post header small{display:block;font-size:9px}
     .kudos-post header small{font-size:7px;color:#777;margin-top:4px}
-    .kudos-post>p{font:16px/1.45 Georgia;margin:17px 0}
+    .kudos-post>p{font:16px/1.45 var(--font-family-primary);margin:17px 0}
     .reactions span{font-size:8px;background:#fff;padding:6px 9px;border-radius:20px}
     .calendar-top{display:flex;justify-content:space-between;font-size:11px}
     .calendar-top span{font-size:8px;background:#fff3b8;border-radius:20px;padding:7px 9px}
@@ -84,7 +84,7 @@
     .dates span{text-align:center;border:1px solid #e4e0d7;border-radius:8px;padding:13px 0;font-size:9px}
     .dates .active{background:var(--blue);color:#fff}
     .milestone{display:flex;align-items:center;gap:10px;border-top:1px solid #eee;padding:13px 0}
-    .milestone i{width:34px;height:34px;border-radius:8px;background:var(--coral);display:grid;place-items:center;font-style:normal;font-size:8px;font-weight:900}
+    .milestone i{width:34px;height:34px;border-radius:8px;background:var(--coral);display:grid;place-items:center;font-style:normal;font-size:8px;font-weight:var(--font-weight-bold)}
     .milestone p{margin:0;flex:1}
     .milestone b,.milestone small{display:block;font-size:9px}
     .milestone small{font-size:7px;color:#777}
@@ -92,7 +92,7 @@
     .section-head{display:grid;grid-template-columns:1fr .5fr;gap:45px;align-items:end;margin-bottom:52px}
     .section-head .kicker{grid-column:1/3;color:var(--blue)}
     .section-head h2{font-size:clamp(50px,5.5vw,82px);line-height:.92;letter-spacing:-.065em;margin:0}
-    .section-head h2 em{font-family:Georgia,serif;font-weight:400}
+    .section-head h2 em{font-family:var(--font-family-primary);font-weight:var(--font-weight-regular)}
     .recognition{background:#f0ebff;padding-bottom:0}
     .feature-grid,.swag-grid,.gifting-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
     .feature-grid{display:grid;grid-template-columns:1fr;gap:28px}
@@ -108,7 +108,7 @@
     .feature p,.swag-card>p,.gift-card>p{font-size:20px;line-height:1.65;color:rgba(18,18,18,.78);max-width:650px}
     .feature-points{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:18px}
     .feature-points li{display:flex;align-items:flex-start;gap:13px;font-size:18px;line-height:1.45;color:var(--ink)}
-    .feature-points li:before{content:"✓";width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:900;flex:0 0 auto;margin-top:1px}
+    .feature-points li:before{content:"✓";width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:var(--font-weight-bold);flex:0 0 auto;margin-top:1px}
     .feature-media{position:relative;min-height:0;margin:0;border-radius:0;overflow:visible;box-shadow:none}
     .feature.coral .feature-media{margin-left:0}
     .feature.yellow .feature-media{margin-right:0;order:2}
@@ -119,7 +119,7 @@
     .feature.yellow .feature-media:after{left:8px;right:auto;bottom:8px;background:var(--coral);width:190px;height:210px;clip-path:polygon(0 0,100% 18%,78% 100%,0 82%)}
     .feature-visual-img{position:relative;z-index:2;width:94%;height:390px;object-fit:cover;object-position:center;display:block;border-radius:0 34px 0 34px;box-shadow:0 24px 52px rgba(18,18,18,.12);margin:0 auto}
     .feature.yellow .feature-visual-img{border-radius:34px 0 34px 0;margin:0 auto}
-    .feature-cta{width:max-content;margin-top:30px;background:var(--ink);color:#fff;text-decoration:none;border-radius:12px;padding:14px 18px;font-weight:900;font-size:14px}
+    .feature-cta{width:max-content;margin-top:30px;background:var(--ink);color:#fff;text-decoration:none;border-radius:12px;padding:14px 18px;font-weight:var(--font-weight-bold);font-size:14px}
     .clean-list{list-style:none;padding:0;margin:20px 0 30px}
     .clean-list li{padding:10px 0;border-top:1px solid rgba(18,18,18,.18);font-size:11px}
     .clean-list li:last-child{border-bottom:1px solid rgba(18,18,18,.18)}
@@ -139,14 +139,14 @@
     .swag .section-head p{display:none}
     .swag-options{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:56px;text-align:center}
     .swag-option{background:transparent;color:var(--ink);border:0;border-radius:0;box-shadow:none}
-    .swag-mark{height:48px;margin:0 auto 26px;display:grid;place-items:center;color:#c9c9c9;font-size:38px;font-weight:900;letter-spacing:-.05em;text-transform:uppercase}
-    .swag-option:nth-child(2) .swag-mark{font-size:34px;font-weight:900;font-style:normal}
+    .swag-mark{height:48px;margin:0 auto 26px;display:grid;place-items:center;color:#c9c9c9;font-size:38px;font-weight:var(--font-weight-bold);letter-spacing:-.05em;text-transform:uppercase}
+    .swag-option:nth-child(2) .swag-mark{font-size:34px;font-weight:var(--font-weight-bold);font-style:normal}
     .swag-option:nth-child(3) .swag-mark{font-size:32px;letter-spacing:.04em}
     .swag-copy{padding:0;display:flex;flex-direction:column;align-items:center}
     .swag-label{display:none}
     .swag-copy h3{font-size:19px;line-height:1.1;letter-spacing:-.025em;margin:0 0 20px}
     .swag-copy p{font-size:15px;line-height:1.75;color:#8a8a93;max-width:315px;margin:0 auto}
-    .swag-cta{grid-column:1/-1;justify-self:center;margin-top:46px;min-width:360px;height:64px;border-radius:0;background:#12b8e8;color:#fff;text-decoration:none;font-size:14px;font-weight:900;display:inline-flex;align-items:center;justify-content:center}
+    .swag-cta{grid-column:1/-1;justify-self:center;margin-top:46px;min-width:360px;height:64px;border-radius:0;background:#12b8e8;color:#fff;text-decoration:none;font-size:14px;font-weight:var(--font-weight-bold);display:inline-flex;align-items:center;justify-content:center}
 
     /* Reference-style gifting section */
     .gifting{background:#fff;padding-bottom:105px}
@@ -160,8 +160,8 @@
     .gift-copy p{font-size:18px;line-height:1.68;color:#25211d;max-width:520px;margin:0}
     .gift-story.client .gift-copy p{color:rgba(255,255,255,.74)}
     .gift-points{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:14px}
-    .gift-points li{display:flex;align-items:flex-start;gap:12px;font-size:16px;line-height:1.42;font-weight:750;color:currentColor}
-    .gift-points li:before{content:"✓";width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900;flex:0 0 auto;margin-top:1px}
+    .gift-points li{display:flex;align-items:flex-start;gap:12px;font-size:16px;line-height:1.42;font-weight:var(--font-weight-bold);color:currentColor}
+    .gift-points li:before{content:"✓";width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:var(--font-weight-bold);flex:0 0 auto;margin-top:1px}
     .gift-story.client .gift-points li:before{background:var(--mint);color:var(--ink)}
     .gift-visual{position:relative;min-height:440px;border-radius:18px;overflow:hidden;background:#a98af4}
     .gift-story.prospect .gift-visual{background:linear-gradient(135deg,#ffd84a 0%,#ff6655 100%)}
@@ -179,10 +179,10 @@
     .store-mock-img{width:100%;height:100%;object-fit:cover;object-position:center left;display:block}
     .store-hero-img,.store-cta-hit,.store-sr-only,.store-proof,.store-float,.stores .number,.stores .kicker{display:none!important}
     .stores-copy{position:absolute;z-index:3;right:0;top:50%;transform:translateY(-50%);width:360px;background:#fff;padding:54px 44px;box-shadow:0 18px 50px rgba(0,0,0,.12);display:flex;flex-direction:column;align-items:center;text-align:center}
-    .stores h2{font-size:42px;line-height:1.08;letter-spacing:-.03em;margin:0 0 20px;font-weight:800;text-align:center;color:#222}
-    .stores h2 em{color:#e9599d;font-family:Arial,Helvetica,sans-serif;font-style:normal;font-weight:800}
+    .stores h2{font-size:42px;line-height:1.08;letter-spacing:-.03em;margin:0 0 20px;font-weight:var(--font-weight-bold);text-align:center;color:#222}
+    .stores h2 em{color:#e9599d;font-family:var(--font-family-primary);font-style:normal;font-weight:var(--font-weight-bold)}
     .stores-copy>p{font-size:15px;line-height:1.65;color:#777;max-width:270px;margin:0 0 30px;text-align:center}
-    .stores .button.light{background:#e9599d;color:#fff;width:150px;height:46px;border-radius:0;font-size:15px;font-weight:700}
+    .stores .button.light{background:#e9599d;color:#fff;width:150px;height:46px;border-radius:0;font-size:15px;font-weight:var(--font-weight-bold)}
 
     
     .gift-card{min-height:625px;padding:40px;border-radius:26px;position:relative;overflow:hidden}
@@ -196,7 +196,7 @@
     .gift-link small{font-size:7px;color:#888}
     .gift-link b{font-size:13px;margin-top:6px}
     .gift-box{position:absolute;left:40px;right:40px;bottom:-5px}
-    .gift-lid{height:95px;background:var(--coral);color:var(--ink);display:grid;place-items:center;font-size:11px;font-weight:900;letter-spacing:.14em;border-radius:13px}
+    .gift-lid{height:95px;background:var(--coral);color:var(--ink);display:grid;place-items:center;font-size:11px;font-weight:var(--font-weight-bold);letter-spacing:.14em;border-radius:13px}
     .gift-products{height:140px;background:var(--blue);border:8px solid var(--lilac);border-radius:10px;display:flex;align-items:center;justify-content:center;gap:16px}
     .gift-products i{width:70px;height:80px;background:var(--yellow);border-radius:99px}
     .gift-products i:nth-child(2){background:var(--mint);height:100px;border-radius:40px}
@@ -205,7 +205,7 @@
     .control-head{max-width:920px}
     .control-head .kicker{color:var(--blue)}
     .control h2{max-width:930px}
-    .control h2 em{font-family:Georgia,serif;font-weight:400}
+    .control h2 em{font-family:var(--font-family-primary);font-weight:var(--font-weight-regular)}
     .control-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:46px;overflow-x:visible;padding-bottom:0}
     .control-card{background:#fff;border:1px solid #dedbd4;border-radius:8px;overflow:hidden;min-height:380px;height:auto;display:flex;flex-direction:column;padding:0;width:100%;min-width:0}
     .control-art{height:190px;position:relative;overflow:hidden;display:grid;place-items:center;flex:0 0 auto}
@@ -222,9 +222,9 @@
     .budget-folder{position:absolute;left:31%;bottom:25px;width:122px;height:70px;background:#bfe4ff;border:4px solid #005bc6;border-radius:8px 8px 15px 15px;box-shadow:0 14px 0 rgba(0,88,200,.18)}
     .budget-folder:before{content:"";position:absolute;left:13px;top:-22px;width:62px;height:25px;background:#005bc6;border-radius:8px 8px 0 0}
     .budget-folder:after{content:"";position:absolute;left:-22px;right:-20px;bottom:-15px;height:15px;background:#005bc6;border-radius:50%;opacity:.95}
-    .coin{position:absolute;width:42px;height:42px;border-radius:50%;background:#eaf6ff;border:4px solid #005bc6;color:#005bc6;display:grid;place-items:center;font-size:20px;font-weight:900;box-shadow:0 8px 14px rgba(0,0,0,.14)}
+    .coin{position:absolute;width:42px;height:42px;border-radius:50%;background:#eaf6ff;border:4px solid #005bc6;color:#005bc6;display:grid;place-items:center;font-size:20px;font-weight:var(--font-weight-bold);box-shadow:0 8px 14px rgba(0,0,0,.14)}
     .coin.c1{left:18%;top:34%}.coin.c2{right:20%;top:18%;font-size:19px}.coin.c3{right:22%;bottom:33%;font-size:18px}
-    .report-panel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:13px}.report-card{background:#fff;border-radius:14px;padding:15px 17px;box-shadow:0 14px 24px rgba(0,0,0,.12);min-width:142px}.report-card b{font-size:15px}.report-card:before{content:"";display:block;width:70px;height:22px;margin:10px 0 9px;background:radial-gradient(circle at 9px 50%,#ff6655 0 9px,transparent 10px),radial-gradient(circle at 27px 50%,#68dcb4 0 9px,transparent 10px),radial-gradient(circle at 45px 50%,#b89df5 0 9px,transparent 10px),radial-gradient(circle at 63px 50%,#ffd84a 0 9px,transparent 10px)}.report-bar{width:130px;height:10px;border-radius:99px;background:#d6ecff;position:relative}.report-bar:before{content:"";position:absolute;inset:0 33% 0 0;background:#5ca0e6;border-radius:99px}.report-ring{width:92px;height:92px;border-radius:50%;background:conic-gradient(#51b86a 0 35%,#ffd84a 0 66%,#ff6655 0 82%,#e8e6df 0);display:grid;place-items:center;font-size:0;box-shadow:0 14px 24px rgba(0,0,0,.1)}    .report-ring:before{content:"160";width:62px;height:62px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:24px;font-weight:900}
+    .report-panel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:13px}.report-card{background:#fff;border-radius:14px;padding:15px 17px;box-shadow:0 14px 24px rgba(0,0,0,.12);min-width:142px}.report-card b{font-size:15px}.report-card:before{content:"";display:block;width:70px;height:22px;margin:10px 0 9px;background:radial-gradient(circle at 9px 50%,#ff6655 0 9px,transparent 10px),radial-gradient(circle at 27px 50%,#68dcb4 0 9px,transparent 10px),radial-gradient(circle at 45px 50%,#b89df5 0 9px,transparent 10px),radial-gradient(circle at 63px 50%,#ffd84a 0 9px,transparent 10px)}.report-bar{width:130px;height:10px;border-radius:99px;background:#d6ecff;position:relative}.report-bar:before{content:"";position:absolute;inset:0 33% 0 0;background:#5ca0e6;border-radius:99px}.report-ring{width:92px;height:92px;border-radius:50%;background:conic-gradient(#51b86a 0 35%,#ffd84a 0 66%,#ff6655 0 82%,#e8e6df 0);display:grid;place-items:center;font-size:0;box-shadow:0 14px 24px rgba(0,0,0,.1)}    .report-ring:before{content:"160";width:62px;height:62px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:24px;font-weight:var(--font-weight-bold)}
     .control-body{padding:20px 24px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
     .control-body h3{font-size:22px;line-height:1.08;letter-spacing:-.035em;margin:0}
     .control-body p{font-size:14px;line-height:1.48;color:#39352f;margin:0}
@@ -389,6 +389,6 @@
 
     <section class="final"><span class="kicker" style="justify-content:center;color:var(--mint)"><i></i> ONE PLATFORM. EVERY MOMENT.</span><h2>Put every program<br><em>on one shelf.</em></h2><p>See how Shelf Merch can simplify recognition, swag and gifting across your company.</p><div class="final-actions"><a class="button light" href="/request-demo">Book a platform demo →</a></div></section>
   </main>
-  <footer class="footer"><a class="brand" href="#platform"><span class="brand-mark">S</span><span>SHELF<br>MERCH</span></a><p>Merch. Gifting. Recognition.<br>Made and delivered across India.</p><nav><a href="#recognition">Recognition</a><a href="#swag">Swag</a><a href="#stores">Stores</a><a href="#gifting">Gifting</a><a href="/terms">Terms</a></nav><small>© 2026 Chitlu Innovations Private Limited</small></footer>
+  <footer class="footer"><a class="brand" href="#platform"><span class="brand-mark">S</span><span>SHELF<br>MERCH</span></a><p>Merch. Gifting. Recognition.<br>Made and delivered across India.</p><nav><a href="#recognition">Recognition</a><a href="#swag">Swag</a><a href="#stores">Stores</a><a href="#gifting">Gifting</a><a href="/terms-condition">Terms</a></nav><small>© 2026 Chitlu Innovations Private Limited</small></footer>
 </body>
 </html>
