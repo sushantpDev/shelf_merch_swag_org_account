@@ -21,11 +21,12 @@ const catalogSchema = z.object({
 }).strict();
 
 export const SHOPS_PREPARE_CATALOG_DESCRIPTION = [
-  'Preview which products a company store will show, hide, or feature.',
-  'Company admins only. Every listing key must already belong to a published collection on that store.',
-  'Featured products must also be shown. Unknown keys are rejected.',
-  'Nothing is saved. Collections and catalog products are not created, published, or removed.',
-  'Returns a one-use confirmation. Saving requires shops_execute_catalog_update.',
+  'Preview which products a company store will show, hide, or feature on its storefront.',
+  'Company admins only. Use shops_get first — it returns activeListingKeys, featuredListingKeys, and availableListings (listingKey + productName) from ready collections.',
+  'To show an existing collection product (for example ActiveDry Polo), copy its listingKey from availableListings into activeListingKeys and keep other shown keys unless the user asked to hide them.',
+  'Featured products must also appear in activeListingKeys. Unknown keys are rejected.',
+  'This does not create collections or pull products from the master catalog into a new collection — only visibility of ready-collection listings.',
+  'Nothing is saved until confirmation. Saving requires shops_execute_catalog_update via the Confirm button.',
 ].join(' ');
 
 export const SHOPS_EXECUTE_CATALOG_DESCRIPTION = [
@@ -100,7 +101,8 @@ async function loadShop(tenantId, shopId) {
   return shop;
 }
 
-async function readyListings(shopId, tenantId) {
+/** Ready collection listings eligible for store show/hide (shared with shops_get). */
+export async function listReadyShopListings(shopId, tenantId) {
   const collections = await Collection.find({
     tenantId,
     status: 'ready',
@@ -119,6 +121,10 @@ async function readyListings(shopId, tenantId) {
     }
   }
   return listings;
+}
+
+async function readyListings(shopId, tenantId) {
+  return listReadyShopListings(shopId, tenantId);
 }
 
 async function assertEligible(shopId, tenantId, keys) {

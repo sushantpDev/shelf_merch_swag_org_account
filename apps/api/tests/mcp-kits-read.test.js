@@ -279,6 +279,8 @@ describe('workspace and curated kit reads', () => {
     expect(officialKitImageUrl('/uploads/abc/artwork/../secret.png', bases)).toBe('');
     expect(officialKitImageUrl('http://cdn.shopify.com/kit.png', bases)).toBe('');
     expect(officialKitImageUrl('/uploads/kit.png', bases)).toBe('');
+    // Local/dev without an https origin keeps a same-origin relative upload path.
+    expect(officialKitImageUrl('/uploads/abc/artwork/logo.png', [])).toBe('/uploads/abc/artwork/logo.png');
   });
 describe('kit catalog card', () => {
   it('initializes the type chip from view.type and omits All for typed requests', () => {

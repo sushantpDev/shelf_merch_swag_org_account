@@ -5,6 +5,7 @@ import { objectId } from '../users/users.validation.js';
 import { Shop } from '../shops/shop.model.js';
 import { listShops as listShopsService, getShop as getShopService } from '../shops/shops.service.js';
 import { employeeReaderFromContext } from './employeesRead.js';
+import { listReadyShopListings } from './shopsCatalogWrite.js';
 
 const READ_ROLES = new Set(rolesForTenantArea('shops', 'read'));
 
@@ -18,7 +19,9 @@ export const SHOPS_LIST_DESCRIPTION = [
 export const SHOPS_GET_DESCRIPTION = [
   'Get one company store by id or exact name.',
   'When several stores share a name, ask the user to choose a store id.',
-  'Returns draft/live status, currency, categories, logo/banner readiness, and whether the store can be published.',
+  'Returns draft/live status, currency, categories, logo/banner readiness, whether the store can be published,',
+  'activeListingKeys / featuredListingKeys currently shown, and availableListings (listingKey, productName, collectionName) from ready collections.',
+  'Use availableListings + shops_prepare_catalog_update to show or hide products already in a published collection.',
   'Company admins and department managers can read stores.',
 ].join(' ');
 
@@ -44,6 +47,12 @@ function hasBanner(shop) {
   });
 }
 
+const listingSummarySchema = z.object({
+  listingKey: z.string(),
+  productName: z.string(),
+  collectionName: z.string(),
+});
+
 const shopRowSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -63,7 +72,12 @@ export const shopsListOutputSchema = z.object({
   shops: z.array(shopRowSchema),
 });
 
-export const shopsGetOutputSchema = shopRowSchema;
+export const shopsGetOutputSchema = shopRowSchema.extend({
+  activeListingKeys: z.array(z.string()),
+  featuredListingKeys: z.array(z.string()),
+  availableListings: z.array(listingSummarySchema),
+  shownListings: z.array(listingSummarySchema),
+});
 
 function normalizeName(name) {
   return String(name || '').trim().toLowerCase().replace(/\s+/g, ' ');
@@ -159,7 +173,18 @@ export async function getShop({ tenantId, actorUserId, input = {} }) {
   const parsed = shopsGetInputSchema.safeParse(input ?? {});
   if (!parsed.success) throw new ApiError(400, 'Store details are not valid', 'VALIDATION');
   const shop = await resolveShop(tenantId, parsed.data);
-  return presentShop(shop);
+  const base = presentShop(shop);
+  const listings = await listReadyShopListings(shop._id, tenantId);
+  const activeListingKeys = (shop.activeListingKeys || []).map(String);
+  const featuredListingKeys = (shop.featuredListingKeys || []).map(String);
+  const describe = (key) => listings.get(key) || { listingKey: key, productName: '', collectionName: '' };
+  return {
+    ...base,
+    activeListingKeys,
+    featuredListingKeys,
+    availableListings: [...listings.values()],
+    shownListings: activeListingKeys.map(describe),
+  };
 }
 
 export async function listShopsForCaller(ctx, args = {}) {
@@ -188,12 +213,24 @@ export function shopsReadText(output, heading) {
       ...output.shops.map((shop) => `${shop.name} (${shop.id}) ${shop.status} ${shop.currencyMode}`),
     ].join('\n');
   }
-  return [
+  const lines = [
     heading,
     `${output.name} (${output.id}) is ${output.status}`,
     `Categories: ${output.categories.join(', ') || '(none)'}`,
     output.publishReady ? 'Ready for store publish.' : 'Needs at least one category before publishing.',
-  ].join('\n');
+  ];
+  if (Array.isArray(output.shownListings) && output.shownListings.length) {
+    lines.push(`Shown: ${output.shownListings.map((row) => row.productName || row.listingKey).join(', ')}`);
+  }
+  if (Array.isArray(output.availableListings) && output.availableListings.length) {
+    lines.push(
+      `Available listings: ${output.availableListings
+        .slice(0, 12)
+        .map((row) => `${row.productName || 'Product'} [${row.listingKey}]`)
+        .join('; ')}`,
+    );
+  }
+  return lines.join('\n');
 }
 
 export function shopsReadError(error, fallback) {

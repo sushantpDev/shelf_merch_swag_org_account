@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Copilot reference image attachment</title>
+  <style>
+    :root { --cp-line:#ddd2c4; --cp-muted:#6b6258; --cp-accent:#1f6b4a; }
+    body { font-family: Georgia, serif; margin: 24px; background: #f6f3ee; color: #1d1a16; }
+    h1 { font-size: 1.35rem; }
+    .panel { background:#fff; border:1px solid var(--cp-line); border-radius:14px; padding:16px; max-width:560px; }
+    .rail { display:flex; flex-direction:column; gap:10px; margin-top:12px; }
+    .chip { display:flex; align-items:center; gap:10px; border:1px solid var(--cp-line); border-radius:12px; padding:8px 10px; background:#f8faf7; }
+    .chip--uploaded { outline: 1px solid color-mix(in srgb, var(--cp-accent) 35%, transparent); }
+    .thumb { width:40px; height:40px; border-radius:8px; object-fit:cover; background:#eee; }
+    .meta { display:grid; gap:2px; }
+    .name { font-weight:700; }
+    .sub { color: var(--cp-accent); font-size: 0.9rem; }
+    .menu { margin-top:18px; border:1px solid var(--cp-line); border-radius:12px; overflow:hidden; }
+    .menu button { display:block; width:100%; text-align:left; padding:10px 12px; border:0; border-bottom:1px solid var(--cp-line); background:#fff; }
+    .menu button:last-child { border-bottom:0; }
+    .menu strong { display:block; }
+    .menu small { color: var(--cp-muted); }
+  </style>
+</head>
+<body>
+  <h1>Reference product image — uploaded</h1>
+  <div class="panel" id="success">
+    <p>Assistant composer attachment rail</p>
+    <div class="rail">
+      <div class="chip chip--uploaded" aria-label="Uploaded reference image">
+        <img class="thumb" src="/demo-product.jpg" alt="product.jpg preview" />
+        <div class="meta">
+          <span class="name">product.jpg</span>
+          <span class="sub">Uploaded · 0.3 KB</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu" aria-label="Attachment options">
+      <button type="button"><strong>Reference product image</strong><small>JPG, PNG, WebP, or GIF up to 25 MB</small></button>
+      <button type="button"><strong>Upload Purchase Order</strong><small>PDF purchase orders up to 25 MB</small></button>
+      <button type="button"><strong>Store logo artwork</strong><small>Store logo PNG up to 5 MB (300 DPI required)</small></button>
+      <button type="button"><strong>Attach File</strong><small>PDF or image up to 25 MB</small></button>
+    </div>
+  </div>
+</body>
+</html>

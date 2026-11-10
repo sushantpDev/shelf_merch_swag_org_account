@@ -25,6 +25,7 @@ function redirectIfAuthed(args?: { request?: Request }) {
 
 const tenantChildren: RouteObject[] = [
   { index: true, lazy: page(() => import("@/features/dashboard/DashboardPage"), "DashboardPage") },
+  { path: "copilot", lazy: page(() => import("@/features/copilot/CopilotPage"), "CopilotPage") },
   { path: "orders", lazy: page(() => import("@/features/orders/OrdersPage"), "OrdersPage") },
   { path: "wallets", lazy: page(() => import("@/features/wallets/WalletsPage"), "WalletsPage") },
   {

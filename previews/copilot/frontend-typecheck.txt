@@ -1,0 +1,59 @@
+
+> @shelfmerch/web@0.1.0 typecheck
+> tsc --noEmit
+
+src/components/KitAcceptPortal.tsx(27,3): error TS2741: Property 'price' is missing in type '{ id: string; g: string; brand: string; nm: string; sw: number; photoUrl: string; baseImageUrl: string; maskImageUrl: undefined; imgUrl: string; mockupUrl: string | undefined; placement: { xPct: number; yPct: number; ... 4 more ...; printWPct?: number; } | undefined; printAreas: { ...; }[] | undefined; imageUrls: st...' but required in type 'UiProduct'.
+src/features/kits/KitDetailDialog.tsx(32,9): error TS2345: Argument of type 'Map<string | undefined, UiProduct>' is not assignable to parameter of type 'Map<string, UiProduct>'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+src/features/kits/KitPreviewDialog.tsx(315,9): error TS2345: Argument of type 'Map<string | undefined, UiProduct>' is not assignable to parameter of type 'Map<string, UiProduct>'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+src/features/kits/controllers/useKitDetailController.ts(70,9): error TS2345: Argument of type 'Map<string | undefined, UiProduct>' is not assignable to parameter of type 'Map<string, UiProduct>'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+src/features/kits/views/SendKitView.tsx(1845,60): error TS2322: Type 'KitPackagingChoice' is not assignable to type '"box" | "none"'.
+  Type '"wrap"' is not assignable to type '"box" | "none"'.
+src/features/swag/wizard/artworkStepModel.test.ts(32,5): error TS2783: 'id' is specified more than once, so this usage will be overwritten.
+src/features/swag/wizard/artworkStepModel.test.ts(33,5): error TS2783: 'nm' is specified more than once, so this usage will be overwritten.
+src/features/swag/wizard/artworkStepModel.test.ts(156,5): error TS2322: Type 'SwagDraft' is not assignable to type '{ step: 0 | 1 | 2 | 3; name: string; picked: number[]; placements: Record<string, Placement>; placementEpoch: number; art: ArtFile; areaArts: { "polo::right": ArtFile; }; }'.
+  Types of property 'art' are incompatible.
+    Type 'ArtFile | null' is not assignable to type 'ArtFile'.
+      Type 'null' is not assignable to type 'ArtFile'.
+src/features/swag/wizard/artworkStepModel.test.ts(174,5): error TS2322: Type 'SwagDraft' is not assignable to type '{ step: 0 | 1 | 2 | 3; name: string; picked: number[]; placementEpoch: number; art: ArtFile; areaArts: { "polo::right": ArtFile; "tee::front": ArtFile; }; placements: { "polo::right": { xPct: number; yPct: number; wPct: number; rot: number; }; }; }'.
+  Types of property 'art' are incompatible.
+    Type 'ArtFile | null' is not assignable to type 'ArtFile'.
+      Type 'null' is not assignable to type 'ArtFile'.
+src/features/swag/wizard/artworkStepModel.test.ts(186,5): error TS2322: Type 'SwagDraft' is not assignable to type '{ step: 0 | 1 | 2 | 3; name: string; picked: number[]; placements: Record<string, Placement>; placementEpoch: number; art: ArtFile; areaArts: { "tee::front": ArtFile; }; }'.
+  Types of property 'art' are incompatible.
+    Type 'ArtFile | null' is not assignable to type 'ArtFile'.
+      Type 'null' is not assignable to type 'ArtFile'.
+src/features/swag/wizard/artworkStepModel.test.ts(188,12): error TS7053: Element implicitly has an 'any' type because expression of type '"polo::right"' can't be used to index type '{ "tee::front": ArtFile; }'.
+  Property 'polo::right' does not exist on type '{ "tee::front": ArtFile; }'.
+src/lib/swag-and-media.test.ts(131,53): error TS2345: Argument of type 'UiPrintArea' is not assignable to parameter of type 'PlaceholderInches'.
+  Types of property 'xIn' are incompatible.
+    Type 'number | undefined' is not assignable to type 'number'.
+      Type 'undefined' is not assignable to type 'number'.
+src/lib/swag-and-media.test.ts(145,36): error TS18048: 'area.xIn' is possibly 'undefined'.
+src/lib/swag-and-media.test.ts(146,36): error TS18048: 'area.yIn' is possibly 'undefined'.
+src/lib/swag-and-media.test.ts(147,36): error TS18048: 'area.widthIn' is possibly 'undefined'.
+src/lib/swag-and-media.test.ts(148,36): error TS18048: 'area.heightIn' is possibly 'undefined'.
+src/services/api-bridge.ts(1078,3): error TS2300: Duplicate identifier 'mockupUrl'.
+src/services/api-bridge.ts(1081,3): error TS2300: Duplicate identifier 'placement'.
+src/services/api-bridge.ts(1101,3): error TS2300: Duplicate identifier 'mockupUrl'.
+src/services/api-bridge.ts(1102,3): error TS2300: Duplicate identifier 'placement'.
+src/services/mutations-api.ts(1502,34): error TS2339: Property 'inviteStatus' does not exist on type '{ name: string; email: string; mobile: string; role: string; invite: boolean; }'.
+src/services/mutations-api.ts(1505,51): error TS2339: Property 'inviteStatus' does not exist on type '{ name: string; email: string; mobile: string; role: string; invite: boolean; }'.
+vite.config.ts(89,20): error TS2339: Property 'requestTimeout' does not exist on type 'HttpServer'.
+  Property 'requestTimeout' does not exist on type 'Http2SecureServer<typeof IncomingMessage, typeof ServerResponse, typeof Http2ServerRequest, typeof Http2ServerResponse>'.
+vite.config.ts(90,20): error TS2339: Property 'headersTimeout' does not exist on type 'HttpServer'.
+  Property 'headersTimeout' does not exist on type 'Http2SecureServer<typeof IncomingMessage, typeof ServerResponse, typeof Http2ServerRequest, typeof Http2ServerResponse>'.
+vite.config.ts(91,20): error TS2339: Property 'timeout' does not exist on type 'HttpServer'.
+  Property 'timeout' does not exist on type 'Http2SecureServer<typeof IncomingMessage, typeof ServerResponse, typeof Http2ServerRequest, typeof Http2ServerResponse>'.
+npm error Lifecycle script `typecheck` failed with error:
+npm error code 1
+npm error path D:\Shelf Merch\SMIO\shelf_merch_swag_org_account\apps\web
+npm error workspace @shelfmerch/web@0.1.0
+npm error location D:\Shelf Merch\SMIO\shelf_merch_swag_org_account\apps\web
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c tsc --noEmit

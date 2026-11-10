@@ -6,6 +6,7 @@ import { WalletBalanceMenu } from "@/components/tenant/WalletBalanceMenu";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { ShelfMerchLogo } from "@/components/brand/ShelfMerchLogo";
 import { LoadingState } from "@/components/LoadingState";
+import { CopilotLauncher } from "@/features/copilot/CopilotLauncher";
 import { getStoredUser, isAuthenticated } from "@/services/api-bridge";
 import { useWorkspace } from "@/hooks/useWorkspace";
 import { useTenantAccess } from "@/hooks/useTenantAccess";
@@ -50,6 +51,7 @@ export default function TenantLayout() {
   const { data: workspace } = useWorkspace();
   const { canWrite } = useTenantAccess();
   const location = useLocation();
+  const isCopilotRoute = /\/copilot\/?$/.test(location.pathname);
   const navigate = useNavigate();
   const navigation = useNavigation();
   const params = useParams();
@@ -105,7 +107,7 @@ export default function TenantLayout() {
   const balanceCaption = isEntityManager ? "Available for you" : "Available balance";
 
   return (
-    <div className="tenant-shell tenant-shell--page-scroll">
+    <div className={`tenant-shell tenant-shell--page-scroll${isCopilotRoute ? " tenant-shell--copilot" : ""}`}>
       <header className="topbar">
         <div className="brandmark">
           <ShelfMerchLogo href={tenantPath()} height={32} />
@@ -133,7 +135,7 @@ export default function TenantLayout() {
       </header>
 
       <div className="body">
-        <CollapsibleSidebar />
+        {isCopilotRoute ? null : <CollapsibleSidebar />}
 
         <main className="main scroll">
           <div className="wrap fade-in">
@@ -145,6 +147,7 @@ export default function TenantLayout() {
           </div>
         </main>
       </div>
+      <CopilotLauncher />
     </div>
   );
 }

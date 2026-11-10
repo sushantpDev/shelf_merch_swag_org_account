@@ -566,6 +566,30 @@ export async function executeMcpWrite({
     });
   } catch (error) {
     const wrapped = asApiError(error);
+    // Duplicate confirm / remount with a new idempotency key: if reconcile can prove the
+    // intended state is already applied, return success without running execute again.
+    if (
+      (wrapped?.code === 'CONFIRMATION_REUSED' || wrapped?.code === 'CONFIRMATION_STALE')
+      && typeof reconcile === 'function'
+    ) {
+      try {
+        const decision = await reconcile(actor);
+        if (decision?.outcome === 'completed') {
+          const result = redactFor({ operation, leaseMs }, decision.result ?? null);
+          await recordAudit({
+            tenantId,
+            actorUserId,
+            actorRole,
+            action: 'mcp_write.reconciled',
+            operation,
+            confirmationId,
+          });
+          return result;
+        }
+      } catch {
+        // Fall through to the original confirmation error when reconcile itself fails.
+      }
+    }
     if (!['CONFIRMATION_MISMATCH', 'CONFIRMATION_REUSED', 'CONFIRMATION_STALE', 'CONFIRMATION_EXPIRED', 'CONFIRMATION_INVALID'].includes(wrapped?.code)) {
       await rejectConfirmation(confirmation, { actorRole, code: wrapped?.code || 'MCP_WRITE_REJECTED' });
     }
@@ -612,7 +636,34 @@ export async function executeMcpWrite({
   if (!consumed) {
     await McpWriteIdempotency.deleteOne({ _id: reservation._id, tenantId, status: 'pending' });
     const current = await McpWriteConfirmation.findOne({ confirmationId, tenantId });
-    await classifyUnconsumed(current, { tenantId, actorUserId, payloadHash, resourceHash, actorRole, clock });
+    try {
+      await classifyUnconsumed(current, { tenantId, actorUserId, payloadHash, resourceHash, actorRole, clock });
+    } catch (error) {
+      const wrapped = asApiError(error);
+      if (
+        (wrapped?.code === 'CONFIRMATION_REUSED' || wrapped?.code === 'CONFIRMATION_STALE')
+        && typeof reconcile === 'function'
+      ) {
+        try {
+          const decision = await reconcile(actor);
+          if (decision?.outcome === 'completed') {
+            const result = redactFor(idempotencyContext, decision.result ?? null);
+            await recordAudit({
+              tenantId,
+              actorUserId,
+              actorRole,
+              action: 'mcp_write.reconciled',
+              operation,
+              confirmationId,
+            });
+            return result;
+          }
+        } catch {
+          // Fall through.
+        }
+      }
+      throw wrapped;
+    }
     throw new ApiError(409, 'This confirmation was already used', 'CONFIRMATION_REUSED');
   }
 

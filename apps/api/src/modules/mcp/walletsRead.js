@@ -10,7 +10,7 @@ import { hidesOrganizationWallet } from './walletVisibility.js';
 
 export const WALLET_BALANCES_DESCRIPTION = [
   'List ShelfMerch organization wallet balances for a company admin in the signed-in workspace.',
-  'Company admins see every wallet. balance is organization cash. allocatedAmount is the total earmarked to departments. unallocatedAmount is balance minus allocatedAmount. fundingPending is true while a purchase-order funding request awaits finance approval.',
+  'Company admins see every wallet. balance is organization cash. allocatedAmount is outstanding earmarks (allocations minus department spends), not the sum of department allocatedAmount columns. unallocatedAmount is balance minus allocatedAmount. fundingPending is true while a purchase-order funding request awaits finance approval.',
   'Entity managers do not receive organization wallet cash, the organization allocated total, or organization unallocated cash. Department allocated, spent, and remaining amounts come from entities_list.',
   'Funding documents, tax ids, contact details, and owner ids are not returned.',
 ].join(' ');

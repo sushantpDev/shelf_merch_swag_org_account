@@ -52,6 +52,27 @@ export function isFileAllowed(allow, { originalname = '', mimetype = '' } = {}) 
   const extOk = allow.exts.has(ext);
   // Accept unknown/generic MIME as long as the extension is allowlisted.
   const mimeOk = allow.mimes.has(mime) || mime === '' || mime === 'application/octet-stream';
+  // Mobile/WhatsApp names like "WhatsApp Image 2024-11-05 at 12.38.07" make path.extname
+  // return ".07". Trust an allowlisted image MIME when the "extension" is not a real type.
+  if (
+    !extOk
+    && mime.startsWith('image/')
+    && allow.mimes.has(mime)
+    && !ALWAYS_BLOCKED_EXTS.has(ext)
+  ) {
+    return true;
+  }
+  // Same WhatsApp-style names sometimes arrive with empty/octet-stream MIME from Windows.
+  const whatsappName = /whatsapp image/i.test(originalname) || /\d{1,2}\.\d{2}\.\d{2}$/.test(originalname);
+  if (
+    !extOk
+    && whatsappName
+    && allow.mimes.has('image/jpeg')
+    && (mime === '' || mime === 'application/octet-stream' || allow.mimes.has(mime))
+    && !ALWAYS_BLOCKED_EXTS.has(ext)
+  ) {
+    return true;
+  }
   return extOk && mimeOk;
 }
 

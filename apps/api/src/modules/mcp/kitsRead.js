@@ -215,8 +215,11 @@ export function officialKitImageUrl(value, origins = kitImageResourceOrigins()) 
     }
   }
   const uploadPath = dashboardUploadPath(raw);
+  if (!uploadPath) return '';
   const origin = origins.find((item) => item.startsWith('https://'));
-  if (!uploadPath || !origin) return '';
+  // Local/dev often only has http://localhost — keep a same-origin relative path
+  // so the embedded Copilot can resolve it via resolveMediaUrl.
+  if (!origin) return uploadPath;
   return origin + uploadPath;
 }
 

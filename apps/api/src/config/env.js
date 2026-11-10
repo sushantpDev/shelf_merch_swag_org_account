@@ -203,12 +203,51 @@ const envSchema = z.object({
    */
   MCP_ALLOW_LEGACY_JWT: z.enum(['true', 'false']).optional().default('false'),
 
-  /** SEO growth engine — server-only; never expose via VITE_ or client bundles. */
+  /** SEO growth engine + Copilot Claude — server-only; never expose via VITE_ or client bundles. */
   ANTHROPIC_API_KEY: z.string().optional().default(''),
+  /** Anthropic model id (SEO + Copilot). Copilot defaults to claude-sonnet-5-5 when unset. */
   ANTHROPIC_MODEL: z.string().optional().default(''),
   ANTHROPIC_API_VERSION: z.string().optional().default('2023-06-01'),
   WINDSOR_API_KEY: z.string().optional().default(''),
   SEMRUSH_API_KEY: z.string().optional().default(''),
+
+  /**
+   * Embedded dashboard AI Copilot. Default off in production — enable explicitly
+   * for staging/internal beta. Never expose provider API keys to the browser.
+   */
+  EMBEDDED_COPILOT_ENABLED: z.enum(['true', 'false']).optional().default('false'),
+  /** Which AI backend Copilot uses: openai | anthropic. Never auto-switches. */
+  COPILOT_AI_PROVIDER: z.enum(['openai', 'anthropic']).optional().default('openai'),
+  /**
+   * Per-domain Copilot WRITE gates (PREPARE → confirm UI → EXECUTE).
+   * All default false. Do not enable against shared Atlas/production data.
+   */
+  EMBEDDED_COPILOT_WRITE_STORE_CREATE: z.enum(['true', 'false']).optional().default('false'),
+  EMBEDDED_COPILOT_WRITE_STORE_UPDATE: z.enum(['true', 'false']).optional().default('false'),
+  EMBEDDED_COPILOT_WRITE_STORE_PUBLISH: z.enum(['true', 'false']).optional().default('false'),
+  EMBEDDED_COPILOT_WRITE_COLLECTIONS: z.enum(['true', 'false']).optional().default('false'),
+  EMBEDDED_COPILOT_WRITE_SHOP_CATALOG: z.enum(['true', 'false']).optional().default('false'),
+  EMBEDDED_COPILOT_WRITE_SHOP_CATEGORIES: z.enum(['true', 'false']).optional().default('false'),
+  EMBEDDED_COPILOT_WRITE_BUDGETS: z.enum(['true', 'false']).optional().default('false'),
+  EMBEDDED_COPILOT_WRITE_WALLET_TOPUP: z.enum(['true', 'false']).optional().default('false'),
+  EMBEDDED_COPILOT_WRITE_WALLET_SETUP: z.enum(['true', 'false']).optional().default('false'),
+  EMBEDDED_COPILOT_WRITE_PAYMENTS: z.enum(['true', 'false']).optional().default('false'),
+  EMBEDDED_COPILOT_WRITE_SEND_POINTS: z.enum(['true', 'false']).optional().default('false'),
+  EMBEDDED_COPILOT_WRITE_SEND_KITS: z.enum(['true', 'false']).optional().default('false'),
+  EMBEDDED_COPILOT_WRITE_EMPLOYEES: z.enum(['true', 'false']).optional().default('false'),
+  EMBEDDED_COPILOT_WRITE_ENTITIES: z.enum(['true', 'false']).optional().default('false'),
+  OPENAI_API_KEY: z.string().optional().default(''),
+  OPENAI_MODEL: z.string().optional().default('gpt-4.1-mini'),
+  EMBEDDED_COPILOT_MAX_TOOL_LOOPS: z.coerce.number().int().min(1).max(8).optional().default(4),
+  EMBEDDED_COPILOT_MAX_OUTPUT_TOKENS: z.coerce.number().int().min(256).max(16_384).optional().default(4_096),
+  EMBEDDED_COPILOT_MAX_INPUT_CHARS: z.coerce.number().int().min(200).max(20_000).optional().default(4_000),
+  EMBEDDED_COPILOT_DAILY_USER_TOKENS: z.coerce.number().int().min(1_000).max(10_000_000).optional().default(200_000),
+  EMBEDDED_COPILOT_DAILY_TENANT_TOKENS: z.coerce.number().int().min(1_000).max(50_000_000).optional().default(1_000_000),
+  /** Optional USD / MTok overrides for usage estimates (logging only, not billing). */
+  EMBEDDED_COPILOT_OPENAI_INPUT_USD_PER_MTOK: z.coerce.number().min(0).optional().default(0.4),
+  EMBEDDED_COPILOT_OPENAI_OUTPUT_USD_PER_MTOK: z.coerce.number().min(0).optional().default(1.6),
+  EMBEDDED_COPILOT_ANTHROPIC_INPUT_USD_PER_MTOK: z.coerce.number().min(0).optional().default(2),
+  EMBEDDED_COPILOT_ANTHROPIC_OUTPUT_USD_PER_MTOK: z.coerce.number().min(0).optional().default(10),
 });
 
 const parsed = envSchema.safeParse(processEnv);

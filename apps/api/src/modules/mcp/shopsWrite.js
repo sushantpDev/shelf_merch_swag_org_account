@@ -5,7 +5,7 @@ import { writeAudit } from '../../services/audit.service.js';
 import { slugifyShopName } from '../../utils/shopSlug.js';
 import { Shop } from '../shops/shop.model.js';
 import { DEFAULT_STORE_BUILDER_CATEGORIES } from '../shops/storeBuilderCategories.js';
-import { createShop, updateShop } from '../shops/shops.service.js';
+import { createShop, publishShop, updateShop } from '../shops/shops.service.js';
 import {
   consumeShopAsset,
   resolveShopAssetUrl,
@@ -130,18 +130,18 @@ export const SHOPS_PREPARE_CREATE_DESCRIPTION = [
   'When categories are omitted, applies the same default builder categories as the dashboard (Food & Beverages, Work Essentials, Merch).',
   'When bannerConfig is omitted, seeds the same default black merchandise-pattern banner as the dashboard (theme dark, preset solid-pattern).',
   'Logo and custom banner images are optional. To upload, use shops_prepare_asset_upload then pass logoTicketId / bannerTicketId; otherwise skip branding.',
-  'Creating a store only saves a draft — it does not publish. After the draft exists, ask for explicit confirmation before shops_prepare_publish / shops_execute_publish.',
+  'Confirmation creates and publishes the new store using the same services as dashboard creation. At least one category is required. Explain that the store will be live before asking for confirmation; no separate publish prompt is needed.',
   'Company admins only. Returns a one-use confirmation. Saving requires shops_execute_create.',
 ].join(' ');
 
 export const SHOPS_EXECUTE_CREATE_DESCRIPTION = [
   'Company admins only. Entity managers cannot create a store, even with a confirmation id.',
-  'Create the draft store from shops_prepare_create.',
+  'Create and publish the new store from shops_prepare_create, matching dashboard creation.',
   'Requires the confirmation id and an idempotency key.',
   'Rechecks the caller and the store settings before writing.',
   'Seeds default categories and the default banner when those were omitted in prepare.',
-  'A repeated key returns the original draft. The same store name is not created twice.',
-  'Does not publish the store — publish requires a separate confirmed shops_execute_publish call.',
+  'A repeated key returns the original result. The same store name is not created twice.',
+  'Uses the existing publish service and its category rule. Existing stores are not updated or published by creation.',
 ].join(' ');
 
 export const SHOPS_PREPARE_UPDATE_DESCRIPTION = [
@@ -279,6 +279,9 @@ async function materializeCreate(tenantId, actorUserId, input) {
   const parsed = createSchema.safeParse(businessInput(input));
   if (!parsed.success) throw invalidDetails();
   const data = parsed.data;
+  if (data.categories?.length === 0) {
+    throw new ApiError(422, 'Add at least one category before publishing', 'SHOP_NO_CATEGORIES');
+  }
   let logoUrl = data.logoUrl || '';
   let bannerConfig = data.bannerConfig;
 
@@ -546,37 +549,6 @@ async function auditShop(actor, action, shop) {
   });
 }
 
-async function applyDraftConfig(actor, shop, input) {
-  if (shop.currencyMode !== input.currencyMode) {
-    throw new ApiError(409, 'A store with this name already exists', 'SHOP_EXISTS');
-  }
-  if (sameConfig(shop, input)) return safeShop(shop);
-  const patch = {};
-  if (input.name !== shop.name) patch.name = input.name;
-  if (input.slug && input.slug !== shop.slug) patch.slug = input.slug;
-  if (Boolean(shop.pointsConversionEnabled) !== input.pointsConversionEnabled) {
-    patch.pointsConversionEnabled = input.pointsConversionEnabled;
-  }
-  if ((shop.companyEmailDomain || '') !== input.companyEmailDomain) {
-    patch.companyEmailDomain = input.companyEmailDomain;
-  }
-  if (JSON.stringify(shop.categories || []) !== JSON.stringify(input.categories)) {
-    patch.categories = input.categories;
-  }
-  if ((shop.logoUrl || '') !== input.logoUrl) patch.logoUrl = input.logoUrl;
-  if (bannerKey(shop.bannerConfig) !== bannerKey(input.bannerConfig)) {
-    patch.bannerConfig = input.bannerConfig;
-  }
-  if (!Object.keys(patch).length) return safeShop(shop);
-  const { shop: saved } = await updateShop({
-    tenantId: actor.tenant._id,
-    shopId: shop._id,
-    patch,
-  });
-  await auditShop(actor, 'shop.update', saved);
-  return safeShop(saved);
-}
-
 async function linkMatchingShop(tenantId, logicalKey, input) {
   const claim = await McpShopClaim.findOne({ tenantId, logicalKey });
   if (claim?.shopId) {
@@ -606,10 +578,9 @@ async function saveLinkedShop(actor, input) {
   await ensureClaims();
   const tenantId = actor.tenant._id;
   const existing = await matchingShop(tenantId, input.name);
-  if (existing?.status === 'live') {
+  if (existing) {
     throw new ApiError(409, 'A store with this name already exists', 'SHOP_EXISTS');
   }
-  if (existing) return applyDraftConfig(actor, existing, input);
 
   const logicalKey = nameKey(input);
   let ownsClaim = false;
@@ -623,10 +594,7 @@ async function saveLinkedShop(actor, input) {
     const shopId = await waitForShop(tenantId, logicalKey, input);
     const shop = await Shop.findOne({ _id: shopId, tenantId });
     if (!shop) throw new ApiError(409, 'This store is already being created', 'SHOP_CREATE_IN_PROGRESS');
-    if (shop.status !== 'draft') {
-      throw new ApiError(409, 'A store with this name already exists', 'SHOP_EXISTS');
-    }
-    return applyDraftConfig(actor, shop, input);
+    throw new ApiError(409, 'A store with this name already exists', 'SHOP_EXISTS');
   }
 
   try {
@@ -636,7 +604,9 @@ async function saveLinkedShop(actor, input) {
     }
     await McpShopClaim.updateOne({ tenantId, logicalKey }, { $set: { shopId: shop._id } });
     await auditShop(actor, 'shop.create', shop);
-    return safeShop(shop);
+    const published = await publishShop({ tenantId, shopId: shop._id, actorUserId: actor.user.userId });
+    await auditShop(actor, 'shop.publish', published);
+    return safeShop(published);
   } catch (error) {
     const created = await matchingShop(tenantId, input.name);
     if (created) {
@@ -665,13 +635,13 @@ export async function prepareShopCreate({ tenantId, actorUserId, input, now }) {
     authorize: async (actor) => {
       assertShopWriter(actor);
       const shop = await matchingShop(tenantId, requested.name);
-      if (shop?.status === 'live') {
+      if (shop) {
         throw new ApiError(409, 'A store with this name already exists', 'SHOP_EXISTS');
       }
     },
-    validate: async () => requested,
+    validate: async () => ({ ...requested, creationBehavior: 'dashboard-create-publish-v1' }),
     resourceState: async () => createResourceState(tenantId, requested),
-    summary: async () => ({ action: 'preview', name: requested.name, status: 'draft' }),
+    summary: async () => ({ action: 'preview', name: requested.name, status: 'live' }),
   });
   const shop = await matchingShop(tenantId, requested.name);
   return {
@@ -681,7 +651,7 @@ export async function prepareShopCreate({ tenantId, actorUserId, input, now }) {
       action: shop ? 'reuse' : 'create',
       name: requested.name,
       slug: shop?.slug || wantedSlug(requested),
-      status: 'draft',
+      status: 'live',
       currencyMode: requested.currencyMode,
       pointsConversionEnabled: requested.pointsConversionEnabled,
       companyEmailDomain: requested.companyEmailDomain,
@@ -713,12 +683,14 @@ export async function executeShopCreate({
     authorize: async (actor) => {
       assertShopWriter(actor);
     },
-    validate: async () => requested,
+    validate: async () => ({ ...requested, creationBehavior: 'dashboard-create-publish-v1' }),
     resourceState: async () => createResourceState(tenantId, requested),
     reconcile: async () => {
       const shop = await matchingShop(tenantId, requested.name);
-      if (shop?.status === 'draft') return { outcome: 'completed', result: safeShop(shop) };
       const claim = await McpShopClaim.findOne({ tenantId, logicalKey: nameKey(requested) });
+      if (shop?.status === 'live' && String(claim?.shopId) === String(shop._id) && sameConfig(shop, requested)) {
+        return { outcome: 'completed', result: safeShop(shop) };
+      }
       if ((claim && !claim.shopId) || shop) return { outcome: 'uncertain' };
       return { outcome: 'absent' };
     },
@@ -788,8 +760,9 @@ export async function executeShopUpdate({
     now,
     authorize: async (actor) => {
       assertShopWriter(actor);
-      const shop = await loadShop(tenantId, requested.shopId);
-      if (!shopChanges(shop, requested).length) throw invalidDetails();
+      // Keep RBAC + existence checks only. "Already applied" must not throw VALIDATION
+      // before confirmation reuse / reconcile can return a safe completed result.
+      await loadShop(tenantId, requested.shopId);
     },
     validate: async () => requested,
     resourceState: async () => shopVersion(await loadShop(tenantId, requested.shopId)),
@@ -877,9 +850,6 @@ export function shopWriteText(output, heading) {
     lines.push(...output.preview.changes.map((change) => `${change.field}: ${change.from} -> ${change.to}`));
   }
   if (output.confirmationId) lines.push('Confirm this preview before it expires.');
-  if (shop.status === 'draft') {
-    lines.push('Store is still a draft. Publishing requires a separate confirmed publish step.');
-  }
   return lines.join('\n');
 }
 

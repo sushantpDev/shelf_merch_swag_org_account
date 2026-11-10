@@ -1,0 +1,13 @@
+
+> @shelfmerch/web@0.1.0 test
+> vitest run src/features/copilot
+
+
+ RUN  v4.1.10 D:/Shelf Merch/SMIO/shelf_merch_swag_org_account/apps/web
+
+
+ Test Files  10 passed (10)
+      Tests  53 passed (53)
+   Start at  13:03:42
+   Duration  10.38s (transform 434ms, setup 77ms, import 3.91s, tests 1.45s, environment 3.27s)
+

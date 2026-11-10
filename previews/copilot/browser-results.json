@@ -1,0 +1,33 @@
+{
+  "fixtureMode": true,
+  "realRoute": {
+    "url": "http://localhost:8080/husain/copilot",
+    "text": "Your privacy choices\n\nWe use essential cookies to keep Shelfmerch working. With your permission, we also use cookies for analytics and advertising. If you allow advertising and Shelf Merch enables the OpenAI pixel, OpenAI automatic advanced matching hashes recognizable form details in your browser, "
+  },
+  "discovery": {
+    "adminCategoryCount": 6,
+    "actionDraftedOnly": true,
+    "managerRestricted": true,
+    "mobileHeaderClean": true,
+    "providerDisabledDrafting": true
+  },
+  "dashboardSidebarHidden": true,
+  "dashboardSidebarRestored": true,
+  "shortWelcome": {
+    "scrollTop": 0,
+    "headingVisible": true,
+    "radius": "22px",
+    "animation": "cp-panel-enter"
+  },
+  "reducedMotion": true,
+  "closeReturned": true,
+  "desktopOverflow": false,
+  "mobileOverflow": false,
+  "multiline": true,
+  "retryDraft": "Retry this message",
+  "deleted": true,
+  "newChat": true,
+  "launcherHidden": true,
+  "disabledComposer": true,
+  "errors": []
+}

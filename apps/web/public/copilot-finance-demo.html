@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Copilot finance render demo</title>
+  <style>
+    body { font-family: Georgia, serif; margin: 24px; background: #f6f3ee; color: #1d1a16; }
+    h1 { font-size: 1.4rem; }
+    h2 { margin-top: 28px; }
+    .panel { background: #fff; border: 1px solid #ddd2c4; border-radius: 14px; padding: 16px; margin: 12px 0; max-width: 720px; }
+    .raw { white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 13px; color: #5c5348; }
+    .md table { width: 100%; border-collapse: collapse; min-width: 28rem; }
+    .wrap { overflow-x: auto; }
+    .md th, .md td { border: 1px solid #ddd2c4; padding: 6px 8px; text-align: left; }
+    .balance { margin-top: 12px; border: 1px solid #ddd2c4; border-radius: 12px; padding: 12px 14px; background: #f8faf7; }
+    .balance strong { display: block; }
+    .avail { color: #1f6b4a; font-weight: 700; margin-top: 4px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+    .grid span { display: block; color: #6b6258; font-size: 12px; }
+    .warn { color: #8a4b08; font-size: 13px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <h1>ShelfMerch Copilot — finance response UX</h1>
+
+  <h2 id="before">Before</h2>
+  <div class="panel">
+    <p>Assistant</p>
+    <div class="raw">Your organization wallet has a total balance of ₹20,000. Of this, ₹8,000 appears allocated across departments in the prose summary, while the department rows below sum to ₹7,000 allocated remaining...
+
+| Department | Allocated | Remaining |
+| --- | --- | --- |
+| Marketing | ₹5,000 | ₹4,500 |
+| Sales | ₹3,000 | ₹2,500 |
+
+(raw pipe table + long explanation for a simple balance question)</div>
+  </div>
+
+  <h2 id="after">After (fixed)</h2>
+  <div class="panel">
+    <p>Assistant</p>
+    <p>Your available organization balance is <strong>₹13,000</strong> (unallocated). Ask if you want the department breakdown.</p>
+    <div class="balance" aria-label="Wallet balance">
+      <strong>Primary wallet</strong>
+      <div class="avail">Available ₹13,000</div>
+      <div class="grid">
+        <div><span>Total balance</span><b>₹20,000</b></div>
+        <div><span>Allocated (outstanding)</span><b>₹7,000</b></div>
+        <div><span>Unallocated</span><b>₹13,000</b></div>
+      </div>
+    </div>
+  </div>
+
+  <h2 id="table">Markdown table rendering</h2>
+  <div class="panel md">
+    <p>Department allocation:</p>
+    <div class="wrap">
+      <table>
+        <thead><tr><th>Department</th><th>Allocated</th><th>Remaining</th></tr></thead>
+        <tbody>
+          <tr><td>Marketing</td><td>₹5,000</td><td>₹4,500</td></tr>
+          <tr><td>Sales</td><td>₹3,000</td><td>₹2,500</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="warn">Note: wallet allocated (outstanding) ₹7,000 matches remaining sum ₹7,000. Summing allocated columns (₹8,000) is not a valid reconciliation and can look like a ₹1,000 discrepancy.</p>
+  </div>
+</body>
+</html>

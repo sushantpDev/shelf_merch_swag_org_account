@@ -21,7 +21,6 @@ import {
 import { McpShopAssetTicket } from '../src/modules/mcp/mcpShopAssetTicket.model.js';
 import { McpWriteConfirmation } from '../src/modules/mcp/mcpWriteConfirmation.model.js';
 import { DEFAULT_STORE_BUILDER_CATEGORIES } from '../src/modules/shops/storeBuilderCategories.js';
-import { prepareShopPublish, executeShopPublish } from '../src/modules/mcp/shopsPublishWrite.js';
 import { validateArtworkBytes } from '../src/utils/artworkValidation.js';
 import { deflateSync } from 'node:zlib';
 
@@ -92,14 +91,14 @@ beforeEach(async () => {
 });
 
 describe('store create lifecycle parity', () => {
-  it('creates Points and INR draft stores with default banner and categories', async () => {
+  it('creates Points and INR live stores with default banner and categories', async () => {
     const pointsPrepared = await prepareShopCreate({
       tenantId: tenant._id,
       actorUserId: admin.user._id,
       input: { name: 'Points Shop', currencyMode: 'points' },
     });
     expect(pointsPrepared.preview).toMatchObject({
-      status: 'draft',
+      status: 'live',
       currencyMode: 'points',
       categories: DEFAULT_STORE_BUILDER_CATEGORIES,
       bannerConfig: DEFAULT_STORE_BANNER_CONFIG,
@@ -115,7 +114,7 @@ describe('store create lifecycle parity', () => {
       idempotencyKey: 'life-points-1',
     });
     expect(points).toMatchObject({
-      status: 'draft',
+      status: 'live',
       currencyMode: 'points',
       categories: DEFAULT_STORE_BUILDER_CATEGORIES,
       bannerConfig: DEFAULT_STORE_BANNER_CONFIG,
@@ -134,7 +133,7 @@ describe('store create lifecycle parity', () => {
       idempotencyKey: 'life-inr-1',
     });
     expect(inr).toMatchObject({
-      status: 'draft',
+      status: 'live',
       currencyMode: 'inr',
       bannerConfig: DEFAULT_STORE_BANNER_CONFIG,
     });
@@ -167,18 +166,7 @@ describe('store create lifecycle parity', () => {
       input: { shopId: created.id, currencyMode: 'inr' },
     })).rejects.toMatchObject({ code: 'VALIDATION' });
 
-    // Resume unfinished draft by name with different currency is rejected.
-    await expect(executeShopCreate({
-      tenantId: tenant._id,
-      actorUserId: admin.user._id,
-      input: { name: 'Currency Locked', currencyMode: 'inr' },
-      confirmationId: (await prepareShopCreate({
-        tenantId: tenant._id,
-        actorUserId: admin.user._id,
-        input: { name: 'Currency Locked', currencyMode: 'inr' },
-      })).confirmationId,
-      idempotencyKey: 'life-currency-2',
-    })).rejects.toMatchObject({ code: 'SHOP_EXISTS' });
+    await expect(prepareShopCreate({ tenantId: tenant._id, actorUserId: admin.user._id, input: { name: 'Currency Locked', currencyMode: 'inr' } })).rejects.toMatchObject({ code: 'SHOP_EXISTS' });
 
     expect((await Shop.findOne({ _id: created.id, tenantId: tenant._id })).currencyMode).toBe('points');
   });
@@ -312,7 +300,7 @@ describe('store create lifecycle parity', () => {
     expect(imaged.bannerConfig).toEqual({ imageUrl: uploaded.assetUrl, theme: 'dark' });
   });
 
-  it('publishes with and without optional branding after draft create', async () => {
+  it('publishes with and without optional branding during confirmed create', async () => {
     const barePrepared = await prepareShopCreate({
       tenantId: tenant._id,
       actorUserId: admin.user._id,
@@ -325,25 +313,7 @@ describe('store create lifecycle parity', () => {
       confirmationId: barePrepared.confirmationId,
       idempotencyKey: 'life-publish-bare-create',
     });
-    const barePublishPrepared = await prepareShopPublish({
-      tenantId: tenant._id,
-      actorUserId: admin.user._id,
-      input: { shopId: bare.id },
-    });
-    expect(barePublishPrepared.preview.readiness).toMatchObject({
-      hasLogo: false,
-      hasBanner: true,
-      categoriesReady: true,
-    });
-    expect(barePublishPrepared.preview.missingRequirements).toEqual([]);
-    const bareLive = await executeShopPublish({
-      tenantId: tenant._id,
-      actorUserId: admin.user._id,
-      input: { shopId: bare.id },
-      confirmationId: barePublishPrepared.confirmationId,
-      idempotencyKey: 'life-publish-bare',
-    });
-    expect(bareLive.status).toBe('live');
+    expect(bare.status).toBe('live');
 
     const logoTicket = await prepareShopAssetUpload({
       tenantId: tenant._id,
@@ -378,24 +348,7 @@ describe('store create lifecycle parity', () => {
       idempotencyKey: 'life-publish-branded-create',
     });
     expect(branded.logoUrl).toBe(logo.assetUrl);
-    const brandedPublishPrepared = await prepareShopPublish({
-      tenantId: tenant._id,
-      actorUserId: admin.user._id,
-      input: { shopId: branded.id },
-    });
-    expect(brandedPublishPrepared.preview.readiness).toMatchObject({
-      hasLogo: true,
-      hasBanner: true,
-      categoriesReady: true,
-    });
-    const brandedLive = await executeShopPublish({
-      tenantId: tenant._id,
-      actorUserId: admin.user._id,
-      input: { shopId: branded.id },
-      confirmationId: brandedPublishPrepared.confirmationId,
-      idempotencyKey: 'life-publish-branded',
-    });
-    expect(brandedLive.status).toBe('live');
+    expect(branded.status).toBe('live');
   });
 
   it('enforces cross-tenant isolation, confirmation safety, and prepare side-effect freeness', async () => {
@@ -570,7 +523,7 @@ describe('store create lifecycle parity', () => {
       idempotencyKey: 'life-ticket-ok',
     });
     expect(ok.logoUrl).toBe(uploaded.assetUrl);
-    expect(ok.status).toBe('draft');
+    expect(ok.status).toBe('live');
     expect((await McpShopAssetTicket.findOne({
       tenantId: tenant._id,
       ticketId: ticket.ticketId,

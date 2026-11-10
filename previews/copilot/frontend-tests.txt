@@ -1,0 +1,435 @@
+
+> shelfmerch@0.1.0 test:web
+> npm test -w @shelfmerch/web
+
+
+> @shelfmerch/web@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.10 D:/Shelf Merch/SMIO/shelf_merch_swag_org_account/apps/web
+
+ ❯ src/components/platform/SeoGrowthPage.test.tsx (9 tests | 1 failed) 310ms
+     × requires factual review and submits the exact displayed version for approval 26ms
+Error: Failed to execute 'startTask()' on 'AsyncTaskManager': The asynchronous task manager has been destroyed. This error can be thrown if scripts continue to run while a browser frame is closed.
+    at AsyncTaskManager.startTask (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:153:19)
+    at file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:416:80
+    at new Promise (<anonymous>)
+    at Fetch.sendRequest (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:415:16)
+    at Fetch.send (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:188:27)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at BrowserFrameNavigator.navigate (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/browser/utilities/BrowserFrameNavigator.js:202:24)
+DOMException [AbortError]: The operation was aborted.
+    at Fetch.onAsyncTaskManagerAbort (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:546:23)
+    at Object.<anonymous> (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:416:101)
+    at AsyncTaskManager.abortAll (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:292:30)
+    at AsyncTaskManager.destroy (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:64:21)
+    at file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/browser/utilities/BrowserFrameFactory.js:43:22
+    at new Promise (<anonymous>)
+    at BrowserFrameFactory.destroyFrame (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/browser/utilities/BrowserFrameFactory.js:30:16)
+    at HTMLIFrameElement.#unloadPage (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/html-iframe-element/HTMLIFrameElement.js:363:33)
+    at HTMLIFrameElement.[disconnectedFromDocument] (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/html-iframe-element/HTMLIFrameElement.js:238:25)
+    at HTMLIFrameElement.[connectedToNode] (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/node/Node.js:797:58)
+DOMException [AbortError]: The operation was aborted.
+    at Fetch.onAsyncTaskManagerAbort (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:546:23)
+    at Object.<anonymous> (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:416:101)
+    at AsyncTaskManager.abortAll (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:292:30)
+    at AsyncTaskManager.destroy (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:64:21)
+    at file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/browser/utilities/BrowserFrameFactory.js:43:22
+    at new Promise (<anonymous>)
+    at BrowserFrameFactory.destroyFrame (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/browser/utilities/BrowserFrameFactory.js:30:16)
+    at HTMLIFrameElement.#unloadPage (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/html-iframe-element/HTMLIFrameElement.js:363:33)
+    at HTMLIFrameElement.[disconnectedFromDocument] (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/html-iframe-element/HTMLIFrameElement.js:238:25)
+    at HTMLIFrameElement.[connectedToNode] (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/node/Node.js:797:58)
+DOMException [AbortError]: The operation was aborted.
+    at Fetch.onAsyncTaskManagerAbort (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:546:23)
+    at Object.<anonymous> (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:416:101)
+    at AsyncTaskManager.abortAll (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:292:30)
+    at AsyncTaskManager.destroy (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:64:21)
+    at file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/browser/utilities/BrowserFrameFactory.js:43:22
+    at new Promise (<anonymous>)
+    at BrowserFrameFactory.destroyFrame (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/browser/utilities/BrowserFrameFactory.js:30:16)
+    at HTMLIFrameElement.#unloadPage (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/html-iframe-element/HTMLIFrameElement.js:363:33)
+    at HTMLIFrameElement.[disconnectedFromDocument] (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/html-iframe-element/HTMLIFrameElement.js:238:25)
+    at HTMLIFrameElement.[connectedToNode] (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/node/Node.js:797:58)
+DOMException [NetworkError]: Failed to execute "fetch()" on "Window" with URL "http://localhost:3000/merge-link-host.html?linkToken=token-workday-1": The operation was aborted.
+    at Fetch.onError (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:540:21)
+    at ClientRequest.emit (node:events:509:28)
+    at emitErrorEvent (node:_http_client:109:11)
+    at _destroy (node:_http_client:993:9)
+    at onSocketNT (node:_http_client:1013:5)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+DOMException [NetworkError]: Failed to execute "fetch()" on "Window" with URL "http://localhost:3000/merge-link-host.html?linkToken=token-bamboohr": The operation was aborted.
+    at Fetch.onError (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:540:21)
+    at ClientRequest.emit (node:events:509:28)
+    at emitErrorEvent (node:_http_client:109:11)
+    at _destroy (node:_http_client:993:9)
+    at onSocketNT (node:_http_client:1013:5)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+DOMException [NetworkError]: Failed to execute "fetch()" on "Window" with URL "http://localhost:3000/merge-link-host.html?linkToken=token-1": The operation was aborted.
+    at Fetch.onError (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:540:21)
+    at ClientRequest.emit (node:events:509:28)
+    at emitErrorEvent (node:_http_client:109:11)
+    at _destroy (node:_http_client:993:9)
+    at onSocketNT (node:_http_client:1013:5)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+DOMException [AbortError]: The operation was aborted.
+    at Fetch.onAsyncTaskManagerAbort (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:546:23)
+    at Object.<anonymous> (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:416:101)
+    at AsyncTaskManager.abortAll (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:292:30)
+    at AsyncTaskManager.destroy (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:64:21)
+    at file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/browser/utilities/BrowserFrameFactory.js:43:22
+    at new Promise (<anonymous>)
+    at BrowserFrameFactory.destroyFrame (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/browser/utilities/BrowserFrameFactory.js:30:16)
+    at HTMLIFrameElement.#unloadPage (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/html-iframe-element/HTMLIFrameElement.js:363:33)
+    at HTMLIFrameElement.[disconnectedFromDocument] (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/html-iframe-element/HTMLIFrameElement.js:238:25)
+    at HTMLIFrameElement.[connectedToNode] (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/node/Node.js:797:58)
+DOMException [NetworkError]: Failed to execute "fetch()" on "Window" with URL "http://localhost:3000/merge-link-host.html?linkToken=token-1": The operation was aborted.
+    at Fetch.onError (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:540:21)
+    at ClientRequest.emit (node:events:509:28)
+    at emitErrorEvent (node:_http_client:109:11)
+    at _destroy (node:_http_client:993:9)
+    at onSocketNT (node:_http_client:1013:5)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+DOMException [AbortError]: The operation was aborted.
+    at Fetch.onAsyncTaskManagerAbort (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:546:23)
+    at Object.<anonymous> (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:416:101)
+    at AsyncTaskManager.abortAll (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:292:30)
+    at AsyncTaskManager.destroy (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:64:21)
+    at file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/browser/utilities/BrowserFrameFactory.js:43:22
+    at new Promise (<anonymous>)
+    at BrowserFrameFactory.destroyFrame (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/browser/utilities/BrowserFrameFactory.js:30:16)
+    at HTMLIFrameElement.#unloadPage (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/html-iframe-element/HTMLIFrameElement.js:363:33)
+    at HTMLIFrameElement.[disconnectedFromDocument] (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/html-iframe-element/HTMLIFrameElement.js:238:25)
+    at HTMLIFrameElement.[connectedToNode] (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/node/Node.js:797:58)
+DOMException [NetworkError]: Failed to execute "fetch()" on "Window" with URL "http://localhost:3000/merge-link-host.html?linkToken=token-1": The operation was aborted.
+    at Fetch.onError (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:540:21)
+    at ClientRequest.emit (node:events:509:28)
+    at emitErrorEvent (node:_http_client:109:11)
+    at Socket.socketErrorListener (node:_http_client:593:5)
+    at Socket.emit (node:events:509:28)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at processTicksAndRejections (node:internal/process/task_queues:90:21)
+DOMException [AbortError]: The operation was aborted.
+    at Fetch.onAsyncTaskManagerAbort (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:546:23)
+    at Object.<anonymous> (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:416:101)
+    at AsyncTaskManager.abortAll (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:292:30)
+    at AsyncTaskManager.destroy (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:64:21)
+    at file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/browser/utilities/BrowserFrameFactory.js:43:22
+    at new Promise (<anonymous>)
+    at BrowserFrameFactory.destroyFrame (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/browser/utilities/BrowserFrameFactory.js:30:16)
+    at HTMLIFrameElement.#unloadPage (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/html-iframe-element/HTMLIFrameElement.js:363:33)
+    at HTMLIFrameElement.[disconnectedFromDocument] (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/html-iframe-element/HTMLIFrameElement.js:238:25)
+    at HTMLIFrameElement.[connectedToNode] (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/nodes/node/Node.js:797:58)
+DOMException [NetworkError]: Failed to execute "fetch()" on "Window" with URL "http://localhost:3000/merge-link-host.html?linkToken=token-1": The operation was aborted.
+    at Fetch.onError (file:///D:/Shelf%20Merch/SMIO/shelf_merch_swag_org_account/node_modules/happy-dom/lib/fetch/Fetch.js:540:21)
+    at ClientRequest.emit (node:events:509:28)
+    at emitErrorEvent (node:_http_client:109:11)
+    at Socket.socketErrorListener (node:_http_client:593:5)
+    at Socket.emit (node:events:509:28)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at processTicksAndRejections (node:internal/process/task_queues:90:21)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/platform/SeoGrowthPage.test.tsx > SEO control plane > requires factual review and submits the exact displayed version for approval
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Approve current version"
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "SEO growth":
+  [36m<h1 />[39m
+
+  Name "Welcome kit guide":
+  [36m<h2 />[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"sub"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p />[39m
+
+  Name "":
+  [36m<p />[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"seo-preview"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "Refresh":
+  [36m<button[39m
+    [33mclass[39m=[32m"btn btn-ghost btn-sm"[39m
+  [36m/>[39m
+
+  Name "Overview":
+  [36m<button[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Keywords":
+  [36m<button[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Drafts":
+  [36m<button[39m
+    [33maria-current[39m=[32m"page"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Knowledge":
+  [36m<button[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Settings":
+  [36m<button[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Performance":
+  [36m<button[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Delete draft":
+  [36m<button[39m
+    [33mclass[39m=[32m"btn btn-ghost btn-sm btn-danger-ghost"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Approve":
+  [36m<button />[39m
+
+  Name "Reject":
+  [36m<button />[39m
+
+  Name "Regenerate":
+  [36m<button />[39m
+
+  Name "Publish":
+  [36m<button[39m
+    [33mclass[39m=[32m"btn btn-brand"[39m
+    [33mdisabled[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  navigation:
+
+  Name "SEO sections":
+  [36m<nav[39m
+    [33maria-label[39m=[32m"SEO sections"[39m
+    [33mclass[39m=[32m"seo-tabs"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  article:
+
+  Name "":
+  [36m<article[39m
+    [33mclass[39m=[32m"seo-card"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  link:
+
+  Name "Open in blog editor":
+  [36m<a[39m
+    [33mdata-discover[39m=[32m"true"[39m
+    [33mhref[39m=[32m"/platform/blog/article1"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  group:
+
+  Name "":
+  [36m<details />[39m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "Notes (optional)":
+  [36m<textarea[39m
+    [33mmaxlength[39m=[32m"2000"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"platform-page seo-growth"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"page-h"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"eyebrow"[39m
+          [36m>[39m
+            [0mPlatform[0m
+          [36m</div>[39m
+          [36m<h1>[39m
+            [0mSEO growth[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"sub"[39m
+          [36m>[39m
+            [0mResearch, evidence and reviewed articles for ShelfMerch.[0m
+          [36m</p>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"row"[39m
+          [33mstyle[39m=[32m"gap: 8px;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"btn btn-ghost btn-sm"[39m
+          [36m>[39m
+            [0mRefresh[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<nav[39m
+        [33maria-label[39m=[32m"SEO sections"[39m
+        [33mclass[39m=[32m"seo-tabs"[39m
+      [36m>[39m
+        [36m<button[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mOverview[0m
+        [36m</button>[39m
+        [36m<button[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mKeywords[0m
+        [36m</button>[39m
+        [36m<button[39m
+          [33maria-current[39m=[32m"page"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mDrafts[0m
+        [36m</button>[39m
+        [36m<button[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mKnowledge[0m
+        [36m</button>[39m
+        [36m<button[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mSettings[0m
+        [36m</button>[39m
+        [36m<button[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mPerformance[0m
+        [36m</button>[39m
+      [36m</nav>[39m
+      [36m<p>[39m
+        [0mUse the existing blog editor for rich content. Editing invalidates approval. Published generated articles must be unpublished before editing; automated refreshes remain recommendations.[0m
+      [36m</p>[39m
+      [36m<article[39m
+        [33mclass[39m=[32m"seo-card"[39m
+      [36m>[39m
+        [36m<h2>[39m
+          [0mWelcome kit guide[0m
+        [36m</h2>[39m
+        [36m<p>[39m
+          [0mStatus: [0m
+          [0mreview[0m
+          [0m · Approval:[0m
+          [0m [0m
+          [0mrequired for current version[0m
+        [36m</p>[39m
+        [36m<a[39m
+          [33mdata-discover[39m=[32m"true"[39m
+          [33mhref[39m=[32m"/platform/blog/article1"[39m
+        [36m>[39m
+          [0mOpen in blog editor[0m
+        [36m</a>[39m
+        [36m<details>[39m
+          [36m<summary>[39m
+            [0mPreview[0m
+          [36m</summary>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"seo-preview"[39m
+          [36m>[39m
+            [0mPractical content.[0m
+          [36m</p>[39m
+        [36m</details>[39m
+        [36m<label>[39m
+          [0mNotes (optional)[0m
+          [36m<textarea[39m
+            [33mmaxlength[39m=[32m"2000"[39m
+          [36m/>[39m
+        [36m</label>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"seo-actions"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"btn btn-ghost btn-sm btn-danger-ghost"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mDelete draft[0m
+          [36m</button>[39m
+          [36m<button>[39m
+            [0mApprove[0m
+          [36m</button>[39m
+          [36m<button>[39m
+            [0mReject[0m
+          [36m</button>[39m
+          [36m<button>[39m
+            [0mRegenerate[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"btn btn-brand"[39m
+            [33mdisabled[39m=[32m""[39m
+          [36m>[39m
+            [0mPublish[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</article>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError ../../node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/platform/SeoGrowthPage.test.tsx:223:28
+    221|     await screen.findByText("Daily scheduling");
+    222|     fireEvent.click(screen.getByRole("button", { name: "Drafts" }));
+    223|     const approve = screen.getByRole("button", {
+       |                            ^
+    224|       name: "Approve current version",
+    225|     }) as HTMLButtonElement;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 82 passed (83)
+      Tests  1 failed | 425 passed (426)
+   Start at  17:23:01
+   Duration  73.87s (transform 4.48s, setup 578ms, import 21.31s, tests 18.07s, environment 15.86s)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path D:\Shelf Merch\SMIO\shelf_merch_swag_org_account\apps\web
+npm error workspace @shelfmerch/web@0.1.0
+npm error location D:\Shelf Merch\SMIO\shelf_merch_swag_org_account\apps\web
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run

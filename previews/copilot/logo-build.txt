@@ -1,0 +1,396 @@
+
+> shelfmerch@0.1.0 build:web
+> npm run build -w @shelfmerch/web
+
+
+> @shelfmerch/web@0.1.0 build
+> vite build
+
+vite v8.1.5 building client environment for production...
+[2Ktransforming...(!) %VITE_GTM_ID% is not defined in env variables found in /index.html. Is the variable mistyped?
+✓ 3654 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                              3.26 kB │ gzip:   0.98 kB
+dist/assets/hibob-logo-DxzqSShs.png                          4.19 kB
+dist/assets/empty-bag-duVHEEz0.svg                           5.01 kB │ gzip:   1.59 kB
+dist/assets/auth0-C7ALxyJH.svg                               5.07 kB │ gzip:   2.14 kB
+dist/assets/informatica-BAX1_vCF.svg                         8.42 kB │ gzip:   3.00 kB
+dist/assets/wallet-icon-BQYsp5PE.svg                        10.77 kB │ gzip:   4.10 kB
+dist/assets/shiprocket-I8E0O1vu.png                         16.58 kB
+dist/assets/workday-logo-Otud5uDJ.png                       38.01 kB
+dist/assets/kit-published-Ck3AfZgh.png                      40.79 kB
+dist/assets/kit-packaging-none-BDwkeZml.png                 53.95 kB
+dist/assets/shelfmerch-video-banner-16x9-BUubwDGj.jpg       56.82 kB
+dist/assets/campaigns-empty-B6qVEv-e.png                    65.28 kB
+dist/assets/order-placed-Bo6DUCAM.png                       68.08 kB
+dist/assets/zoho-people-BFtDcftt.png                        69.47 kB
+dist/assets/impact-people-COJU-IGv.jpg                      76.26 kB
+dist/assets/ukg-pro-logo-BHRuDm_G.png                       77.75 kB
+dist/assets/bamboohr-logo-Bhh_P-Oj.png                      79.04 kB
+dist/assets/kit-wrapping-CvQxa-Nw.png                       87.22 kB
+dist/assets/error-page-signpost-CdeLvQ-q.png                94.10 kB
+dist/assets/kit-preview-B4GXZsFm.png                        97.54 kB
+dist/assets/gusto-logo-CnQ7sPqi.png                        103.77 kB
+dist/assets/zapier-CoxTmPFa.png                            128.07 kB
+dist/assets/kit-packaging-box-D6jgPqii.png                 135.16 kB
+dist/assets/kits-hero-banner-generated-DpV7CD6U.png        150.35 kB
+dist/assets/auth-merch-login-CD_-m0bW.jpg                  156.19 kB
+dist/assets/one-platform-brands-banner-BTAJY5sI.jpg        180.48 kB
+dist/assets/canada-maple-treats-q9S3vJEr.jpg               193.01 kB
+dist/assets/japan-tea-sweets-D_fGfMAt.jpg                  195.85 kB
+dist/assets/austria-confectionery-Gx0Ecrec.jpg             220.82 kB
+dist/assets/australia-gourmet-hamper-CihqAkuc.jpg          232.55 kB
+dist/assets/key-chains-92FgC506.webp                       240.47 kB
+dist/assets/priya-sharma-avatar-CvTm3oM9.jpg               259.40 kB
+dist/assets/mexico-coffee-chocolate-BR46vlhR.jpg           284.32 kB
+dist/assets/singapore-gift-hamper-D0wYO4i2.jpg             287.99 kB
+dist/assets/world-dots-BuIK6YgL.svg                        425.70 kB │ gzip:  33.29 kB
+dist/assets/sent-gifts-empty-B1gsiDbM.png                  444.96 kB
+dist/assets/no-kits-yet-COcMTPt-.png                       964.00 kB
+dist/assets/contacts-hris-rounded-DyLneIFs.png           1,004.06 kB
+dist/assets/budget-empty-rounded-BJSesEn_.png            1,041.11 kB
+dist/assets/orders-empty-rounded-Du_9N1ku.png            1,048.10 kB
+dist/assets/swag-hero-lavender-saas-COigccT4.png         1,096.03 kB
+dist/assets/drinkware-shelfmerch-CqOYyd_Q.png            1,417.11 kB
+dist/assets/catalog-hero-background-W79HATfb.png         1,560.08 kB
+dist/assets/technology-bystadium-xKRXiIBy.png            1,568.23 kB
+dist/assets/global-reach-srN5mnHR.png                    1,629.61 kB
+dist/assets/office-supplies-bystadium-T389zdF1.png       1,641.16 kB
+dist/assets/technology-shelfmerch-B2dqDN2d.png           1,643.92 kB
+dist/assets/sublimation-PMM5UNmx.png                     1,690.27 kB
+dist/assets/giveaways-BiDLLacT.png                       1,735.19 kB
+dist/assets/apparel-shelfmerch-BsXzU0RO.png              1,759.35 kB
+dist/assets/mugs-D3WxYq1V.png                            1,811.85 kB
+dist/assets/apparel-bystadium-DvKBjvX4.png               1,822.31 kB
+dist/assets/bags-bystadium-DYL02dzy.png                  1,863.53 kB
+dist/assets/socks-XyBCnVrZ.png                           1,863.87 kB
+dist/assets/sustainability-new-BW2seAdD.png              1,885.85 kB
+dist/assets/accessories-bystadium-Bytqaw-k.png           1,888.12 kB
+dist/assets/jackets-CtjcAlU4.png                         1,896.85 kB
+dist/assets/uv-dtf-sticker-DuSI7bee.png                  1,923.40 kB
+dist/assets/gadgets-CgvRSxVw.png                         1,924.79 kB
+dist/assets/journey-DPjuiOsK.png                         1,925.27 kB
+dist/assets/hero-B2P1NG5d.png                            1,932.58 kB
+dist/assets/oversized-DdAafPn6.png                       1,946.00 kB
+dist/assets/hero-CdIgUVEe.png                            1,960.44 kB
+dist/assets/bottles-C3NQMzg4.png                         1,960.73 kB
+dist/assets/arrivals-DZ9mABo1.png                        1,980.91 kB
+dist/assets/tumblers-CXMMnfCZ.png                        1,990.50 kB
+dist/assets/t-shirts-ResX-kou.png                        1,999.41 kB
+dist/assets/drinkware-tumbler-lifestyle-VfAnPmKT.png     2,004.64 kB
+dist/assets/kits-MKK96UpH.png                            2,008.17 kB
+dist/assets/team-CBwkyg9N.png                            2,038.45 kB
+dist/assets/hero-DTj_ci6I.png                            2,055.19 kB
+dist/assets/rituals-B7EA1cvV.png                         2,058.50 kB
+dist/assets/duffels-B4lSnUH6.png                         2,070.57 kB
+dist/assets/premium-unbranded-merch-banner-DH3ZntKq.png  2,095.78 kB
+dist/assets/hoodie-C32cqdCc.png                          2,122.25 kB
+dist/assets/everyday-Dpj7OsY5.png                        2,147.39 kB
+dist/assets/dtf-BbwmbMsJ.png                             2,151.61 kB
+dist/assets/backpack-lifestyle-Bbs8-2Ll.png              2,155.46 kB
+dist/assets/team-CK_6Adyt.png                            2,172.87 kB
+dist/assets/organisers-Di7Brkod.png                      2,186.64 kB
+dist/assets/polo-shirts-DRyef-jX.png                     2,196.54 kB
+dist/assets/workspace-DRQCWuy8.png                       2,207.49 kB
+dist/assets/kits-ChJCblt6.png                            2,219.02 kB
+dist/assets/drinkware-bystadium-CcBlieLL.png             2,222.79 kB
+dist/assets/hero-BRy_h4do.png                            2,230.39 kB
+dist/assets/tote-BmMJHx-A.png                            2,237.60 kB
+dist/assets/bag-generated-Bgr6YuoL.png                   2,259.34 kB
+dist/assets/kits-jiPfFkaO.png                            2,264.27 kB
+dist/assets/kits-My8k037l.png                            2,266.16 kB
+dist/assets/laser-engraving-CgCntEls.png                 2,323.19 kB
+dist/assets/kits-B7D6lE0u.png                            2,346.24 kB
+dist/assets/drinkware-C7pFouH_.png                       2,347.56 kB
+dist/assets/apparel-menu-models-Cuba3u5E.png             2,364.32 kB
+dist/assets/kits-BUUkCDcX.png                            2,385.72 kB
+dist/assets/apparel-sweatshirt-closeup-BV3dzGXD.png      2,407.79 kB
+dist/assets/corporate-gifts-CiVAi4Cu.png                 2,417.33 kB
+dist/assets/hero-Bb67XUQZ.png                            2,425.73 kB
+dist/assets/totes-CwOumQLb.png                           2,433.75 kB
+dist/assets/card-holders-vBkDQjgQ.png                    2,433.76 kB
+dist/assets/notebook-BpOn_X4o.png                        2,445.20 kB
+dist/assets/hero-BHyxSvYJ.png                            2,460.59 kB
+dist/assets/id-cards-DP-D069C.png                        2,495.87 kB
+dist/assets/electronics-speaker-BFvy3vky.png             2,511.99 kB
+dist/assets/pens-enP0mUNW.png                            2,520.17 kB
+dist/assets/hero-DF6CkdFm.png                            2,521.26 kB
+dist/assets/notepads-TK3185dj.png                        2,551.23 kB
+dist/assets/all-products-lifestyle-DhwIzNBl.png          2,560.71 kB
+dist/assets/backpacks-DoWCnlpu.png                       2,574.40 kB
+dist/assets/caps-CwjYrxXw.png                            2,592.16 kB
+dist/assets/use-case-4UCdfxsD.png                        2,609.32 kB
+dist/assets/organisers-B4QzpOdK.png                      2,762.50 kB
+dist/assets/messengers-C4M3DZAO.png                      2,864.92 kB
+dist/assets/travel-accessories-closeup-Cr4ZtBJn.png      2,995.04 kB
+dist/assets/diaries-BU9KX9t0.png                         2,996.98 kB
+dist/assets/laptop-bags-CW1DmSAc.png                     3,112.67 kB
+dist/assets/hero-DItpaG9F.png                            3,363.60 kB
+dist/assets/SeoGrowthPage-zDRpNqQ4.css                       2.03 kB │ gzip:   0.73 kB
+dist/assets/OauthConsentPage-CrkX1PVa.css                    2.26 kB │ gzip:   0.75 kB
+dist/assets/ProductCard-x_hQdy26.css                         2.74 kB │ gzip:   0.74 kB
+dist/assets/RequestSampleWizard-jjUNQBIW.css                 3.21 kB │ gzip:   1.01 kB
+dist/assets/ZohoPeopleDocsHomePage-Cha2MzgC.css              3.43 kB │ gzip:   0.91 kB
+dist/assets/CatalogProductPage-BIOS-0lE.css                  3.92 kB │ gzip:   1.07 kB
+dist/assets/CatalogPage-Csvg8WwV.css                         4.01 kB │ gzip:   1.01 kB
+dist/assets/LegalArticle-BNnpFTFV.css                        4.77 kB │ gzip:   1.41 kB
+dist/assets/KitWizard-Cwk9N_on.css                           4.91 kB │ gzip:   1.49 kB
+dist/assets/BlogPages-CCUr-qRM.css                           4.98 kB │ gzip:   1.45 kB
+dist/assets/TenantLayout-CWF8inMS.css                        5.43 kB │ gzip:   1.23 kB
+dist/assets/SettingsPage-D-dAGZET.css                        6.28 kB │ gzip:   1.65 kB
+dist/assets/ContactsPage-BD5kwaEO.css                        6.75 kB │ gzip:   1.66 kB
+dist/assets/ZohoPeopleExampleWorkflowPage-CPV9puhk.css       7.89 kB │ gzip:   1.77 kB
+dist/assets/PlatformMarketingPage--KaGUzgv.css               8.48 kB │ gzip:   1.82 kB
+dist/assets/PublicSupportPage-tp2uehve.css                   8.50 kB │ gzip:   2.03 kB
+dist/assets/PrivacyPage-BqsUzqio.css                         9.07 kB │ gzip:   2.28 kB
+dist/assets/CareersPage-CNxY7kPR.css                         9.50 kB │ gzip:   2.53 kB
+dist/assets/SlackTermsOfServicePage-TKl4Oqpk.css             9.97 kB │ gzip:   2.39 kB
+dist/assets/zoho-admin-guide-Bd-YO_Oj.css                   10.83 kB │ gzip:   2.53 kB
+dist/assets/ContactsPage-IpFU9tLy.css                       11.56 kB │ gzip:   2.69 kB
+dist/assets/AboutPage-CQm5RY_Q.css                          11.99 kB │ gzip:   2.54 kB
+dist/assets/SupportPage-CA2hb_iE.css                        12.94 kB │ gzip:   2.94 kB
+dist/assets/CatalogCategoryPage-CMRQGg8y.css                13.55 kB │ gzip:   2.78 kB
+dist/assets/ResourcesHub-io-Pa54k.css                       13.86 kB │ gzip:   3.03 kB
+dist/assets/KitsPage-DW1ttSom.css                           17.16 kB │ gzip:   3.66 kB
+dist/assets/CampaignsPage-CHspQu72.css                      19.94 kB │ gzip:   4.12 kB
+dist/assets/IntegrationsPage-CghGR-5m.css                   22.13 kB │ gzip:   4.32 kB
+dist/assets/SlackIntegrationLandingPage-IZXVt11Z.css        22.38 kB │ gzip:   4.70 kB
+dist/assets/ResourcesShell-JaoaYLMc.css                     26.29 kB │ gzip:   4.68 kB
+dist/assets/LandingPage-BSjkcb_3.css                        27.95 kB │ gzip:   5.55 kB
+dist/assets/ResourcesTeamPage-BwBk2Y8m.css                  28.47 kB │ gzip:   4.56 kB
+dist/assets/RequestDemoPage-DNI4IDRY.css                    28.49 kB │ gzip:   5.77 kB
+dist/assets/copilot-VTA0ta3T.css                            31.21 kB │ gzip:   6.17 kB
+dist/assets/Header-C6XYejPc.css                             34.85 kB │ gzip:   6.52 kB
+dist/assets/landing-page-DdKW42zo.css                       67.86 kB │ gzip:  12.12 kB
+dist/assets/catalog-view-BwoDlMwF.css                       68.99 kB │ gzip:  13.13 kB
+dist/assets/DashboardPage-JGCjTVXC.css                     120.72 kB │ gzip:  21.17 kB
+dist/assets/index-B3SvNp4t.css                             643.07 kB │ gzip: 106.25 kB
+dist/assets/kit-preview-BAzrDJp_.js                          0.05 kB │ gzip:   0.07 kB
+dist/assets/zoho-people-CBpHMjN4.js                          0.05 kB │ gzip:   0.07 kB
+dist/assets/chevron-up-BaewQU2b.js                           0.12 kB │ gzip:   0.14 kB
+dist/assets/chevron-left-Wfxpo7y_.js                         0.13 kB │ gzip:   0.14 kB
+dist/assets/chevron-right-CublE7nW.js                        0.13 kB │ gzip:   0.14 kB
+dist/assets/hero-Blx5E2JE.js                                 0.13 kB │ gzip:   0.12 kB
+dist/assets/plus-dD0f1o7c.js                                 0.15 kB │ gzip:   0.15 kB
+dist/assets/arrow-down-BwQbGBdK.js                           0.16 kB │ gzip:   0.16 kB
+dist/assets/arrow-left-pOxO0BDr.js                           0.16 kB │ gzip:   0.16 kB
+dist/assets/arrow-right-DWxKdOjW.js                          0.16 kB │ gzip:   0.16 kB
+dist/assets/arrow-up-right-J_Q1Yl_E.js                       0.16 kB │ gzip:   0.16 kB
+dist/assets/clock-BGnHVypZ.js                                0.16 kB │ gzip:   0.16 kB
+dist/assets/circle-check-DDoWBiyB.js                         0.17 kB │ gzip:   0.16 kB
+dist/assets/rotate-ccw-CVrwUQH7.js                           0.20 kB │ gzip:   0.18 kB
+dist/assets/credit-card-CWU7I3TW.js                          0.20 kB │ gzip:   0.18 kB
+dist/assets/mail-B9KrIPKQ.js                                 0.21 kB │ gzip:   0.20 kB
+dist/assets/CatalogBrowsePage-KU7gr5Oz.js                    0.22 kB │ gzip:   0.17 kB
+dist/assets/ellipsis-DIBk-C-m.js                             0.22 kB │ gzip:   0.16 kB
+dist/assets/upload-l8J_o1rv.js                               0.23 kB │ gzip:   0.19 kB
+dist/assets/message-square-Cv_lktKN.js                       0.23 kB │ gzip:   0.20 kB
+dist/assets/paperclip-CK3ypaXs.js                            0.23 kB │ gzip:   0.19 kB
+dist/assets/copy-DMMjO4gR.js                                 0.23 kB │ gzip:   0.21 kB
+dist/assets/headphones-CIFV-Vry.js                           0.23 kB │ gzip:   0.18 kB
+dist/assets/message-circle-w2PLTC5l.js                       0.24 kB │ gzip:   0.21 kB
+dist/assets/circle-question-mark-Ct_QBest.js                 0.24 kB │ gzip:   0.20 kB
+dist/assets/chart-column-B7w06IVM.js                         0.25 kB │ gzip:   0.19 kB
+dist/assets/external-link-D-Fp1eYR.js                        0.25 kB │ gzip:   0.20 kB
+dist/assets/collectionEditability-qpQpAxib.js                0.25 kB │ gzip:   0.16 kB
+dist/assets/lock-keyhole-CbaAlAPh.js                         0.25 kB │ gzip:   0.22 kB
+dist/assets/heart-BLTH38_M.js                                0.25 kB │ gzip:   0.21 kB
+dist/assets/map-pin-B8CjCCqS.js                              0.25 kB │ gzip:   0.22 kB
+dist/assets/pencil-l4b-VQdm.js                               0.27 kB │ gzip:   0.22 kB
+dist/assets/book-open-DSxnDGUG.js                            0.27 kB │ gzip:   0.20 kB
+dist/assets/house-DMb2buCQ.js                                0.28 kB │ gzip:   0.21 kB
+dist/assets/coins-BQoObJpT.js                                0.28 kB │ gzip:   0.22 kB
+dist/assets/plug-CmpUV1dW.js                                 0.28 kB │ gzip:   0.20 kB
+dist/assets/shirt-DJuFs-eM.js                                0.28 kB │ gzip:   0.22 kB
+dist/assets/bell-C-iRnBWA.js                                 0.29 kB │ gzip:   0.23 kB
+dist/assets/send-DiKrTQSe.js                                 0.29 kB │ gzip:   0.23 kB
+dist/assets/users-BVEoNv67.js                                0.30 kB │ gzip:   0.22 kB
+dist/assets/box-CHIIaUpk.js                                  0.31 kB │ gzip:   0.22 kB
+dist/assets/shield-check-VQnz9cFU.js                         0.32 kB │ gzip:   0.25 kB
+dist/assets/square-pen-BmJHs2Vw.js                           0.32 kB │ gzip:   0.24 kB
+dist/assets/refresh-cw-BwrgT1yy.js                           0.32 kB │ gzip:   0.22 kB
+dist/assets/trash-2-DBt2GhxD.js                              0.32 kB │ gzip:   0.21 kB
+dist/assets/shopping-bag-mhhqnARP.js                         0.34 kB │ gzip:   0.24 kB
+dist/assets/PageHeader-Brfk4c20.js                           0.34 kB │ gzip:   0.21 kB
+dist/assets/megaphone-rMbkDF9Y.js                            0.34 kB │ gzip:   0.24 kB
+dist/assets/gift-CSEKcRWw.js                                 0.34 kB │ gzip:   0.25 kB
+dist/assets/file-text-CUgcA9kz.js                            0.38 kB │ gzip:   0.25 kB
+dist/assets/landmark-lbjuwMHD.js                             0.38 kB │ gzip:   0.24 kB
+dist/assets/useLoad-CCE_2Y1p.js                              0.39 kB │ gzip:   0.28 kB
+dist/assets/earth-DQrgCCe6.js                                0.39 kB │ gzip:   0.26 kB
+dist/assets/truck-CO6Esg-H.js                                0.40 kB │ gzip:   0.27 kB
+dist/assets/package-check-BitNTDxi.js                        0.41 kB │ gzip:   0.27 kB
+dist/assets/layers-AT5z9PIE.js                               0.42 kB │ gzip:   0.24 kB
+dist/assets/sliders-horizontal-BmhPi_Jk.js                   0.42 kB │ gzip:   0.24 kB
+dist/assets/useWorkspace-BtOr_8ZA.js                         0.42 kB │ gzip:   0.29 kB
+dist/assets/handshake-B17vnwj_.js                            0.44 kB │ gzip:   0.28 kB
+dist/assets/kitVariantImages-CV9Ivf_O.js                     0.44 kB │ gzip:   0.26 kB
+dist/assets/mediaUrl-DJCxdaj1.js                             0.45 kB │ gzip:   0.27 kB
+dist/assets/star-Ct3UQ_MD.js                                 0.47 kB │ gzip:   0.29 kB
+dist/assets/calendar-days-GcwNIqd2.js                        0.49 kB │ gzip:   0.26 kB
+dist/assets/sparkles-BjcC2FG5.js                             0.49 kB │ gzip:   0.28 kB
+dist/assets/store-BvqhduXn.js                                0.49 kB │ gzip:   0.28 kB
+dist/assets/palette-BUv8CnLm.js                              0.51 kB │ gzip:   0.28 kB
+dist/assets/FullscreenOverlay-D8D7Ckq1.js                    0.52 kB │ gzip:   0.33 kB
+dist/assets/ProductThumb-B4mBq1jh.js                         0.54 kB │ gzip:   0.35 kB
+dist/assets/ShelfMerchLogo-B3FSeMnA.js                       0.61 kB │ gzip:   0.39 kB
+dist/assets/useTenantAccess-CjwwfLXB.js                      0.63 kB │ gzip:   0.34 kB
+dist/assets/ResourcesShell-Ban4rqJf.js                       0.65 kB │ gzip:   0.38 kB
+dist/assets/LegalArticle-DjqeGRad.js                         0.69 kB │ gzip:   0.39 kB
+dist/assets/blog-api-CVz6hBL3.js                             0.71 kB │ gzip:   0.28 kB
+dist/assets/TrustBar-C2BYr2Na.js                             0.73 kB │ gzip:   0.26 kB
+dist/assets/model-BKEmUg85.js                                0.74 kB │ gzip:   0.47 kB
+dist/assets/fundsGate-CtV-FeA6.js                            0.77 kB │ gzip:   0.38 kB
+dist/assets/useDocsMeta-Ck7QCJJU.js                          0.79 kB │ gzip:   0.42 kB
+dist/assets/model-pupIT5vk.js                                0.83 kB │ gzip:   0.35 kB
+dist/assets/model-Bh0DfP7G.js                                0.87 kB │ gzip:   0.34 kB
+dist/assets/auth-store-DtmFsQvV.js                           0.95 kB │ gzip:   0.45 kB
+dist/assets/BillingPage-of6uT72x.js                          0.96 kB │ gzip:   0.55 kB
+dist/assets/model-BlMU3hxD.js                                0.96 kB │ gzip:   0.44 kB
+dist/assets/zap-D3v_M7wx.js                                  0.97 kB │ gzip:   0.43 kB
+dist/assets/MockupViewGallery-C3QWiVTr.js                    1.04 kB │ gzip:   0.50 kB
+dist/assets/loginErrors-CFkIS0jb.js                          1.04 kB │ gzip:   0.57 kB
+dist/assets/types-D9cr5P60.js                                1.04 kB │ gzip:   0.59 kB
+dist/assets/WizardChrome-DDVRhv1d.js                         1.09 kB │ gzip:   0.54 kB
+dist/assets/model-BLlc3UH6.js                                1.11 kB │ gzip:   0.56 kB
+dist/assets/preload-helper-Czpn1I53.js                       1.19 kB │ gzip:   0.67 kB
+dist/assets/CatalogPrice-BsXBPk4x.js                         1.26 kB │ gzip:   0.57 kB
+dist/assets/NextStepDialog-DTtK0-ap.js                       1.29 kB │ gzip:   0.60 kB
+dist/assets/kitDraft-CsocjIEZ.js                             1.30 kB │ gzip:   0.51 kB
+dist/assets/partyBomb-C8Bl5t14.js                            1.32 kB │ gzip:   0.69 kB
+dist/assets/PublicCatalogPage-D_dYu5Po.js                    1.32 kB │ gzip:   0.66 kB
+dist/assets/ProductCard-BQ_mS2Cr.js                          1.36 kB │ gzip:   0.61 kB
+dist/assets/createLucideIcon-DN0J77WO.js                     1.38 kB │ gzip:   0.77 kB
+dist/assets/GoogleAuthCallbackPage-BEOsebu5.js               1.39 kB │ gzip:   0.71 kB
+dist/assets/with-selector-pbgD7hNW.js                        1.63 kB │ gzip:   0.72 kB
+dist/assets/model-fg1tpz7G.js                                1.77 kB │ gzip:   0.92 kB
+dist/assets/SwagProductPage-ptGHzZ7P.js                      1.83 kB │ gzip:   0.92 kB
+dist/assets/catalog-navigation-DNPPe7Ji.js                   1.87 kB │ gzip:   0.88 kB
+dist/assets/button-Dl1oTSgZ.js                               1.93 kB │ gzip:   0.95 kB
+dist/assets/zoho-api-DZOhqXgJ.js                             1.97 kB │ gzip:   0.83 kB
+dist/assets/CatalogBrowseView-DLZb043K.js                    2.01 kB │ gzip:   0.85 kB
+dist/assets/ShopDesignDetailPage-DVsaaetG.js                 2.04 kB │ gzip:   1.03 kB
+dist/assets/catalog-view-_iktzQpo.js                         2.04 kB │ gzip:   1.01 kB
+dist/assets/curatedKitCardStyles-CD9b5z1k.js                 2.08 kB │ gzip:   0.97 kB
+dist/assets/dialog-DyjI2Fcl.js                               2.11 kB │ gzip:   0.85 kB
+dist/assets/platform-access-Bkxm5PiE.js                      2.14 kB │ gzip:   0.68 kB
+dist/assets/useMutation-1C16I5n0.js                          2.28 kB │ gzip:   0.95 kB
+dist/assets/dist-DMv7EfEB.js                                 2.31 kB │ gzip:   1.07 kB
+dist/assets/PublishShopWizard-I7VgJrZL.js                    2.38 kB │ gzip:   1.23 kB
+dist/assets/CollectionInlineCard-x4IjUsfq.js                 2.44 kB │ gzip:   0.90 kB
+dist/assets/KitPackagingStep-c1l_xmqF.js                     2.60 kB │ gzip:   1.06 kB
+dist/assets/MeasurementConsentChoice-Bj_vhKSv.js             2.63 kB │ gzip:   1.06 kB
+dist/assets/useSignupController-Ci3ycMzi.js                  2.63 kB │ gzip:   1.21 kB
+dist/assets/ForgotPasswordPage-B04sYnsQ.js                   2.68 kB │ gzip:   1.26 kB
+dist/assets/PlatformLayout-rV3Z_1Iq.js                       2.75 kB │ gzip:   1.13 kB
+dist/assets/LoginPage-DSRq94Z_.js                            2.88 kB │ gzip:   1.24 kB
+dist/assets/artworkHistory-Di_1WlHE.js                       2.91 kB │ gzip:   1.09 kB
+dist/assets/banner-BqHQcGuY.js                               3.06 kB │ gzip:   1.48 kB
+dist/assets/SignupPage-BDPNwVDg.js                           3.25 kB │ gzip:   1.04 kB
+dist/assets/select-C36akh2R.js                               3.30 kB │ gzip:   1.21 kB
+dist/assets/zoho-admin-guide-h4fFwQCH.js                     3.30 kB │ gzip:   1.18 kB
+dist/assets/copilot-DZsSiSnu.js                              3.34 kB │ gzip:   1.53 kB
+dist/assets/zoho-embed-messaging-B4tPLeIK.js                 3.36 kB │ gzip:   1.01 kB
+dist/assets/model-ed1fHSF7.js                                3.51 kB │ gzip:   1.34 kB
+dist/assets/PaymentPanel-tPyLDvc_.js                         3.62 kB │ gzip:   1.43 kB
+dist/assets/shopListings-B2FmiEQO.js                         3.65 kB │ gzip:   1.64 kB
+dist/assets/VerifyEmailPage-zZlYCdvU.js                      3.67 kB │ gzip:   1.72 kB
+dist/assets/alert-dialog-czEZR8ww.js                         3.73 kB │ gzip:   1.27 kB
+dist/assets/dist-CeZ3xlbF.js                                 3.84 kB │ gzip:   1.69 kB
+dist/assets/dist-DpEIS7Wc.js                                 4.24 kB │ gzip:   1.57 kB
+dist/assets/SwagProductDetail-CACK2lYA.js                    4.25 kB │ gzip:   1.75 kB
+dist/assets/KitRedeemAddressForm-B2880-tW.js                 4.44 kB │ gzip:   1.36 kB
+dist/assets/PreDesignedKits-D3LYT-Hx.js                      4.53 kB │ gzip:   1.90 kB
+dist/assets/ZohoPeopleEmbedAuthPage-CRUMRZTI.js              4.88 kB │ gzip:   1.78 kB
+dist/assets/NotificationBell-D6CinMrP.js                     4.95 kB │ gzip:   1.96 kB
+dist/assets/OauthConsentPage-CYcYVVVz.js                     5.11 kB │ gzip:   1.98 kB
+dist/assets/platform-ui-Cpc9t6Xd.js                          5.22 kB │ gzip:   2.11 kB
+dist/assets/ResetPasswordPage-Dcag6HuQ.js                    5.93 kB │ gzip:   2.31 kB
+dist/assets/catalog-categories-D_1eq41u.js                   5.95 kB │ gzip:   2.16 kB
+dist/assets/Testimonials-CjWE1loP.js                         6.07 kB │ gzip:   1.96 kB
+dist/assets/EditKitWizard-DjqgXOwo.js                        6.09 kB │ gzip:   2.43 kB
+dist/assets/shopify-import-B3mqxbOd.js                       6.19 kB │ gzip:   2.11 kB
+dist/assets/Footer-C_eUiZTL.js                               7.09 kB │ gzip:   2.11 kB
+dist/assets/ZohoPeopleDocsHomePage-BOrvHxi1.js               7.12 kB │ gzip:   2.14 kB
+dist/assets/fundingSuccess-ABejGY9X.js                       7.37 kB │ gzip:   2.66 kB
+dist/assets/ShopsPage-oKuo1VaP.js                            7.50 kB │ gzip:   2.89 kB
+dist/assets/KitDetailPage-DApwe2qO.js                        7.59 kB │ gzip:   2.52 kB
+dist/assets/useHrisEmployeesController-Bgza1EGC.js           8.08 kB │ gzip:   3.10 kB
+dist/assets/ZohoPeopleUserGuidePage-BylF-wtS.js              8.17 kB │ gzip:   2.64 kB
+dist/assets/jsx-runtime-n5LQ9ujS.js                          8.53 kB │ gzip:   3.26 kB
+dist/assets/useQuery-CcBYuKu_.js                             8.89 kB │ gzip:   3.26 kB
+dist/assets/CreateShopWizard-CAjOHthN.js                     9.17 kB │ gzip:   2.83 kB
+dist/assets/OrdersPage-D1W-8RfF.js                           9.20 kB │ gzip:   3.07 kB
+dist/assets/HrisEmployeesPage-plEQ1Ea2.js                    9.43 kB │ gzip:   3.07 kB
+dist/assets/SwagPage-q_UyROCW.js                             9.47 kB │ gzip:   3.44 kB
+dist/assets/singleLocationValidation-DhAjV56m.js             9.48 kB │ gzip:   3.52 kB
+dist/assets/PublicSupportPage-CrrQa1Ni.js                    9.50 kB │ gzip:   2.87 kB
+dist/assets/ZohoPeopleExampleWorkflowPage-CxvL-wS1.js        9.62 kB │ gzip:   3.07 kB
+dist/assets/ResourcesHub-GYhdr0Hf.js                        10.00 kB │ gzip:   3.05 kB
+dist/assets/confetti.module-DBguxEek.js                     10.56 kB │ gzip:   4.19 kB
+dist/assets/ShopBuilderStep-CHo8X76H.js                     10.86 kB │ gzip:   3.40 kB
+dist/assets/platform-api-C4q9Uf1J.js                        11.51 kB │ gzip:   2.83 kB
+dist/assets/KitPreviewDialog-BumteAgl.js                    11.59 kB │ gzip:   3.51 kB
+dist/assets/ZohoPeopleAdminGuidePage-Bsz3j502.js            11.95 kB │ gzip:   3.56 kB
+dist/assets/ZohoPeopleConnectedAppPage-EZRfffqr.js          11.95 kB │ gzip:   3.76 kB
+dist/assets/TenantLayout-yagh5MDn.js                        12.35 kB │ gzip:   4.15 kB
+dist/assets/CatalogProductPage-CEmVxnoY.js                  13.12 kB │ gzip:   4.94 kB
+dist/assets/ContactsPage-bf8AxG75.js                        13.17 kB │ gzip:   3.64 kB
+dist/assets/AboutPage-DAC_bvSL.js                           13.54 kB │ gzip:   4.33 kB
+dist/assets/artworkStepModel-CirOrZoA.js                    14.62 kB │ gzip:   6.17 kB
+dist/assets/SlackIntegrationLandingPage-CHaGureP.js         15.78 kB │ gzip:   4.24 kB
+dist/assets/RequestDemoPage-BfzIM9G2.js                     16.02 kB │ gzip:   5.01 kB
+dist/assets/PlatformMarketingPage-Bsn7z-RJ.js               16.09 kB │ gzip:   4.48 kB
+dist/assets/Header-k2DMSdOk.js                              16.25 kB │ gzip:   5.75 kB
+dist/assets/KitsPage-BZDUx15f.js                            16.84 kB │ gzip:   5.50 kB
+dist/assets/PrivacyPolicyPage-DZ55NQFP.js                   17.10 kB │ gzip:   5.17 kB
+dist/assets/SupportPage-a_ERVqpx.js                         17.22 kB │ gzip:   5.17 kB
+dist/assets/KitWizard-DDHHhwVE.js                           17.27 kB │ gzip:   5.80 kB
+dist/assets/useSendKitController-DOillKrb.js                17.33 kB │ gzip:   6.39 kB
+dist/assets/TermsOfServicePage-D823bKhM.js                  18.70 kB │ gzip:   6.31 kB
+dist/assets/SettingsPage-DEyaG3sj.js                        18.90 kB │ gzip:   5.86 kB
+dist/assets/dist-c0Nf0DZy.js                                19.34 kB │ gzip:   6.65 kB
+dist/assets/KitBrandingStep-DttPJMfF.js                     19.55 kB │ gzip:   5.74 kB
+dist/assets/SlackTermsOfServicePage-DpxrDZU1.js             19.66 kB │ gzip:   5.23 kB
+dist/assets/SeoGrowthPage-DTTghdCX.js                       20.47 kB │ gzip:   5.75 kB
+dist/assets/RecipientExperience-CFhaQTcF.js                 21.11 kB │ gzip:   6.25 kB
+dist/assets/dropdown-menu-elYGpGnA.js                       21.64 kB │ gzip:   6.18 kB
+dist/assets/kit-wizard-BiP1cOtd.js                          22.74 kB │ gzip:   5.73 kB
+dist/assets/RequestSampleWizard-CS8lc1vx.js                 23.54 kB │ gzip:   6.87 kB
+dist/assets/SendPointsPage-DflBzFZ3.js                      23.58 kB │ gzip:   7.99 kB
+dist/assets/lib-Uqn0c2pR.js                                 23.62 kB │ gzip:   8.69 kB
+dist/assets/DashboardPage-s8W78Ucq.js                       24.10 kB │ gzip:   7.35 kB
+dist/assets/CampaignsPage-BwsGu2QG.js                       25.14 kB │ gzip:   7.67 kB
+dist/assets/publicRoutes-D4p8eb1_.js                        26.01 kB │ gzip:   8.16 kB
+dist/assets/Combination-Bq1FHX5-.js                         26.81 kB │ gzip:   9.59 kB
+dist/assets/utils-B6KiDbIe.js                               27.26 kB │ gzip:   8.69 kB
+dist/assets/LandingPage-BzRVz8fI.js                         27.89 kB │ gzip:   7.92 kB
+dist/assets/dist-CwRPHn-5.js                                28.16 kB │ gzip:  10.83 kB
+dist/assets/api-CiIZ0dso.js                                 29.78 kB │ gzip:   9.25 kB
+dist/assets/PrivacyPage-D3B7d8vI.js                         33.55 kB │ gzip:  10.57 kB
+dist/assets/ResourcesTeamPage-Dj0NC0Kl.js                   33.93 kB │ gzip:   9.03 kB
+dist/assets/CareersPage-DiGvixAz.js                         36.42 kB │ gzip:  10.70 kB
+dist/assets/SwagWizard-DZKmjABI.js                          39.71 kB │ gzip:  10.99 kB
+dist/assets/CatalogPage-D-OMbGNQ.js                         41.29 kB │ gzip:  14.10 kB
+dist/assets/SendKitWizard-NEuk7Ckn.js                       41.51 kB │ gzip:  10.57 kB
+dist/assets/CatalogCategoryPage-DLQiE3KC.js                 50.74 kB │ gzip:  13.24 kB
+dist/assets/schemas-D2va5bBi.js                             58.80 kB │ gzip:  15.96 kB
+dist/assets/hooks-fo0N4hVp.js                               69.98 kB │ gzip:  23.19 kB
+dist/assets/ContactsPage-DQ5JflFq.js                        87.75 kB │ gzip:  28.47 kB
+dist/assets/WalletsPage-BCORwAaB.js                         93.54 kB │ gzip:  22.87 kB
+dist/assets/IntegrationsPage-IXlMZznb.js                   106.57 kB │ gzip:  30.96 kB
+dist/assets/PlatformPages-Cgko8dro.js                      112.99 kB │ gzip:  27.79 kB
+dist/assets/CopilotPage-PaLqSOoL.js                        163.72 kB │ gzip:  49.85 kB
+dist/assets/product-wizard-BtyMilQP.js                     171.93 kB │ gzip:  51.91 kB
+dist/assets/lib-1CsjNKT1.js                                181.41 kB │ gzip:  54.58 kB
+dist/assets/ShopDetailPage-MeePp2zZ.js                     387.23 kB │ gzip: 111.85 kB
+dist/assets/BlogPages-CDBb5zE7.js                          413.66 kB │ gzip: 129.87 kB
+dist/assets/index-zumZsMgF.js                              509.39 kB │ gzip: 147.66 kB
+
+✓ built in 6.13s
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.

@@ -148,7 +148,7 @@ beforeEach(async () => {
 });
 
 describe('company store write service', () => {
-  it('previews a draft store without writing, then creates it once', async () => {
+  it('previews a live store without writing, then creates it once', async () => {
     const input = {
       name: 'North Store',
       slug: 'north-store',
@@ -167,7 +167,7 @@ describe('company store write service', () => {
       action: 'create',
       name: 'North Store',
       slug: 'north-store',
-      status: 'draft',
+      status: 'live',
       currencyMode: 'points',
       companyEmailDomain: 'acme.com',
       categories: ['Welcome'],
@@ -185,7 +185,7 @@ describe('company store write service', () => {
     expect(created).toMatchObject({
       name: 'North Store',
       slug: 'north-store',
-      status: 'draft',
+      status: 'live',
       currencyMode: 'points',
       companyEmailDomain: 'acme.com',
       logoUrl: '',
@@ -204,20 +204,7 @@ describe('company store write service', () => {
     expect(replay.id).toBe(created.id);
     expect(await shopCount()).toBe(1);
 
-    const again = await prepareShopCreate({
-      tenantId: tenant._id,
-      actorUserId: admin.user._id,
-      input,
-    });
-    const reused = await executeShopCreate({
-      tenantId: tenant._id,
-      actorUserId: admin.user._id,
-      input,
-      confirmationId: again.confirmationId,
-      idempotencyKey: 'shop-create-2',
-    });
-    expect(reused.id).toBe(created.id);
-    expect(await shopCount()).toBe(1);
+    await expect(prepareShopCreate({ tenantId: tenant._id, actorUserId: admin.user._id, input })).rejects.toMatchObject({ code: 'SHOP_EXISTS' });
     const audits = JSON.stringify(await AuditLog.find({ tenantId: tenant._id }).lean());
     expect(audits).toContain('shop.create');
     expect(audits).toContain('mcp_write.successful');
@@ -628,7 +615,7 @@ it('blocks entity managers from creating, updating, publishing, or deleting stor
   expect(stored.status).toBe('draft');
 });
 
-it('keeps shops:write off the initial challenge and creates a draft through the tools', async () => {
+it('keeps shops:write off the initial challenge and creates a live store through the tools', async () => {
     const password = 'correct-horse';
     const email = `admin-${tenant.slug}@test.io`;
     admin = await makeUser(tenant, 'company_admin', 'tenant', { email, password });
@@ -687,7 +674,7 @@ it('keeps shops:write off the initial challenge and creates a draft through the 
     expect(created.status).toBe(200);
     const body = rpcBody(created).result;
     expect(body.isError).not.toBe(true);
-    expect(body.structuredContent).toMatchObject({ name: 'Tool Store', slug: 'tool-store', status: 'draft' });
+    expect(body.structuredContent).toMatchObject({ name: 'Tool Store', slug: 'tool-store', status: 'live' });
     expect(await shopCount()).toBe(1);
   });
 });

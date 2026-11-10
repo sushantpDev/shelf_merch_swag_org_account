@@ -1,0 +1,26 @@
+
+ RUN  v4.1.10 D:/Shelf Merch/SMIO/shelf_merch_swag_org_account/apps/api
+
+(node:33988) [MONGOOSE] Warning: `errors` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:33988) [MONGOOSE] Warning: mongoose: Duplicate schema index on {"expiresAt":1} for model "SignupPending". This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(node:33988) [MONGOOSE] Warning: mongoose: Duplicate schema index on {"expiresAt":1} for model "PasswordResetToken". This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(node:33988) [MONGOOSE] Warning: mongoose: Duplicate schema index on {"tenantId":1} for model "ZohoIntegration". This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(node:33988) [MONGOOSE] Warning: mongoose: Duplicate schema index on {"expiresAt":1} for model "ShopSignupPending". This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(node:33988) [MONGOOSE] Warning: mongoose: the `new` option for `findOneAndUpdate()` and `findOneAndReplace()` is deprecated. Use `returnDocument: 'after'` instead.
+(node:33988) [MONGOOSE] Warning: mongoose: the `new` option for `findOneAndUpdate()` and `findOneAndReplace()` is deprecated. Use `returnDocument: 'after'` instead.
+(node:33988) [MONGOOSE] Warning: mongoose: the `new` option for `findOneAndUpdate()` and `findOneAndReplace()` is deprecated. Use `returnDocument: 'after'` instead.
+(node:33988) [MONGOOSE] Warning: mongoose: the `new` option for `findOneAndUpdate()` and `findOneAndReplace()` is deprecated. Use `returnDocument: 'after'` instead.
+(node:33988) [MONGOOSE] Warning: mongoose: the `new` option for `findOneAndUpdate()` and `findOneAndReplace()` is deprecated. Use `returnDocument: 'after'` instead.
+(node:33988) [MONGOOSE] Warning: mongoose: the `new` option for `findOneAndUpdate()` and `findOneAndReplace()` is deprecated. Use `returnDocument: 'after'` instead.
+(node:33988) [MONGOOSE] Warning: mongoose: the `new` option for `findOneAndUpdate()` and `findOneAndReplace()` is deprecated. Use `returnDocument: 'after'` instead.
+(node:33988) [MONGOOSE] Warning: mongoose: the `new` option for `findOneAndUpdate()` and `findOneAndReplace()` is deprecated. Use `returnDocument: 'after'` instead.
+(node:33988) [MONGOOSE] Warning: mongoose: the `new` option for `findOneAndUpdate()` and `findOneAndReplace()` is deprecated. Use `returnDocument: 'after'` instead.
+(node:33988) [MONGOOSE] Warning: `errors` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ Test Files  2 passed (2)
+      Tests  16 passed (16)
+   Start at  17:23:12
+   Duration  12.04s (transform 2.21s, setup 0ms, import 7.75s, tests 2.29s, environment 0ms)
+

@@ -33,6 +33,7 @@ import {
 import walletsRoutes from './modules/wallets/wallets.routes.js';
 import mcpWalletDocumentRoutes from './modules/mcp/walletsDocumentUpload.routes.js';
 import mcpShopAssetRoutes from './modules/mcp/shopsAssetUpload.routes.js';
+import copilotRoutes from './modules/copilot/copilot.routes.js';
 import entitiesRoutes from './modules/entities/entities.routes.js';
 import shopsRoutes from './modules/shops/shops.routes.js';
 import catalogRoutes from './modules/catalog/catalog.routes.js';
@@ -312,6 +313,7 @@ export function createApp() {
   api.use('/contacts', contactsRoutes);
   api.use('/demo-leads', demoLeadsRoutes);
   api.use('/campaigns', campaignsRoutes);
+  api.use('/copilot', copilotRoutes);
   api.use('/redemptions', redemptionsRoutes);
   api.use('/storefront', storefrontRoutes);
   api.use('/storefront/:shopId/auth', shopAuthRoutes);
